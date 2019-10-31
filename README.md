@@ -1,4 +1,4 @@
-# youtube_auto_pause
+# Youtube Auto Pause
 
 This is a Chrome extension that pauses Youtube videos when losing the tab focus by
 sending 'k' even to the player. Resumes the playback once the Youtube tab is
