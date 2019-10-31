@@ -1,0 +1,11 @@
+{
+    "name": "Youtube NSFW",
+    "version": "1.0",
+    "description": "Stops Youtube on tab unfocus and continues on focus",
+    "permissions": ["tabs", "https://www.youtube.com/*"],
+    "background": {
+        "scripts": ["yt.js"],
+        "persistent": true
+    },
+    "manifest_version": 2
+}
