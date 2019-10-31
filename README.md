@@ -23,7 +23,5 @@ enabled as this might conflict with other extensions.
 
 ## TODO
 
-* Add icons for the extension
 * Support for other video services
 * Publish in the chrome web store
-* Add settings for continuing/pausing the playback
