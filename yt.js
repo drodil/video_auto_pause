@@ -1,14 +1,6 @@
 var previous_tab = 0;
-var yt_tabs = [];
 var autopause = true;
 var autoresume = true;
-
-function restore_options() {
-    chrome.storage.sync.get({autopause : autopause, autoresume : autoresume}, function(items) {
-        autopause = items.autopause;
-        autoresume = items.autoresume;
-    });
-}
 
 function stop(tabId) {
     chrome.tabs.executeScript(tabId, {
@@ -44,14 +36,13 @@ function handle_tabs(tabId) {
     });
 }
 
-chrome.tabs.onActivated.addListener(function(info) {
-    restore_options();
-    handle_tabs(info.tabId);
-});
-
-chrome.tabs.onRemoved.addListener(function(tabId, info) {
-    var idx = yt_tabs.indexOf(tabId);
-    if (idx > -1) {
-        yt_tabs.splice(idx, 1);
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    if ('autoresume' in changes) {
+        autoresume = changes.autoresume.newValue;
+    }
+    if ('autopause' in changes) {
+        autopause = changes.autopause.newValue;
     }
 });
+
+chrome.tabs.onActivated.addListener(function(info) { handle_tabs(info.tabId); });
