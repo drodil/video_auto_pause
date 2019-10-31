@@ -2,10 +2,30 @@
     "name": "Youtube Auto Pause",
     "version": "1.0",
     "description": "Stops Youtube on tab unfocus and continues on focus",
-    "permissions": ["tabs", "https://www.youtube.com/*"],
+    "permissions": ["tabs", "storage", "https://www.youtube.com/*"],
+    "homepage_url": "https://github.com/drodil/youtube_auto_pause",
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+    "icons": {
+        "16": "images/icon_16.png",
+        "32": "images/icon_32.png",
+        "64": "images/icon_64.png",
+        "128": "images/icon_128.png"
+    },
+    "browser_action": {
+        "default_popup": "options.html",
+        "default_icon": {
+            "16": "images/icon_16.png",
+            "32": "images/icon_32.png",
+            "64": "images/icon_64.png",
+            "128": "images/icon_128.png"
+        }
+    },
     "background": {
         "scripts": ["yt.js"],
-        "persistent": true
+        "persistent": false
     },
     "manifest_version": 2
 }

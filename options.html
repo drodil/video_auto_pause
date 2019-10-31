@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Youtube Auto Pause options</title>
+    <style>
+        @charset "UTF-8";
+        @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
+        @import 'https://fonts.googleapis.com/css?family=Nunito:300,400,700';
+
+        body {
+            padding: 20px;
+            padding-top: 5px;
+            font-family: "Nunito", sans-serif;
+            font-weight: 400;
+        }
+
+        label {
+            cursor: pointer;
+            color: #383A3F;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        label input[type="checkbox"]+.label-text:hover:before {
+            color: #fe4365;
+        }
+
+        label input[type="checkbox"] {
+            display: none;
+        }
+
+        label input[type="checkbox"]+.label-text:before {
+            content: "\f096";
+            color: #dddfe6;
+            font-family: "fontAwesome";
+            line-height: 1;
+            width: 1em;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        label input[type="checkbox"]:checked+.label-text:before {
+            content: "\f14a";
+            color: #fe4365;
+            animation: tick 150ms ease-in;
+        }
+
+        label input[type="checkbox"]:disabled+.label-text:before {
+            content: "\f0c8";
+            color: #dddfe6;
+        }
+
+        @keyframes tick {
+            0% {
+                transform: scale(0);
+            }
+
+            90% {
+                transform: scale(1.3);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            border: 0;
+            margin-top: 1em;
+            color: white;
+            background-color: #77b11c;
+        }
+
+        #status {
+            position: fixed;
+            padding: 10px;
+            top: 0;
+            right: 0;
+            text-align: right;
+            color: green;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 300px">
+        <h2>Youtube Auto Pause</h2>
+        <label><input type="checkbox" id="autopause"><span class="label-text">Enable auto pause on tab unfocus</span></label>
+        <label><input type="checkbox" id="autoresume"><span class="label-text">Enable auto resume on tab focus</span></label>
+        <div id="status"></div>
+        <button id="save">Save</button>
+    </div>
+    <script src="options.js"></script>
+</body>
+
+</html>
