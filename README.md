@@ -28,6 +28,6 @@ enabled as this might conflict with other extensions.
 ## TODO
 
 * Support for other video services
-* Add support for stop/resume on minimize
-    * chrome.windows.onFocusChanged is not working properly though (especially
-      with only one window open)
+* Fix the "Extension context invalidated" error on first start
+    * Relates to the chrome.runtime.sendMessage being called before the
+      extension background script is loaded
