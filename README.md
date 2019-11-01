@@ -6,7 +6,11 @@ back in focus.
 
 ## Installing
 
-Only way to install this at the moment is by:
+**From chrome web store**
+
+https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
+
+**Manually**
 
 1. Clone the repository
 2. Start chrome
@@ -24,4 +28,6 @@ enabled as this might conflict with other extensions.
 ## TODO
 
 * Support for other video services
-* Publish in the chrome web store
+* Add support for stop/resume on minimize
+    * chrome.windows.onFocusChanged is not working properly though (especially
+      with only one window open)
