@@ -55,16 +55,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (!pausemin || previous_tab == 0) {
         return true;
     }
+    chrome.windows.getCurrent(function(win) {
+        if (win.state !== "minimized" && request.minimized) {
+            request.minimized = false;
+        }
 
-    if (request.minimized && request.minimized != minimized) {
-        chrome.tabs.query({}, function(tabs) { tabs.forEach(tab => { stop(tab); }); });
-    } else if (!request.minimized && request.minimized != minimized) {
-        chrome.tabs.get(previous_tab, function(prev) {
-            if (!chrome.runtime.lastError) {
-                 resume(prev);
-            }
-        });
-    }
-    minimized = request.minimized;
+        if (request.minimized) {
+            chrome.tabs.query({}, function(tabs) { tabs.forEach(tab => { stop(tab); }); });
+        } else if (!request.minimized) {
+            chrome.tabs.get(previous_tab, function(prev) {
+                if (!chrome.runtime.lastError) {
+                     resume(prev);
+                }
+            });
+        }
+        minimized = request.minimized;
+    });
     return true;
 });
