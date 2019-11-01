@@ -51,6 +51,16 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
 chrome.tabs.onActivated.addListener(function(info) { handle_tabs(info.tabId); });
 
+chrome.windows.onFocusChanged.addListener(function(info) {
+    if (previous_tab != 0) {
+        chrome.tabs.get(previous_tab, function(tab) {
+            if (autopause) {
+                stop(tab);
+            }
+        });
+    }
+});
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (!pausemin || previous_tab == 0) {
         return true;
