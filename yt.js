@@ -1,15 +1,21 @@
 var previous_tab = 0;
 var autopause = true;
 var autoresume = true;
+var pausemin = true;
+var minimized = false;
+
+function is_yt_tab(tab) {
+    return tab !== undefined && tab.url !== undefined && tab.url.includes("youtube.com");
+}
 
 function stop(tab) {
-    if (tab !== undefined && tab.url !== undefined && tab.url.includes("youtube.com")) {
+    if (is_yt_tab(tab)) {
         chrome.tabs.executeScript(tab.id, {"file" : "stop.js"});
     }
 }
 
 function resume(tab) {
-    if (tab !== undefined && tab.url !== undefined && tab.url.includes("youtube.com")) {
+    if (is_yt_tab(tab)) {
         chrome.tabs.executeScript(tab.id, {"file" : "resume.js"});
     }
 }
@@ -38,12 +44,27 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     if ('autopause' in changes) {
         autopause = changes.autopause.newValue;
     }
+    if ('pausemin' in changes) {
+        pausemin = changes.pausemin.newValue;
+    }
 });
 
 chrome.tabs.onActivated.addListener(function(info) { handle_tabs(info.tabId); });
 
-chrome.windows.onFocusChanged.addListener(function() {
-    if (autopause) {
-        chrome.tabs.getCurrent(function(cur) { stop(cur); });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (!pausemin || previous_tab == 0) {
+        return true;
     }
+
+    if (request.minimized && request.minimized != minimized) {
+        chrome.tabs.query({}, function(tabs) { tabs.forEach(tab => { stop(tab); }); });
+    } else if (!request.minimized && request.minimized != minimized) {
+        chrome.tabs.get(previous_tab, function(prev) {
+            if (!chrome.runtime.lastError) {
+                 resume(prev);
+            }
+        });
+    }
+    minimized = request.minimized;
+    return true;
 });

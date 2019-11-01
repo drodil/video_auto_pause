@@ -8,6 +8,10 @@
         "page": "options.html",
         "open_in_tab": false
     },
+    "content_scripts": [{
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["visibility.js"]
+    }],
     "icons": {
         "16": "images/icon_16.png",
         "32": "images/icon_32.png",
