@@ -2,22 +2,35 @@ var previous_tab = 0;
 var autopause = true;
 var autoresume = true;
 
-function is_yt_tab(tab) {
-    return tab !== undefined && tab.url !== undefined && tab.url.includes("youtube.com");
+function get_shortcut_key(tab) {
+    if (tab === undefined || tab.url === undefined) {
+        return undefined;
+    }
+
+    if (tab.url.includes("youtube.com")) {
+        return 75;
+    }
+
+    // Default to space
+    return 32;
 }
 
 function stop(tab) {
-    if (is_yt_tab(tab)) {
-        chrome.tabs.executeScript(tab.id, {"file" : "stop.js"},
-                                  function() { void chrome.runtime.lastError; });
+    var key = get_shortcut_key(tab);
+    if (key === undefined) {
+        return;
     }
+
+    chrome.tabs.sendMessage(tab.id, {'action' : 'stop'});
 }
 
 function resume(tab) {
-    if (is_yt_tab(tab)) {
-        chrome.tabs.executeScript(tab.id, {"file" : "resume.js"},
-                                  function() { void chrome.runtime.lastError; });
+    var key = get_shortcut_key(tab);
+    if (key === undefined) {
+        return;
     }
+
+    chrome.tabs.sendMessage(tab.id, {'action' : 'resume'});
 }
 
 function handle_tabs(tabId) {
@@ -47,6 +60,12 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 });
 
 chrome.tabs.onActivated.addListener(function(info) { handle_tabs(info.tabId); });
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if ('status' in changeInfo && changeInfo.status === 'complete' && !tab.active) {
+        stop(tab);
+    }
+});
 
 chrome.windows.onFocusChanged.addListener(function(info) {
     if (previous_tab != 0) {
