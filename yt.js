@@ -8,13 +8,15 @@ function is_yt_tab(tab) {
 
 function stop(tab) {
     if (is_yt_tab(tab)) {
-        chrome.tabs.executeScript(tab.id, {"file" : "stop.js"});
+        chrome.tabs.executeScript(tab.id, {"file" : "stop.js"},
+                                  function() { void chrome.runtime.lastError; });
     }
 }
 
 function resume(tab) {
     if (is_yt_tab(tab)) {
-        chrome.tabs.executeScript(tab.id, {"file" : "resume.js"});
+        chrome.tabs.executeScript(tab.id, {"file" : "resume.js"},
+                                  function() { void chrome.runtime.lastError; });
     }
 }
 
@@ -29,7 +31,7 @@ function handle_tabs(tabId) {
     previous_tab = tabId;
 
     chrome.tabs.get(tabId, function(tab) {
-        if (autoresume) {
+        if (autoresume && !chrome.runtime.lastError) {
             resume(tab);
         }
     });
@@ -49,7 +51,10 @@ chrome.tabs.onActivated.addListener(function(info) { handle_tabs(info.tabId); })
 chrome.windows.onFocusChanged.addListener(function(info) {
     if (previous_tab != 0) {
         chrome.tabs.get(previous_tab, function(tab) {
-            if (!tab.active && autopause && !chrome.runtime.lastError) {
+            if (tab === undefined || chrome.runtime.lastError) {
+                return;
+            }
+            if (!tab.active && autopause) {
                 stop(tab);
             }
         });
@@ -57,13 +62,23 @@ chrome.windows.onFocusChanged.addListener(function(info) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (sender.tab === undefined) {
+    if (sender.tab === undefined || chrome.runtime.lastError) {
         return true;
     }
+
     if (request.minimized && autopause) {
-        stop(sender.tab);
+        chrome.tabs.get(sender.tab.id, function(tab) {
+            if (!chrome.runtime.lastError) {
+                stop(sender.tab);
+            }
+        });
     } else if (!request.minimized && autoresume) {
-        resume(sender.tab);
+        chrome.tabs.get(sender.tab.id, function(tab) {
+            if (!chrome.runtime.lastError) {
+                resume(sender.tab);
+            }
+        });
     }
+
     return true;
 });
