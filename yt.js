@@ -1,7 +1,6 @@
 var previous_tab = 0;
 var autopause = true;
 var autoresume = true;
-var minimized = false;
 
 function is_yt_tab(tab) {
     return tab !== undefined && tab.url !== undefined && tab.url.includes("youtube.com");
@@ -58,21 +57,13 @@ chrome.windows.onFocusChanged.addListener(function(info) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    chrome.windows.getCurrent(function(win) {
-        if (win.state !== "minimized" && request.minimized) {
-            request.minimized = false;
-        }
-
-        if (request.minimized && autopause) {
-            chrome.tabs.query({}, function(tabs) { tabs.forEach(tab => { stop(tab); }); });
-        } else if (previous_tab !== 0 && !request.minimized && autoresume) {
-            chrome.tabs.get(previous_tab, function(prev) {
-                if (!chrome.runtime.lastError) {
-                     resume(prev);
-                }
-            });
-        }
-        minimized = request.minimized;
-    });
+    if (sender.tab === undefined) {
+        return true;
+    }
+    if (request.minimized && autopause) {
+        stop(sender.tab);
+    } else if (!request.minimized && autoresume) {
+        resume(sender.tab);
+    }
     return true;
 });
