@@ -1,6 +1,6 @@
 {
     "name": "Youtube Auto Pause",
-    "version": "1.3.3",
+    "version": "1.3.4",
     "description": "Stops Youtube on tab unfocus and continues on focus",
     "permissions": [
         "tabs",
@@ -20,6 +20,8 @@
             "https://vimeo.com/*",
             "https://www.netflix.com/watch/*"
         ],
+        "run_at": "document_end",
+        "all_frames": true,
         "js": ["content.js"]
     }],
     "icons": {
