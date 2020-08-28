@@ -13,21 +13,25 @@ var observer = new IntersectionObserver(function(entries) {
     }
 }, {threshold: [0]});
 
-observer.observe(document.querySelector('video'));
+document.onload = function(e) {
+    videoElements = query.querySelectorAll('video')
+    for (i = 0; i < videoElements.length; i++) {
+        observer.observe(videoElements[i]);
+    }
+}
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (!('action' in request)) {
         return;
     }
 
-    var videoElement = document.querySelector('video');
-    if (videoElement === null) {
-        return;
-    }
+    var videoElements = document.querySelectorAll('video');
 
-    if (request.action === 'stop' && !videoElement.paused) {
-        videoElement.pause();
-    } else if (request.action === 'resume' && videoElement.paused) {
-        videoElement.play();
+    for (i = 0; i < videoElements.length; i++) {
+        if (request.action === 'stop' && !videoElements[i].paused) {
+            videoElements[i].pause();
+        } else if (request.action === 'resume' && videoElements[i].paused) {
+            videoElements[i].play();
+        }
     }
 });
