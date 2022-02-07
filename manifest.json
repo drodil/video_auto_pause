@@ -17,6 +17,7 @@
     "content_scripts": [{
         "matches": [
             "https://www.youtube.com/*",
+            "https://www.youtubekids.com/*",
             "https://vimeo.com/*",
             "https://www.netflix.com/watch/*"
         ],
