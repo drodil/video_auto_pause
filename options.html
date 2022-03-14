@@ -5,8 +5,15 @@
     <title>Youtube Auto Pause options</title>
     <style>
         @charset "UTF-8";
-        @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
         @import 'https://fonts.googleapis.com/css?family=Nunito:300,400,700';
+
+		@font-face {
+		  font-family: 'Nunito';
+		  font-style: normal;
+		  font-weight: 300;
+		  src: url(Nunito.woff2) format('woff2');
+		  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+		}
 
         body {
             padding: 20px;
@@ -21,35 +28,6 @@
             display: block;
             margin-bottom: 10px;
             font-size: 1.2em;
-        }
-
-        label input[type="checkbox"]+.label-text:hover:before {
-            color: #fe4365;
-        }
-
-        label input[type="checkbox"] {
-            display: none;
-        }
-
-        label input[type="checkbox"]+.label-text:before {
-            content: "\f096";
-            color: #dddfe6;
-            font-family: "fontAwesome";
-            line-height: 1;
-            width: 1em;
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        label input[type="checkbox"]:checked+.label-text:before {
-            content: "\f14a";
-            color: #fe4365;
-            animation: tick 150ms ease-in;
-        }
-
-        label input[type="checkbox"]:disabled+.label-text:before {
-            content: "\f0c8";
-            color: #dddfe6;
         }
 
         @keyframes tick {
@@ -97,6 +75,8 @@
         <label><input type="checkbox" id="scrollpause"><span class="label-text">Enable auto pause when out of viewport</span></label>
         <div id="status"></div>
         <button id="save">Save</button>
+		<h4>Hotkeys</h4>
+		<p>Ctrl/Cmd+Shift+P - Disable/enable extension</p>
     </div>
     <script src="options.js"></script>
 </body>

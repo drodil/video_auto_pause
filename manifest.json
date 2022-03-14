@@ -1,13 +1,18 @@
 {
     "name": "Youtube Auto Pause",
-    "version": "1.3.5",
+    "version": "1.3.6",
     "description": "Stops Youtube on tab unfocus and continues on focus",
     "permissions": [
         "tabs",
         "storage",
+		"activeTab",
+		"scripting"
+	],
+	"host_permissions": [
         "https://www.youtube.com/*",
         "https://vimeo.com/*",
-        "https://www.netflix.com/watch/*"
+        "https://www.netflix.com/watch/*",
+        "https://www.youtubekids.com/*"
     ],
     "homepage_url": "https://github.com/drodil/youtube_auto_pause",
     "options_ui": {
@@ -31,7 +36,7 @@
         "64": "images/icon_64.png",
         "128": "images/icon_128.png"
     },
-    "browser_action": {
+    "action": {
         "default_popup": "options.html",
         "default_icon": {
             "16": "images/icon_16.png",
@@ -41,8 +46,27 @@
         }
     },
     "background": {
-        "scripts": ["yt.js"],
-        "persistent": false
+        "service_worker": "yt.js"
     },
-    "manifest_version": 2
+	"externally_connectable": {
+		"ids": [
+			"*"
+		],
+		"matches": [
+            "https://www.youtube.com/*",
+            "https://www.youtubekids.com/*",
+            "https://vimeo.com/*",
+            "https://www.netflix.com/watch/*"
+		]
+	},
+	"commands": {
+		"toggle-auto-pause": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+P",
+				"mac": "Command+Shift+P"
+			},
+			"description": "Toggle auto pause functionality on or off"
+		}
+	},
+    "manifest_version": 3
 }
