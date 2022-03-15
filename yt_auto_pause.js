@@ -1,10 +1,16 @@
+function sendMessage(message) {
+  if (!chrome.runtime.lastError) {
+    chrome.runtime.sendMessage(message, function () {
+      void chrome.runtime.lastError;
+    });
+  }
+}
+
 document.addEventListener(
   "visibilitychange",
   function () {
     if (document.hidden !== undefined) {
-      chrome.runtime.sendMessage({ minimized: document.hidden }, function () {
-        void chrome.runtime.lastError;
-      });
+      sendMessage({ minimized: document.hidden });
     }
   },
   false
@@ -13,17 +19,20 @@ document.addEventListener(
 var intersection_observer = new IntersectionObserver(
   function (entries) {
     if (entries[0].isIntersecting === true) {
-      chrome.runtime.sendMessage({ visible: true }, function () {
-        void chrome.runtime.lastError;
-      });
+      sendMessage({ visible: true });
     } else {
-      chrome.runtime.sendMessage({ visible: false }, function () {
-        void chrome.runtime.lastError;
-      });
+      sendMessage({ visible: false });
     }
   },
   { threshold: [0] }
 );
+
+window.addEventListener("load", function (e) {
+  videoElements = document.querySelectorAll("video");
+  for (i = 0; i < videoElements.length; i++) {
+    intersection_observer.observe(videoElements[i]);
+  }
+});
 
 chrome.runtime.onMessage.addListener(async function (
   request,
