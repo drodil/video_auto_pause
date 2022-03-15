@@ -30,22 +30,36 @@ function refresh_settings() {
   );
 }
 
+function sendMessage(tab, message) {
+  if (!chrome.runtime.lastError) {
+    chrome.tabs.sendMessage(tab.id, message, {}, function () {
+      void chrome.runtime.lastError;
+    });
+  }
+}
+
 function stop(tab) {
-  chrome.tabs.sendMessage(tab.id, { action: "stop" }, {}, function () {
-    void chrome.runtime.lastError;
-  });
+  sendMessage(tab, { action: "stop" });
 }
 
 function resume(tab) {
-  chrome.tabs.sendMessage(tab.id, { action: "resume" }, {}, function () {
-    void chrome.runtime.lastError;
-  });
+  sendMessage(tab, { action: "resume" });
 }
 
 function toggle(tab) {
-  chrome.tabs.sendMessage(tab.id, { action: "toggle" }, {}, function () {
-    void chrome.runtime.lastError;
-  });
+  sendMessage(tab, { action: "toggle" });
+}
+
+function mute(tab) {
+  sendMessage(tab, { action: "mute" });
+}
+
+function unmute(tab) {
+  sendMessage(tab, { action: "unmute" });
+}
+
+function toggle_mute(tab) {
+  sendMessage(tab, { action: "toggle_mute" });
 }
 
 function handle_tabs(tabId) {
@@ -130,32 +144,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   if ("minimized" in request) {
     if (request.minimized && autopause) {
-      chrome.tabs.get(sender.tab.id, function (tab) {
-        if (!chrome.runtime.lastError) {
-          stop(sender.tab);
-        }
-      });
+      stop(sender.tab);
     } else if (!request.minimized && autoresume) {
-      chrome.tabs.get(sender.tab.id, function (tab) {
-        if (!chrome.runtime.lastError) {
-          resume(sender.tab);
-        }
-      });
+      resume(sender.tab);
     }
   }
   if ("visible" in request && scrollpause) {
     if (!request.visible) {
-      chrome.tabs.get(sender.tab.id, function (tab) {
-        if (!chrome.runtime.lastError) {
-          stop(sender.tab);
-        }
-      });
+      stop(sender.tab);
     } else {
-      chrome.tabs.get(sender.tab.id, function (tab) {
-        if (!chrome.runtime.lastError) {
-          resume(sender.tab);
-        }
-      });
+      resume(sender.tab);
     }
   }
 
@@ -172,6 +170,11 @@ chrome.commands.onCommand.addListener(async (command) => {
     let tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle(tabs[i]);
+    }
+  } else if (command === "toggle_mute") {
+    let tabs = await chrome.tabs.query({ currentWindow: true });
+    for (let i = 0; i < tabs.length; i++) {
+      toggle_mute(tabs[i]);
     }
   }
 });

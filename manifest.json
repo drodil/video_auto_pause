@@ -70,9 +70,16 @@
 		"toggle-play": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+Space",
-				"mac": "Ctrl+Shift+Space"
+				"mac": "Command+Shift+Space"
 			},
 			"description": "Toggle play/pause of current videos in browser"
+		},
+		"toggle_mute": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+O",
+				"mac": "Command+Shift+O"
+			},
+			"description": "Toggle mute of current videos in browser"
 		}
 	},
     "manifest_version": 3

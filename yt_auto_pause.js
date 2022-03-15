@@ -10,7 +10,7 @@ document.addEventListener(
   false
 );
 
-var observer = new IntersectionObserver(
+var intersection_observer = new IntersectionObserver(
   function (entries) {
     if (entries[0].isIntersecting === true) {
       chrome.runtime.sendMessage({ visible: true }, function () {
@@ -25,14 +25,11 @@ var observer = new IntersectionObserver(
   { threshold: [0] }
 );
 
-window.addEventListener("load", function (e) {
-  videoElements = document.querySelectorAll("video");
-  for (i = 0; i < videoElements.length; i++) {
-    observer.observe(videoElements[i]);
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
   if (!("action" in request)) {
     return false;
   }
@@ -42,10 +39,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action === "stop" && !videoElements[i].paused) {
       videoElements[i].pause();
     } else if (request.action === "resume" && videoElements[i].paused) {
-      videoElements[i].play();
+      await videoElements[i].play();
+    } else if (request.action === "toggle_mute") {
+      videoElements[i].muted = !videoElements[i].muted;
+    } else if (request.action === "mute") {
+      videoElements[i].muted = true;
+    } else if (request.action === "unmute") {
+      videoElements[i].muted = false;
     } else if (request.action === "toggle") {
       if (videoElements[i].paused) {
-        videoElements[i].play();
+        await videoElements[i].play();
       } else {
         videoElements[i].pause();
       }
