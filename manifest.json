@@ -60,7 +60,7 @@
 		]
 	},
 	"commands": {
-		"toggle-auto-pause": {
+		"toggle-extension": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+P",
 				"mac": "Command+Shift+P"

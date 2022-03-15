@@ -1,29 +1,34 @@
 function save_options() {
-  console.log("SAVE OPTIONS");
   var autopause = document.getElementById("autopause").checked;
   var autoresume = document.getElementById("autoresume").checked;
   var scrollpause = document.getElementById("scrollpause").checked;
-  console.log(autopause);
+  var disabled = document.getElementById("disabled").checked;
   chrome.storage.sync.set(
-    { autopause: autopause, autoresume: autoresume, scrollpause: scrollpause },
+    {
+      autopause: autopause,
+      autoresume: autoresume,
+      scrollpause: scrollpause,
+      disabled: disabled,
+    },
     function () {
       var status = document.getElementById("status");
       status.textContent = "Saved!";
       setTimeout(function () {
         status.textContent = "";
-      }, 1000);
+      }, 1500);
     }
   );
 }
 
 function restore_options() {
   chrome.storage.sync.get(
-    { autopause: true, autoresume: true, scrollpause: false, toggled: false },
+    { autopause: true, autoresume: true, scrollpause: false, disabled: false },
     function (items) {
       document.getElementById("autopause").checked = items.autopause;
       document.getElementById("autoresume").checked = items.autoresume;
       document.getElementById("scrollpause").checked = items.scrollpause;
-      if (items.toggled) {
+      document.getElementById("disabled").checked = items.disabled;
+      if (items.disabled) {
         document.getElementById("autopause").disabled = true;
         document.getElementById("autoresume").disabled = true;
         document.getElementById("scrollpause").disabled = true;

@@ -2,12 +2,12 @@ var previous_tab = 0;
 var autopause = true;
 var autoresume = true;
 var scrollpause = false;
-var toggled = false;
+var disabled = false;
 refresh_settings();
 
 function refresh_settings() {
   chrome.storage.sync.get(
-    ["autopause", "autoresume", "scrollpause", "toggled"],
+    ["autopause", "autoresume", "scrollpause", "disabled"],
     function (result) {
       if ("autopause" in result) {
         autopause = result.autopause;
@@ -18,11 +18,11 @@ function refresh_settings() {
       if ("scrollpause" in result) {
         scrollpause = result.scrollpause;
       }
-      if ("toggled" in result && result.toggled === true) {
+      if ("disabled" in result && result.disabled === true) {
         autopause = false;
         autoresume = false;
         scrollpause = false;
-        toggled = result.toggled;
+        disabled = result.disabled;
       }
     }
   );
@@ -136,9 +136,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 chrome.commands.onCommand.addListener((command) => {
-  if (command === "toggle-auto-pause") {
-    toggled = !toggled;
-    chrome.storage.sync.set({ toggled: toggled });
+  if (command === "toggle-extension") {
+    disabled = !disabled;
+    chrome.storage.sync.set({ disabled: disabled });
     refresh_settings();
   }
 });
