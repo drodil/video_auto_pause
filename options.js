@@ -28,15 +28,10 @@ function restore_options() {
       document.getElementById("autoresume").checked = items.autoresume;
       document.getElementById("scrollpause").checked = items.scrollpause;
       document.getElementById("disabled").checked = items.disabled;
-      if (items.disabled) {
-        document.getElementById("autopause").disabled = true;
-        document.getElementById("autoresume").disabled = true;
-        document.getElementById("scrollpause").disabled = true;
-      } else {
-        document.getElementById("autopause").disabled = false;
-        document.getElementById("autoresume").disabled = false;
-        document.getElementById("scrollpause").disabled = false;
-      }
+
+      document.getElementById("autopause").disabled = items.disabled;
+      document.getElementById("autoresume").disabled = items.disabled;
+      document.getElementById("scrollpause").disabled = items.disabled;
     }
   );
 }

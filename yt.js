@@ -20,11 +20,11 @@ function refresh_settings() {
       }
       if ("disabled" in result) {
         disabled = result.disabled;
-        if (disabled === true) {
-          autopause = false;
-          autoresume = false;
-          scrollpause = false;
-        }
+      }
+      if (disabled === true) {
+        autopause = false;
+        autoresume = false;
+        scrollpause = false;
       }
     }
   );
@@ -73,16 +73,13 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
   }
 
   if ("disabled" in changes) {
+    refresh_settings();
     disabled = changes.disabled.newValue;
     let tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
-      if (disabled) {
+      if (disabled === true) {
         resume(tabs[i]);
-        autopause = false;
-        autoresume = false;
-        scrollpause = false;
       } else {
-        refresh_settings();
         if (!tabs[i].active && autopause) {
           stop(tabs[i]);
         } else if (tabs[i].active && autoresume) {
@@ -162,8 +159,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 chrome.commands.onCommand.addListener((command) => {
   if (command === "toggle-extension") {
-    newDisabled = !disabled;
-    chrome.storage.sync.set({ disabled: newDisabled });
+    disabled = !disabled;
+    chrome.storage.sync.set({ disabled: disabled });
+    refresh_settings();
   }
 });
 
