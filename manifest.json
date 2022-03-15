@@ -66,6 +66,13 @@
 				"mac": "Command+Shift+P"
 			},
 			"description": "Toggle auto pause functionality on or off"
+		},
+		"toggle-play": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Space",
+				"mac": "Ctrl+Shift+Space"
+			},
+			"description": "Toggle play/pause of current videos in browser"
 		}
 	},
     "manifest_version": 3

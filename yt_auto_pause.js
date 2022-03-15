@@ -36,7 +36,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (!("action" in request)) {
     return false;
   }
-
   var videoElements = document.querySelectorAll("video");
 
   for (i = 0; i < videoElements.length; i++) {
@@ -44,6 +43,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       videoElements[i].pause();
     } else if (request.action === "resume" && videoElements[i].paused) {
       videoElements[i].play();
+    } else if (request.action === "toggle") {
+      if (videoElements[i].paused) {
+        videoElements[i].play();
+      } else {
+        videoElements[i].pause();
+      }
     }
   }
   sendResponse({});

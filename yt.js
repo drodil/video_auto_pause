@@ -42,6 +42,12 @@ function resume(tab) {
   });
 }
 
+function toggle(tab) {
+  chrome.tabs.sendMessage(tab.id, { action: "toggle" }, {}, function () {
+    void chrome.runtime.lastError;
+  });
+}
+
 function handle_tabs(tabId) {
   if (autopause && previous_tab != 0) {
     chrome.tabs.get(previous_tab, function (prev) {
@@ -157,11 +163,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   return true;
 });
 
-chrome.commands.onCommand.addListener((command) => {
+chrome.commands.onCommand.addListener(async (command) => {
   if (command === "toggle-extension") {
     disabled = !disabled;
     chrome.storage.sync.set({ disabled: disabled });
     refresh_settings();
+  } else if (command === "toggle-play") {
+    let tabs = await chrome.tabs.query({ currentWindow: true });
+    for (let i = 0; i < tabs.length; i++) {
+      toggle(tabs[i]);
+    }
   }
 });
 
