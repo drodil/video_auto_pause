@@ -9,10 +9,10 @@
 		"scripting"
 	],
 	"host_permissions": [
-        "https://www.youtube.com/*",
-        "https://vimeo.com/*",
-        "https://www.netflix.com/watch/*",
-        "https://www.youtubekids.com/*"
+        "https://*.youtube.com/*",
+        "https://*.vimeo.com/*",
+        "https://*.netflix.com/watch/*",
+        "https://*.youtubekids.com/*"
     ],
     "homepage_url": "https://github.com/drodil/youtube_auto_pause",
     "options_ui": {
@@ -21,10 +21,10 @@
     },
     "content_scripts": [{
         "matches": [
-            "https://www.youtube.com/*",
-            "https://www.youtubekids.com/*",
-            "https://vimeo.com/*",
-            "https://www.netflix.com/watch/*"
+            "https://*.youtube.com/*",
+            "https://*.youtubekids.com/*",
+            "https://*.vimeo.com/*",
+            "https://*.netflix.com/watch/*"
         ],
         "run_at": "document_end",
         "all_frames": true,
@@ -53,10 +53,10 @@
 			"*"
 		],
 		"matches": [
-            "https://www.youtube.com/*",
-            "https://www.youtubekids.com/*",
-            "https://vimeo.com/*",
-            "https://www.netflix.com/watch/*"
+            "https://*.youtube.com/*",
+            "https://*.youtubekids.com/*",
+            "https://*.vimeo.com/*",
+            "https://*.netflix.com/watch/*"
 		]
 	},
 	"commands": {

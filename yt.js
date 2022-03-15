@@ -18,11 +18,13 @@ function refresh_settings() {
       if ("scrollpause" in result) {
         scrollpause = result.scrollpause;
       }
-      if ("disabled" in result && result.disabled === true) {
-        autopause = false;
-        autoresume = false;
-        scrollpause = false;
+      if ("disabled" in result) {
         disabled = result.disabled;
+        if (disabled === true) {
+          autopause = false;
+          autoresume = false;
+          scrollpause = false;
+        }
       }
     }
   );
@@ -54,15 +56,17 @@ function handle_tabs(tabId) {
   });
 }
 
-chrome.storage.onChanged.addListener(function (changes, namespace) {
-  if ("autoresume" in changes) {
-    autoresume = changes.autoresume.newValue;
-  }
-  if ("autopause" in changes) {
-    autopause = changes.autopause.newValue;
-  }
-  if ("scrollpause" in changes) {
-    scrollpause = changes.scrollpause.newValue;
+chrome.storage.onChanged.addListener(async function (changes, namespace) {
+  refresh_settings();
+  if ("disabled" in changes) {
+    let tabs = await chrome.tabs.query({ currentWindow: true });
+    for (let i = 0; i < tabs.length; i++) {
+      if (disabled) {
+        resume(tabs[i]);
+      } else if (!tabs[i].active) {
+        stop(tabs[i]);
+      }
+    }
   }
 });
 
@@ -139,19 +143,13 @@ chrome.commands.onCommand.addListener((command) => {
   if (command === "toggle-extension") {
     disabled = !disabled;
     chrome.storage.sync.set({ disabled: disabled });
-    refresh_settings();
   }
 });
-
-async function getTabs() {
-  let queryOptions = { currentWindow: true };
-  return await chrome.tabs.query(queryOptions);
-}
 
 chrome.runtime.onInstalled.addListener(installScript);
 
 async function installScript(details) {
-  let tabs = await getTabs();
+  let tabs = await chrome.tabs.query({ currentWindow: true });
   let contentFiles = chrome.runtime.getManifest().content_scripts[0].js;
   let matches = chrome.runtime.getManifest().content_scripts[0].matches;
   for (let index = 0; index < tabs.length; index++) {
