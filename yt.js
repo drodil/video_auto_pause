@@ -3,6 +3,8 @@ var autopause = true;
 var autoresume = true;
 var scrollpause = false;
 var disabled = false;
+
+refresh_settings();
 function refresh_settings() {
   chrome.storage.sync.get(
     ["autopause", "autoresume", "scrollpause", "disabled"],
@@ -29,11 +31,15 @@ function refresh_settings() {
 }
 
 function stop(tab) {
-  chrome.tabs.sendMessage(tab.id, { action: "stop" });
+  chrome.tabs.sendMessage(tab.id, { action: "stop" }, {}, function () {
+    void chrome.runtime.lastError;
+  });
 }
 
 function resume(tab) {
-  chrome.tabs.sendMessage(tab.id, { action: "resume" });
+  chrome.tabs.sendMessage(tab.id, { action: "resume" }, {}, function () {
+    void chrome.runtime.lastError;
+  });
 }
 
 function handle_tabs(tabId) {
