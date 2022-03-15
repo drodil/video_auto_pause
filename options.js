@@ -40,4 +40,7 @@ document.addEventListener("DOMContentLoaded", restore_options);
 chrome.storage.onChanged.addListener(function (_changes, _namespace) {
   restore_options();
 });
-document.getElementById("save").addEventListener("click", save_options);
+document.getElementById("autopause").addEventListener("change", save_options);
+document.getElementById("autoresume").addEventListener("change", save_options);
+document.getElementById("scrollpause").addEventListener("change", save_options);
+document.getElementById("disabled").addEventListener("change", save_options);

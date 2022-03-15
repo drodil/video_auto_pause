@@ -100,10 +100,8 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
       if (disabled === true) {
         resume(tabs[i]);
       } else {
-        if (!tabs[i].active && autopause) {
+        if (!tabs[i].active) {
           stop(tabs[i]);
-        } else if (tabs[i].active && autoresume) {
-          resume(tabs[i]);
         }
       }
     }
