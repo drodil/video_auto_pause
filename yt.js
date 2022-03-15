@@ -3,8 +3,6 @@ var autopause = true;
 var autoresume = true;
 var scrollpause = false;
 var disabled = false;
-refresh_settings();
-
 function refresh_settings() {
   chrome.storage.sync.get(
     ["autopause", "autoresume", "scrollpause", "disabled"],
@@ -39,7 +37,6 @@ function resume(tab) {
 }
 
 function handle_tabs(tabId) {
-  refresh_settings();
   if (autopause && previous_tab != 0) {
     chrome.tabs.get(previous_tab, function (prev) {
       if (!chrome.runtime.lastError) {
@@ -57,14 +54,34 @@ function handle_tabs(tabId) {
 }
 
 chrome.storage.onChanged.addListener(async function (changes, namespace) {
-  refresh_settings();
+  if ("autopause" in changes) {
+    autopause = changes.autopause.newValue;
+  }
+
+  if ("autoresume" in changes) {
+    autoresume = changes.autoresume.newValue;
+  }
+
+  if ("scrollpause" in changes) {
+    scrollpause = changes.scrollpause.newValue;
+  }
+
   if ("disabled" in changes) {
+    disabled = changes.disabled.newValue;
     let tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       if (disabled) {
         resume(tabs[i]);
-      } else if (!tabs[i].active && autopause) {
-        stop(tabs[i]);
+        autopause = false;
+        autoresume = false;
+        scrollpause = false;
+      } else {
+        refresh_settings();
+        if (!tabs[i].active && autopause) {
+          stop(tabs[i]);
+        } else if (tabs[i].active && autoresume) {
+          resume(tabs[i]);
+        }
       }
     }
   }
@@ -85,7 +102,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 chrome.windows.onFocusChanged.addListener(function (info) {
-  refresh_settings();
   if (previous_tab != 0) {
     chrome.tabs.get(previous_tab, function (tab) {
       if (tab === undefined || chrome.runtime.lastError) {
@@ -103,7 +119,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     return true;
   }
 
-  refresh_settings();
   if ("minimized" in request) {
     if (request.minimized && autopause) {
       chrome.tabs.get(sender.tab.id, function (tab) {
@@ -141,9 +156,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 chrome.commands.onCommand.addListener((command) => {
   if (command === "toggle-extension") {
-    disabled = !disabled;
-    chrome.storage.sync.set({ disabled: disabled });
-    refresh_settings();
+    newDisabled = !disabled;
+    chrome.storage.sync.set({ disabled: newDisabled });
   }
 });
 
