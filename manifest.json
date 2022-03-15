@@ -28,7 +28,7 @@
         ],
         "run_at": "document_end",
         "all_frames": true,
-        "js": ["content.js"]
+        "js": ["yt_auto_pause.js"]
     }],
     "icons": {
         "16": "images/icon_16.png",
