@@ -63,7 +63,7 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
     for (let i = 0; i < tabs.length; i++) {
       if (disabled) {
         resume(tabs[i]);
-      } else if (!tabs[i].active) {
+      } else if (!tabs[i].active && autopause) {
         stop(tabs[i]);
       }
     }
@@ -143,6 +143,7 @@ chrome.commands.onCommand.addListener((command) => {
   if (command === "toggle-extension") {
     disabled = !disabled;
     chrome.storage.sync.set({ disabled: disabled });
+    refresh_settings();
   }
 });
 

@@ -25,12 +25,12 @@ var observer = new IntersectionObserver(
   { threshold: [0] }
 );
 
-document.onload = function (e) {
-  videoElements = query.querySelectorAll("video");
+window.addEventListener("load", function (e) {
+  videoElements = document.querySelectorAll("video");
   for (i = 0; i < videoElements.length; i++) {
     observer.observe(videoElements[i]);
   }
-};
+});
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (!("action" in request)) {
