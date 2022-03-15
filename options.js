@@ -10,13 +10,7 @@ function save_options() {
       scrollpause: scrollpause,
       disabled: disabled,
     },
-    function () {
-      var status = document.getElementById("status");
-      status.textContent = "Saved!";
-      setTimeout(function () {
-        status.textContent = "";
-      }, 1500);
-    }
+    function () {}
   );
 }
 
