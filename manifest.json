@@ -64,7 +64,7 @@
 		"toggle-extension": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+K",
-				"mac": "Command+Shift+L"
+				"mac": "Command+Shift+K"
 			},
 			"description": "Toggle auto pause/resume"
 		},
