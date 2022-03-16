@@ -63,8 +63,8 @@
 	"commands": {
 		"toggle-extension": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+T",
-				"mac": "Command+Shift+T"
+				"default": "Ctrl+Shift+K",
+				"mac": "Command+Shift+L"
 			},
 			"description": "Toggle auto pause/resume"
 		},
@@ -77,8 +77,8 @@
 		},
 		"toggle_mute": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+M",
-				"mac": "Command+Shift+M"
+				"default": "Ctrl+Shift+L",
+				"mac": "Command+Shift+L"
 			},
 			"description": "Toggle mute"
 		}
