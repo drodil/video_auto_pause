@@ -49,6 +49,8 @@ function restore_options() {
       document.getElementById("scrollpause").disabled = items.disabled;
       document.getElementById("lockpause").disabled = items.disabled;
       document.getElementById("lockresume").disabled = items.disabled;
+      document.getElementById("focuspause").disabled = items.disabled;
+      document.getElementById("focusresume").disabled = items.disabled;
     }
   );
 }
