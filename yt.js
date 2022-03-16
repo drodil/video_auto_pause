@@ -170,7 +170,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 chrome.windows.onFocusChanged.addListener(async function (window) {
-  console.log(window, previous_window);
   if (window !== previous_window) {
     if (
       focuspause &&
