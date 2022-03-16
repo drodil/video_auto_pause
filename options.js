@@ -30,6 +30,21 @@ function restore_options() {
   );
 }
 
+chrome.commands.getAll(function (commands) {
+  var hotkeysDiv = document.getElementById("hotkeys");
+  for (let i = 0; i < commands.length; i++) {
+    var tag = document.createElement("p");
+    var text = document.createTextNode(
+      commands[i].shortcut + " - " + commands[i].description
+    );
+    tag.appendChild(text);
+    hotkeysDiv.appendChild(tag);
+  }
+});
+
+var version = document.getElementById("version");
+version.innerHTML = "v" + chrome.runtime.getManifest().version;
+
 document.addEventListener("DOMContentLoaded", restore_options);
 chrome.storage.onChanged.addListener(function (_changes, _namespace) {
   restore_options();

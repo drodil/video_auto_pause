@@ -65,21 +65,21 @@
 				"default": "Ctrl+Shift+P",
 				"mac": "Command+Shift+P"
 			},
-			"description": "Toggle auto pause functionality on or off"
+			"description": "Toggle auto pause/resume"
 		},
 		"toggle-play": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+Space",
 				"mac": "Command+Shift+Space"
 			},
-			"description": "Toggle play/pause of current videos in browser"
+			"description": "Toggle play/pause"
 		},
 		"toggle_mute": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+O",
 				"mac": "Command+Shift+O"
 			},
-			"description": "Toggle mute of current videos in browser"
+			"description": "Toggle mute"
 		}
 	},
     "manifest_version": 3

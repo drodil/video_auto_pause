@@ -5,45 +5,81 @@
     <title>Youtube Auto Pause options</title>
     <style>
         @charset "UTF-8";
-        @import 'https://fonts.googleapis.com/css?family=Nunito:400';
+        @import 'https://fonts.googleapis.com/css?family=Nunito:300';
 
-        body {
-            padding: 10px;
-            padding-top: 0px;
+		body {
             font-family: "Nunito", sans-serif;
-            font-weight: 400;
+            font-weight: 300;
+			padding: 0;
+			margin: 0;
+		}
+
+        .container {
+			padding: 10px;
         }
 
         label {
             cursor: pointer;
             color: #383A3F;
             display: block;
-            margin-bottom: 10px;
             font-size: 1.2em;
         }
 
+		p, label {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
 		h2 {
 			font-size: 20px;
+			text-align: center;
+		}
+
+		h4, hr, h2 {
+			margin: 0;
 		}
 
 		#logo {
 			margin-right: 6px;
 			margin-left: 3px;
 		}
+
+		#version {
+			float: right;
+		}
+
+		a, a:hover, a:focus, a:active {
+      		text-decoration: underline;
+      		color: inherit;
+ 		}
     </style>
 </head>
 
 <body>
-    <div style="width: 300px">
-		<h2><img src="images/icon_16.png" id="logo"></img>Youtube Auto Pause</h2>
-        <label><input type="checkbox" id="autopause"><span class="label-text">Enable auto pause on tab unfocus</span></label>
-        <label><input type="checkbox" id="autoresume"><span class="label-text">Enable auto resume on tab focus</span></label>
-        <label><input type="checkbox" id="scrollpause"><span class="label-text">Enable auto pause when out of viewport</span></label>
-        <label><input type="checkbox" id="disabled"><span class="label-text">Disable auto pause/resume</span></label>
-		<h4>Hotkeys</h4>
-		<p>Ctrl/Cmd+Shift+P - Toggle auto pause/resume</p>
-		<p>Ctrl/Cmd+Shift+Space - Toggle play/pause<p>
-		<p>Ctrl/Cmd+Shift+O - Toggle mute</p>
+    <div style="width: 350px">
+		<div class="container">
+			<h2><img src="images/icon_16.png" id="logo"></img>Youtube Auto Pause</h2>
+		</div>
+		<hr>
+		<div class="container">
+			<h4>Settings</h4>
+	        <label><input type="checkbox" id="autopause"><span class="label-text">Enable auto pause on tab unfocus</span></label>
+    	    <label><input type="checkbox" id="autoresume"><span class="label-text">Enable auto resume on tab focus</span></label>
+        	<label><input type="checkbox" id="scrollpause"><span class="label-text">Enable auto pause when out of viewport</span></label>
+        	<label><input type="checkbox" id="disabled"><span class="label-text">Disable auto pause/resume</span></label>
+		</div>
+		<hr>
+		<div class="container">
+			<h4>Hotkeys</h4>
+			<div id="hotkeys">
+			</div>
+			<p>You can configure hotkeys in the Extensions menu</p>
+		</div>
+		<hr>
+		<div class="container" style="padding-top: 0">
+			<p style="float: left;"><a href="https://github.com/drodil/youtube_auto_pause" target="_blank">Source</a></p>
+			<p id="version"></p>
+		</div>
 	</div>
     <script src="options.js"></script>
 </body>
