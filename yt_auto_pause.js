@@ -1,3 +1,4 @@
+// Send message to service worker
 function sendMessage(message) {
   if (!chrome.runtime.lastError) {
     chrome.runtime.sendMessage(message, function () {
@@ -6,6 +7,7 @@ function sendMessage(message) {
   }
 }
 
+// Listen to visibilitychange event of the page
 document.addEventListener(
   "visibilitychange",
   function () {
@@ -16,6 +18,8 @@ document.addEventListener(
   false
 );
 
+// Intersection observer for the video elements in page
+// can be used to determine when video goes out of viewport
 var intersection_observer = new IntersectionObserver(
   function (entries) {
     if (entries[0].isIntersecting === true) {
@@ -27,6 +31,7 @@ var intersection_observer = new IntersectionObserver(
   { threshold: [0] }
 );
 
+// Start observing video elements
 window.addEventListener("load", function (e) {
   videoElements = document.querySelectorAll("video");
   for (i = 0; i < videoElements.length; i++) {
@@ -34,6 +39,7 @@ window.addEventListener("load", function (e) {
   }
 });
 
+// Listen media commands from the service worker
 chrome.runtime.onMessage.addListener(async function (
   request,
   sender,

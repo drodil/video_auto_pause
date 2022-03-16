@@ -9,6 +9,7 @@ const options = {
   disabled: false,
 };
 
+// Saves options to chrome storage
 function save_options() {
   var storage = {};
   for (var option in options) {
@@ -17,6 +18,7 @@ function save_options() {
   chrome.storage.sync.set(storage, function () {});
 }
 
+// Restores options from chrome storage
 function restore_options() {
   chrome.storage.sync.get(options, function (items) {
     for (var option in items) {
@@ -32,6 +34,7 @@ function restore_options() {
   });
 }
 
+// Show shortcuts in the options window
 chrome.commands.getAll(function (commands) {
   var hotkeysDiv = document.getElementById("hotkeys");
   for (let i = 0; i < commands.length; i++) {
@@ -44,14 +47,17 @@ chrome.commands.getAll(function (commands) {
   }
 });
 
+// Show version in the options window
 var version = document.getElementById("version");
 version.innerHTML = "v" + chrome.runtime.getManifest().version;
 
+// Restore options on load and when they change in the store
 document.addEventListener("DOMContentLoaded", restore_options);
 chrome.storage.onChanged.addListener(function (_changes, _namespace) {
   restore_options();
 });
 
+// Listen to changes of options
 for (var option in options) {
   document.getElementById(option).addEventListener("change", save_options);
 }
