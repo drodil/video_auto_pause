@@ -1,8 +1,11 @@
 var previous_tab = 0;
+var previous_window = chrome.windows.WINDOW_ID_NONE;
 var autopause = true;
 var autoresume = true;
 var lockpause = true;
 var lockresume = true;
+var focuspause = true;
+var focusresume = true;
 var scrollpause = false;
 var disabled = false;
 var state = "active";
@@ -17,6 +20,8 @@ function refresh_settings() {
       "disabled",
       "lockpause",
       "lockresume",
+      "focuspause",
+      "focusresume",
     ],
     function (result) {
       if ("autopause" in result) {
@@ -31,6 +36,12 @@ function refresh_settings() {
       if ("lockresume" in result) {
         lockresume = result.lockresume;
       }
+      if ("focuspause" in result) {
+        focuspause = result.focuspause;
+      }
+      if ("focusresume" in result) {
+        focusresume = result.focusresume;
+      }
       if ("scrollpause" in result) {
         scrollpause = result.scrollpause;
       }
@@ -43,6 +54,8 @@ function refresh_settings() {
         scrollpause = false;
         lockpause = false;
         lockresume = false;
+        focuspause = false;
+        focusresume = false;
       }
     }
   );
@@ -118,6 +131,14 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
     lockresume = changes.lockresume.newValue;
   }
 
+  if ("focuspause" in changes) {
+    focuspause = changes.focuspause.newValue;
+  }
+
+  if ("focusresume" in changes) {
+    focusresume = changes.focusresume.newValue;
+  }
+
   if ("disabled" in changes) {
     refresh_settings();
     disabled = changes.disabled.newValue;
@@ -148,16 +169,31 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 
-chrome.windows.onFocusChanged.addListener(function (info) {
-  if (previous_tab != 0) {
-    chrome.tabs.get(previous_tab, function (tab) {
-      if (tab === undefined || chrome.runtime.lastError) {
-        return;
+chrome.windows.onFocusChanged.addListener(async function (window) {
+  console.log(window, previous_window);
+  if (window !== previous_window) {
+    if (
+      focuspause &&
+      state !== "locked" &&
+      previous_window !== chrome.windows.WINDOW_ID_NONE
+    ) {
+      let tabsStop = await chrome.tabs.query({ windowId: previous_window });
+      for (let i = 0; i < tabsStop.length; i++) {
+        stop(tabsStop[i]);
       }
-      if (!tab.active && autopause && state !== "locked") {
-        stop(tab);
+    }
+
+    if (focusresume && window !== chrome.windows.WINDOW_ID_NONE) {
+      let tabsResume = await chrome.tabs.query({ windowId: window });
+      for (let i = 0; i < tabsResume.length; i++) {
+        if (!tabsResume[i].active && autopause) {
+          continue;
+        }
+        resume(tabsResume[i]);
       }
-    });
+    }
+
+    previous_window = window;
   }
 });
 
@@ -211,6 +247,9 @@ chrome.idle.onStateChanged.addListener(async function (s) {
     if (state === "locked" && lockpause) {
       stop(tabs[i]);
     } else if (state !== "locked" && lockresume) {
+      if (!tabs[i].active && autopause) {
+        continue;
+      }
       resume(tabs[i]);
     }
   }
@@ -220,6 +259,8 @@ chrome.runtime.onInstalled.addListener(installScript);
 
 async function installScript(details) {
   let tabs = await chrome.tabs.query({ currentWindow: true });
+  let window = await chrome.windows.getCurrent();
+  previous_window = window.id;
   let contentFiles = chrome.runtime.getManifest().content_scripts[0].js;
   let matches = chrome.runtime.getManifest().content_scripts[0].matches;
   for (let index = 0; index < tabs.length; index++) {
