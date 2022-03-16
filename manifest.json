@@ -6,7 +6,8 @@
         "tabs",
         "storage",
 		"activeTab",
-		"scripting"
+		"scripting",
+		"idle"
 	],
 	"host_permissions": [
         "https://*.youtube.com/*",

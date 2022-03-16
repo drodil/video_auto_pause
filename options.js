@@ -3,12 +3,16 @@ function save_options() {
   var autoresume = document.getElementById("autoresume").checked;
   var scrollpause = document.getElementById("scrollpause").checked;
   var disabled = document.getElementById("disabled").checked;
+  var lockpause = document.getElementById("lockpause").checked;
+  var lockresume = document.getElementById("lockresume").checked;
   chrome.storage.sync.set(
     {
       autopause: autopause,
       autoresume: autoresume,
       scrollpause: scrollpause,
       disabled: disabled,
+      lockpause: lockpause,
+      lockresume: lockresume,
     },
     function () {}
   );
@@ -16,16 +20,27 @@ function save_options() {
 
 function restore_options() {
   chrome.storage.sync.get(
-    { autopause: true, autoresume: true, scrollpause: false, disabled: false },
+    {
+      autopause: true,
+      autoresume: true,
+      scrollpause: false,
+      disabled: false,
+      lockpause: true,
+      lockresume: true,
+    },
     function (items) {
       document.getElementById("autopause").checked = items.autopause;
       document.getElementById("autoresume").checked = items.autoresume;
       document.getElementById("scrollpause").checked = items.scrollpause;
+      document.getElementById("lockpause").checked = items.lockpause;
+      document.getElementById("lockresume").checked = items.lockresume;
       document.getElementById("disabled").checked = items.disabled;
 
       document.getElementById("autopause").disabled = items.disabled;
       document.getElementById("autoresume").disabled = items.disabled;
       document.getElementById("scrollpause").disabled = items.disabled;
+      document.getElementById("lockpause").disabled = items.disabled;
+      document.getElementById("lockresume").disabled = items.disabled;
     }
   );
 }
@@ -51,5 +66,7 @@ chrome.storage.onChanged.addListener(function (_changes, _namespace) {
 });
 document.getElementById("autopause").addEventListener("change", save_options);
 document.getElementById("autoresume").addEventListener("change", save_options);
+document.getElementById("lockpause").addEventListener("change", save_options);
+document.getElementById("lockresume").addEventListener("change", save_options);
 document.getElementById("scrollpause").addEventListener("change", save_options);
 document.getElementById("disabled").addEventListener("change", save_options);

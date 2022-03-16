@@ -1,19 +1,35 @@
 var previous_tab = 0;
 var autopause = true;
 var autoresume = true;
+var lockpause = true;
+var lockresume = true;
 var scrollpause = false;
 var disabled = false;
+var state = "active";
 
 refresh_settings();
 function refresh_settings() {
   chrome.storage.sync.get(
-    ["autopause", "autoresume", "scrollpause", "disabled"],
+    [
+      "autopause",
+      "autoresume",
+      "scrollpause",
+      "disabled",
+      "lockpause",
+      "lockresume",
+    ],
     function (result) {
       if ("autopause" in result) {
         autopause = result.autopause;
       }
       if ("autoresume" in result) {
         autoresume = result.autoresume;
+      }
+      if ("lockpause" in result) {
+        lockpause = result.lockpause;
+      }
+      if ("lockresume" in result) {
+        lockresume = result.lockresume;
       }
       if ("scrollpause" in result) {
         scrollpause = result.scrollpause;
@@ -25,6 +41,8 @@ function refresh_settings() {
         autopause = false;
         autoresume = false;
         scrollpause = false;
+        lockpause = false;
+        lockresume = false;
       }
     }
   );
@@ -92,6 +110,14 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
     scrollpause = changes.scrollpause.newValue;
   }
 
+  if ("lockpause" in changes) {
+    lockpause = changes.lockpause.newValue;
+  }
+
+  if ("lockresume" in changes) {
+    lockresume = changes.lockresume.newValue;
+  }
+
   if ("disabled" in changes) {
     refresh_settings();
     disabled = changes.disabled.newValue;
@@ -128,7 +154,7 @@ chrome.windows.onFocusChanged.addListener(function (info) {
       if (tab === undefined || chrome.runtime.lastError) {
         return;
       }
-      if (!tab.active && autopause) {
+      if (!tab.active && autopause && state !== "locked") {
         stop(tab);
       }
     });
@@ -173,6 +199,19 @@ chrome.commands.onCommand.addListener(async (command) => {
     let tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle_mute(tabs[i]);
+    }
+  }
+});
+
+chrome.idle.onStateChanged.addListener(async function (s) {
+  state = s;
+  let tabs = await chrome.tabs.query({ currentWindow: true });
+
+  for (let i = 0; i < tabs.length; i++) {
+    if (state === "locked" && lockpause) {
+      stop(tabs[i]);
+    } else if (state !== "locked" && lockresume) {
+      resume(tabs[i]);
     }
   }
 });
