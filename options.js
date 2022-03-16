@@ -1,58 +1,35 @@
+const options = {
+  autopause: true,
+  autoresume: true,
+  scrollpause: false,
+  lockpause: true,
+  lockresume: true,
+  focuspause: false,
+  focusresume: false,
+  disabled: false,
+};
+
 function save_options() {
-  var autopause = document.getElementById("autopause").checked;
-  var autoresume = document.getElementById("autoresume").checked;
-  var scrollpause = document.getElementById("scrollpause").checked;
-  var disabled = document.getElementById("disabled").checked;
-  var lockpause = document.getElementById("lockpause").checked;
-  var lockresume = document.getElementById("lockresume").checked;
-  var focuspause = document.getElementById("focuspause").checked;
-  var focusresume = document.getElementById("focusresume").checked;
-  chrome.storage.sync.set(
-    {
-      autopause: autopause,
-      autoresume: autoresume,
-      scrollpause: scrollpause,
-      disabled: disabled,
-      lockpause: lockpause,
-      lockresume: lockresume,
-      focuspause: focuspause,
-      focusresume: focusresume,
-    },
-    function () {}
-  );
+  var storage = {};
+  for (var option in options) {
+    storage[option] = document.getElementById(option).checked;
+  }
+  chrome.storage.sync.set(storage, function () {});
 }
 
 function restore_options() {
-  chrome.storage.sync.get(
-    {
-      autopause: true,
-      autoresume: true,
-      scrollpause: false,
-      disabled: false,
-      lockpause: true,
-      lockresume: true,
-      focuspause: true,
-      focusresume: true,
-    },
-    function (items) {
-      document.getElementById("autopause").checked = items.autopause;
-      document.getElementById("autoresume").checked = items.autoresume;
-      document.getElementById("scrollpause").checked = items.scrollpause;
-      document.getElementById("lockpause").checked = items.lockpause;
-      document.getElementById("lockresume").checked = items.lockresume;
-      document.getElementById("focuspause").checked = items.focuspause;
-      document.getElementById("focusresume").checked = items.focusresume;
-      document.getElementById("disabled").checked = items.disabled;
-
-      document.getElementById("autopause").disabled = items.disabled;
-      document.getElementById("autoresume").disabled = items.disabled;
-      document.getElementById("scrollpause").disabled = items.disabled;
-      document.getElementById("lockpause").disabled = items.disabled;
-      document.getElementById("lockresume").disabled = items.disabled;
-      document.getElementById("focuspause").disabled = items.disabled;
-      document.getElementById("focusresume").disabled = items.disabled;
+  chrome.storage.sync.get(options, function (items) {
+    for (var option in items) {
+      document.getElementById(option).checked = items[option];
     }
-  );
+
+    for (var option in options) {
+      document.getElementById(option).disabled = items.disabled;
+      if (items.disabled) {
+        document.getElementById("disabled").disabled = false;
+      }
+    }
+  });
 }
 
 chrome.commands.getAll(function (commands) {
@@ -74,11 +51,7 @@ document.addEventListener("DOMContentLoaded", restore_options);
 chrome.storage.onChanged.addListener(function (_changes, _namespace) {
   restore_options();
 });
-document.getElementById("autopause").addEventListener("change", save_options);
-document.getElementById("autoresume").addEventListener("change", save_options);
-document.getElementById("lockpause").addEventListener("change", save_options);
-document.getElementById("lockresume").addEventListener("change", save_options);
-document.getElementById("focuspause").addEventListener("change", save_options);
-document.getElementById("focusresume").addEventListener("change", save_options);
-document.getElementById("scrollpause").addEventListener("change", save_options);
-document.getElementById("disabled").addEventListener("change", save_options);
+
+for (var option in options) {
+  document.getElementById(option).addEventListener("change", save_options);
+}
