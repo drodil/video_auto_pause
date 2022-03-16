@@ -1,8 +1,12 @@
 # Youtube Auto Pause
 
-This is a Chrome extension that pauses Youtube videos when losing the tab focus by
-sending 'k' even to the player. Resumes the playback once the Youtube tab is
-back in focus.
+This is a Chrome extension that pauses Youtube videos when losing the tab/window focus by
+sending event to the player. Resumes the playback once the Youtube tab/window is back in focus.
+
+Also listens for computer lock events and when the video goes out of viewport
+(for example when reading comments below).
+
+Features some useful keyboard shortcuts to control videos in the window.
 
 ## Installing
 
@@ -27,7 +31,4 @@ enabled as this might conflict with other extensions.
 
 ## TODO
 
-* Support for other video services
-* Fix the "Extension context invalidated" error on first start
-    * Relates to the chrome.runtime.sendMessage being called before the
-      extension background script is loaded
+* Allow selecting video services
