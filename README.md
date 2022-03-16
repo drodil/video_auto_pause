@@ -1,10 +1,10 @@
 ![Youtube Auto Pause](yt_auto_pause.png)
 
 This is a Chrome extension that pauses Youtube videos when losing the tab/window focus by
-sending event to the player. Resumes the playback once the Youtube tab/window is back in focus.
+sending events to the player. Resumes the playback once the Youtube tab/window is back in focus.
 
 Also listens for computer lock events and when the video goes out of viewport
-(for example when reading comments below).
+(for example when reading comments below the video).
 
 Features some useful keyboard shortcuts to control videos in the window.
 
@@ -22,6 +22,14 @@ https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 4. Enable developer mode
 5. Click on "Load unpacked"
 6. Select the cloned folder
+
+## Supported services
+
+* Youtube (obviously)
+* Youtube Kids
+* Vimeo
+* Netflix
+* ... More to come, please contribute! (also see TODO)
 
 ## Contributing
 
