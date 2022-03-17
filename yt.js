@@ -171,8 +171,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 // Listener for keyboard shortcuts
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === "toggle-extension") {
-    disabled = !disabled;
-    chrome.storage.sync.set({ disabled: disabled });
+    options.disabled = !options.disabled;
+    chrome.storage.sync.set({ disabled: options.disabled });
     refresh_settings();
   } else if (command === "toggle-play") {
     let tabs = await chrome.tabs.query({ currentWindow: true });
