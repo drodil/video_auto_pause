@@ -1,10 +1,13 @@
 // Send message to service worker
 function sendMessage(message) {
-  if (!chrome.runtime.lastError) {
-    chrome.runtime.sendMessage(message, function () {
-      void chrome.runtime.lastError;
-    });
+  if (chrome.runtime.lastError) {
+    console.error(`Youtube Autopause error: ${chrome.runtime.lastError}`);
+    return;
   }
+
+  chrome.runtime.sendMessage(message, function () {
+    void chrome.runtime.lastError;
+  });
 }
 
 // Listen to visibilitychange event of the page
@@ -20,7 +23,7 @@ document.addEventListener(
 
 // Intersection observer for the video elements in page
 // can be used to determine when video goes out of viewport
-var intersection_observer = new IntersectionObserver(
+const intersection_observer = new IntersectionObserver(
   function (entries) {
     if (entries[0].isIntersecting === true) {
       sendMessage({ visible: true });
@@ -33,8 +36,8 @@ var intersection_observer = new IntersectionObserver(
 
 // Start observing video elements
 window.addEventListener("load", function (e) {
-  videoElements = document.querySelectorAll("video");
-  for (i = 0; i < videoElements.length; i++) {
+  let videoElements = document.querySelectorAll("video");
+  for (let i = 0; i < videoElements.length; i++) {
     intersection_observer.observe(videoElements[i]);
   }
 });
@@ -48,10 +51,10 @@ chrome.runtime.onMessage.addListener(async function (
   if (!("action" in request)) {
     return false;
   }
-  var videoElements = document.querySelectorAll("video");
+  const videoElements = document.querySelectorAll("video");
 
-  for (i = 0; i < videoElements.length; i++) {
-    if (request.action === "stop" && !videoElements[i].paused) {
+  for (let i = 0; i < videoElements.length; i++) {
+    if (request.action === "stop") {
       videoElements[i].pause();
     } else if (request.action === "resume" && videoElements[i].paused) {
       await videoElements[i].play();

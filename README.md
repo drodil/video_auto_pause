@@ -25,11 +25,11 @@ https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 
 ## Supported services
 
-* Youtube (obviously)
-* Youtube Kids
-* Vimeo
-* Netflix
-* ... More to come, please contribute! (also see TODO)
+- Youtube (obviously)
+- Youtube Kids
+- Vimeo
+- Netflix
+- ... More to come, please contribute! (also see TODO)
 
 ## Contributing
 
@@ -39,4 +39,4 @@ enabled as this might conflict with other extensions.
 
 ## TODO
 
-* Allow selecting video services
+- Allow selecting video services

@@ -1,10 +1,10 @@
 // Previous tab and window numbers
-var previous_tab = 0;
-var previous_window = chrome.windows.WINDOW_ID_NONE;
+let previous_tab = 0;
+let previous_window = chrome.windows.WINDOW_ID_NONE;
 // Computer state
-var state = "active";
+let state = "active";
 // Default options
-var options = {
+let options = {
   autopause: true,
   autoresume: true,
   scrollpause: false,
@@ -35,11 +35,14 @@ function refresh_settings() {
 
 // Functionality to send messages to tabs
 function sendMessage(tab, message) {
-  if (!chrome.runtime.lastError) {
-    chrome.tabs.sendMessage(tab.id, message, {}, function () {
-      void chrome.runtime.lastError;
-    });
+  if (chrome.runtime.lastError) {
+    console.error(`Youtube Autopause error: ${chrome.runtime.lastError}`);
+    return;
   }
+
+  chrome.tabs.sendMessage(tab.id, message, {}, function () {
+    void chrome.runtime.lastError;
+  });
 }
 
 // Media conrol functions
@@ -69,13 +72,13 @@ function toggle_mute(tab) {
 
 // Listen options changes
 chrome.storage.onChanged.addListener(async function (changes, namespace) {
-  for (var key in changes) {
+  for (const key in changes) {
     options[key] = changes[key].newValue;
   }
 
   if ("disabled" in changes) {
     refresh_settings();
-    let tabs = await chrome.tabs.query({ currentWindow: true });
+    const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       if (options.disabled === true) {
         resume(tabs[i]);
@@ -123,14 +126,14 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
       state !== "locked" &&
       previous_window !== chrome.windows.WINDOW_ID_NONE
     ) {
-      let tabsStop = await chrome.tabs.query({ windowId: previous_window });
+      const tabsStop = await chrome.tabs.query({ windowId: previous_window });
       for (let i = 0; i < tabsStop.length; i++) {
         stop(tabsStop[i]);
       }
     }
 
     if (options.focusresume && window !== chrome.windows.WINDOW_ID_NONE) {
-      let tabsResume = await chrome.tabs.query({ windowId: window });
+      const tabsResume = await chrome.tabs.query({ windowId: previous_window });
       for (let i = 0; i < tabsResume.length; i++) {
         if (!tabsResume[i].active && options.autopause) {
           continue;
@@ -175,12 +178,12 @@ chrome.commands.onCommand.addListener(async (command) => {
     chrome.storage.sync.set({ disabled: options.disabled });
     refresh_settings();
   } else if (command === "toggle-play") {
-    let tabs = await chrome.tabs.query({ currentWindow: true });
+    const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle(tabs[i]);
     }
   } else if (command === "toggle_mute") {
-    let tabs = await chrome.tabs.query({ currentWindow: true });
+    const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle_mute(tabs[i]);
     }
@@ -190,7 +193,7 @@ chrome.commands.onCommand.addListener(async (command) => {
 // Listener for computer idle/locked/active
 chrome.idle.onStateChanged.addListener(async function (s) {
   state = s;
-  let tabs = await chrome.tabs.query({ currentWindow: true });
+  const tabs = await chrome.tabs.query({ currentWindow: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (state === "locked" && options.lockpause) {
@@ -206,16 +209,18 @@ chrome.idle.onStateChanged.addListener(async function (s) {
 
 // Installer
 chrome.runtime.onInstalled.addListener(async function installScript(details) {
-  let tabs = await chrome.tabs.query({ currentWindow: true });
-  let window = await chrome.windows.getCurrent();
+  const tabs = await chrome.tabs.query({ currentWindow: true });
+  const window = await chrome.windows.getCurrent();
   previous_window = window.id;
-  let contentFiles = chrome.runtime.getManifest().content_scripts[0].js;
-  let matches = chrome.runtime.getManifest().content_scripts[0].matches;
+  const contentFiles = chrome.runtime.getManifest().content_scripts[0].js;
+  const matches = chrome.runtime.getManifest().content_scripts[0].matches;
 
   for (let index = 0; index < tabs.length; index++) {
     let execute = false;
     matches.forEach(function (match) {
-      let reg = match.replace(/[.+?^${}()|/[\]\\]/g, "\\$&").replace("*", ".*");
+      const reg = match
+        .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
+        .replace("*", ".*");
       if (new RegExp(reg).test(tabs[index].url) === true) {
         execute = true;
         return;
