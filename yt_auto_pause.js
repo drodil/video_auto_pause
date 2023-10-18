@@ -44,30 +44,34 @@ if (window.ytAutoPauseInjected !== true) {
     const videoElements = document.getElementsByTagName("video");
 
     for (let i = 0; i < videoElements.length; i++) {
-      if (request.action === "stop" && !manuallyPaused) {
-        automaticallyPaused = true;
-        videoElements[i].pause();
-      } else if (
-        request.action === "resume" &&
-        videoElements[i].paused &&
-        !manuallyPaused
-      ) {
-        automaticallyPaused = false;
-        await videoElements[i].play();
-      } else if (request.action === "toggle_mute") {
-        videoElements[i].muted = !videoElements[i].muted;
-      } else if (request.action === "mute") {
-        videoElements[i].muted = true;
-      } else if (request.action === "unmute") {
-        videoElements[i].muted = false;
-      } else if (request.action === "toggle") {
-        if (videoElements[i].paused && !manuallyPaused) {
-          await videoElements[i].play();
-          automaticallyPaused = false;
-        } else if (!manuallyPaused) {
-          videoElements[i].pause();
+      try {
+        if (request.action === "stop" && !manuallyPaused) {
           automaticallyPaused = true;
+          videoElements[i].pause();
+        } else if (
+          request.action === "resume" &&
+          videoElements[i].paused &&
+          !manuallyPaused
+        ) {
+          automaticallyPaused = false;
+          await videoElements[i].play();
+        } else if (request.action === "toggle_mute") {
+          videoElements[i].muted = !videoElements[i].muted;
+        } else if (request.action === "mute") {
+          videoElements[i].muted = true;
+        } else if (request.action === "unmute") {
+          videoElements[i].muted = false;
+        } else if (request.action === "toggle") {
+          if (videoElements[i].paused && !manuallyPaused) {
+            await videoElements[i].play();
+            automaticallyPaused = false;
+          } else if (!manuallyPaused) {
+            videoElements[i].pause();
+            automaticallyPaused = true;
+          }
         }
+      } catch (e) {
+        // NOOP
       }
     }
     sendResponse({});

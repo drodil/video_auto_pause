@@ -38,6 +38,12 @@ function restore_options() {
 chrome.commands.getAll(function (commands) {
   var hotkeysDiv = document.getElementById("hotkeys");
   for (let i = 0; i < commands.length; i++) {
+    if (
+      commands[i].shortcut.length === 0 ||
+      commands[i].description.length === 0
+    ) {
+      continue;
+    }
     var tag = document.createElement("p");
     var text = document.createTextNode(
       commands[i].shortcut + " - " + commands[i].description
