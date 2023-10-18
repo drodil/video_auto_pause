@@ -1,6 +1,7 @@
 // Previous tab and window numbers
 let previous_tab = 0;
 let previous_window = chrome.windows.WINDOW_ID_NONE;
+
 // Computer state
 let state = "active";
 // Default options
@@ -35,8 +36,14 @@ function refresh_settings() {
 
 // Functionality to send messages to tabs
 function sendMessage(tab, message) {
+  if (!chrome.runtime?.id) {
+    return;
+  }
+
   if (chrome.runtime.lastError) {
-    console.error(`Youtube Autopause error: ${chrome.runtime.lastError}`);
+    console.error(
+      `Youtube Autopause error: ${chrome.runtime.lastError.toString()}`
+    );
     return;
   }
 
@@ -98,6 +105,11 @@ chrome.tabs.onActivated.addListener(function (info) {
       stop(prev);
     });
   }
+
+  if (previous_tab === info.tab) {
+    return;
+  }
+
   previous_tab = info.tabId;
 
   chrome.tabs.get(info.tabId, function (tab) {
@@ -207,33 +219,25 @@ chrome.idle.onStateChanged.addListener(async function (s) {
   }
 });
 
-// Installer
-chrome.runtime.onInstalled.addListener(async function installScript(details) {
-  const tabs = await chrome.tabs.query({ currentWindow: true });
-  const window = await chrome.windows.getCurrent();
-  previous_window = window.id;
-  const contentFiles = chrome.runtime.getManifest().content_scripts[0].js;
-  const matches = chrome.runtime.getManifest().content_scripts[0].matches;
-
-  for (let index = 0; index < tabs.length; index++) {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  const matches = chrome.runtime.getManifest().externally_connectable.matches;
+  if (changeInfo.status === "complete") {
     let execute = false;
     matches.forEach(function (match) {
       const reg = match
         .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
         .replace("*", ".*");
-      if (new RegExp(reg).test(tabs[index].url) === true) {
+      if (new RegExp(reg).test(tab.url) === true) {
         execute = true;
         return;
       }
     });
 
     if (execute) {
-      try {
-        chrome.scripting.executeScript({
-          target: { tabId: tabs[index].id },
-          files: contentFiles,
-        });
-      } catch (e) {}
+      chrome.scripting.executeScript({
+        target: { tabId },
+        files: ["yt_auto_pause.js"],
+      });
     }
   }
 });

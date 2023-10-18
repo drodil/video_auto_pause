@@ -1,6 +1,6 @@
 {
   "name": "Youtube Auto Pause",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Stops Youtube on tab unfocus and continues on focus",
   "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "host_permissions": [
@@ -14,19 +14,6 @@
     "page": "options.html",
     "open_in_tab": false
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.youtube.com/*",
-        "https://*.youtubekids.com/*",
-        "https://*.vimeo.com/*",
-        "https://*.netflix.com/watch/*"
-      ],
-      "run_at": "document_end",
-      "all_frames": true,
-      "js": ["yt_auto_pause.js"]
-    }
-  ],
   "icons": {
     "16": "images/icon_16.png",
     "32": "images/icon_32.png",
