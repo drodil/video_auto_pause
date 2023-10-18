@@ -1,13 +1,17 @@
 {
   "name": "Youtube Auto Pause",
   "version": "1.5.1",
-  "description": "Stops Youtube on tab unfocus and continues on focus",
+  "description": "Stops Youtube (+ other video services) on tab unfocus and continues on focus",
   "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "host_permissions": [
     "https://*.youtube.com/*",
     "https://*.vimeo.com/*",
     "https://*.netflix.com/watch/*",
-    "https://*.youtubekids.com/*"
+    "https://*.youtubekids.com/*",
+    "https://*.primevideo.com/*",
+    "https://*.hbomax.com/*",
+    "https://*.disneyplus.com/*",
+    "https://areena.yle.fi/*"
   ],
   "homepage_url": "https://github.com/drodil/youtube_auto_pause",
   "options_ui": {
@@ -38,7 +42,11 @@
       "https://*.youtube.com/*",
       "https://*.youtubekids.com/*",
       "https://*.vimeo.com/*",
-      "https://*.netflix.com/watch/*"
+      "https://*.netflix.com/watch/*",
+      "https://*.primevideo.com/*",
+      "https://*.hbomax.com/*",
+      "https://*.disneyplus.com/*",
+      "https://areena.yle.fi/*"
     ]
   },
   "commands": {
