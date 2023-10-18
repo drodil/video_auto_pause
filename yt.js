@@ -16,6 +16,11 @@ let options = {
   disabled: false,
 };
 
+var hosts = chrome.runtime.getManifest().host_permissions;
+for (var host of hosts) {
+  options[host] = true;
+}
+
 // Initialize settings from storage
 refresh_settings();
 
@@ -30,13 +35,32 @@ function refresh_settings() {
       options.lockresume = false;
       options.focuspause = false;
       options.focusresume = false;
+      for (var host of hosts) {
+        options[host] = false;
+      }
     }
   });
 }
 
+function isEnabledForTab(tab) {
+  const optionKey = Object.keys(options).find((option) => {
+    if (!option.startsWith("http")) {
+      return false;
+    }
+    const reg = option
+      .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
+      .replace("*", ".*");
+    return new RegExp(reg).test(tab.url);
+  });
+  if (optionKey) {
+    return options[optionKey];
+  }
+  return true;
+}
+
 // Functionality to send messages to tabs
 function sendMessage(tab, message) {
-  if (!chrome.runtime?.id) {
+  if (!chrome.runtime?.id || !isEnabledForTab(tab)) {
     return;
   }
 
@@ -220,11 +244,10 @@ chrome.idle.onStateChanged.addListener(async function (s) {
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  const matches = chrome.runtime.getManifest().externally_connectable.matches;
   if (changeInfo.status === "complete") {
     let execute = false;
-    matches.forEach(function (match) {
-      const reg = match
+    hosts.forEach(function (host) {
+      const reg = host
         .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
         .replace("*", ".*");
       if (new RegExp(reg).test(tab.url) === true) {

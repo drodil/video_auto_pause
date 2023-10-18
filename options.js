@@ -9,12 +9,19 @@ const options = {
   disabled: false,
 };
 
+var hosts = chrome.runtime.getManifest().host_permissions;
+for (var host of hosts) {
+  options[host] = true;
+}
+
 // Saves options to chrome storage
 function save_options() {
   var storage = {};
+
   for (var option in options) {
     storage[option] = document.getElementById(option).checked;
   }
+
   chrome.storage.sync.set(storage, function () {});
 }
 
@@ -52,6 +59,22 @@ chrome.commands.getAll(function (commands) {
     hotkeysDiv.appendChild(tag);
   }
 });
+
+var hostsDiv = document.getElementById("hosts");
+
+for (host of hosts) {
+  var label = document.createElement("label");
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = host;
+  label.appendChild(checkbox);
+  var span = document.createElement("span");
+  span.className = "label-text";
+  span.innerHTML = host;
+  label.appendChild(span);
+  hostsDiv.appendChild(label);
+  checkbox.addEventListener("change", save_options);
+}
 
 // Show version in the options window
 var version = document.getElementById("version");
