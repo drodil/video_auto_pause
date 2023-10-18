@@ -11,9 +11,6 @@
     "https://*.primevideo.com/*",
     "https://*.hbomax.com/*",
     "https://*.disneyplus.com/*",
-    "https://www.dailymotion.com/video/*",
-    "https://playeur.com/v/*",
-    "https://d.tube/*",
     "https://*.twitch.tv/*"
   ],
   "homepage_url": "https://github.com/drodil/youtube_auto_pause",
@@ -49,9 +46,6 @@
       "https://*.primevideo.com/*",
       "https://*.hbomax.com/*",
       "https://*.disneyplus.com/*",
-      "https://www.dailymotion.com/video/*",
-      "https://playeur.com/v/*",
-      "https://d.tube/*",
       "https://*.twitch.tv/*"
     ]
   },
