@@ -219,7 +219,7 @@ chrome.idle.onStateChanged.addListener(async function (s) {
   }
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   const matches = chrome.runtime.getManifest().externally_connectable.matches;
   if (changeInfo.status === "complete") {
     let execute = false;
@@ -234,7 +234,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     });
 
     if (execute) {
-      chrome.scripting.executeScript({
+      await chrome.scripting.executeScript({
         target: { tabId },
         files: ["yt_auto_pause.js"],
       });
