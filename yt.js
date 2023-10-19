@@ -43,6 +43,10 @@ function refresh_settings() {
 }
 
 function isEnabledForTab(tab) {
+  if (!tab) {
+    return false;
+  }
+
   const optionKey = Object.keys(options).find((option) => {
     if (!option.startsWith("http")) {
       return false;
@@ -169,7 +173,7 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
     }
 
     if (options.focusresume && window !== chrome.windows.WINDOW_ID_NONE) {
-      const tabsResume = await chrome.tabs.query({ windowId: previous_window });
+      const tabsResume = await chrome.tabs.query({ windowId: window });
       for (let i = 0; i < tabsResume.length; i++) {
         if (!tabsResume[i].active && options.autopause) {
           continue;
