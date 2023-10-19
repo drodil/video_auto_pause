@@ -52,6 +52,32 @@
       		text-decoration: underline;
       		color: inherit;
  		}
+
+		.collapsible_button {
+			cursor: pointer;
+			color: #383A3F;
+			background-color: white;
+			padding: 2px 0 2px 0;
+			width: 100%;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 13px;
+		}
+
+		.collapsible_button::after {
+			content: ' \25BC'
+		}
+
+		.collapsible_button.active::after {
+			content: ' \25B2'
+		}
+
+		.collapsible_content {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.2s ease-out;
+		}
     </style>
 </head>
 
@@ -73,8 +99,13 @@
         	<label><input type="checkbox" id="disabled"><span class="label-text">Disable auto pause/resume</span></label>
 		</div>
 		<hr>
-		<div class="container" id="hosts">
-			<h4>Enabled sites</h4>
+		<div class="container">
+			<button class="collapsible_button">Advanced settings</button>
+			<div class="collapsible_content">
+		        <div id="hosts">
+     	     		<h4>Enabled sites</h4>
+	        	</div>
+			</div>
 		</div>
 		<hr>
 		<div class="container">

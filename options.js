@@ -60,8 +60,11 @@ chrome.commands.getAll(function (commands) {
   }
 });
 
-var hostsDiv = document.getElementById("hosts");
+function formatHostName(hostname) {
+  return hostname.replace("https://", "").split("/")[0].replaceAll("*.", "");
+}
 
+var hostsDiv = document.getElementById("hosts");
 for (host of hosts) {
   var label = document.createElement("label");
   var checkbox = document.createElement("input");
@@ -70,7 +73,7 @@ for (host of hosts) {
   label.appendChild(checkbox);
   var span = document.createElement("span");
   span.className = "label-text";
-  span.innerHTML = host;
+  span.innerHTML = formatHostName(host);
   label.appendChild(span);
   hostsDiv.appendChild(label);
   checkbox.addEventListener("change", save_options);
@@ -89,4 +92,19 @@ chrome.storage.onChanged.addListener(function (_changes, _namespace) {
 // Listen to changes of options
 for (var option in options) {
   document.getElementById(option).addEventListener("change", save_options);
+}
+
+var coll = document.getElementsByClassName("collapsible_button");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
 }
