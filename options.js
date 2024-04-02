@@ -7,6 +7,7 @@ const options = {
   focuspause: false,
   focusresume: false,
   disabled: false,
+  cursorTracking: false,
 };
 
 var hosts = chrome.runtime.getManifest().host_permissions;
@@ -108,3 +109,8 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+// Add event listener for the cursor tracking option
+document
+  .getElementById("cursorTracking")
+  .addEventListener("change", save_options);

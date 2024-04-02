@@ -17,21 +17,25 @@ if (window.ytAutoPauseInjected !== true) {
   let cursorNearEdgeTimeout;
 
   // Listen for mousemove events
-  window.addEventListener("mousemove", function (event) {
-    if (isCursorNearEdge(event)) {
-      // If the cursor is near the edge, set a timeout
-      if (!cursorNearEdgeTimeout) {
-        cursorNearEdgeTimeout = setTimeout(function () {
-          sendMessage({ cursorNearEdge: true });
+  window.addEventListener("mousemove", async function (event) {
+    await chrome.storage.sync.get(["cursorTracking"], function (result) {
+      if (result.cursorTracking) {
+        if (isCursorNearEdge(event)) {
+          // If the cursor is near the edge, set a timeout
+          if (!cursorNearEdgeTimeout) {
+            cursorNearEdgeTimeout = setTimeout(function () {
+              sendMessage({ cursorNearEdge: true });
+              cursorNearEdgeTimeout = null;
+            }, 200); // Wait for 1 second to infer user intention
+          }
+        } else {
+          // If the cursor moves away from the edge, clear the timeout
+          clearTimeout(cursorNearEdgeTimeout);
           cursorNearEdgeTimeout = null;
-        }, 200); // Wait for 1 second to infer user intention
+          sendMessage({ cursorNearEdge: false });
+        }
       }
-    } else {
-      // If the cursor moves away from the edge, clear the timeout
-      clearTimeout(cursorNearEdgeTimeout);
-      cursorNearEdgeTimeout = null;
-      sendMessage({ cursorNearEdge: false });
-    }
+    });
   });
 
   // Existing code...
