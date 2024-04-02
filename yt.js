@@ -14,6 +14,7 @@ let options = {
   focuspause: false,
   focusresume: false,
   disabled: false,
+  cursorTracking: false,
 };
 
 var hosts = chrome.runtime.getManifest().host_permissions;
@@ -35,6 +36,7 @@ function refresh_settings() {
       options.lockresume = false;
       options.focuspause = false;
       options.focusresume = false;
+      options.cursorTracking = false;
       for (var host of hosts) {
         options[host] = false;
       }
@@ -187,7 +189,11 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
 });
 
 // Message listener for messages from tabs
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
   if (sender.tab === undefined || chrome.runtime.lastError) {
     return true;
   }
@@ -206,6 +212,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       resume(sender.tab);
     }
   }
+
+  await chrome.storage.sync.get("cursorTracking", function (result) {
+    if (result.cursorTracking) {
+      // Handle cursor near edge changes
+      if ("cursorNearEdge" in request) {
+        if (request.cursorNearEdge && options.autopause) {
+          stop(sender.tab);
+        } else if (!request.cursorNearEdge && options.autoresume) {
+          resume(sender.tab);
+        }
+      }
+    }
+  });
 
   sendResponse({});
   return true;
