@@ -3,6 +3,39 @@ if (window.ytAutoPauseInjected !== true) {
   let manuallyPaused = false;
   let automaticallyPaused = false;
 
+  // Function to check if the cursor is near the edge of the window
+  function isCursorNearEdge(event) {
+    const threshold = 50; // pixels from the edge
+    return (
+      event.clientX < threshold ||
+      event.clientX > window.innerWidth - threshold ||
+      event.clientY < threshold ||
+      event.clientY > window.innerHeight - threshold
+    );
+  }
+
+  let cursorNearEdgeTimeout;
+
+  // Listen for mousemove events
+  window.addEventListener("mousemove", function (event) {
+    if (isCursorNearEdge(event)) {
+      // If the cursor is near the edge, set a timeout
+      if (!cursorNearEdgeTimeout) {
+        cursorNearEdgeTimeout = setTimeout(function () {
+          sendMessage({ cursorNearEdge: true });
+          cursorNearEdgeTimeout = null;
+        }, 200); // Wait for 1 second to infer user intention
+      }
+    } else {
+      // If the cursor moves away from the edge, clear the timeout
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      sendMessage({ cursorNearEdge: false });
+    }
+  });
+
+  // Existing code...
+
   // Send message to service worker
   function sendMessage(message) {
     if (!chrome.runtime?.id) {

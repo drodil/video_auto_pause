@@ -207,6 +207,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
   }
 
+  // Handle cursor near edge changes
+  if ("cursorNearEdge" in request) {
+    if (request.cursorNearEdge && options.autopause) {
+      stop(sender.tab);
+    } else if (!request.cursorNearEdge && options.autoresume) {
+      resume(sender.tab);
+    }
+  }
+
   sendResponse({});
   return true;
 });
