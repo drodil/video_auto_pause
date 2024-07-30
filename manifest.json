@@ -1,6 +1,6 @@
 {
   "name": "Youtube Auto Pause",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Stops Youtube (+ other video services) on tab unfocus and continues on focus",
   "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "host_permissions": [

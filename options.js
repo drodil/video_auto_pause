@@ -8,18 +8,20 @@ const options = {
   focusresume: false,
   disabled: false,
   cursorTracking: false,
+  manualPause: true,
+  debugMode: false,
 };
 
-var hosts = chrome.runtime.getManifest().host_permissions;
-for (var host of hosts) {
+const hosts = chrome.runtime.getManifest().host_permissions;
+for (const host of hosts) {
   options[host] = true;
 }
 
 // Saves options to chrome storage
 function save_options() {
-  var storage = {};
+  const storage = {};
 
-  for (var option in options) {
+  for (const option in options) {
     storage[option] = document.getElementById(option).checked;
   }
 
@@ -29,11 +31,11 @@ function save_options() {
 // Restores options from chrome storage
 function restore_options() {
   chrome.storage.sync.get(options, function (items) {
-    for (var option in items) {
-      document.getElementById(option).checked = items[option];
+    for (const opt in items) {
+      document.getElementById(opt).checked = items[opt];
     }
 
-    for (var option in options) {
+    for (const option in options) {
       document.getElementById(option).disabled = items.disabled;
       if (items.disabled) {
         document.getElementById("disabled").disabled = false;
@@ -44,7 +46,7 @@ function restore_options() {
 
 // Show shortcuts in the options window
 chrome.commands.getAll(function (commands) {
-  var hotkeysDiv = document.getElementById("hotkeys");
+  const hotkeysDiv = document.getElementById("hotkeys");
   for (let i = 0; i < commands.length; i++) {
     if (
       commands[i].shortcut.length === 0 ||
@@ -52,8 +54,8 @@ chrome.commands.getAll(function (commands) {
     ) {
       continue;
     }
-    var tag = document.createElement("p");
-    var text = document.createTextNode(
+    const tag = document.createElement("p");
+    const text = document.createTextNode(
       commands[i].shortcut + " - " + commands[i].description
     );
     tag.appendChild(text);
@@ -65,14 +67,14 @@ function formatHostName(hostname) {
   return hostname.replace("https://", "").split("/")[0].replaceAll("*.", "");
 }
 
-var hostsDiv = document.getElementById("hosts");
+const hostsDiv = document.getElementById("hosts");
 for (host of hosts) {
-  var label = document.createElement("label");
-  var checkbox = document.createElement("input");
+  const label = document.createElement("label");
+  const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = host;
   label.appendChild(checkbox);
-  var span = document.createElement("span");
+  const span = document.createElement("span");
   span.className = "label-text";
   span.innerHTML = formatHostName(host);
   label.appendChild(span);
@@ -81,7 +83,7 @@ for (host of hosts) {
 }
 
 // Show version in the options window
-var version = document.getElementById("version");
+const version = document.getElementById("version");
 version.innerHTML = "v" + chrome.runtime.getManifest().version;
 
 // Restore options on load and when they change in the store
@@ -91,17 +93,17 @@ chrome.storage.onChanged.addListener(function (_changes, _namespace) {
 });
 
 // Listen to changes of options
-for (var option in options) {
+for (const option in options) {
   document.getElementById(option).addEventListener("change", save_options);
 }
 
-var coll = document.getElementsByClassName("collapsible_button");
-var i;
+const coll = document.getElementsByClassName("collapsible_button");
+let i;
 
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function () {
     this.classList.toggle("active");
-    var content = this.nextElementSibling;
+    const content = this.nextElementSibling;
     if (content.style.maxHeight) {
       content.style.maxHeight = null;
     } else {

@@ -3,6 +3,40 @@ if (window.ytAutoPauseInjected !== true) {
   let manuallyPaused = false;
   let automaticallyPaused = false;
 
+  const options = {
+    autopause: true,
+    autoresume: true,
+    scrollpause: false,
+    lockpause: true,
+    lockresume: true,
+    focuspause: false,
+    focusresume: false,
+    disabled: false,
+    cursorTracking: false,
+    manualPause: true,
+    debugMode: false,
+  };
+
+  function debugLog(message) {
+    if (options.debugMode) {
+      console.log(`YouTube auto pause: ${message}`);
+    }
+  }
+
+  chrome.storage.onChanged.addListener(async function (changes, namespace) {
+    for (const key in changes) {
+      debugLog(
+        `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
+      );
+      options[key] = changes[key].newValue;
+    }
+
+    if (!options.manualPause) {
+      manuallyPaused = false;
+      automaticallyPaused = true;
+    }
+  });
+
   // Function to check if the cursor is near the edge of the window
   function isCursorNearEdge(event) {
     const threshold = 50; // pixels from the edge
@@ -18,24 +52,25 @@ if (window.ytAutoPauseInjected !== true) {
 
   // Listen for mousemove events
   window.addEventListener("mousemove", async function (event) {
-    await chrome.storage.sync.get(["cursorTracking"], function (result) {
-      if (result.cursorTracking) {
-        if (isCursorNearEdge(event)) {
-          // If the cursor is near the edge, set a timeout
-          if (!cursorNearEdgeTimeout) {
-            cursorNearEdgeTimeout = setTimeout(function () {
-              sendMessage({ cursorNearEdge: true });
-              cursorNearEdgeTimeout = null;
-            }, 200); // Wait for 1 second to infer user intention
-          }
-        } else {
-          // If the cursor moves away from the edge, clear the timeout
-          clearTimeout(cursorNearEdgeTimeout);
+    if (!options.cursorTracking) {
+      return;
+    }
+    if (isCursorNearEdge(event)) {
+      // If the cursor is near the edge, set a timeout
+      if (!cursorNearEdgeTimeout) {
+        cursorNearEdgeTimeout = setTimeout(function () {
+          debugLog(`Cursor near window edge, sending message`);
+          sendMessage({ cursorNearEdge: true });
           cursorNearEdgeTimeout = null;
-          sendMessage({ cursorNearEdge: false });
-        }
+        }, 200); // Wait for 1 second to infer user intention
       }
-    });
+    } else {
+      // If the cursor moves away from the edge, clear the timeout
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      debugLog(`Cursor not near window edge, sending message`);
+      sendMessage({ cursorNearEdge: false });
+    }
   });
 
   // Existing code...
@@ -53,6 +88,8 @@ if (window.ytAutoPauseInjected !== true) {
       return;
     }
 
+    debugLog(`Sending message ${JSON.stringify(message)}`);
+
     chrome.runtime.sendMessage(message, function () {
       void chrome.runtime.lastError;
     });
@@ -63,6 +100,7 @@ if (window.ytAutoPauseInjected !== true) {
     "visibilitychange",
     function () {
       if (document.hidden !== undefined) {
+        debugLog(`Document hidden, sending minimized ${document.hidden}`);
         sendMessage({ minimized: document.hidden });
       }
     },
@@ -79,6 +117,7 @@ if (window.ytAutoPauseInjected !== true) {
       return false;
     }
     const videoElements = document.getElementsByTagName("video");
+    debugLog(`Received message: ${JSON.stringify(request)}`);
 
     for (let i = 0; i < videoElements.length; i++) {
       try {
@@ -120,8 +159,10 @@ if (window.ytAutoPauseInjected !== true) {
   const intersection_observer = new IntersectionObserver(
     function (entries) {
       if (entries[0].isIntersecting === true) {
+        debugLog(`Video not anymore in viewport`);
         sendMessage({ visible: true });
       } else {
+        debugLog(`Video in viewport`);
         sendMessage({ visible: false });
       }
     },
@@ -132,14 +173,18 @@ if (window.ytAutoPauseInjected !== true) {
   let videoElements = document.getElementsByTagName("video");
   for (let i = 0; i < videoElements.length; i++) {
     intersection_observer.observe(videoElements[i]);
-    videoElements[i].addEventListener("pause", (_e) => {
-      if (!automaticallyPaused) {
+    videoElements[i].addEventListener("pause", async (_e) => {
+      if (!automaticallyPaused && options.manualPause) {
+        debugLog(`Manually paused video`);
         manuallyPaused = true;
         automaticallyPaused = false;
       }
     });
     videoElements[i].addEventListener("play", (_e) => {
-      manuallyPaused = false;
+      if (options.manualPause) {
+        debugLog(`Manually resumed video`);
+        manuallyPaused = false;
+      }
     });
   }
 }

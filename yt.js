@@ -1,5 +1,5 @@
 // Previous tab and window numbers
-let previous_tab = 0;
+let previous_tab = -1;
 let previous_window = chrome.windows.WINDOW_ID_NONE;
 
 // Computer state
@@ -15,6 +15,7 @@ let options = {
   focusresume: false,
   disabled: false,
   cursorTracking: false,
+  debugMode: false,
 };
 
 var hosts = chrome.runtime.getManifest().host_permissions;
@@ -37,6 +38,7 @@ function refresh_settings() {
       options.focuspause = false;
       options.focusresume = false;
       options.cursorTracking = false;
+      options.debugMode = false;
       for (var host of hosts) {
         options[host] = false;
       }
@@ -44,8 +46,15 @@ function refresh_settings() {
   });
 }
 
+function debugLog(message) {
+  if (options.debugMode) {
+    console.log(`YouTube auto pause: ${message}`);
+  }
+}
+
 function isEnabledForTab(tab) {
   if (!tab) {
+    debugLog(`Not enabled for ${tab.url}`);
     return false;
   }
 
@@ -76,6 +85,8 @@ function sendMessage(tab, message) {
     );
     return;
   }
+
+  debugLog(`Sending message ${JSON.stringify(message)} to tab ${tab.id}`);
 
   chrome.tabs.sendMessage(tab.id, message, {}, function () {
     void chrome.runtime.lastError;
@@ -110,19 +121,22 @@ function toggle_mute(tab) {
 // Listen options changes
 chrome.storage.onChanged.addListener(async function (changes, namespace) {
   for (const key in changes) {
+    debugLog(
+      `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
+    );
     options[key] = changes[key].newValue;
   }
 
   if ("disabled" in changes) {
     refresh_settings();
-    const tabs = await chrome.tabs.query({ currentWindow: true });
+    const tabs = await chrome.tabs.query({ active: true });
     for (let i = 0; i < tabs.length; i++) {
       if (options.disabled === true) {
+        debugLog(`Extension enabled, resuming active tabs`);
         resume(tabs[i]);
       } else {
-        if (!tabs[i].active) {
-          stop(tabs[i]);
-        }
+        debugLog(`Extension disabled, stopping active tabs`);
+        stop(tabs[i]);
       }
     }
   }
@@ -130,23 +144,29 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
 
 // Tab change listener
 chrome.tabs.onActivated.addListener(function (info) {
-  if (options.autopause && previous_tab != 0) {
+  if (previous_window !== info.windowId) {
+    return;
+  }
+
+  if (options.autopause && previous_tab !== -1) {
+    debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
     chrome.tabs.get(previous_tab, function (prev) {
       stop(prev);
     });
   }
 
-  if (previous_tab === info.tab) {
+  if (previous_tab === info.tabId) {
     return;
   }
 
-  previous_tab = info.tabId;
-
   chrome.tabs.get(info.tabId, function (tab) {
     if (options.autoresume) {
+      debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
       resume(tab);
     }
   });
+
+  previous_tab = info.tabId;
 });
 
 // Tab update listener
@@ -156,6 +176,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     changeInfo.status === "complete" &&
     !tab.active
   ) {
+    debugLog(
+      `Tab updated, stopping video in tab ${tabId} with status ${changeInfo.status}, active ${tab.active}`
+    );
     stop(tab);
   }
 });
@@ -163,12 +186,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 // Window focus listener
 chrome.windows.onFocusChanged.addListener(async function (window) {
   if (window !== previous_window) {
-    if (
-      options.focuspause &&
-      state !== "locked" &&
-      previous_window !== chrome.windows.WINDOW_ID_NONE
-    ) {
+    if (options.focuspause && state !== "locked") {
       const tabsStop = await chrome.tabs.query({ windowId: previous_window });
+      debugLog(`Window changed, stopping videos in window ${window}`);
       for (let i = 0; i < tabsStop.length; i++) {
         stop(tabsStop[i]);
       }
@@ -176,6 +196,7 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
 
     if (options.focusresume && window !== chrome.windows.WINDOW_ID_NONE) {
       const tabsResume = await chrome.tabs.query({ windowId: window });
+      debugLog(`Window changed, resuming videos in window ${window}`);
       for (let i = 0; i < tabsResume.length; i++) {
         if (!tabsResume[i].active && options.autopause) {
           continue;
@@ -200,28 +221,36 @@ chrome.runtime.onMessage.addListener(async function (
 
   if ("minimized" in request) {
     if (request.minimized && options.autopause) {
+      debugLog(`Window minimized, stopping videos in tab ${sender.tab.id}`);
       stop(sender.tab);
     } else if (!request.minimized && options.autoresume) {
+      debugLog(`Window returned, resuming videos in tab ${sender.tab.id}`);
       resume(sender.tab);
     }
   }
   if ("visible" in request && options.scrollpause) {
     if (!request.visible) {
+      debugLog(
+        `Window is not visible, stopping videos in tab ${sender.tab.id}`
+      );
       stop(sender.tab);
     } else {
+      debugLog(`Window is visible, resuming videos in tab ${sender.tab.id}`);
       resume(sender.tab);
     }
   }
 
   await chrome.storage.sync.get("cursorTracking", function (result) {
-    if (result.cursorTracking) {
+    if (result.cursorTracking && "cursorNearEdge" in request) {
       // Handle cursor near edge changes
-      if ("cursorNearEdge" in request) {
-        if (request.cursorNearEdge && options.autopause) {
-          stop(sender.tab);
-        } else if (!request.cursorNearEdge && options.autoresume) {
-          resume(sender.tab);
-        }
+      if (request.cursorNearEdge && options.autopause) {
+        debugLog(
+          `Nearing window edge, stopping videos in tab ${sender.tab.id}`
+        );
+        stop(sender.tab);
+      } else if (!request.cursorNearEdge && options.autoresume) {
+        debugLog(`Returned to window, resuming videos in tab ${sender.tab.id}`);
+        resume(sender.tab);
       }
     }
   });
@@ -234,14 +263,23 @@ chrome.runtime.onMessage.addListener(async function (
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === "toggle-extension") {
     options.disabled = !options.disabled;
+    debugLog(
+      `Toggle extension command received, extension state ${options.disabled}`
+    );
     chrome.storage.sync.set({ disabled: options.disabled });
     refresh_settings();
   } else if (command === "toggle-play") {
+    debugLog(
+      `Toggle play command received, toggling play for all tabs in current window`
+    );
     const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle(tabs[i]);
     }
   } else if (command === "toggle_mute") {
+    debugLog(
+      `Toggle mute command received, toggling mute for all tabs in current window`
+    );
     const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       toggle_mute(tabs[i]);
@@ -252,15 +290,17 @@ chrome.commands.onCommand.addListener(async (command) => {
 // Listener for computer idle/locked/active
 chrome.idle.onStateChanged.addListener(async function (s) {
   state = s;
-  const tabs = await chrome.tabs.query({ currentWindow: true });
+  const tabs = await chrome.tabs.query({ active: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (state === "locked" && options.lockpause) {
+      debugLog(`Computer locked, stopping all videos`);
       stop(tabs[i]);
     } else if (state !== "locked" && options.lockresume) {
       if (!tabs[i].active && options.autopause) {
         continue;
       }
+      debugLog(`Computer unlocked, resuming videos`);
       resume(tabs[i]);
     }
   }
@@ -275,11 +315,11 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         .replace("*", ".*");
       if (new RegExp(reg).test(tab.url) === true) {
         execute = true;
-        return;
       }
     });
 
     if (execute) {
+      debugLog(`Injecting script into tab ${tabId} with url ${tab.url}`);
       await chrome.scripting.executeScript({
         target: { tabId },
         files: ["yt_auto_pause.js"],
