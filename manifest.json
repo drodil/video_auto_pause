@@ -11,7 +11,8 @@
     "https://*.primevideo.com/*",
     "https://*.hbomax.com/*",
     "https://*.disneyplus.com/*",
-    "https://*.twitch.tv/*"
+    "https://*.twitch.tv/*",
+    "https://*.udacity.com/*"
   ],
   "homepage_url": "https://github.com/drodil/youtube_auto_pause",
   "options_ui": {
@@ -46,7 +47,8 @@
       "https://*.primevideo.com/*",
       "https://*.hbomax.com/*",
       "https://*.disneyplus.com/*",
-      "https://*.twitch.tv/*"
+      "https://*.twitch.tv/*",
+      "https://*.udacity.com/*"
     ]
   },
   "commands": {

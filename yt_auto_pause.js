@@ -143,8 +143,29 @@ if (window.ytAutoPauseInjected !== true) {
     if (!("action" in request)) {
       return false;
     }
-    const videoElements = document.getElementsByTagName("video");
     debugLog(`Received message: ${JSON.stringify(request)}`);
+
+    const videoElements = document.getElementsByTagName("video");
+    const iframeElements = document.getElementsByTagName("iframe");
+
+    for (let i = 0; i < iframeElements.length; i++) {
+      const iframe = iframeElements[i];
+      try {
+        if (request.action === "stop") {
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ event: "command", func: "pauseVideo" }),
+            "*"
+          );
+        } else if (request.action === "resume") {
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ event: "command", func: "playVideo" }),
+            "*"
+          );
+        }
+      } catch (e) {
+        debugLog(e);
+      }
+    }
 
     for (let i = 0; i < videoElements.length; i++) {
       try {
@@ -174,7 +195,7 @@ if (window.ytAutoPauseInjected !== true) {
           }
         }
       } catch (e) {
-        // NOOP
+        debugLog(e);
       }
     }
     sendResponse({});
