@@ -54,7 +54,6 @@ function debugLog(message) {
 
 function isEnabledForTab(tab) {
   if (!tab) {
-    debugLog(`Not enabled for ${tab.url}`);
     return false;
   }
 

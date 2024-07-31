@@ -178,7 +178,9 @@ if (window.ytAutoPauseInjected !== true) {
           !manuallyPaused
         ) {
           automaticallyPaused = false;
-          await videoElements[i].play();
+          if (!videoElements[i].ended) {
+            await videoElements[i].play();
+          }
         } else if (request.action === "toggle_mute") {
           videoElements[i].muted = !videoElements[i].muted;
         } else if (request.action === "mute") {
@@ -187,7 +189,9 @@ if (window.ytAutoPauseInjected !== true) {
           videoElements[i].muted = false;
         } else if (request.action === "toggle") {
           if (videoElements[i].paused && !manuallyPaused) {
-            await videoElements[i].play();
+            if (!videoElements[i].ended) {
+              await videoElements[i].play();
+            }
             automaticallyPaused = false;
           } else if (!manuallyPaused) {
             videoElements[i].pause();
