@@ -306,6 +306,18 @@ chrome.idle.onStateChanged.addListener(async function (s) {
   }
 });
 
+chrome.windows.onCreated.addListener(async function (window) {
+  const tabs = await chrome.tabs.query({ windowId: window.id });
+  debugLog(`Window created, stopping all non active videos`);
+  for (let i = 0; i < tabs.length; i++) {
+    if (tabs[i].active && options.autoresume) {
+      resume(tabs[i]);
+    } else if (options.autopause) {
+      stop(tabs[i]);
+    }
+  }
+});
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete") {
     let execute = false;
