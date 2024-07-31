@@ -3,7 +3,7 @@ if (window.ytAutoPauseInjected !== true) {
   let manuallyPaused = false;
   let automaticallyPaused = false;
 
-  const options = {
+  let options = {
     autopause: true,
     autoresume: true,
     scrollpause: false,
@@ -23,6 +23,29 @@ if (window.ytAutoPauseInjected !== true) {
     }
   }
 
+  // Initialize settings from storage
+  refresh_settings();
+
+  function refresh_settings() {
+    chrome.storage.sync.get(Object.keys(options), function (result) {
+      options = Object.assign(options, result);
+      if (options.disabled === true) {
+        options.autopause = false;
+        options.autoresume = false;
+        options.scrollpause = false;
+        options.lockpause = false;
+        options.lockresume = false;
+        options.focuspause = false;
+        options.focusresume = false;
+        options.cursorTracking = false;
+        options.debugMode = false;
+        for (var host of hosts) {
+          options[host] = false;
+        }
+      }
+    });
+  }
+
   chrome.storage.onChanged.addListener(async function (changes, namespace) {
     for (const key in changes) {
       debugLog(
@@ -34,6 +57,10 @@ if (window.ytAutoPauseInjected !== true) {
     if (!options.manualPause) {
       manuallyPaused = false;
       automaticallyPaused = true;
+    }
+
+    if ("disabled" in changes) {
+      refresh_settings();
     }
   });
 
