@@ -45,6 +45,7 @@ function refresh_settings() {
         options[host] = false;
       }
     }
+    enabledTabs = [];
   });
 }
 
@@ -63,12 +64,18 @@ function isEnabledForTab(tab) {
     return true;
   }
 
-  for (const host of hosts) {
-    const reg = host.replace(/[.+?^${}()|/[\]\\]/g, "\\$&").replace("*", ".*");
-    if (new RegExp(reg).test(tab.url) === true) {
-      enabledTabs.push(tab.id);
-      return true;
+  const optionKey = Object.keys(options).find((option) => {
+    if (!option.startsWith("http")) {
+      return false;
     }
+    const reg = option
+      .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
+      .replace("*", ".*");
+    return new RegExp(reg).test(tab.url);
+  });
+
+  if (optionKey) {
+    return options[optionKey];
   }
 
   return false;
@@ -99,7 +106,7 @@ function sendMessage(tab, message) {
 
   if (chrome.runtime.lastError) {
     console.error(
-      `Youtube Autopause error: ${chrome.runtime.lastError.toString()}`
+      `YouTube Autopause error: ${chrome.runtime.lastError.toString()}`
     );
     return;
   }
