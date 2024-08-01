@@ -1,6 +1,8 @@
 // Previous tab and window numbers
 let previous_tab = -1;
 let previous_window = chrome.windows.WINDOW_ID_NONE;
+let executedTabs = [];
+let enabledTabs = [];
 
 // Computer state
 let state = "active";
@@ -53,23 +55,40 @@ function debugLog(message) {
 }
 
 function isEnabledForTab(tab) {
-  if (!tab) {
+  if (!tab || !tab.url) {
     return false;
   }
 
-  const optionKey = Object.keys(options).find((option) => {
-    if (!option.startsWith("http")) {
-      return false;
-    }
-    const reg = option
-      .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
-      .replace("*", ".*");
-    return new RegExp(reg).test(tab.url);
-  });
-  if (optionKey) {
-    return options[optionKey];
+  if (enabledTabs.includes(tab.id)) {
+    return true;
   }
-  return true;
+
+  for (const host of hosts) {
+    const reg = host.replace(/[.+?^${}()|/[\]\\]/g, "\\$&").replace("*", ".*");
+    if (new RegExp(reg).test(tab.url) === true) {
+      enabledTabs.push(tab.id);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function injectScript(tab) {
+  if (executedTabs.includes(tab.id) || !isEnabledForTab(tab)) {
+    return;
+  }
+
+  debugLog(`Injecting script into tab ${tab.id} with url ${tab.url}`);
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ["yt_auto_pause.js"],
+    });
+    executedTabs.push(tab.id);
+  } catch (e) {
+    debugLog(e);
+  }
 }
 
 // Functionality to send messages to tabs
@@ -119,6 +138,7 @@ function toggle_mute(tab) {
 
 // Listen options changes
 chrome.storage.onChanged.addListener(async function (changes, namespace) {
+  enabledTabs = [];
   for (const key in changes) {
     debugLog(
       `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
@@ -147,29 +167,37 @@ chrome.tabs.onActivated.addListener(function (info) {
     return;
   }
 
-  if (options.autopause && previous_tab !== -1) {
-    debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
-    chrome.tabs.get(previous_tab, function (prev) {
-      stop(prev);
-    });
-  }
+  chrome.tabs.get(info.tabId, async function (tab) {
+    if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
+      return;
+    }
 
-  if (previous_tab === info.tabId) {
-    return;
-  }
+    await injectScript(tab);
 
-  chrome.tabs.get(info.tabId, function (tab) {
+    if (options.autopause && previous_tab !== -1) {
+      debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
+      chrome.tabs.get(previous_tab, function (prev) {
+        stop(prev);
+      });
+    }
+
     if (options.autoresume) {
       debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
       resume(tab);
     }
-  });
 
-  previous_tab = info.tabId;
+    previous_tab = info.tabId;
+  });
 });
 
 // Tab update listener
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+  if (!isEnabledForTab(tab)) {
+    return;
+  }
+
+  await injectScript(tab);
+
   if (
     "status" in changeInfo &&
     changeInfo.status === "complete" &&
@@ -182,6 +210,17 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 
+chrome.tabs.onRemoved.addListener(function (tabId) {
+  if (enabledTabs.includes(tabId)) {
+    debugLog(`Tab removed, removing tab ${tabId} from enabled tabs`);
+    enabledTabs = enabledTabs.filter((e) => e !== tabId);
+  }
+  if (executedTabs.includes(tabId)) {
+    debugLog(`Tab removed, removing tab ${tabId} from executed tabs`);
+    executedTabs = executedTabs.filter((e) => e !== tabId);
+  }
+});
+
 // Window focus listener
 chrome.windows.onFocusChanged.addListener(async function (window) {
   if (window !== previous_window) {
@@ -189,6 +228,9 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
       const tabsStop = await chrome.tabs.query({ windowId: previous_window });
       debugLog(`Window changed, stopping videos in window ${window}`);
       for (let i = 0; i < tabsStop.length; i++) {
+        if (!isEnabledForTab(tabsStop[i])) {
+          continue;
+        }
         stop(tabsStop[i]);
       }
     }
@@ -197,6 +239,9 @@ chrome.windows.onFocusChanged.addListener(async function (window) {
       const tabsResume = await chrome.tabs.query({ windowId: window });
       debugLog(`Window changed, resuming videos in window ${window}`);
       for (let i = 0; i < tabsResume.length; i++) {
+        if (!isEnabledForTab(tabsResume[i])) {
+          continue;
+        }
         if (!tabsResume[i].active && options.autopause) {
           continue;
         }
@@ -214,7 +259,7 @@ chrome.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
-  if (sender.tab === undefined || chrome.runtime.lastError) {
+  if (!isEnabledForTab(sender.tab) || chrome.runtime.lastError) {
     return true;
   }
 
@@ -227,6 +272,7 @@ chrome.runtime.onMessage.addListener(async function (
       resume(sender.tab);
     }
   }
+
   if ("visible" in request && options.scrollpause) {
     if (!request.visible) {
       debugLog(
@@ -273,6 +319,9 @@ chrome.commands.onCommand.addListener(async (command) => {
     );
     const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
+      if (!isEnabledForTab(tabs[i])) {
+        continue;
+      }
       toggle(tabs[i]);
     }
   } else if (command === "toggle_mute") {
@@ -281,6 +330,9 @@ chrome.commands.onCommand.addListener(async (command) => {
     );
     const tabs = await chrome.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
+      if (!isEnabledForTab(tabs[i])) {
+        continue;
+      }
       toggle_mute(tabs[i]);
     }
   }
@@ -292,6 +344,10 @@ chrome.idle.onStateChanged.addListener(async function (s) {
   const tabs = await chrome.tabs.query({ active: true });
 
   for (let i = 0; i < tabs.length; i++) {
+    if (!isEnabledForTab(tabs[i])) {
+      continue;
+    }
+
     if (state === "locked" && options.lockpause) {
       debugLog(`Computer locked, stopping all videos`);
       stop(tabs[i]);
@@ -309,32 +365,16 @@ chrome.windows.onCreated.addListener(async function (window) {
   const tabs = await chrome.tabs.query({ windowId: window.id });
   debugLog(`Window created, stopping all non active videos`);
   for (let i = 0; i < tabs.length; i++) {
+    if (!isEnabledForTab(tabs[i])) {
+      continue;
+    }
+
+    await injectScript(tabs[i]);
+
     if (tabs[i].active && options.autoresume) {
       resume(tabs[i]);
     } else if (options.autopause) {
       stop(tabs[i]);
-    }
-  }
-});
-
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete") {
-    let execute = false;
-    hosts.forEach(function (host) {
-      const reg = host
-        .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
-        .replace("*", ".*");
-      if (new RegExp(reg).test(tab.url) === true) {
-        execute = true;
-      }
-    });
-
-    if (execute) {
-      debugLog(`Injecting script into tab ${tabId} with url ${tab.url}`);
-      await chrome.scripting.executeScript({
-        target: { tabId },
-        files: ["yt_auto_pause.js"],
-      });
     }
   }
 });

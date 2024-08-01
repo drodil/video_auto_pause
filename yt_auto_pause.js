@@ -210,6 +210,9 @@ if (window.ytAutoPauseInjected !== true) {
   // can be used to determine when video goes out of viewport
   const intersection_observer = new IntersectionObserver(
     function (entries) {
+      if (!options.scrollpause) {
+        return;
+      }
       if (entries[0].isIntersecting === true) {
         debugLog(`Video not anymore in viewport`);
         sendMessage({ visible: true });
