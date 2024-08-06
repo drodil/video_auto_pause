@@ -1,6 +1,6 @@
 {
   "name": "@drodil/youtube_auto_pause",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "homepage": "https://github.com/drodil/youtube_auto_pause",
   "bugs": {
     "url": "https://github.com/drodil/youtube_auto_pause/issues",
@@ -30,7 +30,8 @@
     "build:chrome": "web-ext build --overwrite-dest --source-dir ./chrome/ --filename chrome.zip",
     "start:firefox": "web-ext run --source-dir ./firefox/",
     "debug:firefox": "web-ext run --devtools --source-dir ./firefox/",
-    "build:firefox": "web-ext build --overwrite-dest --source-dir ./firefox/ --filename firefox.zip"
+    "build:firefox": "web-ext build --overwrite-dest --source-dir ./firefox/ --filename firefox.zip",
+    "bump": "bump --commit \"chore: bump to version \" package.json chrome/manifest.json firefox/manifest.json"
   },
   "devDependencies": {
     "web-ext": "^8.2.0"
