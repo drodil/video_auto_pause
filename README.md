@@ -15,6 +15,12 @@ Features some useful keyboard shortcuts to control videos in the window.
 Chrome: https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 
+**From releases**
+
+There are pre-packaged releases available for both Chrome and Firefox. Download the latest release
+from the [releases page](https://github.com/drodil/youtube_auto_pause/releases) and
+install it manually to your browser.
+
 **Manually (Chrome)**
 
 1. Clone the repository
