@@ -1,0 +1,84 @@
+{
+  "name": "YouTube Auto Pause",
+  "version": "1.7.0",
+  "description": "Stops YouTube (+ other video services) on tab unfocus and continues on focus",
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "drodil@youtube_auto_pause",
+      "strict_min_version": "127.0"
+    }
+  },
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "https://*.vimeo.com/*",
+    "https://*.netflix.com/watch/*",
+    "https://*.youtubekids.com/*",
+    "https://*.primevideo.com/*",
+    "https://*.hbomax.com/*",
+    "https://*.disneyplus.com/*",
+    "https://*.twitch.tv/*",
+    "https://*.udacity.com/*"
+  ],
+  "homepage_url": "https://github.com/drodil/youtube_auto_pause",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "64": "images/icon_64.png",
+    "128": "images/icon_128.png"
+  },
+  "action": {
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "64": "images/icon_64.png",
+      "128": "images/icon_128.png"
+    }
+  },
+  "background": {
+    "scripts": ["yt.js"]
+  },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": [
+      "https://*.youtube.com/*",
+      "https://*.youtubekids.com/*",
+      "https://*.vimeo.com/*",
+      "https://*.netflix.com/watch/*",
+      "https://*.primevideo.com/*",
+      "https://*.hbomax.com/*",
+      "https://*.disneyplus.com/*",
+      "https://*.twitch.tv/*",
+      "https://*.udacity.com/*"
+    ]
+  },
+  "commands": {
+    "toggle-extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Toggle auto pause/resume"
+    },
+    "toggle-play": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "Command+Shift+Space"
+      },
+      "description": "Toggle play/pause"
+    },
+    "toggle_mute": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O",
+        "mac": "Command+Shift+O"
+      },
+      "description": "Toggle mute"
+    }
+  },
+  "manifest_version": 3
+}

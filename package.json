@@ -1,0 +1,38 @@
+{
+  "name": "@drodil/youtube_auto_pause",
+  "version": "1.7.0",
+  "homepage": "https://github.com/drodil/youtube_auto_pause",
+  "bugs": {
+    "url": "https://github.com/drodil/youtube_auto_pause/issues",
+    "email": "heiccih@gmail.com"
+  },
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drodil/youtube_auto_pause.git"
+  },
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/drodil"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/drodil"
+    }
+  ],
+  "scripts": {
+    "build": "npm run build:chrome && npm run build:firefox",
+    "lint": "web-ext lint --source-dir ./firefox/",
+    "start:chrome": "web-ext run --source-dir ./chrome/ --target chromium",
+    "debug:chrome": "web-ext run --devtools --source-dir ./chrome/ --target chromium",
+    "build:chrome": "web-ext build --overwrite-dest --source-dir ./chrome/ --filename chrome.zip",
+    "start:firefox": "web-ext run --source-dir ./firefox/",
+    "debug:firefox": "web-ext run --devtools --source-dir ./firefox/",
+    "build:firefox": "web-ext build --overwrite-dest --source-dir ./firefox/ --filename firefox.zip"
+  },
+  "devDependencies": {
+    "web-ext": "^8.2.0"
+  }
+}

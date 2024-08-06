@@ -1,5 +1,6 @@
 .idea
 .DS_Store
 Archive.zip
-images/store
-package.zip
+**/images/store
+web-ext-artifacts
+node_modules

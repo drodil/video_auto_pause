@@ -76,7 +76,7 @@ for (host of hosts) {
   label.appendChild(checkbox);
   const span = document.createElement("span");
   span.className = "label-text";
-  span.innerHTML = formatHostName(host);
+  span.textContent = formatHostName(host);
   label.appendChild(span);
   hostsDiv.appendChild(label);
   checkbox.addEventListener("change", save_options);
@@ -84,7 +84,7 @@ for (host of hosts) {
 
 // Show version in the options window
 const version = document.getElementById("version");
-version.innerHTML = "v" + chrome.runtime.getManifest().version;
+version.textContent = "v" + chrome.runtime.getManifest().version;
 
 // Restore options on load and when they change in the store
 document.addEventListener("DOMContentLoaded", restore_options);

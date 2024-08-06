@@ -20,8 +20,8 @@ let options = {
   debugMode: false,
 };
 
-var hosts = chrome.runtime.getManifest().host_permissions;
-for (var host of hosts) {
+const hosts = chrome.runtime.getManifest().host_permissions;
+for (const host of hosts) {
   options[host] = true;
 }
 
@@ -75,7 +75,7 @@ function isEnabledForTab(tab) {
   });
 
   if (optionKey) {
-    return options[optionKey];
+    return !!options[optionKey];
   }
 
   return false;
@@ -144,7 +144,7 @@ function toggle_mute(tab) {
 }
 
 // Listen options changes
-chrome.storage.onChanged.addListener(async function (changes, namespace) {
+chrome.storage.onChanged.addListener(async function (changes) {
   enabledTabs = [];
   for (const key in changes) {
     debugLog(
@@ -154,14 +154,17 @@ chrome.storage.onChanged.addListener(async function (changes, namespace) {
   }
 
   if ("disabled" in changes) {
-    refresh_settings();
-    const tabs = await chrome.tabs.query({ active: true });
+    const tabs = await browser.tabs.query({ active: true });
+    if (!options.disabled) {
+      debugLog(`Extension enabled, resuming active tabs`);
+    } else {
+      debugLog(`Extension disabled, stopping active tabs`);
+    }
+
     for (let i = 0; i < tabs.length; i++) {
-      if (options.disabled === true) {
-        debugLog(`Extension enabled, resuming active tabs`);
+      if (!options.disabled) {
         resume(tabs[i]);
       } else {
-        debugLog(`Extension disabled, stopping active tabs`);
         stop(tabs[i]);
       }
     }
