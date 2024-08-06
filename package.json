@@ -31,10 +31,11 @@
     "start:firefox": "web-ext run --source-dir ./firefox/",
     "debug:firefox": "web-ext run --devtools --source-dir ./firefox/",
     "build:firefox": "web-ext build --overwrite-dest --source-dir ./firefox/ --filename firefox.zip",
-    "bump": "bump --tag --commit \"chore: bump to version \" package.json chrome/manifest.json firefox/manifest.json"
+    "bump-test": "yarn run standard-version --dry-run --no-verify",
+    "bump": "npm run standard-version --no-verify"
   },
   "devDependencies": {
-    "@jsdevtools/version-bump-prompt": "^6.1.0",
+    "standard-version": "^9.5.0",
     "web-ext": "^8.2.0"
   }
 }

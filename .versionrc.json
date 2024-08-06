@@ -1,0 +1,51 @@
+{
+  "commitUrlFormat": "https://github.com/drodil/youtube_auto_pause/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/drodil/youtube_auto_pause/compare/{{previousTag}}...{{currentTag}}",
+  "releaseCommitMessageFormat": "chore(release): :bookmark: {{currentTag}}",
+  "issueUrlFormat": "https://github.com/drodil/youtube_auto_pause/issues/{{id}}",
+  "userUrlFormat": "https://github.com/{{user}}",
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "package-lock.json",
+      "type": "json"
+    },
+    {
+      "filename": "chrome/manifest.json",
+      "type": "json"
+    },
+    {
+      "filename": "firefox/manifest.json",
+      "type": "json"
+    }
+  ],
+  "types": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "chore",
+      "section": "Maintenance"
+    },
+    {
+      "type": "refactor",
+      "section": "Maintenance"
+    },
+    {
+      "type": "ci",
+      "section": "Maintenance"
+    },
+    {
+      "type": "docs",
+      "section": "Documentation"
+    }
+  ]
+}
