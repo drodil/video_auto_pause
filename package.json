@@ -34,6 +34,7 @@
     "bump": "bump --commit \"chore: bump to version \" package.json chrome/manifest.json firefox/manifest.json"
   },
   "devDependencies": {
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
     "web-ext": "^8.2.0"
   }
 }
