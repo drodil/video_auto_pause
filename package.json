@@ -31,7 +31,7 @@
     "start:firefox": "web-ext run --source-dir ./firefox/",
     "debug:firefox": "web-ext run --devtools --source-dir ./firefox/",
     "build:firefox": "web-ext build --overwrite-dest --source-dir ./firefox/ --filename firefox.zip",
-    "bump": "bump --commit \"chore: bump to version \" package.json chrome/manifest.json firefox/manifest.json"
+    "bump": "bump --tag --commit \"chore: bump to version \" package.json chrome/manifest.json firefox/manifest.json"
   },
   "devDependencies": {
     "@jsdevtools/version-bump-prompt": "^6.1.0",
