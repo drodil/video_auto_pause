@@ -15,7 +15,7 @@ Features some useful keyboard shortcuts to control videos in the window.
 Chrome: https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 
-**Manually (chrome)**
+**Manually (Chrome)**
 
 1. Clone the repository
 2. Start chrome
@@ -24,7 +24,7 @@ Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 5. Click on "Load unpacked"
 6. Select the `chrome` directory in the repository
 
-**Manually (firefox)**
+**Manually (Firefox)**
 
 1. Clone the repository
 2. Start firefox
@@ -39,7 +39,11 @@ Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 - Youtube Kids
 - Vimeo
 - Netflix
-- ... More to come, please contribute! (also see TODO)
+- Prime Video
+- Max
+- Disney+
+- Twitch
+- Udacity
 
 ## Contributing
 

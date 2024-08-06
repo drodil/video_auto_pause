@@ -15,7 +15,7 @@
     "https://*.netflix.com/watch/*",
     "https://*.youtubekids.com/*",
     "https://*.primevideo.com/*",
-    "https://*.hbomax.com/*",
+    "https://*.max.com/*",
     "https://*.disneyplus.com/*",
     "https://*.twitch.tv/*",
     "https://*.udacity.com/*"
@@ -51,7 +51,7 @@
       "https://*.vimeo.com/*",
       "https://*.netflix.com/watch/*",
       "https://*.primevideo.com/*",
-      "https://*.hbomax.com/*",
+      "https://*.max.com/*",
       "https://*.disneyplus.com/*",
       "https://*.twitch.tv/*",
       "https://*.udacity.com/*"
