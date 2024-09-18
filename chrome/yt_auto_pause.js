@@ -169,6 +169,11 @@ if (window.ytAutoPauseInjected !== true) {
 
     for (let i = 0; i < videoElements.length; i++) {
       try {
+        if (document.fullscreenElement) {
+          debugLog(`Document is in fullscreen mode, ignoring all commands`);
+          break;
+        }
+
         if (request.action === "stop" && !manuallyPaused) {
           automaticallyPaused = true;
           videoElements[i].pause();

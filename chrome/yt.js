@@ -154,7 +154,7 @@ chrome.storage.onChanged.addListener(async function (changes) {
   }
 
   if ("disabled" in changes) {
-    const tabs = await browser.tabs.query({ active: true });
+    const tabs = await chrome.tabs.query({ active: true });
     if (!options.disabled) {
       debugLog(`Extension enabled, resuming active tabs`);
     } else {
