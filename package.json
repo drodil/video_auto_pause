@@ -1,6 +1,6 @@
 {
   "name": "@drodil/youtube_auto_pause",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "homepage": "https://github.com/drodil/youtube_auto_pause",
   "bugs": {
     "url": "https://github.com/drodil/youtube_auto_pause/issues",
@@ -37,5 +37,6 @@
   "devDependencies": {
     "standard-version": "^9.5.0",
     "web-ext": "^8.2.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

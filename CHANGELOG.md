@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.7](https://github.com/drodil/youtube_auto_pause/compare/v1.7.6...v1.7.7) (2024-09-18)
+
+
+### Bug Fixes
+
+* ignore all messages when in fullscreen mode ([f5bd8a3](https://github.com/drodil/youtube_auto_pause/commit/f5bd8a3d04c9a4600158739ba81d03084a589aa0))
+
 ### [1.7.6](https://github.com/drodil/youtube_auto_pause/compare/v1.7.5...v1.7.6) (2024-08-06)
 
 
