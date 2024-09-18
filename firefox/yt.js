@@ -18,6 +18,7 @@ let options = {
   disabled: false,
   cursorTracking: false,
   debugMode: false,
+  disableOnFullscreen: false,
 };
 
 const hosts = browser.runtime.getManifest().host_permissions;
@@ -43,6 +44,7 @@ function refresh_settings() {
       options.focusresume = false;
       options.cursorTracking = false;
       options.debugMode = false;
+      options.disableOnFullscreen = true;
       for (var host of hosts) {
         options[host] = false;
       }

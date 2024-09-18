@@ -15,6 +15,7 @@ if (window.ytAutoPauseInjected !== true) {
     cursorTracking: false,
     manualPause: true,
     debugMode: false,
+    disableOnFullscreen: false,
   };
 
   function debugLog(message) {
@@ -39,6 +40,7 @@ if (window.ytAutoPauseInjected !== true) {
         options.focusresume = false;
         options.cursorTracking = false;
         options.debugMode = false;
+        options.disableOnFullscreen = true;
         for (var host of hosts) {
           options[host] = false;
         }
@@ -145,6 +147,11 @@ if (window.ytAutoPauseInjected !== true) {
     }
     debugLog(`Received message: ${JSON.stringify(request)}`);
 
+    if (document.fullscreenElement && options.disableOnFullscreen) {
+      debugLog(`Document is in fullscreen mode, ignoring all commands`);
+      return true;
+    }
+
     const videoElements = document.getElementsByTagName("video");
     const iframeElements = document.getElementsByTagName("iframe");
 
@@ -169,11 +176,6 @@ if (window.ytAutoPauseInjected !== true) {
 
     for (let i = 0; i < videoElements.length; i++) {
       try {
-        if (document.fullscreenElement) {
-          debugLog(`Document is in fullscreen mode, ignoring all commands`);
-          break;
-        }
-
         if (request.action === "stop" && !manuallyPaused) {
           automaticallyPaused = true;
           videoElements[i].pause();

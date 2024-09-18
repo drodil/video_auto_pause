@@ -10,6 +10,7 @@ const options = {
   cursorTracking: false,
   manualPause: true,
   debugMode: false,
+  disableOnFullscreen: false,
 };
 
 const hosts = browser.runtime.getManifest().host_permissions;
