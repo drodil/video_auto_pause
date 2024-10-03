@@ -58,7 +58,7 @@ function debugLog(message) {
 }
 
 function isEnabledForTab(tab) {
-  if (!tab || !tab.url) {
+  if (!tab || !tab.url || options.disabled) {
     return false;
   }
 
@@ -145,6 +145,28 @@ function toggle_mute(tab) {
   sendMessage(tab, { action: "toggle_mute" });
 }
 
+function changeIcon(disabled) {
+  if (disabled) {
+    chrome.action.setIcon({
+      path: {
+        16: "/images/icon_disabled_16.png",
+        32: "/images/icon_disabled_32.png",
+        64: "/images/icon_disabled_64.png",
+        128: "/images/icon_disabled_128.png",
+      },
+    });
+  } else {
+    chrome.action.setIcon({
+      path: {
+        16: "/images/icon_16.png",
+        32: "/images/icon_32.png",
+        64: "/images/icon_64.png",
+        128: "/images/icon_128.png",
+      },
+    });
+  }
+}
+
 // Listen options changes
 chrome.storage.onChanged.addListener(async function (changes) {
   enabledTabs = [];
@@ -155,31 +177,22 @@ chrome.storage.onChanged.addListener(async function (changes) {
     options[key] = changes[key].newValue;
   }
 
-  if ("disabled" in changes) {
-    const tabs = await chrome.tabs.query({ active: true });
-    if (!options.disabled) {
-      debugLog(`Extension enabled, resuming active tabs`);
-    } else {
-      debugLog(`Extension disabled, stopping active tabs`);
-    }
+  const tabs = await chrome.tabs.query({ active: true });
 
-    for (let i = 0; i < tabs.length; i++) {
-      if (!options.disabled) {
-        resume(tabs[i]);
-      } else {
-        stop(tabs[i]);
-      }
+  for (let i = 0; i < tabs.length; i++) {
+    if (isEnabledForTab(tabs[i])) {
+      changeIcon(false);
+      resume(tabs[i]);
+    } else {
+      changeIcon(true);
     }
   }
 });
 
 // Tab change listener
 chrome.tabs.onActivated.addListener(function (info) {
-  if (previous_window !== info.windowId) {
-    return;
-  }
-
   chrome.tabs.get(info.tabId, async function (tab) {
+    changeIcon(!isEnabledForTab(tab));
     if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
       return;
     }
@@ -207,7 +220,6 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (!isEnabledForTab(tab)) {
     return;
   }
-
   await injectScript(tab);
 
   if (
