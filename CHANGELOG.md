@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/drodil/youtube_auto_pause/compare/v1.8.0...v1.9.0) (2024-10-03)
+
+
+### Features
+
+* ff support for gray icon ([c768126](https://github.com/drodil/youtube_auto_pause/commit/c768126311a7f16a3cc402d0d3a315805c9957b2))
+* turn icon to gray when extension not active ([7f1c00c](https://github.com/drodil/youtube_auto_pause/commit/7f1c00c003b68140e41610c19385cae52611c3be)), closes [#13](https://github.com/drodil/youtube_auto_pause/issues/13)
+
 ## [1.8.0](https://github.com/drodil/youtube_auto_pause/compare/v1.7.7...v1.8.0) (2024-09-18)
 
 
