@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://github.com/drodil/youtube_auto_pause/compare/v1.9.1...v1.9.2) (2024-10-04)
+
+
+### Bug Fixes
+
+* check for active tab for disabled icon ([22a2f3a](https://github.com/drodil/youtube_auto_pause/commit/22a2f3a1585db9199b99b035965821b571a088fb))
+
 ### [1.9.1](https://github.com/drodil/youtube_auto_pause/compare/v1.9.0...v1.9.1) (2024-10-04)
 
 
