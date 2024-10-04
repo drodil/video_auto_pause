@@ -218,8 +218,11 @@ chrome.tabs.onActivated.addListener(function (info) {
 // Tab update listener
 chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (!isEnabledForTab(tab)) {
+    changeIcon(true);
     return;
   }
+
+  changeIcon(false);
   await injectScript(tab);
 
   if (

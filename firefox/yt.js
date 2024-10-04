@@ -220,9 +220,11 @@ browser.tabs.onActivated.addListener(function (info) {
 // Tab update listener
 browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (!isEnabledForTab(tab)) {
+    changeIcon(true);
     return;
   }
 
+  changeIcon(false);
   await injectScript(tab);
 
   if (
