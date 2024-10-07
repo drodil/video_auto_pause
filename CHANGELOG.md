@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/drodil/youtube_auto_pause/compare/v1.10.0...v1.10.1) (2024-10-07)
+
+
+### Bug Fixes
+
+* lint command ([13bffc1](https://github.com/drodil/youtube_auto_pause/commit/13bffc142b7edb6057d0c3aef3c901c30f00ecde))
+
 ## [1.10.0](https://github.com/drodil/youtube_auto_pause/compare/v1.9.2...v1.10.0) (2024-10-07)
 
 
