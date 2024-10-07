@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "npm run build:chrome && npm run build:firefox",
-    "lint": "web-ext lint --source-dir ./src/",
+    "lint": "npm run prepare:firefox && web-ext lint --source-dir ./src/",
     "prepare:chrome": "cp manifests/chrome.json src/manifest.json",
     "prepare:firefox": "cp manifests/firefox.json src/manifest.json",
     "start:chrome": "npm run prepare:chrome && web-ext run --source-dir src/ --target chromium",
