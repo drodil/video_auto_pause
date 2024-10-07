@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/drodil/youtube_auto_pause/compare/v1.9.2...v1.10.0) (2024-10-07)
+
+
+### Features
+
+* allow enabling/disabling for single tab ([4c5ec50](https://github.com/drodil/youtube_auto_pause/commit/4c5ec506caf9ef8766e6def3db69ccf69e5881c4))
+
+
+### Maintenance
+
+* merge firefox and chrome sources ([79219a0](https://github.com/drodil/youtube_auto_pause/commit/79219a0a6a12a91faed385e6948ab080ebb6ef9b))
+
 ### [1.9.2](https://github.com/drodil/youtube_auto_pause/compare/v1.9.1...v1.9.2) (2024-10-04)
 
 

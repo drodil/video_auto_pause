@@ -1,8 +1,14 @@
 {
   "name": "YouTube Auto Pause",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "Stops YouTube (+ other video services) on tab unfocus and continues on focus",
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "idle"
+  ],
   "host_permissions": [
     "https://*.youtube.com/*",
     "https://*.vimeo.com/*",
@@ -38,7 +44,9 @@
     "service_worker": "yt.js"
   },
   "externally_connectable": {
-    "ids": ["*"],
+    "ids": [
+      "*"
+    ],
     "matches": [
       "https://*.youtube.com/*",
       "https://*.youtubekids.com/*",

@@ -1,8 +1,14 @@
 {
   "name": "YouTube Auto Pause",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "Stops YouTube (+ other video services) on tab unfocus and continues on focus",
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "idle"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "drodil@youtube_auto_pause",
@@ -41,7 +47,9 @@
     }
   },
   "background": {
-    "scripts": ["yt.js"]
+    "scripts": [
+      "yt.js"
+    ]
   },
   "commands": {
     "toggle-extension": {
