@@ -1,6 +1,9 @@
+// Browser
+const env = chrome.runtime ? chrome : browser;
+
 // Previous tab and window numbers
 let previous_tab = -1;
-let previous_window = browser.windows.WINDOW_ID_NONE;
+let previous_window = env.windows.WINDOW_ID_NONE;
 let executedTabs = [];
 let enabledTabs = [];
 
@@ -21,18 +24,16 @@ let options = {
   disableOnFullscreen: false,
 };
 
-const hosts = browser.runtime.getManifest().host_permissions;
+const hosts = env.runtime.getManifest().host_permissions;
 for (const host of hosts) {
   options[host] = true;
 }
 
 // Initialize settings from storage
-setTimeout(() => {
-  refresh_settings();
-}, 100);
+refresh_settings();
 
 function refresh_settings() {
-  browser.storage.sync.get(Object.keys(options), function (result) {
+  env.storage.sync.get(Object.keys(options), function (result) {
     options = Object.assign(options, result);
     if (options.disabled === true) {
       options.autopause = false;
@@ -92,7 +93,7 @@ async function injectScript(tab) {
 
   debugLog(`Injecting script into tab ${tab.id} with url ${tab.url}`);
   try {
-    await browser.scripting.executeScript({
+    await env.scripting.executeScript({
       target: { tabId: tab.id },
       files: ["yt_auto_pause.js"],
     });
@@ -104,22 +105,21 @@ async function injectScript(tab) {
 
 // Functionality to send messages to tabs
 function sendMessage(tab, message) {
-  if (!browser.runtime?.id || !isEnabledForTab(tab)) {
-    debugLog(`Not sending message`);
+  if (!env.runtime?.id || !isEnabledForTab(tab)) {
     return;
   }
 
-  if (browser.runtime.lastError) {
+  if (env.runtime.lastError) {
     console.error(
-      `YouTube Autopause error: ${browser.runtime.lastError.toString()}`
+      `YouTube Autopause error: ${env.runtime.lastError.toString()}`
     );
     return;
   }
 
   debugLog(`Sending message ${JSON.stringify(message)} to tab ${tab.id}`);
 
-  browser.tabs.sendMessage(tab.id, message, {}, function () {
-    void browser.runtime.lastError;
+  env.tabs.sendMessage(tab.id, message, {}, function () {
+    void env.runtime.lastError;
   });
 }
 
@@ -150,7 +150,7 @@ function toggle_mute(tab) {
 
 function changeIcon(disabled) {
   if (disabled) {
-    browser.action.setIcon({
+    env.action.setIcon({
       path: {
         16: "/images/icon_disabled_16.png",
         32: "/images/icon_disabled_32.png",
@@ -159,7 +159,7 @@ function changeIcon(disabled) {
       },
     });
   } else {
-    browser.action.setIcon({
+    env.action.setIcon({
       path: {
         16: "/images/icon_16.png",
         32: "/images/icon_32.png",
@@ -171,7 +171,7 @@ function changeIcon(disabled) {
 }
 
 // Listen options changes
-browser.storage.onChanged.addListener(async function (changes) {
+env.storage.onChanged.addListener(async function (changes) {
   enabledTabs = [];
   for (const key in changes) {
     debugLog(
@@ -180,7 +180,7 @@ browser.storage.onChanged.addListener(async function (changes) {
     options[key] = changes[key].newValue;
   }
 
-  const tabs = await browser.tabs.query({ active: true });
+  const tabs = await env.tabs.query({ active: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (isEnabledForTab(tabs[i])) {
@@ -193,8 +193,9 @@ browser.storage.onChanged.addListener(async function (changes) {
 });
 
 // Tab change listener
-browser.tabs.onActivated.addListener(function (info) {
-  browser.tabs.get(info.tabId, async function (tab) {
+env.tabs.onActivated.addListener(function (info) {
+  env.tabs.get(info.tabId, async function (tab) {
+    changeIcon(!isEnabledForTab(tab));
     if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
       return;
     }
@@ -203,7 +204,7 @@ browser.tabs.onActivated.addListener(function (info) {
 
     if (options.autopause && previous_tab !== -1) {
       debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
-      browser.tabs.get(previous_tab, function (prev) {
+      env.tabs.get(previous_tab, function (prev) {
         stop(prev);
       });
     }
@@ -218,7 +219,7 @@ browser.tabs.onActivated.addListener(function (info) {
 });
 
 // Tab update listener
-browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (!isEnabledForTab(tab)) {
     if (tab.active) {
       changeIcon(true);
@@ -243,7 +244,7 @@ browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   }
 });
 
-browser.tabs.onRemoved.addListener(function (tabId) {
+env.tabs.onRemoved.addListener(function (tabId) {
   if (enabledTabs.includes(tabId)) {
     debugLog(`Tab removed, removing tab ${tabId} from enabled tabs`);
     enabledTabs = enabledTabs.filter((e) => e !== tabId);
@@ -255,10 +256,10 @@ browser.tabs.onRemoved.addListener(function (tabId) {
 });
 
 // Window focus listener
-browser.windows.onFocusChanged.addListener(async function (window) {
+env.windows.onFocusChanged.addListener(async function (window) {
   if (window !== previous_window) {
     if (options.focuspause && state !== "locked") {
-      const tabsStop = await browser.tabs.query({ windowId: previous_window });
+      const tabsStop = await env.tabs.query({ windowId: previous_window });
       debugLog(`Window changed, stopping videos in window ${window}`);
       for (let i = 0; i < tabsStop.length; i++) {
         if (!isEnabledForTab(tabsStop[i])) {
@@ -268,8 +269,8 @@ browser.windows.onFocusChanged.addListener(async function (window) {
       }
     }
 
-    if (options.focusresume && window !== browser.windows.WINDOW_ID_NONE) {
-      const tabsResume = await browser.tabs.query({ windowId: window });
+    if (options.focusresume && window !== env.windows.WINDOW_ID_NONE) {
+      const tabsResume = await env.tabs.query({ windowId: window });
       debugLog(`Window changed, resuming videos in window ${window}`);
       for (let i = 0; i < tabsResume.length; i++) {
         if (!isEnabledForTab(tabsResume[i])) {
@@ -287,12 +288,12 @@ browser.windows.onFocusChanged.addListener(async function (window) {
 });
 
 // Message listener for messages from tabs
-browser.runtime.onMessage.addListener(async function (
+env.runtime.onMessage.addListener(async function (
   request,
   sender,
   sendResponse
 ) {
-  if (!isEnabledForTab(sender.tab) || browser.runtime.lastError) {
+  if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
     return true;
   }
 
@@ -318,7 +319,7 @@ browser.runtime.onMessage.addListener(async function (
     }
   }
 
-  await browser.storage.sync.get("cursorTracking", function (result) {
+  await env.storage.sync.get("cursorTracking", function (result) {
     if (result.cursorTracking && "cursorNearEdge" in request) {
       // Handle cursor near edge changes
       if (request.cursorNearEdge && options.autopause) {
@@ -338,19 +339,19 @@ browser.runtime.onMessage.addListener(async function (
 });
 
 // Listener for keyboard shortcuts
-browser.commands.onCommand.addListener(async (command) => {
+env.commands.onCommand.addListener(async (command) => {
   if (command === "toggle-extension") {
     options.disabled = !options.disabled;
     debugLog(
       `Toggle extension command received, extension state ${options.disabled}`
     );
-    browser.storage.sync.set({ disabled: options.disabled });
+    env.storage.sync.set({ disabled: options.disabled });
     refresh_settings();
   } else if (command === "toggle-play") {
     debugLog(
       `Toggle play command received, toggling play for all tabs in current window`
     );
-    const tabs = await browser.tabs.query({ currentWindow: true });
+    const tabs = await env.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       if (!isEnabledForTab(tabs[i])) {
         continue;
@@ -361,7 +362,7 @@ browser.commands.onCommand.addListener(async (command) => {
     debugLog(
       `Toggle mute command received, toggling mute for all tabs in current window`
     );
-    const tabs = await browser.tabs.query({ currentWindow: true });
+    const tabs = await env.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
       if (!isEnabledForTab(tabs[i])) {
         continue;
@@ -372,9 +373,9 @@ browser.commands.onCommand.addListener(async (command) => {
 });
 
 // Listener for computer idle/locked/active
-browser.idle.onStateChanged.addListener(async function (s) {
+env.idle.onStateChanged.addListener(async function (s) {
   state = s;
-  const tabs = await browser.tabs.query({ active: true });
+  const tabs = await env.tabs.query({ active: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (!isEnabledForTab(tabs[i])) {
@@ -394,8 +395,8 @@ browser.idle.onStateChanged.addListener(async function (s) {
   }
 });
 
-browser.windows.onCreated.addListener(async function (window) {
-  const tabs = await browser.tabs.query({ windowId: window.id });
+env.windows.onCreated.addListener(async function (window) {
+  const tabs = await env.tabs.query({ windowId: window.id });
   debugLog(`Window created, stopping all non active videos`);
   for (let i = 0; i < tabs.length; i++) {
     if (!isEnabledForTab(tabs[i])) {

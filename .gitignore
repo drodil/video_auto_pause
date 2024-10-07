@@ -4,3 +4,4 @@ Archive.zip
 **/images/store
 web-ext-artifacts
 node_modules
+src/manifest.json

@@ -1,4 +1,5 @@
 if (window.ytAutoPauseInjected !== true) {
+  const env = chrome.runtime ? chrome : browser;
   window.ytAutoPauseInjected = true;
   let manuallyPaused = false;
   let automaticallyPaused = false;
@@ -28,7 +29,7 @@ if (window.ytAutoPauseInjected !== true) {
   refresh_settings();
 
   function refresh_settings() {
-    chrome.storage.sync.get(Object.keys(options), function (result) {
+    env.storage.sync.get(Object.keys(options), function (result) {
       options = Object.assign(options, result);
       if (options.disabled === true) {
         options.autopause = false;
@@ -48,7 +49,7 @@ if (window.ytAutoPauseInjected !== true) {
     });
   }
 
-  chrome.storage.onChanged.addListener(async function (changes, namespace) {
+  env.storage.onChanged.addListener(async function (changes, namespace) {
     for (const key in changes) {
       debugLog(
         `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
@@ -106,21 +107,21 @@ if (window.ytAutoPauseInjected !== true) {
 
   // Send message to service worker
   function sendMessage(message) {
-    if (!chrome.runtime?.id) {
+    if (!env.runtime?.id) {
       return;
     }
 
-    if (chrome.runtime.lastError) {
+    if (env.runtime.lastError) {
       console.error(
-        `Youtube Autopause error: ${chrome.runtime.lastError.toString()}`
+        `Youtube Autopause error: ${env.runtime.lastError.toString()}`
       );
       return;
     }
 
     debugLog(`Sending message ${JSON.stringify(message)}`);
 
-    chrome.runtime.sendMessage(message, function () {
-      void chrome.runtime.lastError;
+    env.runtime.sendMessage(message, function () {
+      void env.runtime.lastError;
     });
   }
 
@@ -137,7 +138,7 @@ if (window.ytAutoPauseInjected !== true) {
   );
 
   // Listen media commands from the service worker
-  chrome.runtime.onMessage.addListener(async function (
+  env.runtime.onMessage.addListener(async function (
     request,
     sender,
     sendResponse

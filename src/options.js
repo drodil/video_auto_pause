@@ -1,3 +1,6 @@
+// Browser
+const env = chrome.runtime ? chrome : browser;
+
 const options = {
   autopause: true,
   autoresume: true,
@@ -13,12 +16,12 @@ const options = {
   disableOnFullscreen: false,
 };
 
-const hosts = browser.runtime.getManifest().host_permissions;
+const hosts = env.runtime.getManifest().host_permissions;
 for (const host of hosts) {
   options[host] = true;
 }
 
-// Saves options to browser.storage
+// Saves options to chrome storage
 function save_options() {
   const storage = {};
 
@@ -26,12 +29,12 @@ function save_options() {
     storage[option] = document.getElementById(option).checked;
   }
 
-  browser.storage.sync.set(storage, function () {});
+  env.storage.sync.set(storage, function () {});
 }
 
-// Restores options from browser.storage
+// Restores options from chrome storage
 function restore_options() {
-  browser.storage.sync.get(options, function (items) {
+  env.storage.sync.get(options, function (items) {
     for (const opt in items) {
       document.getElementById(opt).checked = items[opt];
     }
@@ -46,7 +49,7 @@ function restore_options() {
 }
 
 // Show shortcuts in the options window
-browser.commands.getAll(function (commands) {
+env.commands.getAll(function (commands) {
   const hotkeysDiv = document.getElementById("hotkeys");
   for (let i = 0; i < commands.length; i++) {
     if (
@@ -85,11 +88,11 @@ for (host of hosts) {
 
 // Show version in the options window
 const version = document.getElementById("version");
-version.textContent = "v" + browser.runtime.getManifest().version;
+version.textContent = "v" + env.runtime.getManifest().version;
 
 // Restore options on load and when they change in the store
 document.addEventListener("DOMContentLoaded", restore_options);
-browser.storage.onChanged.addListener(function (_changes, _namespace) {
+env.storage.onChanged.addListener(function (_changes, _namespace) {
   restore_options();
 });
 

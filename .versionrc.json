@@ -14,11 +14,11 @@
       "type": "json"
     },
     {
-      "filename": "chrome/manifest.json",
+      "filename": "manifests/chrome.json",
       "type": "json"
     },
     {
-      "filename": "firefox/manifest.json",
+      "filename": "manifests/firefox.json",
       "type": "json"
     }
   ],
