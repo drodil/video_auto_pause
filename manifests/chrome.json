@@ -2,13 +2,7 @@
   "name": "YouTube Auto Pause",
   "version": "1.9.2",
   "description": "Stops YouTube (+ other video services) on tab unfocus and continues on focus",
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab",
-    "scripting",
-    "idle"
-  ],
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "host_permissions": [
     "https://*.youtube.com/*",
     "https://*.vimeo.com/*",
@@ -44,9 +38,7 @@
     "service_worker": "yt.js"
   },
   "externally_connectable": {
-    "ids": [
-      "*"
-    ],
+    "ids": ["*"],
     "matches": [
       "https://*.youtube.com/*",
       "https://*.youtubekids.com/*",
@@ -65,7 +57,14 @@
         "default": "Ctrl+Shift+K",
         "mac": "Command+Shift+K"
       },
-      "description": "Toggle auto pause/resume"
+      "description": "Disable/enable extension"
+    },
+    "toggle-tab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Disable/enable on active tab"
     },
     "toggle-play": {
       "suggested_key": {

@@ -5,7 +5,7 @@ const env = chrome.runtime ? chrome : browser;
 let previous_tab = -1;
 let previous_window = env.windows.WINDOW_ID_NONE;
 let executedTabs = [];
-let enabledTabs = [];
+let disabledTabs = [];
 
 // Computer state
 let state = "active";
@@ -29,35 +29,43 @@ for (const host of hosts) {
   options[host] = true;
 }
 
-// Initialize settings from storage
-refresh_settings();
-
-function refresh_settings() {
-  env.storage.sync.get(Object.keys(options), function (result) {
-    options = Object.assign(options, result);
-    if (options.disabled === true) {
-      options.autopause = false;
-      options.autoresume = false;
-      options.scrollpause = false;
-      options.lockpause = false;
-      options.lockresume = false;
-      options.focuspause = false;
-      options.focusresume = false;
-      options.cursorTracking = false;
-      options.debugMode = false;
-      options.disableOnFullscreen = true;
-      for (var host of hosts) {
-        options[host] = false;
-      }
-    }
-    enabledTabs = [];
-  });
-}
-
 function debugLog(message) {
   if (options.debugMode) {
     console.log(`YouTube auto pause: ${message}`);
   }
+}
+
+// Initialize settings from storage
+refresh_settings();
+
+async function refresh_settings() {
+  const result = await env.storage.sync.get(Object.keys(options));
+  options = Object.assign(options, result);
+  debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
+  if (options.disabled === true) {
+    options.autopause = false;
+    options.autoresume = false;
+    options.scrollpause = false;
+    options.lockpause = false;
+    options.lockresume = false;
+    options.focuspause = false;
+    options.focusresume = false;
+    options.cursorTracking = false;
+    options.debugMode = false;
+    options.disableOnFullscreen = true;
+    for (const host of hosts) {
+      options[host] = false;
+    }
+  }
+
+  disabledTabs =
+    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
+  debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
+}
+
+async function save_settings() {
+  await env.storage.sync.set(options);
+  await env.storage.local.set({ disabledTabs });
 }
 
 function isEnabledForTab(tab) {
@@ -65,8 +73,8 @@ function isEnabledForTab(tab) {
     return false;
   }
 
-  if (enabledTabs.includes(tab.id)) {
-    return true;
+  if (disabledTabs.includes(tab.id)) {
+    return false;
   }
 
   const optionKey = Object.keys(options).find((option) => {
@@ -171,14 +179,8 @@ function changeIcon(disabled) {
 }
 
 // Listen options changes
-env.storage.onChanged.addListener(async function (changes) {
-  enabledTabs = [];
-  for (const key in changes) {
-    debugLog(
-      `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
-    );
-    options[key] = changes[key].newValue;
-  }
+env.storage.onChanged.addListener(async function () {
+  await refresh_settings();
 
   const tabs = await env.tabs.query({ active: true });
 
@@ -193,29 +195,33 @@ env.storage.onChanged.addListener(async function (changes) {
 });
 
 // Tab change listener
-env.tabs.onActivated.addListener(function (info) {
-  env.tabs.get(info.tabId, async function (tab) {
-    changeIcon(!isEnabledForTab(tab));
-    if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
-      return;
+env.tabs.onActivated.addListener(async function (info) {
+  const tab = await env.tabs.get(info.tabId);
+  if (!tab) {
+    return;
+  }
+
+  changeIcon(!isEnabledForTab(tab));
+  if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
+    return;
+  }
+
+  await injectScript(tab);
+
+  if (options.autopause && previous_tab !== -1) {
+    debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
+    const prev = await env.tabs.get(previous_tab);
+    if (prev) {
+      stop(prev);
     }
+  }
 
-    await injectScript(tab);
+  if (options.autoresume) {
+    debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
+    resume(tab);
+  }
 
-    if (options.autopause && previous_tab !== -1) {
-      debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
-      env.tabs.get(previous_tab, function (prev) {
-        stop(prev);
-      });
-    }
-
-    if (options.autoresume) {
-      debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
-      resume(tab);
-    }
-
-    previous_tab = info.tabId;
-  });
+  previous_tab = info.tabId;
 });
 
 // Tab update listener
@@ -245,13 +251,13 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 });
 
 env.tabs.onRemoved.addListener(function (tabId) {
-  if (enabledTabs.includes(tabId)) {
-    debugLog(`Tab removed, removing tab ${tabId} from enabled tabs`);
-    enabledTabs = enabledTabs.filter((e) => e !== tabId);
-  }
   if (executedTabs.includes(tabId)) {
     debugLog(`Tab removed, removing tab ${tabId} from executed tabs`);
     executedTabs = executedTabs.filter((e) => e !== tabId);
+  }
+  if (disabledTabs.includes(tabId)) {
+    disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
+    save_settings();
   }
 });
 
@@ -346,7 +352,18 @@ env.commands.onCommand.addListener(async (command) => {
       `Toggle extension command received, extension state ${options.disabled}`
     );
     env.storage.sync.set({ disabled: options.disabled });
-    refresh_settings();
+    await refresh_settings();
+  } else if (command === "toggle-tab") {
+    const tabs = await env.tabs.query({ active: true, currentWindow: true });
+    const tab = tabs[0];
+    debugLog(`Toggle tab command received for tab ${tab.id}`);
+    if (disabledTabs.includes(tab.id)) {
+      disabledTabs = disabledTabs.filter((t) => t !== tab.id);
+    } else {
+      disabledTabs.push(tab.id);
+    }
+    await save_settings();
+    changeIcon(!isEnabledForTab);
   } else if (command === "toggle-play") {
     debugLog(
       `Toggle play command received, toggling play for all tabs in current window`

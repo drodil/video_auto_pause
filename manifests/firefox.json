@@ -51,6 +51,13 @@
       },
       "description": "Toggle auto pause/resume"
     },
+    "toggle-tab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Disable/enable on active tab"
+    },
     "toggle-play": {
       "suggested_key": {
         "default": "Ctrl+Shift+Space",

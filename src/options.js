@@ -22,30 +22,49 @@ for (const host of hosts) {
 }
 
 // Saves options to chrome storage
-function save_options() {
+async function save_options() {
   const storage = {};
 
   for (const option in options) {
     storage[option] = document.getElementById(option).checked;
   }
+  await env.storage.sync.set(storage);
 
-  env.storage.sync.set(storage, function () {});
+  const disabledForActive = document.getElementById("disabledTabs").checked;
+  const tabs = await env.tabs.query({ active: true, currentWindow: true });
+  const disabled =
+    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
+  if (disabledForActive) {
+    await env.storage.local.set({
+      disabledTabs: [...new Set([...disabled, tabs[0].id])],
+    });
+  } else {
+    await env.storage.local.set({
+      disabledTabs: disabled.filter((tab) => tab !== tabs[0].id),
+    });
+  }
 }
 
 // Restores options from chrome storage
-function restore_options() {
-  env.storage.sync.get(options, function (items) {
-    for (const opt in items) {
-      document.getElementById(opt).checked = items[opt];
-    }
+async function restore_options() {
+  const items = await env.storage.sync.get(options);
+  for (const opt in items) {
+    document.getElementById(opt).checked = items[opt];
+  }
 
-    for (const option in options) {
-      document.getElementById(option).disabled = items.disabled;
-      if (items.disabled) {
-        document.getElementById("disabled").disabled = false;
-      }
+  for (const option in options) {
+    document.getElementById(option).disabled = items.disabled;
+    if (items.disabled) {
+      document.getElementById("disabled").disabled = false;
     }
-  });
+  }
+
+  const disabled =
+    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
+  const tabs = await env.tabs.query({ active: true, currentWindow: true });
+  if (disabled.includes(tabs[0].id)) {
+    document.getElementById("disabledTabs").checked = true;
+  }
 }
 
 // Show shortcuts in the options window
@@ -92,14 +111,19 @@ version.textContent = "v" + env.runtime.getManifest().version;
 
 // Restore options on load and when they change in the store
 document.addEventListener("DOMContentLoaded", restore_options);
-env.storage.onChanged.addListener(function (_changes, _namespace) {
-  restore_options();
+env.storage.onChanged.addListener(async (_changes, _namespace) => {
+  await restore_options();
 });
 
 // Listen to changes of options
 for (const option in options) {
-  document.getElementById(option).addEventListener("change", save_options);
+  document
+    .getElementById(option)
+    .addEventListener("change", async () => await save_options());
 }
+document
+  .getElementById("disabledTabs")
+  .addEventListener("change", async () => await save_options());
 
 const coll = document.getElementsByClassName("collapsible_button");
 let i;
@@ -115,8 +139,3 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
-
-// Add event listener for the cursor tracking option
-document
-  .getElementById("cursorTracking")
-  .addEventListener("change", save_options);
