@@ -1,8 +1,8 @@
 {
-  "commitUrlFormat": "https://github.com/drodil/youtube_auto_pause/commit/{{hash}}",
-  "compareUrlFormat": "https://github.com/drodil/youtube_auto_pause/compare/{{previousTag}}...{{currentTag}}",
+  "commitUrlFormat": "https://github.com/drodil/video_auto_pause/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/drodil/video_auto_pause/compare/{{previousTag}}...{{currentTag}}",
   "releaseCommitMessageFormat": "chore(release): :bookmark: {{currentTag}}",
-  "issueUrlFormat": "https://github.com/drodil/youtube_auto_pause/issues/{{id}}",
+  "issueUrlFormat": "https://github.com/drodil/video_auto_pause/issues/{{id}}",
   "userUrlFormat": "https://github.com/{{user}}",
   "bumpFiles": [
     {

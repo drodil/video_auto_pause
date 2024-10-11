@@ -31,7 +31,7 @@ for (const host of hosts) {
 
 function debugLog(message) {
   if (options.debugMode) {
-    console.log(`YouTube auto pause: ${message}`);
+    console.log(`Video auto pause: ${message}`);
   }
 }
 
@@ -103,7 +103,7 @@ async function injectScript(tab) {
   try {
     await env.scripting.executeScript({
       target: { tabId: tab.id },
-      files: ["yt_auto_pause.js"],
+      files: ["video_auto_pause.js"],
     });
     executedTabs.push(tab.id);
   } catch (e) {
@@ -118,9 +118,7 @@ function sendMessage(tab, message) {
   }
 
   if (env.runtime.lastError) {
-    console.error(
-      `YouTube Autopause error: ${env.runtime.lastError.toString()}`
-    );
+    console.error(`Video Autopause error: ${env.runtime.lastError.toString()}`);
     return;
   }
 

@@ -1,16 +1,16 @@
 {
-  "name": "@drodil/youtube_auto_pause",
+  "name": "@drodil/video_auto_pause",
   "version": "1.10.1",
-  "homepage": "https://github.com/drodil/youtube_auto_pause",
+  "homepage": "https://github.com/drodil/video_auto_pause",
   "bugs": {
-    "url": "https://github.com/drodil/youtube_auto_pause/issues",
+    "url": "https://github.com/drodil/video_auto_pause/issues",
     "email": "heiccih@gmail.com"
   },
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/drodil/youtube_auto_pause.git"
+    "url": "https://github.com/drodil/video_auto_pause.git"
   },
   "funding": [
     {

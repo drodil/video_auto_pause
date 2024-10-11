@@ -1,6 +1,6 @@
-if (window.ytAutoPauseInjected !== true) {
+if (window.autoPauseInjected !== true) {
   const env = chrome.runtime ? chrome : browser;
-  window.ytAutoPauseInjected = true;
+  window.autoPauseInjected = true;
   let manuallyPaused = false;
   let automaticallyPaused = false;
 
@@ -21,7 +21,7 @@ if (window.ytAutoPauseInjected !== true) {
 
   function debugLog(message) {
     if (options.debugMode) {
-      console.log(`YouTube auto pause: ${message}`);
+      console.log(`Video auto pause: ${message}`);
     }
   }
 
@@ -113,7 +113,7 @@ if (window.ytAutoPauseInjected !== true) {
 
     if (env.runtime.lastError) {
       console.error(
-        `Youtube Autopause error: ${env.runtime.lastError.toString()}`
+        `Video Autopause error: ${env.runtime.lastError.toString()}`
       );
       return;
     }

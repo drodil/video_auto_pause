@@ -1,14 +1,8 @@
 {
-  "name": "YouTube Auto Pause",
+  "name": "Video Auto Pause",
   "version": "1.10.1",
-  "description": "Stops YouTube (+ other video services) on tab unfocus and continues on focus",
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab",
-    "scripting",
-    "idle"
-  ],
+  "description": "Stops multiple video services on tab unfocus and continues on focus",
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "host_permissions": [
     "https://*.youtube.com/*",
     "https://*.vimeo.com/*",
@@ -20,7 +14,7 @@
     "https://*.twitch.tv/*",
     "https://*.udacity.com/*"
   ],
-  "homepage_url": "https://github.com/drodil/youtube_auto_pause",
+  "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
@@ -41,12 +35,10 @@
     }
   },
   "background": {
-    "service_worker": "yt.js"
+    "service_worker": "vap_bs.js"
   },
   "externally_connectable": {
-    "ids": [
-      "*"
-    ],
+    "ids": ["*"],
     "matches": [
       "https://*.youtube.com/*",
       "https://*.youtubekids.com/*",

@@ -1,7 +1,7 @@
-![Youtube Auto Pause](yt_auto_pause.png)
+![Video Auto Pause](yt_auto_pause.png)
 
-This is a Chrome & Firefox extension that pauses Youtube videos when losing the tab/window focus by
-sending events to the player. Resumes the playback once the Youtube tab/window is back in focus.
+This is a Chrome & Firefox extension that pauses videos when losing the tab/window focus by
+sending events to the player. Resumes the playback once the tab/window is back in focus.
 
 Also listens for computer lock events and when the video goes out of viewport
 (for example when reading comments below the video).
@@ -18,7 +18,7 @@ Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 **From releases**
 
 There are pre-packaged releases available for both Chrome and Firefox. Download the latest release
-from the [releases page](https://github.com/drodil/youtube_auto_pause/releases) and
+from the [releases page](https://github.com/drodil/video_auto_pause/releases) and
 install it manually to your browser.
 
 **Manually (Chrome)**
@@ -41,7 +41,7 @@ install it manually to your browser.
 
 ## Supported services
 
-- Youtube (obviously)
+- Youtube
 - Youtube Kids
 - Vimeo
 - Netflix
