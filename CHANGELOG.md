@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.2](https://github.com/drodil/video_auto_pause/compare/v1.10.1...v1.10.2) (2024-10-11)
+
+
+### Bug Fixes
+
+* rename to video auto pause due to trademark ([5403e08](https://github.com/drodil/video_auto_pause/commit/5403e08ef16766683fc1a85bc7ce9591b0f24a5e))
+
+
+### Maintenance
+
+* change graphics ([95ff64d](https://github.com/drodil/video_auto_pause/commit/95ff64d0895a9676613e0264dcd1a4590dc28844))
+
 ### [1.10.1](https://github.com/drodil/video_auto_pause/compare/v1.10.0...v1.10.1) (2024-10-07)
 
 ### Bug Fixes

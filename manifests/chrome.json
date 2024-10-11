@@ -1,8 +1,14 @@
 {
   "name": "Video Auto Pause",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "Stops multiple video services on tab unfocus and continues on focus",
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "idle"
+  ],
   "host_permissions": [
     "https://*.youtube.com/*",
     "https://*.vimeo.com/*",
@@ -38,7 +44,9 @@
     "service_worker": "vap_bs.js"
   },
   "externally_connectable": {
-    "ids": ["*"],
+    "ids": [
+      "*"
+    ],
     "matches": [
       "https://*.youtube.com/*",
       "https://*.youtubekids.com/*",

@@ -1,8 +1,14 @@
 {
   "name": "Video Auto Pause",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "Stops various video services on tab unfocus and continues on focus",
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "idle"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "drodil@youtube_auto_pause",
@@ -41,7 +47,9 @@
     }
   },
   "background": {
-    "scripts": ["vap_bs.js"]
+    "scripts": [
+      "vap_bs.js"
+    ]
   },
   "commands": {
     "toggle-extension": {
