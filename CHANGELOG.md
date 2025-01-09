@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/drodil/video_auto_pause/compare/v1.10.2...v1.11.0) (2025-01-09)
+
+
+### Features
+
+* enable extension on all sites ([0bf9017](https://github.com/drodil/video_auto_pause/commit/0bf9017a38c20d4c85fc69664856804ceb44863d))
+
+
+### Documentation
+
+* remove supported services from readme ([1ee26bf](https://github.com/drodil/video_auto_pause/commit/1ee26bfae0cac61cef90b44ab0d4610c97bec8f4))
+
 ### [1.10.2](https://github.com/drodil/video_auto_pause/compare/v1.10.1...v1.10.2) (2024-10-11)
 
 
