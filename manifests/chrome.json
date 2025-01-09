@@ -2,24 +2,8 @@
   "name": "Video Auto Pause",
   "version": "1.10.2",
   "description": "Stops multiple video services on tab unfocus and continues on focus",
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab",
-    "scripting",
-    "idle"
-  ],
-  "host_permissions": [
-    "https://*.youtube.com/*",
-    "https://*.vimeo.com/*",
-    "https://*.netflix.com/watch/*",
-    "https://*.youtubekids.com/*",
-    "https://*.primevideo.com/*",
-    "https://*.max.com/*",
-    "https://*.disneyplus.com/*",
-    "https://*.twitch.tv/*",
-    "https://*.udacity.com/*"
-  ],
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "host_permissions": ["<all_urls>"],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
@@ -42,22 +26,6 @@
   },
   "background": {
     "service_worker": "vap_bs.js"
-  },
-  "externally_connectable": {
-    "ids": [
-      "*"
-    ],
-    "matches": [
-      "https://*.youtube.com/*",
-      "https://*.youtubekids.com/*",
-      "https://*.vimeo.com/*",
-      "https://*.netflix.com/watch/*",
-      "https://*.primevideo.com/*",
-      "https://*.max.com/*",
-      "https://*.disneyplus.com/*",
-      "https://*.twitch.tv/*",
-      "https://*.udacity.com/*"
-    ]
   },
   "commands": {
     "toggle-extension": {

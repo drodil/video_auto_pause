@@ -16,11 +16,6 @@ const options = {
   disableOnFullscreen: false,
 };
 
-const hosts = env.runtime.getManifest().host_permissions;
-for (const host of hosts) {
-  options[host] = true;
-}
-
 // Saves options to chrome storage
 async function save_options() {
   const storage = {};
@@ -85,25 +80,6 @@ env.commands.getAll(function (commands) {
     hotkeysDiv.appendChild(tag);
   }
 });
-
-function formatHostName(hostname) {
-  return hostname.replace("https://", "").split("/")[0].replaceAll("*.", "");
-}
-
-const hostsDiv = document.getElementById("hosts");
-for (host of hosts) {
-  const label = document.createElement("label");
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.id = host;
-  label.appendChild(checkbox);
-  const span = document.createElement("span");
-  span.className = "label-text";
-  span.textContent = formatHostName(host);
-  label.appendChild(span);
-  hostsDiv.appendChild(label);
-  checkbox.addEventListener("change", save_options);
-}
 
 // Show version in the options window
 const version = document.getElementById("version");

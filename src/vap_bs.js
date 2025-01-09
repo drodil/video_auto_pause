@@ -4,7 +4,6 @@ const env = chrome.runtime ? chrome : browser;
 // Previous tab and window numbers
 let previous_tab = -1;
 let previous_window = env.windows.WINDOW_ID_NONE;
-let executedTabs = [];
 let disabledTabs = [];
 
 // Computer state
@@ -24,11 +23,6 @@ let options = {
   disableOnFullscreen: false,
 };
 
-const hosts = env.runtime.getManifest().host_permissions;
-for (const host of hosts) {
-  options[host] = true;
-}
-
 function debugLog(message) {
   if (options.debugMode) {
     console.log(`Video auto pause: ${message}`);
@@ -37,6 +31,14 @@ function debugLog(message) {
 
 // Initialize settings from storage
 refresh_settings();
+env.scripting.registerContentScripts([
+  {
+    id: "video_auto_pause",
+    matches: ["<all_urls>"],
+    js: ["video_auto_pause.js"],
+    runAt: "document_start",
+  },
+]);
 
 async function refresh_settings() {
   const result = await env.storage.sync.get(Object.keys(options));
@@ -53,9 +55,6 @@ async function refresh_settings() {
     options.cursorTracking = false;
     options.debugMode = false;
     options.disableOnFullscreen = true;
-    for (const host of hosts) {
-      options[host] = false;
-    }
   }
 
   disabledTabs =
@@ -69,46 +68,11 @@ async function save_settings() {
 }
 
 function isEnabledForTab(tab) {
-  if (!tab || !tab.url || options.disabled) {
+  if (!tab || options.disabled) {
     return false;
   }
 
-  if (disabledTabs.includes(tab.id)) {
-    return false;
-  }
-
-  const optionKey = Object.keys(options).find((option) => {
-    if (!option.startsWith("http")) {
-      return false;
-    }
-    const reg = option
-      .replace(/[.+?^${}()|/[\]\\]/g, "\\$&")
-      .replace("*", ".*");
-    return new RegExp(reg).test(tab.url);
-  });
-
-  if (optionKey) {
-    return !!options[optionKey];
-  }
-
-  return false;
-}
-
-async function injectScript(tab) {
-  if (executedTabs.includes(tab.id) || !isEnabledForTab(tab)) {
-    return;
-  }
-
-  debugLog(`Injecting script into tab ${tab.id} with url ${tab.url}`);
-  try {
-    await env.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ["video_auto_pause.js"],
-    });
-    executedTabs.push(tab.id);
-  } catch (e) {
-    debugLog(e);
-  }
+  return !disabledTabs.includes(tab.id);
 }
 
 // Functionality to send messages to tabs
@@ -204,8 +168,6 @@ env.tabs.onActivated.addListener(async function (info) {
     return;
   }
 
-  await injectScript(tab);
-
   if (options.autopause && previous_tab !== -1) {
     debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
     const prev = await env.tabs.get(previous_tab);
@@ -234,7 +196,6 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (tab.active) {
     changeIcon(false);
   }
-  await injectScript(tab);
 
   if (
     "status" in changeInfo &&
@@ -249,10 +210,6 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 });
 
 env.tabs.onRemoved.addListener(function (tabId) {
-  if (executedTabs.includes(tabId)) {
-    debugLog(`Tab removed, removing tab ${tabId} from executed tabs`);
-    executedTabs = executedTabs.filter((e) => e !== tabId);
-  }
   if (disabledTabs.includes(tabId)) {
     disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
     save_settings();
@@ -417,8 +374,6 @@ env.windows.onCreated.addListener(async function (window) {
     if (!isEnabledForTab(tabs[i])) {
       continue;
     }
-
-    await injectScript(tabs[i]);
 
     if (tabs[i].active && options.autoresume) {
       resume(tabs[i]);

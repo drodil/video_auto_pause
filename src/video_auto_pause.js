@@ -42,9 +42,6 @@ if (window.autoPauseInjected !== true) {
         options.cursorTracking = false;
         options.debugMode = false;
         options.disableOnFullscreen = true;
-        for (var host of hosts) {
-          options[host] = false;
-        }
       }
     });
   }
