@@ -39,18 +39,6 @@ install it manually to your browser.
 5. Click on "Load Temporary Add-on"
 6. Select the `firefox` directory in the repository
 
-## Supported services
-
-- Youtube
-- Youtube Kids
-- Vimeo
-- Netflix
-- Prime Video
-- Max
-- Disney+
-- Twitch
-- Udacity
-
 ## Contributing
 
 Please feel free to contribute with pull requests or by creating issues. In case
