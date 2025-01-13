@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/drodil/video_auto_pause/compare/v1.11.0...v1.11.1) (2025-01-13)
+
+
+### Bug Fixes
+
+* enabled icon & viewport check ([75d2bbf](https://github.com/drodil/video_auto_pause/commit/75d2bbfa407a2b7e750c6e77f690efe84b434320))
+
 ## [1.11.0](https://github.com/drodil/video_auto_pause/compare/v1.10.2...v1.11.0) (2025-01-09)
 
 
