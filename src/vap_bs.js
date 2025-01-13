@@ -163,7 +163,8 @@ env.tabs.onActivated.addListener(async function (info) {
     return;
   }
 
-  changeIcon(!isEnabledForTab(tab));
+  sendMessage(tab, { action: "check" });
+
   if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
     return;
   }
@@ -186,10 +187,9 @@ env.tabs.onActivated.addListener(async function (info) {
 
 // Tab update listener
 env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+  sendMessage(tab, { action: "check" });
+
   if (!isEnabledForTab(tab)) {
-    if (tab.active) {
-      changeIcon(true);
-    }
     return;
   }
 
@@ -254,6 +254,11 @@ env.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
+  if ("hasVideos" in request && sender.tab.active) {
+    debugLog(`Tab has videos: ${request.hasVideos}`);
+    changeIcon(!(request.hasVideos && isEnabledForTab(sender.tab)));
+  }
+
   if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
     return true;
   }
@@ -318,7 +323,6 @@ env.commands.onCommand.addListener(async (command) => {
       disabledTabs.push(tab.id);
     }
     await save_settings();
-    changeIcon(!isEnabledForTab);
   } else if (command === "toggle-play") {
     debugLog(
       `Toggle play command received, toggling play for all tabs in current window`

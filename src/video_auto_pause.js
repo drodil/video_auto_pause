@@ -145,12 +145,14 @@ if (window.autoPauseInjected !== true) {
     }
     debugLog(`Received message: ${JSON.stringify(request)}`);
 
+    const videoElements = document.getElementsByTagName("video");
+    sendMessage({ hasVideos: videoElements.length >= 1 });
+
     if (document.fullscreenElement && options.disableOnFullscreen) {
       debugLog(`Document is in fullscreen mode, ignoring all commands`);
       return true;
     }
 
-    const videoElements = document.getElementsByTagName("video");
     const iframeElements = document.getElementsByTagName("iframe");
 
     for (let i = 0; i < iframeElements.length; i++) {
@@ -213,38 +215,43 @@ if (window.autoPauseInjected !== true) {
 
   // Intersection observer for the video elements in page
   // can be used to determine when video goes out of viewport
-  const intersection_observer = new IntersectionObserver(
-    function (entries) {
-      if (!options.scrollpause) {
-        return;
-      }
-      if (entries[0].isIntersecting === true) {
-        debugLog(`Video not anymore in viewport`);
-        sendMessage({ visible: true });
-      } else {
-        debugLog(`Video in viewport`);
-        sendMessage({ visible: false });
-      }
-    },
-    { threshold: [0] }
-  );
+  document.addEventListener("DOMContentLoaded", () => {
+    const intersection_observer = new IntersectionObserver(
+      function (entries) {
+        if (!options.scrollpause) {
+          return;
+        }
+        if (entries[0].isIntersecting === true) {
+          debugLog(`Video not anymore in viewport`);
+          sendMessage({ visible: true });
+        } else {
+          debugLog(`Video in viewport`);
+          sendMessage({ visible: false });
+        }
+      },
+      { threshold: [0] }
+    );
 
-  // Start observing video elements
-  let videoElements = document.getElementsByTagName("video");
-  for (let i = 0; i < videoElements.length; i++) {
-    intersection_observer.observe(videoElements[i]);
-    videoElements[i].addEventListener("pause", async (_e) => {
-      if (!automaticallyPaused && options.manualPause) {
-        debugLog(`Manually paused video`);
-        manuallyPaused = true;
-        automaticallyPaused = false;
-      }
-    });
-    videoElements[i].addEventListener("play", (_e) => {
-      if (options.manualPause) {
-        debugLog(`Manually resumed video`);
-        manuallyPaused = false;
-      }
-    });
-  }
+    // Start observing video elements
+    let videoElements = document.getElementsByTagName("video");
+    sendMessage({ hasVideos: videoElements.length >= 1 });
+
+    for (let i = 0; i < videoElements.length; i++) {
+      intersection_observer.observe(videoElements[i]);
+      videoElements[i].addEventListener("pause", async (_e) => {
+        console.log(automaticallyPaused, options.manualPause);
+        if (!automaticallyPaused && options.manualPause) {
+          debugLog(`Manually paused video`);
+          manuallyPaused = true;
+          automaticallyPaused = false;
+        }
+      });
+      videoElements[i].addEventListener("play", (_e) => {
+        if (options.manualPause) {
+          debugLog(`Manually resumed video`);
+          manuallyPaused = false;
+        }
+      });
+    }
+  });
 }
