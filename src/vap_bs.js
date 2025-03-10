@@ -118,26 +118,33 @@ function toggle_mute(tab) {
   sendMessage(tab, { action: "toggle_mute" });
 }
 
+let iconTimeout;
 function changeIcon(disabled) {
-  if (disabled) {
-    env.action.setIcon({
-      path: {
-        16: "/images/icon_disabled_16.png",
-        32: "/images/icon_disabled_32.png",
-        64: "/images/icon_disabled_64.png",
-        128: "/images/icon_disabled_128.png",
-      },
-    });
-  } else {
-    env.action.setIcon({
-      path: {
-        16: "/images/icon_16.png",
-        32: "/images/icon_32.png",
-        64: "/images/icon_64.png",
-        128: "/images/icon_128.png",
-      },
-    });
+  if (iconTimeout) {
+    clearTimeout(iconTimeout);
   }
+
+  iconTimeout = setTimeout(() => {
+    if (disabled) {
+      env.action.setIcon({
+        path: {
+          16: "/images/icon_disabled_16.png",
+          32: "/images/icon_disabled_32.png",
+          64: "/images/icon_disabled_64.png",
+          128: "/images/icon_disabled_128.png",
+        },
+      });
+    } else {
+      env.action.setIcon({
+        path: {
+          16: "/images/icon_16.png",
+          32: "/images/icon_32.png",
+          64: "/images/icon_64.png",
+          128: "/images/icon_128.png",
+        },
+      });
+    }
+  }, 100);
 }
 
 // Listen options changes
@@ -183,6 +190,12 @@ env.tabs.onActivated.addListener(async function (info) {
   }
 
   previous_tab = info.tabId;
+});
+
+env.tabs.onCreated.addListener(async function (tab) {
+  if (!tab.url) {
+    changeIcon(true);
+  }
 });
 
 // Tab update listener

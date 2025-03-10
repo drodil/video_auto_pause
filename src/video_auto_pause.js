@@ -134,6 +134,10 @@ if (window.autoPauseInjected !== true) {
     false
   );
 
+  const hasVideos = () => {
+    return document.getElementsByTagName("video").length >= 1;
+  };
+
   // Listen media commands from the service worker
   env.runtime.onMessage.addListener(async function (
     request,
@@ -146,7 +150,7 @@ if (window.autoPauseInjected !== true) {
     debugLog(`Received message: ${JSON.stringify(request)}`);
 
     const videoElements = document.getElementsByTagName("video");
-    sendMessage({ hasVideos: videoElements.length >= 1 });
+    sendMessage({ hasVideos: hasVideos() });
 
     if (document.fullscreenElement && options.disableOnFullscreen) {
       debugLog(`Document is in fullscreen mode, ignoring all commands`);
@@ -234,7 +238,7 @@ if (window.autoPauseInjected !== true) {
 
     // Start observing video elements
     let videoElements = document.getElementsByTagName("video");
-    sendMessage({ hasVideos: videoElements.length >= 1 });
+    sendMessage({ hasVideos: hasVideos() });
 
     for (let i = 0; i < videoElements.length; i++) {
       intersection_observer.observe(videoElements[i]);
