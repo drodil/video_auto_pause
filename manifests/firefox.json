@@ -1,15 +1,23 @@
 {
   "name": "Video Auto Pause",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "Stops various video services on tab unfocus and continues on focus",
-  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "idle"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "drodil@youtube_auto_pause",
       "strict_min_version": "127.0"
     }
   },
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
@@ -31,7 +39,9 @@
     }
   },
   "background": {
-    "scripts": ["vap_bs.js"]
+    "scripts": [
+      "vap_bs.js"
+    ]
   },
   "commands": {
     "toggle-extension": {
