@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/drodil/video_auto_pause/compare/v1.11.1...v1.11.2) (2025-06-05)
+
+
+### Bug Fixes
+
+* check for active tab explicitly before resuming ([90db7da](https://github.com/drodil/video_auto_pause/commit/90db7da9242b22428e98c1efdb4e6aee3e332762)), closes [#16](https://github.com/drodil/video_auto_pause/issues/16)
+* improve disabled icon handling ([2fb2887](https://github.com/drodil/video_auto_pause/commit/2fb28877f1d6ac4fc033b0d3450748d1078f2f16))
+
 ### [1.11.1](https://github.com/drodil/video_auto_pause/compare/v1.11.0...v1.11.1) (2025-01-13)
 
 
