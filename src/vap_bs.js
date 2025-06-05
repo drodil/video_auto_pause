@@ -20,7 +20,7 @@ let options = {
   disabled: false,
   cursorTracking: false,
   debugMode: false,
-  disableOnFullscreen: false,
+  disableOnFullscreen: true,
 };
 
 function debugLog(message) {
@@ -37,6 +37,7 @@ env.scripting.registerContentScripts([
     matches: ["<all_urls>"],
     js: ["video_auto_pause.js"],
     runAt: "document_start",
+    allFrames: true,
   },
 ]);
 
@@ -144,7 +145,7 @@ function changeIcon(disabled) {
         },
       });
     }
-  }, 100);
+  }, 150);
 }
 
 // Listen options changes
@@ -153,12 +154,16 @@ env.storage.onChanged.addListener(async function () {
 
   const tabs = await env.tabs.query({ active: true });
 
+  const enabledTab = tabs.find((t) => isEnabledForTab(t) && t.active);
+  if (enabledTab) {
+    changeIcon(false);
+  } else {
+    changeIcon(true);
+  }
+
   for (let i = 0; i < tabs.length; i++) {
-    if (isEnabledForTab(tabs[i])) {
-      changeIcon(false);
+    if (isEnabledForTab(tabs[i]) && tabs[i].active) {
       resume(tabs[i]);
-    } else {
-      changeIcon(true);
     }
   }
 });
@@ -184,7 +189,7 @@ env.tabs.onActivated.addListener(async function (info) {
     }
   }
 
-  if (options.autoresume) {
+  if (options.autoresume && tab.active) {
     debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
     resume(tab);
   }
@@ -230,11 +235,11 @@ env.tabs.onRemoved.addListener(function (tabId) {
 });
 
 // Window focus listener
-env.windows.onFocusChanged.addListener(async function (window) {
-  if (window !== previous_window) {
+env.windows.onFocusChanged.addListener(async function (windowId) {
+  if (windowId !== previous_window) {
     if (options.focuspause && state !== "locked") {
       const tabsStop = await env.tabs.query({ windowId: previous_window });
-      debugLog(`Window changed, stopping videos in window ${window}`);
+      debugLog(`Window changed, stopping videos in window ${windowId}`);
       for (let i = 0; i < tabsStop.length; i++) {
         if (!isEnabledForTab(tabsStop[i])) {
           continue;
@@ -243,9 +248,9 @@ env.windows.onFocusChanged.addListener(async function (window) {
       }
     }
 
-    if (options.focusresume && window !== env.windows.WINDOW_ID_NONE) {
-      const tabsResume = await env.tabs.query({ windowId: window });
-      debugLog(`Window changed, resuming videos in window ${window}`);
+    if (options.focusresume && windowId !== env.windows.WINDOW_ID_NONE) {
+      const tabsResume = await env.tabs.query({ windowId: windowId });
+      debugLog(`Window changed, resuming videos in window ${windowId}`);
       for (let i = 0; i < tabsResume.length; i++) {
         if (!isEnabledForTab(tabsResume[i])) {
           continue;
@@ -257,7 +262,7 @@ env.windows.onFocusChanged.addListener(async function (window) {
       }
     }
 
-    previous_window = window;
+    previous_window = windowId;
   }
 });
 
@@ -280,7 +285,7 @@ env.runtime.onMessage.addListener(async function (
     if (request.minimized && options.autopause) {
       debugLog(`Window minimized, stopping videos in tab ${sender.tab.id}`);
       stop(sender.tab);
-    } else if (!request.minimized && options.autoresume) {
+    } else if (!request.minimized && options.autoresume && sender.tab.active) {
       debugLog(`Window returned, resuming videos in tab ${sender.tab.id}`);
       resume(sender.tab);
     }
@@ -292,7 +297,7 @@ env.runtime.onMessage.addListener(async function (
         `Window is not visible, stopping videos in tab ${sender.tab.id}`
       );
       stop(sender.tab);
-    } else {
+    } else if (request.visible && sender.tab.active) {
       debugLog(`Window is visible, resuming videos in tab ${sender.tab.id}`);
       resume(sender.tab);
     }
@@ -306,7 +311,11 @@ env.runtime.onMessage.addListener(async function (
           `Nearing window edge, stopping videos in tab ${sender.tab.id}`
         );
         stop(sender.tab);
-      } else if (!request.cursorNearEdge && options.autoresume) {
+      } else if (
+        !request.cursorNearEdge &&
+        options.autoresume &&
+        sender.tab.active
+      ) {
         debugLog(`Returned to window, resuming videos in tab ${sender.tab.id}`);
         resume(sender.tab);
       }

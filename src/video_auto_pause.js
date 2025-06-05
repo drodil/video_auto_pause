@@ -16,7 +16,7 @@ if (window.autoPauseInjected !== true) {
     cursorTracking: false,
     manualPause: true,
     debugMode: false,
-    disableOnFullscreen: false,
+    disableOnFullscreen: true,
   };
 
   function debugLog(message) {
@@ -99,8 +99,6 @@ if (window.autoPauseInjected !== true) {
       sendMessage({ cursorNearEdge: false });
     }
   });
-
-  // Existing code...
 
   // Send message to service worker
   function sendMessage(message) {
