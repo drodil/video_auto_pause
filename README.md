@@ -4,27 +4,28 @@ This is a Chrome & Firefox extension that pauses videos when losing the tab/wind
 sending events to the player. Resumes the playback once the tab/window is back in focus.
 
 Also listens for computer lock events and when the video goes out of viewport
-(for example when reading comments below the video).
+(for example, when reading comments below the video).
 
 Features some useful keyboard shortcuts to control videos in the window.
 
 ## Installing
 
-**From web store**
+#### Chrome Web Store
+https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 
-Chrome: https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
-Firefox: https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
+#### Firefox Web Store
+https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 
 **From releases**
 
 There are pre-packaged releases available for both Chrome and Firefox. Download the latest release
-from the [releases page](https://github.com/drodil/vide_auto_pause/releases) and
+from the [releases page](https://github.com/drodil/video_auto_pause/releases) and
 install it manually to your browser.
 
 **Manually (Chrome)**
 
 1. Clone the repository
-2. Start chrome
+2. Start Chrome
 3. Go to `chrome://extensions`
 4. Enable developer mode
 5. Click on "Load unpacked"
@@ -33,7 +34,7 @@ install it manually to your browser.
 **Manually (Firefox)**
 
 1. Clone the repository
-2. Start firefox
+2. Start Firefox
 3. Go to `about:debugging`
 4. Click on "This Firefox"
 5. Click on "Load Temporary Add-on"
