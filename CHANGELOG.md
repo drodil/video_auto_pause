@@ -4,42 +4,36 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.11.2](https://github.com/drodil/video_auto_pause/compare/v1.11.1...v1.11.2) (2025-06-05)
 
-
 ### Bug Fixes
 
-* check for active tab explicitly before resuming ([90db7da](https://github.com/drodil/video_auto_pause/commit/90db7da9242b22428e98c1efdb4e6aee3e332762)), closes [#16](https://github.com/drodil/video_auto_pause/issues/16)
-* improve disabled icon handling ([2fb2887](https://github.com/drodil/video_auto_pause/commit/2fb28877f1d6ac4fc033b0d3450748d1078f2f16))
+- check for active tab explicitly before resuming ([90db7da](https://github.com/drodil/video_auto_pause/commit/90db7da9242b22428e98c1efdb4e6aee3e332762)), closes [#16](https://github.com/drodil/video_auto_pause/issues/16)
+- improve disabled icon handling ([2fb2887](https://github.com/drodil/video_auto_pause/commit/2fb28877f1d6ac4fc033b0d3450748d1078f2f16))
 
 ### [1.11.1](https://github.com/drodil/video_auto_pause/compare/v1.11.0...v1.11.1) (2025-01-13)
 
-
 ### Bug Fixes
 
-* enabled icon & viewport check ([75d2bbf](https://github.com/drodil/video_auto_pause/commit/75d2bbfa407a2b7e750c6e77f690efe84b434320))
+- enabled icon & viewport check ([75d2bbf](https://github.com/drodil/video_auto_pause/commit/75d2bbfa407a2b7e750c6e77f690efe84b434320))
 
 ## [1.11.0](https://github.com/drodil/video_auto_pause/compare/v1.10.2...v1.11.0) (2025-01-09)
 
-
 ### Features
 
-* enable extension on all sites ([0bf9017](https://github.com/drodil/video_auto_pause/commit/0bf9017a38c20d4c85fc69664856804ceb44863d))
-
+- enable extension on all sites ([0bf9017](https://github.com/drodil/video_auto_pause/commit/0bf9017a38c20d4c85fc69664856804ceb44863d))
 
 ### Documentation
 
-* remove supported services from readme ([1ee26bf](https://github.com/drodil/video_auto_pause/commit/1ee26bfae0cac61cef90b44ab0d4610c97bec8f4))
+- remove supported services from readme ([1ee26bf](https://github.com/drodil/video_auto_pause/commit/1ee26bfae0cac61cef90b44ab0d4610c97bec8f4))
 
 ### [1.10.2](https://github.com/drodil/video_auto_pause/compare/v1.10.1...v1.10.2) (2024-10-11)
 
-
 ### Bug Fixes
 
-* rename to video auto pause due to trademark ([5403e08](https://github.com/drodil/video_auto_pause/commit/5403e08ef16766683fc1a85bc7ce9591b0f24a5e))
-
+- rename to video auto pause due to trademark ([5403e08](https://github.com/drodil/video_auto_pause/commit/5403e08ef16766683fc1a85bc7ce9591b0f24a5e))
 
 ### Maintenance
 
-* change graphics ([95ff64d](https://github.com/drodil/video_auto_pause/commit/95ff64d0895a9676613e0264dcd1a4590dc28844))
+- change graphics ([95ff64d](https://github.com/drodil/video_auto_pause/commit/95ff64d0895a9676613e0264dcd1a4590dc28844))
 
 ### [1.10.1](https://github.com/drodil/video_auto_pause/compare/v1.10.0...v1.10.1) (2024-10-07)
 

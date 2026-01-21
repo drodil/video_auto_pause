@@ -49,7 +49,7 @@ if (window.autoPauseInjected !== true) {
   env.storage.onChanged.addListener(async function (changes, namespace) {
     for (const key in changes) {
       debugLog(
-        `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`
+        `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`,
       );
       options[key] = changes[key].newValue;
     }
@@ -108,7 +108,7 @@ if (window.autoPauseInjected !== true) {
 
     if (env.runtime.lastError) {
       console.error(
-        `Video Autopause error: ${env.runtime.lastError.toString()}`
+        `Video Autopause error: ${env.runtime.lastError.toString()}`,
       );
       return;
     }
@@ -129,7 +129,7 @@ if (window.autoPauseInjected !== true) {
         sendMessage({ minimized: document.hidden });
       }
     },
-    false
+    false,
   );
 
   const hasVideos = () => {
@@ -137,83 +137,81 @@ if (window.autoPauseInjected !== true) {
   };
 
   // Listen media commands from the service worker
-  env.runtime.onMessage.addListener(async function (
-    request,
-    sender,
-    sendResponse
-  ) {
-    if (!("action" in request)) {
-      return false;
-    }
-    debugLog(`Received message: ${JSON.stringify(request)}`);
-
-    const videoElements = document.getElementsByTagName("video");
-    sendMessage({ hasVideos: hasVideos() });
-
-    if (document.fullscreenElement && options.disableOnFullscreen) {
-      debugLog(`Document is in fullscreen mode, ignoring all commands`);
-      return true;
-    }
-
-    const iframeElements = document.getElementsByTagName("iframe");
-
-    for (let i = 0; i < iframeElements.length; i++) {
-      const iframe = iframeElements[i];
-      try {
-        if (request.action === "stop") {
-          iframe.contentWindow.postMessage(
-            JSON.stringify({ event: "command", func: "pauseVideo" }),
-            "*"
-          );
-        } else if (request.action === "resume") {
-          iframe.contentWindow.postMessage(
-            JSON.stringify({ event: "command", func: "playVideo" }),
-            "*"
-          );
-        }
-      } catch (e) {
-        debugLog(e);
+  env.runtime.onMessage.addListener(
+    async function (request, sender, sendResponse) {
+      if (!("action" in request)) {
+        return false;
       }
-    }
+      debugLog(`Received message: ${JSON.stringify(request)}`);
 
-    for (let i = 0; i < videoElements.length; i++) {
-      try {
-        if (request.action === "stop" && !manuallyPaused) {
-          automaticallyPaused = true;
-          videoElements[i].pause();
-        } else if (
-          request.action === "resume" &&
-          videoElements[i].paused &&
-          !manuallyPaused
-        ) {
-          automaticallyPaused = false;
-          if (!videoElements[i].ended) {
-            await videoElements[i].play();
+      const videoElements = document.getElementsByTagName("video");
+      sendMessage({ hasVideos: hasVideos() });
+
+      if (document.fullscreenElement && options.disableOnFullscreen) {
+        debugLog(`Document is in fullscreen mode, ignoring all commands`);
+        return true;
+      }
+
+      const iframeElements = document.getElementsByTagName("iframe");
+
+      for (let i = 0; i < iframeElements.length; i++) {
+        const iframe = iframeElements[i];
+        try {
+          if (request.action === "stop") {
+            iframe.contentWindow.postMessage(
+              JSON.stringify({ event: "command", func: "pauseVideo" }),
+              "*",
+            );
+          } else if (request.action === "resume") {
+            iframe.contentWindow.postMessage(
+              JSON.stringify({ event: "command", func: "playVideo" }),
+              "*",
+            );
           }
-        } else if (request.action === "toggle_mute") {
-          videoElements[i].muted = !videoElements[i].muted;
-        } else if (request.action === "mute") {
-          videoElements[i].muted = true;
-        } else if (request.action === "unmute") {
-          videoElements[i].muted = false;
-        } else if (request.action === "toggle") {
-          if (videoElements[i].paused && !manuallyPaused) {
+        } catch (e) {
+          debugLog(e);
+        }
+      }
+
+      for (let i = 0; i < videoElements.length; i++) {
+        try {
+          if (request.action === "stop" && !manuallyPaused) {
+            automaticallyPaused = true;
+            videoElements[i].pause();
+          } else if (
+            request.action === "resume" &&
+            videoElements[i].paused &&
+            !manuallyPaused
+          ) {
+            automaticallyPaused = false;
             if (!videoElements[i].ended) {
               await videoElements[i].play();
             }
-            automaticallyPaused = false;
-          } else if (!manuallyPaused) {
-            videoElements[i].pause();
-            automaticallyPaused = true;
+          } else if (request.action === "toggle_mute") {
+            videoElements[i].muted = !videoElements[i].muted;
+          } else if (request.action === "mute") {
+            videoElements[i].muted = true;
+          } else if (request.action === "unmute") {
+            videoElements[i].muted = false;
+          } else if (request.action === "toggle") {
+            if (videoElements[i].paused && !manuallyPaused) {
+              if (!videoElements[i].ended) {
+                await videoElements[i].play();
+              }
+              automaticallyPaused = false;
+            } else if (!manuallyPaused) {
+              videoElements[i].pause();
+              automaticallyPaused = true;
+            }
           }
+        } catch (e) {
+          debugLog(e);
         }
-      } catch (e) {
-        debugLog(e);
       }
-    }
-    sendResponse({});
-    return true;
-  });
+      sendResponse({});
+      return true;
+    },
+  );
 
   // Intersection observer for the video elements in page
   // can be used to determine when video goes out of viewport
@@ -231,7 +229,7 @@ if (window.autoPauseInjected !== true) {
           sendMessage({ visible: false });
         }
       },
-      { threshold: [0] }
+      { threshold: [0] },
     );
 
     // Start observing video elements
@@ -253,6 +251,7 @@ if (window.autoPauseInjected !== true) {
           debugLog(`Manually resumed video`);
           manuallyPaused = false;
         }
+        automaticallyPaused = false;
       });
     }
   });

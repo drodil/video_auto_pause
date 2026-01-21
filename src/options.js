@@ -74,7 +74,7 @@ env.commands.getAll(function (commands) {
     }
     const tag = document.createElement("p");
     const text = document.createTextNode(
-      commands[i].shortcut + " - " + commands[i].description
+      commands[i].shortcut + " - " + commands[i].description,
     );
     tag.appendChild(text);
     hotkeysDiv.appendChild(tag);

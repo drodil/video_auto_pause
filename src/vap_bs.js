@@ -61,6 +61,18 @@ async function refresh_settings() {
   disabledTabs =
     (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
   debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
+
+   // Initialize previous tab & window
+   const windows = await env.windows.getAll({ populate: false, windowTypes: ['normal'] });
+   if (windows.length > 0) {
+      const currentWindow = await env.windows.getLastFocused();
+      previous_window = currentWindow.id;
+   }
+   
+   const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
+   if (tabs.length > 0) {
+      previous_tab = tabs[0].id;
+   }
 }
 
 async function save_settings() {
@@ -170,7 +182,13 @@ env.storage.onChanged.addListener(async function () {
 
 // Tab change listener
 env.tabs.onActivated.addListener(async function (info) {
-  const tab = await env.tabs.get(info.tabId);
+  let tab;
+  try {
+    tab = await env.tabs.get(info.tabId);
+  } catch (e) {
+    debugLog(`Could not get current tab ${info.tabId}: ${e}`);
+    return;
+  }
   if (!tab) {
     return;
   }
@@ -183,9 +201,13 @@ env.tabs.onActivated.addListener(async function (info) {
 
   if (options.autopause && previous_tab !== -1) {
     debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
-    const prev = await env.tabs.get(previous_tab);
-    if (prev) {
-      stop(prev);
+    try {
+      const prev = await env.tabs.get(previous_tab);
+      if (prev) {
+        stop(prev);
+      }
+    } catch (e) {
+      debugLog(`Could not get previous tab ${previous_tab}: ${e}`);
     }
   }
 
@@ -221,7 +243,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     !tab.active
   ) {
     debugLog(
-      `Tab updated, stopping video in tab ${tabId} with status ${changeInfo.status}, active ${tab.active}`
+      `Tab updated, stopping video in tab ${tabId} with status ${changeInfo.status}, active ${tab.active}`,
     );
     stop(tab);
   }
@@ -267,71 +289,75 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
 });
 
 // Message listener for messages from tabs
-env.runtime.onMessage.addListener(async function (
-  request,
-  sender,
-  sendResponse
-) {
-  if ("hasVideos" in request && sender.tab.active) {
-    debugLog(`Tab has videos: ${request.hasVideos}`);
-    changeIcon(!(request.hasVideos && isEnabledForTab(sender.tab)));
-  }
-
-  if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
-    return true;
-  }
-
-  if ("minimized" in request) {
-    if (request.minimized && options.autopause) {
-      debugLog(`Window minimized, stopping videos in tab ${sender.tab.id}`);
-      stop(sender.tab);
-    } else if (!request.minimized && options.autoresume && sender.tab.active) {
-      debugLog(`Window returned, resuming videos in tab ${sender.tab.id}`);
-      resume(sender.tab);
+env.runtime.onMessage.addListener(
+  async function (request, sender, sendResponse) {
+    if ("hasVideos" in request && sender.tab.active) {
+      debugLog(`Tab has videos: ${request.hasVideos}`);
+      changeIcon(!(request.hasVideos && isEnabledForTab(sender.tab)));
     }
-  }
 
-  if ("visible" in request && options.scrollpause) {
-    if (!request.visible) {
-      debugLog(
-        `Window is not visible, stopping videos in tab ${sender.tab.id}`
-      );
-      stop(sender.tab);
-    } else if (request.visible && sender.tab.active) {
-      debugLog(`Window is visible, resuming videos in tab ${sender.tab.id}`);
-      resume(sender.tab);
+    if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
+      return true;
     }
-  }
 
-  await env.storage.sync.get("cursorTracking", function (result) {
-    if (result.cursorTracking && "cursorNearEdge" in request) {
-      // Handle cursor near edge changes
-      if (request.cursorNearEdge && options.autopause) {
-        debugLog(
-          `Nearing window edge, stopping videos in tab ${sender.tab.id}`
-        );
+    if ("minimized" in request) {
+      if (request.minimized && options.autopause) {
+        debugLog(`Window minimized, stopping videos in tab ${sender.tab.id}`);
         stop(sender.tab);
       } else if (
-        !request.cursorNearEdge &&
+        !request.minimized &&
         options.autoresume &&
         sender.tab.active
       ) {
-        debugLog(`Returned to window, resuming videos in tab ${sender.tab.id}`);
+        debugLog(`Window returned, resuming videos in tab ${sender.tab.id}`);
         resume(sender.tab);
       }
     }
-  });
 
-  sendResponse({});
-  return true;
-});
+    if ("visible" in request && options.scrollpause) {
+      if (!request.visible) {
+        debugLog(
+          `Window is not visible, stopping videos in tab ${sender.tab.id}`,
+        );
+        stop(sender.tab);
+      } else if (request.visible && sender.tab.active) {
+        debugLog(`Window is visible, resuming videos in tab ${sender.tab.id}`);
+        resume(sender.tab);
+      }
+    }
+
+    await env.storage.sync.get("cursorTracking", function (result) {
+      if (result.cursorTracking && "cursorNearEdge" in request) {
+        // Handle cursor near edge changes
+        if (request.cursorNearEdge && options.autopause) {
+          debugLog(
+            `Nearing window edge, stopping videos in tab ${sender.tab.id}`,
+          );
+          stop(sender.tab);
+        } else if (
+          !request.cursorNearEdge &&
+          options.autoresume &&
+          sender.tab.active
+        ) {
+          debugLog(
+            `Returned to window, resuming videos in tab ${sender.tab.id}`,
+          );
+          resume(sender.tab);
+        }
+      }
+    });
+
+    sendResponse({});
+    return true;
+  },
+);
 
 // Listener for keyboard shortcuts
 env.commands.onCommand.addListener(async (command) => {
   if (command === "toggle-extension") {
     options.disabled = !options.disabled;
     debugLog(
-      `Toggle extension command received, extension state ${options.disabled}`
+      `Toggle extension command received, extension state ${options.disabled}`,
     );
     env.storage.sync.set({ disabled: options.disabled });
     await refresh_settings();
@@ -347,7 +373,7 @@ env.commands.onCommand.addListener(async (command) => {
     await save_settings();
   } else if (command === "toggle-play") {
     debugLog(
-      `Toggle play command received, toggling play for all tabs in current window`
+      `Toggle play command received, toggling play for all tabs in current window`,
     );
     const tabs = await env.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {
@@ -358,7 +384,7 @@ env.commands.onCommand.addListener(async (command) => {
     }
   } else if (command === "toggle_mute") {
     debugLog(
-      `Toggle mute command received, toggling mute for all tabs in current window`
+      `Toggle mute command received, toggling mute for all tabs in current window`,
     );
     const tabs = await env.tabs.query({ currentWindow: true });
     for (let i = 0; i < tabs.length; i++) {

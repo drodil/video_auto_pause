@@ -11,9 +11,11 @@ Features some useful keyboard shortcuts to control videos in the window.
 ## Installing
 
 #### Chrome Web Store
+
 https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 
 #### Firefox Web Store
+
 https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
 
 **From releases**

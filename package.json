@@ -34,11 +34,15 @@
     "debug:firefox": "npm run prepare:firefox && web-ext run --devtools --source-dir ./src/",
     "build:firefox": "npm run prepare:firefox && web-ext build --overwrite-dest --source-dir ./src/ --filename firefox.zip",
     "bump-test": "standard-version --dry-run --no-verify",
-    "bump": "standard-version --no-verify"
+    "bump": "standard-version --no-verify",
+    "prettier:fix": "prettier --write ."
   },
   "devDependencies": {
     "standard-version": "^9.5.0",
     "web-ext": "^8.2.0"
   },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+  "dependencies": {
+    "prettier": "^3.8.0"
+  }
 }
