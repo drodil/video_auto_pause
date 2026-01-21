@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.3](https://github.com/drodil/video_auto_pause/compare/v1.11.2...v1.11.3) (2026-01-21)
+
+
+### Bug Fixes
+
+* cursor listeners ([3675887](https://github.com/drodil/video_auto_pause/commit/3675887b0c491644445386167ee9f73e4ec2d984))
+
+
+### Maintenance
+
+* error handling + formatting ([7d33f8d](https://github.com/drodil/video_auto_pause/commit/7d33f8d146c083c322458de40dfe1b2c8114a69c))
+* fix prettier deps ([eb8763b](https://github.com/drodil/video_auto_pause/commit/eb8763bf25b77450b3b02d5c4e2f8fe42cc62985))
+
 ### [1.11.2](https://github.com/drodil/video_auto_pause/compare/v1.11.1...v1.11.2) (2025-06-05)
 
 ### Bug Fixes
