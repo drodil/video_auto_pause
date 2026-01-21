@@ -76,6 +76,7 @@ if (window.autoPauseInjected !== true) {
   }
 
   let cursorNearEdgeTimeout;
+  let cursorOutsideWindow = false;
 
   // Listen for mousemove events
   window.addEventListener("mousemove", async function (event) {
@@ -89,13 +90,46 @@ if (window.autoPauseInjected !== true) {
           debugLog(`Cursor near window edge, sending message`);
           sendMessage({ cursorNearEdge: true });
           cursorNearEdgeTimeout = null;
-        }, 200); // Wait for 1 second to infer user intention
+        }, 200); // Wait for 200ms to infer user intention
       }
     } else {
       // If the cursor moves away from the edge, clear the timeout
       clearTimeout(cursorNearEdgeTimeout);
       cursorNearEdgeTimeout = null;
-      debugLog(`Cursor not near window edge, sending message`);
+      if (!cursorOutsideWindow) {
+        debugLog(`Cursor not near window edge, sending message`);
+        sendMessage({ cursorNearEdge: false });
+      }
+    }
+  });
+
+  // Listen for mouse leaving the window
+  document.addEventListener("mouseleave", function (event) {
+    if (!options.cursorTracking) {
+      return;
+    }
+    if (
+      event.relatedTarget === null ||
+      event.relatedTarget.nodeName === "HTML"
+    ) {
+      debugLog(`Cursor left the window, sending message`);
+      cursorOutsideWindow = true;
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      sendMessage({ cursorNearEdge: true });
+    }
+  });
+
+  // Listen for mouse entering the window
+  document.addEventListener("mouseenter", function (_event) {
+    if (!options.cursorTracking) {
+      return;
+    }
+    if (cursorOutsideWindow) {
+      debugLog(`Cursor entered the window, sending message`);
+      cursorOutsideWindow = false;
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
       sendMessage({ cursorNearEdge: false });
     }
   });
@@ -183,10 +217,17 @@ if (window.autoPauseInjected !== true) {
             videoElements[i].paused &&
             !manuallyPaused
           ) {
+            debugLog(
+              `Attempting to resume video: paused=${videoElements[i].paused}, manuallyPaused=${manuallyPaused}`,
+            );
             automaticallyPaused = false;
             if (!videoElements[i].ended) {
               await videoElements[i].play();
             }
+          } else if (request.action === "resume") {
+            debugLog(
+              `Resume blocked: paused=${videoElements[i].paused}, manuallyPaused=${manuallyPaused}`,
+            );
           } else if (request.action === "toggle_mute") {
             videoElements[i].muted = !videoElements[i].muted;
           } else if (request.action === "mute") {
@@ -213,46 +254,94 @@ if (window.autoPauseInjected !== true) {
     },
   );
 
+  function attachVideoListeners(videoElement, intersection_observer) {
+    if (videoElement.dataset.autoPauseListenerAttached) {
+      return;
+    }
+    videoElement.dataset.autoPauseListenerAttached = "true";
+
+    intersection_observer.observe(videoElement);
+
+    videoElement.addEventListener("pause", async (_e) => {
+      debugLog(
+        `Pause event: automaticallyPaused=${automaticallyPaused}, manualPause=${options.manualPause}`,
+      );
+      if (!automaticallyPaused && options.manualPause) {
+        debugLog(`Manually paused video`);
+        manuallyPaused = true;
+        automaticallyPaused = false;
+      }
+    });
+
+    videoElement.addEventListener("play", (_e) => {
+      if (options.manualPause) {
+        debugLog(`Manually resumed video`);
+        manuallyPaused = false;
+      }
+      automaticallyPaused = false;
+    });
+  }
+
   // Intersection observer for the video elements in page
   // can be used to determine when video goes out of viewport
-  document.addEventListener("DOMContentLoaded", () => {
-    const intersection_observer = new IntersectionObserver(
-      function (entries) {
-        if (!options.scrollpause) {
-          return;
-        }
-        if (entries[0].isIntersecting === true) {
-          debugLog(`Video not anymore in viewport`);
-          sendMessage({ visible: true });
-        } else {
-          debugLog(`Video in viewport`);
-          sendMessage({ visible: false });
-        }
-      },
-      { threshold: [0] },
-    );
+  const intersection_observer = new IntersectionObserver(
+    function (entries) {
+      if (!options.scrollpause) {
+        return;
+      }
+      if (entries[0].isIntersecting === true) {
+        debugLog(`Video not anymore in viewport`);
+        sendMessage({ visible: true });
+      } else {
+        debugLog(`Video in viewport`);
+        sendMessage({ visible: false });
+      }
+    },
+    { threshold: [0] },
+  );
 
-    // Start observing video elements
+  // Function to observe all current video elements
+  function observeExistingVideos() {
     let videoElements = document.getElementsByTagName("video");
     sendMessage({ hasVideos: hasVideos() });
 
     for (let i = 0; i < videoElements.length; i++) {
-      intersection_observer.observe(videoElements[i]);
-      videoElements[i].addEventListener("pause", async (_e) => {
-        console.log(automaticallyPaused, options.manualPause);
-        if (!automaticallyPaused && options.manualPause) {
-          debugLog(`Manually paused video`);
-          manuallyPaused = true;
-          automaticallyPaused = false;
-        }
-      });
-      videoElements[i].addEventListener("play", (_e) => {
-        if (options.manualPause) {
-          debugLog(`Manually resumed video`);
-          manuallyPaused = false;
-        }
-        automaticallyPaused = false;
-      });
+      attachVideoListeners(videoElements[i], intersection_observer);
     }
+  }
+
+  // Initial observation when DOM is loaded
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", observeExistingVideos);
+  } else {
+    observeExistingVideos();
+  }
+
+  // Watch for dynamically added video elements
+  const videoObserver = new MutationObserver(function (mutations) {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.tagName === "VIDEO") {
+          debugLog(`New video element detected`);
+          attachVideoListeners(node, intersection_observer);
+          sendMessage({ hasVideos: hasVideos() });
+        } else if (node.getElementsByTagName) {
+          const videos = node.getElementsByTagName("video");
+          if (videos.length > 0) {
+            debugLog(`New video elements detected in added node`);
+            for (let i = 0; i < videos.length; i++) {
+              attachVideoListeners(videos[i], intersection_observer);
+            }
+            sendMessage({ hasVideos: hasVideos() });
+          }
+        }
+      }
+    }
+  });
+
+  // Start observing the document for video element additions
+  videoObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
   });
 }

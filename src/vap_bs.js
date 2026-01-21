@@ -62,17 +62,20 @@ async function refresh_settings() {
     (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
   debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
 
-   // Initialize previous tab & window
-   const windows = await env.windows.getAll({ populate: false, windowTypes: ['normal'] });
-   if (windows.length > 0) {
-      const currentWindow = await env.windows.getLastFocused();
-      previous_window = currentWindow.id;
-   }
-   
-   const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
-   if (tabs.length > 0) {
-      previous_tab = tabs[0].id;
-   }
+  // Initialize previous tab & window
+  const windows = await env.windows.getAll({
+    populate: false,
+    windowTypes: ["normal"],
+  });
+  if (windows.length > 0) {
+    const currentWindow = await env.windows.getLastFocused();
+    previous_window = currentWindow.id;
+  }
+
+  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
+  if (tabs.length > 0) {
+    previous_tab = tabs[0].id;
+  }
 }
 
 async function save_settings() {
