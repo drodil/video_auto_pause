@@ -176,9 +176,9 @@ env.storage.onChanged.addListener(async function () {
     changeIcon(true);
   }
 
-  for (let i = 0; i < tabs.length; i++) {
-    if (isEnabledForTab(tabs[i]) && tabs[i].active) {
-      resume(tabs[i]);
+  for (const element of tabs) {
+    if (isEnabledForTab(element) && element.active) {
+      resume(element);
     }
   }
 });
@@ -203,10 +203,10 @@ env.tabs.onActivated.addListener(async function (info) {
   }
 
   if (options.autopause && previous_tab !== -1) {
-    debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
     try {
       const prev = await env.tabs.get(previous_tab);
-      if (prev) {
+      if (prev && prev.windowId === tab.windowId) {
+        debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
         stop(prev);
       }
     } catch (e) {
@@ -257,6 +257,10 @@ env.tabs.onRemoved.addListener(function (tabId) {
     disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
     save_settings();
   }
+
+  if (previous_tab === tabId) {
+    previous_tab = -1;
+  }
 });
 
 // Window focus listener
@@ -264,7 +268,7 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
   if (windowId !== previous_window) {
     if (options.focuspause && state !== "locked") {
       const tabsStop = await env.tabs.query({ windowId: previous_window });
-      debugLog(`Window changed, stopping videos in window ${windowId}`);
+      debugLog(`Window changed, stopping videos in window ${previous_window}`);
       for (let i = 0; i < tabsStop.length; i++) {
         if (!isEnabledForTab(tabsStop[i])) {
           continue;
@@ -288,6 +292,12 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
     }
 
     previous_window = windowId;
+  }
+});
+
+env.windows.onRemoved.addListener(function (windowId) {
+  if (previous_window === windowId) {
+    previous_window = env.windows.WINDOW_ID_NONE;
   }
 });
 

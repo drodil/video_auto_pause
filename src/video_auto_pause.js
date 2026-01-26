@@ -1,7 +1,7 @@
 if (window.autoPauseInjected !== true) {
   const env = chrome.runtime ? chrome : browser;
   window.autoPauseInjected = true;
-  let manuallyPaused = false;
+  const manuallyPausedVideos = new WeakMap();
   let automaticallyPaused = false;
 
   let options = {
@@ -55,7 +55,10 @@ if (window.autoPauseInjected !== true) {
     }
 
     if (!options.manualPause) {
-      manuallyPaused = false;
+      const videoElements = document.getElementsByTagName("video");
+      for (const element of videoElements) {
+        manuallyPausedVideos.delete(element);
+      }
       automaticallyPaused = true;
     }
 
@@ -188,8 +191,8 @@ if (window.autoPauseInjected !== true) {
 
       const iframeElements = document.getElementsByTagName("iframe");
 
-      for (let i = 0; i < iframeElements.length; i++) {
-        const iframe = iframeElements[i];
+      for (const element of iframeElements) {
+        const iframe = element;
         try {
           if (request.action === "stop") {
             iframe.contentWindow.postMessage(
@@ -207,41 +210,44 @@ if (window.autoPauseInjected !== true) {
         }
       }
 
-      for (let i = 0; i < videoElements.length; i++) {
+      for (const element of videoElements) {
         try {
-          if (request.action === "stop" && !manuallyPaused) {
+          const video = element;
+          const isManuallyPaused = manuallyPausedVideos.get(video);
+
+          if (request.action === "stop" && !isManuallyPaused) {
             automaticallyPaused = true;
-            videoElements[i].pause();
+            video.pause();
           } else if (
             request.action === "resume" &&
-            videoElements[i].paused &&
-            !manuallyPaused
+            video.paused &&
+            !isManuallyPaused
           ) {
             debugLog(
-              `Attempting to resume video: paused=${videoElements[i].paused}, manuallyPaused=${manuallyPaused}`,
+              `Attempting to resume video: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
             );
             automaticallyPaused = false;
-            if (!videoElements[i].ended) {
-              await videoElements[i].play();
+            if (!video.ended) {
+              await video.play();
             }
           } else if (request.action === "resume") {
             debugLog(
-              `Resume blocked: paused=${videoElements[i].paused}, manuallyPaused=${manuallyPaused}`,
+              `Resume blocked: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
             );
           } else if (request.action === "toggle_mute") {
-            videoElements[i].muted = !videoElements[i].muted;
+            video.muted = !video.muted;
           } else if (request.action === "mute") {
-            videoElements[i].muted = true;
+            video.muted = true;
           } else if (request.action === "unmute") {
-            videoElements[i].muted = false;
+            video.muted = false;
           } else if (request.action === "toggle") {
-            if (videoElements[i].paused && !manuallyPaused) {
-              if (!videoElements[i].ended) {
-                await videoElements[i].play();
+            if (video.paused && !isManuallyPaused) {
+              if (!video.ended) {
+                await video.play();
               }
               automaticallyPaused = false;
-            } else if (!manuallyPaused) {
-              videoElements[i].pause();
+            } else if (!isManuallyPaused) {
+              video.pause();
               automaticallyPaused = true;
             }
           }
@@ -268,7 +274,7 @@ if (window.autoPauseInjected !== true) {
       );
       if (!automaticallyPaused && options.manualPause) {
         debugLog(`Manually paused video`);
-        manuallyPaused = true;
+        manuallyPausedVideos.set(videoElement, true);
         automaticallyPaused = false;
       }
     });
@@ -276,7 +282,7 @@ if (window.autoPauseInjected !== true) {
     videoElement.addEventListener("play", (_e) => {
       if (options.manualPause) {
         debugLog(`Manually resumed video`);
-        manuallyPaused = false;
+        manuallyPausedVideos.delete(videoElement);
       }
       automaticallyPaused = false;
     });
@@ -289,12 +295,14 @@ if (window.autoPauseInjected !== true) {
       if (!options.scrollpause) {
         return;
       }
-      if (entries[0].isIntersecting === true) {
-        debugLog(`Video not anymore in viewport`);
-        sendMessage({ visible: true });
-      } else {
-        debugLog(`Video in viewport`);
-        sendMessage({ visible: false });
+      for (const entry of entries) {
+        if (entry.isIntersecting === true) {
+          debugLog(`Video in viewport`);
+          sendMessage({ visible: true });
+        } else {
+          debugLog(`Video scrolled out of viewport`);
+          sendMessage({ visible: false });
+        }
       }
     },
     { threshold: [0] },
@@ -305,8 +313,8 @@ if (window.autoPauseInjected !== true) {
     let videoElements = document.getElementsByTagName("video");
     sendMessage({ hasVideos: hasVideos() });
 
-    for (let i = 0; i < videoElements.length; i++) {
-      attachVideoListeners(videoElements[i], intersection_observer);
+    for (const element of videoElements) {
+      attachVideoListeners(element, intersection_observer);
     }
   }
 
@@ -329,8 +337,8 @@ if (window.autoPauseInjected !== true) {
           const videos = node.getElementsByTagName("video");
           if (videos.length > 0) {
             debugLog(`New video elements detected in added node`);
-            for (let i = 0; i < videos.length; i++) {
-              attachVideoListeners(videos[i], intersection_observer);
+            for (const element of videos) {
+              attachVideoListeners(element, intersection_observer);
             }
             sendMessage({ hasVideos: hasVideos() });
           }
