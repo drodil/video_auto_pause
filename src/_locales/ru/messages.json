@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Сделано с ♥",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Включить/отключить расширение",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Включить/отключить на активной вкладке",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Переключить воспроизведение/паузу",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Переключить звук",
+    "description": "Command description for toggling mute"
   }
 }

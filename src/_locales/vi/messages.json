@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Được tạo với ♥ bởi",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Bật/tắt tiện ích mở rộng",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Bật/tắt trên tab hiện tại",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Chuyển đổi phát/tạm dừng",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Chuyển đổi tắt tiếng",
+    "description": "Command description for toggling mute"
   }
 }

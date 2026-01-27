@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Feito com ♥ por",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Ativar/desativar extensão",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Ativar/desativar na guia ativa",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Alternar reproduzir/parar",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Alternar mudo",
+    "description": "Command description for toggling mute"
   }
 }

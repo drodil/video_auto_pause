@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "视频自动暂停",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "当标签页失去焦点时暂停多个视频服务，并在重新获得焦点时继续播放",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "设置",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "高级设置",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "热键",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "切换标签页时暂停视频",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "返回标签页时继续播放视频",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "浏览器失去焦点时暂停视频",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "浏览器获得焦点时继续播放视频",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "禁用当前标签页的扩展",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "视频全屏时禁用",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "完全禁用扩展",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "计算机锁定时暂停视频",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "计算机解锁时继续播放视频",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "滚动出视野时暂停视频",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "光标离开浏览器窗口时暂停",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "防止手动暂停后自动继续播放",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "在控制台显示调试消息",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "您可以在扩展菜单中配置热键",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "在 GitHub 上查看源码",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "在 Patreon 上支持",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "由 ♥ 制作",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "启用/禁用扩展",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "在活动标签页上启用/禁用",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "切换播放/暂停",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "切换静音",
+    "description": "Command description for toggling mute"
+  }
+}

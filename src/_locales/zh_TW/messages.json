@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "影片自動暫停",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "當分頁失去焦點時暫停多個影片服務，並在重新獲得焦點時繼續播放",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "進階設定",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "熱鍵",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "切換分頁時暫停影片",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "返回分頁時繼續播放影片",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "瀏覽器失去焦點時暫停影片",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "瀏覽器獲得焦點時繼續播放影片",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "停用目前分頁的擴充功能",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "影片全螢幕時停用",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "完全停用擴充功能",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "電腦鎖定時暫停影片",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "電腦解鎖時繼續播放影片",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "捲動出視野時暫停影片",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "游標離開瀏覽器視窗時暫停",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "防止手動暫停後自動繼續播放",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "在控制台顯示除錯訊息",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "您可以在擴充功能選單中設定熱鍵",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "在 GitHub 上查看原始碼",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "在 Patreon 上支持",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "由 ♥ 製作",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "啟用/停用擴充功能",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "在作用中分頁上啟用/停用",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "切換播放/暫停",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "切換靜音",
+    "description": "Command description for toggling mute"
+  }
+}

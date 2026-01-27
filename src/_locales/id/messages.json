@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Dibuat dengan ♥ oleh",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Aktifkan/nonaktifkan ekstensi",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Aktifkan/nonaktifkan pada tab aktif",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Putar/jeda",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Bisukan/suarakan",
+    "description": "Command description for toggling mute"
   }
 }

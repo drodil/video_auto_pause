@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Arrête plusieurs services vidéo lors du changement d'onglet et reprend lors du focus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Paramètres",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Paramètres avancés",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Raccourcis clavier",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Mettre en pause lors du changement d'onglet",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Reprendre la vidéo lors du retour à l'onglet",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Mettre en pause lorsque le navigateur perd le focus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Reprendre lorsque le navigateur gagne le focus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Désactiver l'extension pour l'onglet actuel",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Désactiver en plein écran",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Désactiver l'extension complètement",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Mettre en pause lorsque l'ordinateur est verrouillé",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Reprendre lorsque l'ordinateur est déverrouillé",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Mettre en pause lors du défilement hors de vue",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Mettre en pause lorsque le curseur quitte la fenêtre",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Empêcher la reprise auto après une pause manuelle",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Afficher les messages de débogage dans la console",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Vous pouvez configurer les raccourcis dans le menu Extensions",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Voir le code source sur GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Soutenir sur Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Fait avec ♥ par",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Activer/désactiver l'extension",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Activer/désactiver sur l'onglet actif",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Basculer lecture/pause",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Basculer muet",
+    "description": "Command description for toggling mute"
+  }
+}

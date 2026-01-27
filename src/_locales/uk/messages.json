@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Зупиняє кілька відеосервісів при втраті фокусу вкладки та продовжує при відновленні",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Налаштування",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Розширені налаштування",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Гарячі клавіші",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Призупиняти відео при перемиканні вкладок",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Відновлювати відео при поверненні на вкладку",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Призупиняти відео, коли браузер втрачає фокус",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Відновлювати відео, коли браузер отримує фокус",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Вимкнути розширення для поточної вкладки",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Вимкнути в повноекранному режимі",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Повністю вимкнути розширення",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Призупиняти відео при блокуванні комп'ютера",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Відновлювати відео при розблокуванні комп'ютера",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Призупиняти відео при прокручуванні за межі видимості",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Призупиняти, коли курсор залишає вікно браузера",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Запобігати авто-відновленню після ручної паузи",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Показувати повідомлення налагодження в консолі",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Ви можете налаштувати гарячі клавіші в меню розширень",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Переглянути вихідний код на GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Підтримати на Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Зроблено з ♥",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Увімкнути/вимкнути розширення",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Увімкнути/вимкнути на активній вкладці",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Перемкнути відтворення/паузу",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Перемкнути звук",
+    "description": "Command description for toggling mute"
+  }
+}

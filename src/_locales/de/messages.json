@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Video Auto-Pause",
+    "message": "Video Auto Pause",
     "description": "Name of the extension"
   },
   "extDescription": {
@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Mit ♥ erstellt von",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Erweiterung aktivieren/deaktivieren",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Auf aktivem Tab aktivieren/deaktivieren",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Wiedergabe/Pause umschalten",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Stummschaltung umschalten",
+    "description": "Command description for toggling mute"
   }
 }

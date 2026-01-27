@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Pausar flera videotjänster när fliken tappar fokus och återupptar vid fokus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Inställningar",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Avancerade inställningar",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Kortkommandon",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Pausa video vid byte av flik",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Återuppta video när du återvänder till fliken",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Pausa video när webbläsaren tappar fokus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Återuppta video när webbläsaren får fokus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Inaktivera tillägg för nuvarande flik",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Inaktivera vid helskärmsläge",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Inaktivera tillägget helt",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Pausa video när datorn låses",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Återuppta video när datorn låses upp",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Pausa video när den scrollas ur bild",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Pausa när markören lämnar webbläsarfönstret",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Förhindra automatisk återuppspelning efter manuell paus",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Visa debug-meddelanden i konsolen",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Du kan konfigurera kortkommandon i menyn Tillägg",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Visa källkod på GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Stöd på Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Gjord med ♥ av",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Aktivera/inaktivera tillägg",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Aktivera/inaktivera på aktiv flik",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Växla spela/pausa",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Växla ljudlös",
+    "description": "Command description for toggling mute"
+  }
+}
