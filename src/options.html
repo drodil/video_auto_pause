@@ -1,208 +1,378 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Auto Pause options</title>
     <style>
-      @charset "UTF-8";
-      @import "https://fonts.googleapis.com/css?family=Nunito:300";
+      @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap";
+
+      * {
+        box-sizing: border-box;
+      }
 
       body {
-        font-family: "Nunito", sans-serif;
-        font-weight: 300;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-weight: 400;
         padding: 0;
         margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wrapper {
+        width: 380px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px;
+        text-align: center;
+      }
+
+      .header h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      #logo {
+        width: 20px;
+        height: 20px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
       }
 
       .container {
-        padding: 10px;
+        padding: 12px 14px;
+      }
+
+      .section {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .section:last-child {
+        margin-bottom: 0;
+      }
+
+      h4 {
+        font-size: 11px;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 6px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       label {
         cursor: pointer;
-        color: #383a3f;
-        display: block;
-        font-size: 1.2em;
-      }
-
-      p,
-      label {
-        margin-top: 5px;
-        margin-bottom: 5px;
-      }
-
-      h2 {
-        font-size: 20px;
-        text-align: center;
+        color: #1f2937;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        padding: 6px 8px;
+        margin: 1px 0;
+        border-radius: 4px;
+        transition: all 0.2s ease;
         user-select: none;
       }
 
-      h4,
-      hr,
-      h2 {
-        margin: 0;
+      label:hover {
+        background-color: #f3f4f6;
       }
 
-      #logo {
-        margin-right: 6px;
-        margin-left: 3px;
-        width: 22px;
-        height: 22px;
-        vertical-align: sub;
+      input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #d1d5db;
+        border-radius: 3px;
+        margin-right: 8px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        background: white;
       }
 
-      #version {
-        float: right;
+      input[type="checkbox"]:hover {
+        border-color: #667eea;
       }
 
-      a,
-      a:hover,
-      a:focus,
-      a:active {
+      input[type="checkbox"]:checked {
+        background: #667eea;
+        border-color: #667eea;
+      }
+
+      input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        width: 3px;
+        height: 7px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      input[type="checkbox"]:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      label:has(input:disabled) {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      label:has(input:disabled):hover {
+        background-color: transparent;
+      }
+
+      .label-text {
+        flex: 1;
+      }
+
+      p {
+        margin: 6px 0;
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+
+      a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        color: #764ba2;
         text-decoration: underline;
-        color: inherit;
       }
 
       .collapsible_button {
         cursor: pointer;
-        color: #383a3f;
-        background-color: white;
-        padding: 2px 0 2px 0;
+        color: #667eea;
+        background-color: #f3f4f6;
+        padding: 8px 10px;
         width: 100%;
-        border: none;
+        border: 2px solid transparent;
+        border-radius: 4px;
         text-align: left;
         outline: none;
         font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .collapsible_button:hover {
+        background-color: #e5e7eb;
+        border-color: #667eea;
       }
 
       .collapsible_button::after {
-        content: " \25BC";
+        content: "\25BC";
+        font-size: 12px;
+        transition: transform 0.2s ease;
       }
 
       .collapsible_button.active::after {
-        content: " \25B2";
+        transform: rotate(180deg);
       }
 
       .collapsible_content {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.2s ease-out;
+        transition: max-height 0.3s ease-out;
+        padding: 0 2px;
+      }
+
+      #hotkeys p {
+        background: #f9fafb;
+        padding: 6px 8px;
+        border-radius: 4px;
+        border-left: 3px solid #667eea;
+        font-family: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
+        font-size: 12px;
+        color: #374151;
+        margin: 4px 0;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        background: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        font-size: 11px;
+      }
+
+      .footer p {
+        margin: 0;
+      }
+
+      #version {
+        color: #9ca3af;
+        font-weight: 500;
+      }
+
+      .support-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 0;
+      }
+
+      .support-link {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white !important;
+        text-align: center;
+        padding: 8px 10px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        font-size: 12px;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      }
+
+      .support-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        text-decoration: none;
       }
     </style>
   </head>
 
   <body>
-    <div style="width: 350px">
-      <div class="container">
+    <div class="wrapper">
+      <div class="header">
         <h2>
-          <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />Video
-          Auto Pause
+          <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />
+          Video Auto Pause
         </h2>
       </div>
-      <hr />
-      <div class="container">
-        <h4>Settings</h4>
-        <label
-          ><input type="checkbox" id="autopause" /><span class="label-text"
-            >Enable auto pause on tab unfocus</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="autoresume" /><span class="label-text"
-            >Enable auto resume on tab focus</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="focuspause" /><span class="label-text"
-            >Enable auto pause on window unfocus</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="focusresume" /><span class="label-text"
-            >Enable auto resume on window focus</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="disabledTabs" /><span class="label-text"
-            >Disable on this tab</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="disableOnFullscreen" /><span
-            class="label-text"
-            >Disable on full screen</span
-          ></label
-        >
-        <label
-          ><input type="checkbox" id="disabled" /><span class="label-text"
-            >Disable extension</span
-          ></label
-        >
-      </div>
-      <hr />
-      <div class="container">
-        <button class="collapsible_button">Advanced settings</button>
-        <div class="collapsible_content">
-          <h4>Other settings</h4>
-          <label
-            ><input type="checkbox" id="lockpause" /><span class="label-text"
-              >Enable auto pause on computer lock</span
-            ></label
-          >
-          <label
-            ><input type="checkbox" id="lockresume" /><span class="label-text"
-              >Enable auto resume on computer unlock</span
-            ></label
-          >
-          <label
-            ><input type="checkbox" id="scrollpause" /><span class="label-text"
-              >Enable auto pause when out of viewport</span
-            ></label
-          >
-          <label
-            ><input type="checkbox" id="cursorTracking" /><span
-              class="label-text"
-              >Enable cursor on window tracking</span
-            ></label
-          >
-          <label
-            ><input type="checkbox" id="manualPause" /><span class="label-text"
-              >Manual pause disables auto resume</span
-            ></label
-          >
-          <label
-            ><input type="checkbox" id="debugMode" /><span class="label-text"
-              >Enable debug mode</span
-            ></label
-          >
+
+      <div class="container section">
+        <button class="collapsible_button active">
+          <span>Settings</span>
+        </button>
+        <div class="collapsible_content" style="max-height: 1000px;">
+          <div style="margin-top: 8px;">
+            <label>
+              <input type="checkbox" id="autopause" />
+              <span class="label-text">Pause video when switching tabs</span>
+            </label>
+            <label>
+              <input type="checkbox" id="autoresume" />
+              <span class="label-text">Resume video when returning to tab</span>
+            </label>
+            <label>
+              <input type="checkbox" id="focuspause" />
+              <span class="label-text">Pause video when browser loses focus</span>
+            </label>
+            <label>
+              <input type="checkbox" id="focusresume" />
+              <span class="label-text">Resume video when browser gains focus</span>
+            </label>
+            <label>
+              <input type="checkbox" id="disabledTabs" />
+              <span class="label-text">Disable extension for current tab</span>
+            </label>
+            <label>
+              <input type="checkbox" id="disableOnFullscreen" />
+              <span class="label-text">Disable when video is fullscreen</span>
+            </label>
+            <label>
+              <input type="checkbox" id="disabled" />
+              <span class="label-text">Disable extension completely</span>
+            </label>
+          </div>
         </div>
       </div>
-      <hr />
-      <div class="container">
-        <h4>Hotkeys</h4>
-        <div id="hotkeys"></div>
-        <p>You can configure hotkeys in the Extensions menu</p>
+
+      <div class="container section">
+        <button class="collapsible_button">
+          <span>Advanced Settings</span>
+        </button>
+        <div class="collapsible_content">
+          <div style="margin-top: 8px;">
+            <label>
+              <input type="checkbox" id="lockpause" />
+              <span class="label-text">Pause video when computer is locked</span>
+            </label>
+            <label>
+              <input type="checkbox" id="lockresume" />
+              <span class="label-text">Resume video when computer is unlocked</span>
+            </label>
+            <label>
+              <input type="checkbox" id="scrollpause" />
+              <span class="label-text">Pause video when scrolled out of view</span>
+            </label>
+            <label>
+              <input type="checkbox" id="cursorTracking" />
+              <span class="label-text">Pause when cursor leaves browser window</span>
+            </label>
+            <label>
+              <input type="checkbox" id="manualPause" />
+              <span class="label-text">Prevent auto-resume after manual pause</span>
+            </label>
+            <label>
+              <input type="checkbox" id="debugMode" />
+              <span class="label-text">Show debug messages in console</span>
+            </label>
+          </div>
+        </div>
       </div>
-      <hr />
-      <div class="container" style="padding-top: 0">
-        <p style="float: left">
-          <a href="https://github.com/drodil/video_auto_pause" target="_blank"
-            >Source</a
-          >
+
+      <div class="container section">
+        <button class="collapsible_button">
+          <span>Hotkeys</span>
+        </button>
+        <div class="collapsible_content">
+          <div id="hotkeys" style="margin-top: 8px;"></div>
+          <p>You can configure hotkeys in the Extensions menu</p>
+        </div>
+      </div>
+
+
+      <div class="container section">
+        <div class="support-links">
+          <a href="https://github.com/sponsors/drodil" target="_blank" class="support-link">
+            GitHub Sponsors
+          </a>
+          <a href="https://patreon.com/drodil" target="_blank" class="support-link">
+            Support on Patreon
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: 12px;">
+          <a href="https://github.com/drodil/video_auto_pause" target="_blank">
+            View Source on GitHub
+          </a>
         </p>
+      </div>
+
+      <div class="footer">
+        <p>Made with &hearts; by <a href="https://github.com/drodil" target="_blank">drodil</a></p>
         <p id="version"></p>
-      </div>
-      <hr style="clear: both" />
-      <div class="container" style="padding-top: 0">
-        <p style="float: left">
-          <a href="https://github.com/sponsors/drodil" target="_blank"
-            >Support on GitHub</a
-          >
-        </p>
-        <p style="float: right">
-          <a href="https://patreon.com/drodil" target="_blank"
-            >Support on Patreon</a
-          >
-        </p>
       </div>
     </div>
     <script src="options.js"></script>
