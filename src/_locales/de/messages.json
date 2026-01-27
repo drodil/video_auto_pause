@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Video Auto-Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Stoppt mehrere Videodienste beim Verlassen des Tabs und setzt sie beim Fokussieren fort",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Einstellungen",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Erweiterte Einstellungen",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Tastenkürzel",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Video beim Wechseln des Tabs pausieren",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Video beim Zurückkehren zum Tab fortsetzen",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Video pausieren, wenn Browser Fokus verliert",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Video fortsetzen, wenn Browser Fokus erhält",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Erweiterung für aktuellen Tab deaktivieren",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Im Vollbildmodus deaktivieren",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Erweiterung vollständig deaktivieren",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Video pausieren, wenn Computer gesperrt ist",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Video fortsetzen, wenn Computer entsperrt wird",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Video pausieren, wenn aus Sicht gescrollt",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Pausieren, wenn Cursor Browserfenster verlässt",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Automatische Fortsetzung nach manueller Pause verhindern",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Debug-Meldungen in Konsole anzeigen",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Sie können Tastenkürzel im Erweiterungsmenü konfigurieren",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Quellcode auf GitHub ansehen",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Auf Patreon unterstützen",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Mit ♥ erstellt von",
+    "description": "Footer text"
+  }
+}

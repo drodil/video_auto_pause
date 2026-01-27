@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Stops multiple video services on tab unfocus and continues on focus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Settings",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Advanced Settings",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Hotkeys",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Pause video when switching tabs",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Resume video when returning to tab",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Pause video when browser loses focus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Resume video when browser gains focus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Disable extension for current tab",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Disable when video is fullscreen",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Disable extension completely",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Pause video when computer is locked",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Resume video when computer is unlocked",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Pause video when scrolled out of view",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Pause when cursor leaves browser window",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Prevent auto-resume after manual pause",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Show debug messages in console",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "You can configure hotkeys in the Extensions menu",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "View Source on GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Support on Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Made with ♥ by",
+    "description": "Footer text"
+  }
+}

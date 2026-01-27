@@ -1,6 +1,21 @@
 // Browser
 const env = chrome.runtime ? chrome : browser;
 
+function localizeUI() {
+  if (!env?.i18n) {
+    return;
+  }
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const messageName = element.dataset.i18n;
+    const message = env.i18n.getMessage(messageName);
+    if (message) {
+      element.textContent = message;
+    }
+  });
+
+  document.title = env.i18n.getMessage("extName") ?? "Video Auto Pause";
+}
+
 const options = {
   autopause: true,
   autoresume: true,
@@ -74,7 +89,7 @@ env.commands.getAll(function (commands) {
     }
     const tag = document.createElement("p");
     const text = document.createTextNode(
-      commands[i].shortcut + " - " + commands[i].description,
+      commands[i].shortcut + " - " + commands[i].description
     );
     tag.appendChild(text);
     hotkeysDiv.appendChild(tag);
@@ -84,6 +99,9 @@ env.commands.getAll(function (commands) {
 // Show version in the options window
 const version = document.getElementById("version");
 version.textContent = "v" + env.runtime.getManifest().version;
+
+// Localize UI elements
+localizeUI();
 
 // Restore options on load and when they change in the store
 document.addEventListener("DOMContentLoaded", restore_options);

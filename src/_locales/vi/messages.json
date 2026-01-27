@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Tự Động Tạm Dừng Video",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Dừng nhiều dịch vụ video khi rời khỏi tab và tiếp tục khi quay lại",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Cài Đặt",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Cài Đặt Nâng Cao",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Phím Tắt",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Tạm dừng video khi chuyển tab",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Tiếp tục video khi quay lại tab",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Tạm dừng video khi trình duyệt mất tiêu điểm",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Tiếp tục video khi trình duyệt được tiêu điểm",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Tắt tiện ích cho tab hiện tại",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Tắt khi video toàn màn hình",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Tắt tiện ích hoàn toàn",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Tạm dừng video khi máy tính bị khóa",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Tiếp tục video khi máy tính được mở khóa",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Tạm dừng video khi cuộn ra ngoài tầm nhìn",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Tạm dừng khi con trỏ rời khỏi cửa sổ trình duyệt",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Ngăn tự động tiếp tục sau khi tạm dừng thủ công",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Hiển thị thông báo gỡ lỗi trong console",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Bạn có thể cấu hình phím tắt trong menu Tiện ích",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Xem Mã Nguồn trên GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Ủng Hộ trên Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Được tạo với ♥ bởi",
+    "description": "Footer text"
+  }
+}

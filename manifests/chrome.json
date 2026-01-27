@@ -1,17 +1,10 @@
 {
-  "name": "Video Auto Pause",
+  "name": "__MSG_extName__",
   "version": "1.11.4",
-  "description": "Stops multiple video services on tab unfocus and continues on focus",
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab",
-    "scripting",
-    "idle"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "description": "__MSG_extDescription__",
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "default_locale": "en",
+  "host_permissions": ["<all_urls>"],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
