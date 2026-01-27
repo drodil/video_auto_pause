@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "Alihkan Gambar-dalam-Gambar",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Bisukan video alih-alih menjeda",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Tingkatkan kecepatan pemutaran",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Kurangi kecepatan pemutaran",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   }
 }

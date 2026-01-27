@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "Växla Bild-i-Bild",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Stäng av ljudet på videon istället för att pausa",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Öka uppspelningshastighet",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Minska uppspelningshastighet",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Återställ uppspelningshastighet",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "Domäninställningar",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "Ange domäner att inkludera (en per rad):",
+    "description": "Auto-translated"
   }
 }

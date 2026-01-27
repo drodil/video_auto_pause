@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "Resim içinde Resim'i Aç/Kapat",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Duraklatmak yerine videonun sesini kapat",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Oynatma hızını artır",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Oynatma hızını azalt",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   }
 }

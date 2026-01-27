@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "Skipta Mynd-í-mynd",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Þagga niður í myndbandi í stað þess að gera hlé",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Auka spilunarhraða",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Minnka spilunarhraða",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   }
 }

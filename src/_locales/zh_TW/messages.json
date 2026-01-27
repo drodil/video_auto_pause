@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "切換畫中畫",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "靜音視頻而不是暫停",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "增加播放速度",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "降低播放速度",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   }
 }

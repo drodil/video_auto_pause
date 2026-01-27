@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "PIP 전환",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "일시 중지 대신 비디오 음소거",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "재생 속도 증가",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "재생 속도 감소",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "재생 속도 초기화",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "도메인 설정",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "포함할 도메인 입력 (줄당 하나):",
+    "description": "Auto-translated"
   }
 }

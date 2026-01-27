@@ -289,36 +289,27 @@ test.describe("Video Auto Pause Extension", () => {
     page,
     context,
   }) => {
-    // manualPause is enabled by default
     await page.goto(`http://localhost:${port}/video.html`);
     const video = page.locator("#v");
     await expect(video).toBeAttached();
 
-    // 1. Play video
     await video.evaluate(async (v) => {
       await v.play();
     });
     await expect(video).toHaveJSProperty("paused", false);
 
-    // 2. Determine "manual" pause.
-    // If we use video.pause() in console/evaluate, does extension see it as manual?
-    // Extension listens to 'pause' event.
-    // It sets manuallyPausedVideos if (!automaticallyPaused && options.manualPause)
     await video.evaluate(async (v) => {
       v.pause();
     });
     await expect(video).toHaveJSProperty("paused", true);
 
-    // 3. Switch tabs (would trigger pause, but already paused)
     const page2 = await context.newPage();
     await page2.goto(`http://localhost:${port}/video.html`);
     await page.waitForTimeout(1000);
 
-    // 4. Switch back
     await page.bringToFront();
     await page.waitForTimeout(2000);
 
-    // 5. Verify it REMAINS paused because we paused it manually
     await expect(video).toHaveJSProperty("paused", true);
   });
 
@@ -326,31 +317,94 @@ test.describe("Video Auto Pause Extension", () => {
     page,
     context,
   }) => {
-    // Disable autoresume
     await context.updateSettings({ autoresume: false });
 
     await page.goto(`http://localhost:${port}/video.html`);
     const video = page.locator("#v");
     await expect(video).toBeAttached();
 
-    // 1. Play video
     await video.evaluate(async (v) => {
       await v.play();
     });
     await expect(video).toHaveJSProperty("paused", false);
 
-    // 2. Switch tabs (triggers pause)
     const page2 = await context.newPage();
     await page2.goto(`http://localhost:${port}/video.html`);
 
     await page.waitForTimeout(2000);
     await expect(video).toHaveJSProperty("paused", true);
 
-    // 3. Switch back
     await page.bringToFront();
     await page.waitForTimeout(2000);
 
-    // 4. Verify it REMAINS paused because autoresume is off
     await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("should mute video instead of pausing when Mute Mode is enabled", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ muteVideo: true });
+
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await expect(video).toBeAttached();
+
+    await video.evaluate(async (v) => {
+      v.muted = false;
+      await v.play();
+    });
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", false);
+
+    const page2 = await context.newPage();
+    await page2.goto(`http://localhost:${port}/video.html`);
+
+    await page.waitForTimeout(2000);
+
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", true);
+
+    await page.bringToFront();
+    await page.waitForTimeout(2000);
+
+    await expect(video).toHaveJSProperty("muted", false);
+  });
+
+  test("should respect Simultaneous Domain Lists (Priority & Implicit Whitelist)", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ excludedDomains: [], includedDomains: [] });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await video.evaluate(async (v) => await v.play());
+
+    const page2 = await context.newPage();
+    await page2.goto(`http://localhost:${port}/video.html`);
+    await page.waitForTimeout(2000);
+    await expect(video).toHaveJSProperty("paused", true);
+    await page.bringToFront();
+
+    await context.updateSettings({ includedDomains: ["localhost"] });
+    await page.waitForTimeout(1000);
+
+    await page2.bringToFront();
+    await page.waitForTimeout(2000);
+    await expect(video).toHaveJSProperty("paused", true);
+    await page.bringToFront();
+
+    await video.evaluate(async (v) => await v.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await context.updateSettings({
+      excludedDomains: ["localhost"],
+      includedDomains: ["localhost"],
+    });
+    await page.waitForTimeout(1000);
+
+    await page2.bringToFront();
+    await page.waitForTimeout(2000);
+    await expect(video).toHaveJSProperty("paused", false);
   });
 });
