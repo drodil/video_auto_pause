@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "Alternar Imagen en Imagen",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Silenciar video en lugar de pausar",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Aumentar velocidad de reproducción",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Disminuir velocidad de reproducción",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Restablecer velocidad de reproducción",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "Configuración de dominios",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "Ingrese dominios para incluir (uno por línea):",
+    "description": "Auto-translated"
   }
 }

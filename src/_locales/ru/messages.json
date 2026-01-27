@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "Переключить Картинка-в-картинке",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Отключить звук видео вместо паузы",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Увеличить скорость воспроизведения",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Уменьшить скорость воспроизведения",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Сбросить скорость воспроизведения",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "Настройки домена",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "Введите домены для включения (по одному в строке):",
+    "description": "Auto-translated"
   }
 }

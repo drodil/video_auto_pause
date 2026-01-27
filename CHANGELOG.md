@@ -4,14 +4,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.12.0](https://github.com/drodil/video_auto_pause/compare/v1.11.4...v1.12.0) (2026-01-27)
 
-
 ### Features
 
-* add localization ([94a1851](https://github.com/drodil/video_auto_pause/commit/94a18514e3f096928c84ddbbea7a81320828207b))
-* delays + domain exclusions ([f1e3764](https://github.com/drodil/video_auto_pause/commit/f1e37647b397ebf02a32fc66beabbc9f19bccc1c))
-* more languages + hotkey translation fix ([e7d15b0](https://github.com/drodil/video_auto_pause/commit/e7d15b04395f3eb535d1ad5917e4ec256ed4b902))
-* pip and audio fading ([c915fe5](https://github.com/drodil/video_auto_pause/commit/c915fe5c29103009421ac18d213371764ced5531))
-* restyle options panel ([be3651d](https://github.com/drodil/video_auto_pause/commit/be3651d441603395a0e8ca90d4f89555500092f8))
+- add localization ([94a1851](https://github.com/drodil/video_auto_pause/commit/94a18514e3f096928c84ddbbea7a81320828207b))
+- delays + domain exclusions ([f1e3764](https://github.com/drodil/video_auto_pause/commit/f1e37647b397ebf02a32fc66beabbc9f19bccc1c))
+- more languages + hotkey translation fix ([e7d15b0](https://github.com/drodil/video_auto_pause/commit/e7d15b04395f3eb535d1ad5917e4ec256ed4b902))
+- pip and audio fading ([c915fe5](https://github.com/drodil/video_auto_pause/commit/c915fe5c29103009421ac18d213371764ced5531))
+- restyle options panel ([be3651d](https://github.com/drodil/video_auto_pause/commit/be3651d441603395a0e8ca90d4f89555500092f8))
 
 ### [1.11.4](https://github.com/drodil/video_auto_pause/compare/v1.11.3...v1.11.4) (2026-01-26)
 

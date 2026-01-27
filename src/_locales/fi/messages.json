@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "Vaihda Kuva kuvassa -tilaa",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Mykistä video tauottamisen sijaan",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Lisää toistonopeutta",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Vähennä toistonopeutta",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Nollaa toistonopeus",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "Verkkotunnusasetukset",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "Syötä sisällytettävät verkkotunnukset (yksi per rivi):",
+    "description": "Auto-translated"
   }
 }

@@ -5,6 +5,7 @@ const env = chrome.runtime ? chrome : browser;
 let previous_tab = -1;
 let previous_window = env.windows.WINDOW_ID_NONE;
 let disabledTabs = [];
+let tabVideos = {}; // { tabId: { frameId: boolean } }
 
 // Computer state
 let state = "active";
@@ -12,6 +13,8 @@ let state = "active";
 let options = {
   autopause: true,
   autoresume: true,
+
+  muteVideo: false,
   scrollpause: false,
   lockpause: true,
   lockresume: true,
@@ -24,6 +27,7 @@ let options = {
   pauseDelay: 0,
   resumeDelay: 0,
   excludedDomains: [],
+  includedDomains: [],
 };
 
 function debugLog(message) {
@@ -62,6 +66,7 @@ async function refresh_settings() {
     options.pauseDelay = 0;
     options.resumeDelay = 0;
     options.excludedDomains = [];
+    options.includedDomains = [];
   }
 
   disabledTabs =
@@ -97,13 +102,21 @@ function isEnabledForTab(tab) {
   if (!disabledTabs.includes(tab.id)) {
     if (tab.url) {
       const url = new URL(tab.url);
+
       if (
         options.excludedDomains.some((domain) => url.hostname.includes(domain))
       ) {
         return false;
       }
+
+      if (options.includedDomains.length > 0) {
+        return options.includedDomains.some((domain) =>
+          url.hostname.includes(domain),
+        );
+      }
+
+      return true;
     }
-    return true;
   }
   return false;
 }
@@ -141,11 +154,13 @@ function stop(tab) {
       return;
     }
     pauseTimeouts[tab.id] = setTimeout(() => {
-      sendMessage(tab, { action: "stop" });
+      const action = options.muteVideo ? "mute" : "stop";
+      sendMessage(tab, { action: action });
       delete pauseTimeouts[tab.id];
     }, options.pauseDelay);
   } else {
-    sendMessage(tab, { action: "stop" });
+    const action = options.muteVideo ? "mute" : "stop";
+    sendMessage(tab, { action: action });
   }
 }
 
@@ -160,11 +175,13 @@ function resume(tab) {
       return;
     }
     resumeTimeouts[tab.id] = setTimeout(() => {
-      sendMessage(tab, { action: "resume" });
+      const action = options.muteVideo ? "unmute" : "resume";
+      sendMessage(tab, { action: action });
       delete resumeTimeouts[tab.id];
     }, options.resumeDelay);
   } else {
-    sendMessage(tab, { action: "resume" });
+    const action = options.muteVideo ? "unmute" : "resume";
+    sendMessage(tab, { action: action });
   }
 }
 
@@ -182,6 +199,10 @@ function unmute(tab) {
 
 function toggle_mute(tab) {
   sendMessage(tab, { action: "toggle_mute" });
+}
+
+function speed(tab, command) {
+  sendMessage(tab, { action: "speed", command: command });
 }
 
 let iconTimeout;
@@ -303,6 +324,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 });
 
 env.tabs.onRemoved.addListener(function (tabId) {
+  delete tabVideos[tabId];
   if (disabledTabs.includes(tabId)) {
     disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
     save_settings();
@@ -355,8 +377,32 @@ env.windows.onRemoved.addListener(function (windowId) {
 env.runtime.onMessage.addListener(
   async function (request, sender, sendResponse) {
     if ("hasVideos" in request && sender.tab.active) {
-      debugLog(`Tab has videos: ${request.hasVideos}`);
-      changeIcon(!(request.hasVideos && isEnabledForTab(sender.tab)));
+      if (!tabVideos[sender.tab.id]) {
+        tabVideos[sender.tab.id] = {};
+      }
+      tabVideos[sender.tab.id][sender.frameId] = request.hasVideos;
+
+      const anyFrameHasVideos = Object.values(tabVideos[sender.tab.id]).some(
+        (v) => v,
+      );
+      debugLog(
+        `Tab ${sender.tab.id} has videos: ${anyFrameHasVideos} (frame ${sender.frameId}: ${request.hasVideos})`,
+      );
+      changeIcon(!(anyFrameHasVideos && isEnabledForTab(sender.tab)));
+    }
+
+    if ("windowFocused" in request) {
+      if (!request.windowFocused && options.focuspause) {
+        debugLog(`Window blurred, stopping videos in tab ${sender.tab.id}`);
+        stop(sender.tab);
+      } else if (
+        request.windowFocused &&
+        options.focusresume &&
+        sender.tab.active
+      ) {
+        debugLog(`Window focused, resuming videos in tab ${sender.tab.id}`);
+        resume(sender.tab);
+      }
     }
 
     if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
@@ -455,6 +501,19 @@ env.commands.onCommand.addListener(async (command) => {
         continue;
       }
       toggle_mute(tabs[i]);
+    }
+  } else if (
+    command === "speed-up" ||
+    command === "speed-down" ||
+    command === "speed-reset"
+  ) {
+    debugLog(`Speed command received: ${command}`);
+    const tabs = await env.tabs.query({ currentWindow: true });
+    for (let i = 0; i < tabs.length; i++) {
+      if (!isEnabledForTab(tabs[i])) {
+        continue;
+      }
+      speed(tabs[i], command);
     }
   }
 });

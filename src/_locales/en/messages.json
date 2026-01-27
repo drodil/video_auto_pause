@@ -23,6 +23,10 @@
     "message": "Pause video when switching tabs",
     "description": "Enable auto pause when switching tabs"
   },
+  "muteVideo": {
+    "message": "Mute video instead of pausing",
+    "description": "Enable muting video instead of pausing"
+  },
   "autoresume": {
     "message": "Resume video when returning to tab",
     "description": "Enable auto resume when returning to tab"
@@ -106,6 +110,18 @@
   "commandToggleMute": {
     "message": "Toggle mute",
     "description": "Command description for toggling mute"
+  },
+  "commandSpeedUp": {
+    "message": "Increase playback speed",
+    "description": "Command description for increasing playback speed"
+  },
+  "commandSpeedDown": {
+    "message": "Decrease playback speed",
+    "description": "Command description for decreasing playback speed"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   },
   "delays": {
     "message": "Delays (ms)",

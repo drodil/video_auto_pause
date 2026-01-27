@@ -222,6 +222,18 @@
         margin: 4px 0;
       }
 
+      /* Disabled state styling */
+      input:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      input:disabled + .label-text {
+        text-decoration: line-through;
+        opacity: 0.6;
+        color: #9ca3af;
+      }
+
       .footer {
         display: flex;
         justify-content: space-between;
@@ -371,6 +383,13 @@
                 >Show Picture-in-Picture Button</span
               >
             </label>
+
+            <label>
+              <input type="checkbox" id="muteVideo" />
+              <span class="label-text" data-i18n="muteVideo"
+                >Mute video instead of pausing</span
+              >
+            </label>
             <label>
               <input type="checkbox" id="debugMode" />
               <span class="label-text" data-i18n="debugMode"
@@ -497,30 +516,57 @@
 
       <div class="container section">
         <button class="collapsible_button">
-          <span data-i18n="domainExclusions">Domain Exclusions</span>
+          <span data-i18n="domainSettings">Domain Settings</span>
         </button>
         <div class="collapsible_content">
           <div style="margin-top: 8px">
-            <p
-              data-i18n="domainExclusionsDescription"
-              style="margin-bottom: 6px"
-            >
-              Enter domains to exclude (one per line):
-            </p>
-            <textarea
-              id="excludedDomains"
-              rows="5"
-              style="
-                width: 100%;
-                padding: 8px;
-                border: 1px solid #d1d5db;
-                border-radius: 4px;
-                font-family: monospace;
-                font-size: 12px;
-                resize: vertical;
-              "
-              placeholder="example.com&#10;youtube.com"
-            ></textarea>
+            <div style="margin-bottom: 8px"></div>
+
+            <div id="excludedDomainsContainer">
+              <p
+                data-i18n="domainExclusionsDescription"
+                style="margin-bottom: 6px"
+              >
+                Enter domains to exclude (one per line):
+              </p>
+              <textarea
+                id="excludedDomains"
+                rows="5"
+                style="
+                  width: 100%;
+                  padding: 8px;
+                  border: 1px solid #d1d5db;
+                  border-radius: 4px;
+                  font-family: monospace;
+                  font-size: 12px;
+                  resize: vertical;
+                "
+                placeholder="example.com&#10;youtube.com"
+              ></textarea>
+            </div>
+
+            <div id="includedDomainsContainer">
+              <p
+                data-i18n="domainInclusionsDescription"
+                style="margin-bottom: 6px"
+              >
+                Enter domains to include (one per line):
+              </p>
+              <textarea
+                id="includedDomains"
+                rows="5"
+                style="
+                  width: 100%;
+                  padding: 8px;
+                  border: 1px solid #d1d5db;
+                  border-radius: 4px;
+                  font-family: monospace;
+                  font-size: 12px;
+                  resize: vertical;
+                "
+                placeholder="example.com&#10;youtube.com"
+              ></textarea>
+            </div>
           </div>
         </div>
       </div>

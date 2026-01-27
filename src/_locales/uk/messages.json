@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "Перемкнути Картинка-в-картинці",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Вимкнути звук відео замість паузи",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Збільшити швидкість відтворення",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Зменшити швидкість відтворення",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Скинути швидкість відтворення",
+    "description": "Auto-translated"
   }
 }

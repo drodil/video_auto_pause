@@ -142,5 +142,29 @@
   "pipTitle": {
     "message": "ピクチャーインピクチャーを切り替え",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "一時停止の代わりにビデオをミュート",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "再生速度を上げる",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "再生速度を下げる",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "再生速度をリセット",
+    "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "ドメイン設定",
+    "description": "Auto-translated"
+  },
+  "domainInclusionsDescription": {
+    "message": "含めるドメインを入力してください（1行に1つ）:",
+    "description": "Auto-translated"
   }
 }

@@ -7,6 +7,8 @@ if (window.autoPauseInjected !== true) {
   let options = {
     autopause: true,
     autoresume: true,
+
+    muteVideo: false,
     scrollpause: false,
     lockpause: true,
     lockresume: true,
@@ -16,8 +18,9 @@ if (window.autoPauseInjected !== true) {
     cursorTracking: false,
     manualPause: true,
     debugMode: false,
-    debugMode: false,
     disableOnFullscreen: true,
+    excludedDomains: [],
+    includedDomains: [],
     audioFading: false,
     fadeDuration: 200,
     showPipButton: false,
@@ -38,14 +41,17 @@ if (window.autoPauseInjected !== true) {
       if (options.disabled === true) {
         options.autopause = false;
         options.autoresume = false;
-        options.scrollpause = false;
-        options.lockpause = false;
+
+        options.muteVideo = false;
+        ((options.scrollpause = false), (options.lockpause = false));
         options.lockresume = false;
         options.focuspause = false;
         options.focusresume = false;
         options.cursorTracking = false;
         options.debugMode = false;
         options.disableOnFullscreen = true;
+        options.excludedDomains = [];
+        options.includedDomains = [];
         options.audioFading = false;
         options.fadeDuration = 200;
         options.showPipButton = false;
@@ -180,8 +186,35 @@ if (window.autoPauseInjected !== true) {
     false,
   );
 
+  window.addEventListener("blur", function () {
+    debugLog("Window blur");
+    sendMessage({ windowFocused: false });
+  });
+
+  window.addEventListener("focus", function () {
+    debugLog("Window focus");
+    sendMessage({ windowFocused: true });
+  });
+
   const hasVideos = () => {
-    return document.getElementsByTagName("video").length >= 1;
+    // Standard check
+    if (document.getElementsByTagName("video").length >= 1) {
+      return true;
+    }
+
+    // Check for common player wrappers or Shadow DOM if we can
+    // Some sites use custom elements that might contain videos in shadow roots
+    const shadowHosts = document.querySelectorAll("*");
+    for (let i = 0; i < shadowHosts.length; i++) {
+      if (
+        shadowHosts[i].shadowRoot &&
+        shadowHosts[i].shadowRoot.querySelector("video")
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   // Listen media commands from the service worker
@@ -354,10 +387,39 @@ if (window.autoPauseInjected !== true) {
             );
           } else if (request.action === "toggle_mute") {
             video.muted = !video.muted;
-          } else if (request.action === "mute") {
-            video.muted = true;
-          } else if (request.action === "unmute") {
-            video.muted = false;
+          } else if (request.action === "mute" && !video.muted) {
+            automaticallyPaused = true;
+            if (options.audioFading) {
+              if (!originalVolumes.has(video)) {
+                originalVolumes.set(video, video.volume);
+              }
+              fadeAudio(video, 0, options.fadeDuration).then(() => {
+                video.muted = true;
+                if (originalVolumes.has(video)) {
+                  video.volume = originalVolumes.get(video);
+                  originalVolumes.delete(video);
+                }
+              });
+            } else {
+              video.muted = true;
+            }
+          } else if (request.action === "unmute" && video.muted) {
+            automaticallyPaused = false;
+            let targetVolume = video.volume;
+            if (originalVolumes.has(video)) {
+              targetVolume = originalVolumes.get(video);
+              originalVolumes.delete(video);
+            } else if (video.volume === 0 && !activeFades.has(video)) {
+              targetVolume = 1.0;
+            }
+
+            if (options.audioFading) {
+              video.volume = 0;
+              video.muted = false;
+              fadeAudio(video, targetVolume, options.fadeDuration);
+            } else {
+              video.muted = false;
+            }
           } else if (request.action === "toggle") {
             if (video.paused && !isManuallyPaused) {
               if (!video.ended) {
@@ -368,6 +430,17 @@ if (window.autoPauseInjected !== true) {
               video.pause();
               automaticallyPaused = true;
             }
+          } else if (request.action === "speed") {
+            let newRate = video.playbackRate;
+            if (request.command === "speed-up") {
+              newRate += 0.25;
+            } else if (request.command === "speed-down") {
+              newRate = Math.max(0.25, newRate - 0.25);
+            } else if (request.command === "speed-reset") {
+              newRate = 1.0;
+            }
+            video.playbackRate = newRate;
+            showToast(`Speed: ${newRate}x`);
           }
         } catch (e) {
           debugLog(e);
@@ -434,40 +507,62 @@ if (window.autoPauseInjected !== true) {
     btn.className = "vap-pip-btn";
     btn.title = env.i18n.getMessage("pipTitle");
     btn.innerHTML =
-      '<svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg>';
+      '<svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg>';
 
     Object.assign(btn.style, {
       position: "absolute",
-      top: "10px",
-      right: "10px",
-      zIndex: "99999",
-      background: "rgba(0, 0, 0, 0.6)",
-      border: "none",
-      borderRadius: "4px",
+      top: "15px",
+      left: "15px",
+      zIndex: "2147483647",
+      background: "rgba(0, 0, 0, 0.7)",
+      border: "1px solid rgba(255, 255, 255, 0.2)",
+      borderRadius: "8px",
       cursor: "pointer",
-      padding: "4px",
+      padding: "8px",
       display: "none",
       alignItems: "center",
       justifyContent: "center",
+      pointerEvents: "auto",
+      boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
     });
 
+    let hideTimeout;
     const showBtn = () => {
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
       btn.style.display = "flex";
     };
     const hideBtn = () => {
-      setTimeout(() => {
-        if (!btn.matches(":hover") && !video.matches(":hover"))
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+      }
+      hideTimeout = setTimeout(() => {
+        if (!btn.matches(":hover") && !video.matches(":hover")) {
           btn.style.display = "none";
-      }, 1000);
+        }
+        hideTimeout = null;
+      }, 2000);
     };
 
-    video.addEventListener("mouseenter", showBtn);
-    video.addEventListener("mouseleave", hideBtn);
+    // Try to find a player container (especially for YouTube)
+    let container = video.parentElement;
+    if (container && container.classList.contains("html5-video-container")) {
+      container = container.parentElement;
+    }
+
+    if (!container) return;
+
+    container.addEventListener("mouseenter", showBtn);
+    container.addEventListener("mouseleave", hideBtn);
+    container.addEventListener("mousemove", showBtn);
     btn.addEventListener("mouseenter", showBtn);
     btn.addEventListener("mouseleave", hideBtn);
 
     video.addEventListener("enterpictureinpicture", () => {
       debugLog("Entered Picture-in-Picture");
+      btn.style.display = "none";
     });
 
     video.addEventListener("leavepictureinpicture", () => {
@@ -483,6 +578,7 @@ if (window.autoPauseInjected !== true) {
     });
 
     btn.addEventListener("click", async (e) => {
+      debugLog("PiP button clicked");
       e.preventDefault();
       e.stopPropagation();
       try {
@@ -496,13 +592,10 @@ if (window.autoPauseInjected !== true) {
       }
     });
 
-    const parent = video.parentElement || video.parentNode;
-    if (parent) {
-      if (window.getComputedStyle(parent).position === "static") {
-        parent.style.position = "relative";
-      }
-      parent.appendChild(btn);
+    if (window.getComputedStyle(container).position === "static") {
+      container.style.position = "relative";
     }
+    container.appendChild(btn);
   }
 
   function togglePipButtons() {
@@ -538,20 +631,77 @@ if (window.autoPauseInjected !== true) {
   );
 
   // Function to observe all current video elements
-  function observeExistingVideos() {
+  function observeExistingVideos(retries = 5) {
     let videoElements = document.getElementsByTagName("video");
-    sendMessage({ hasVideos: hasVideos() });
+    const found = videoElements.length > 0;
 
-    for (const element of videoElements) {
-      attachVideoListeners(element, intersection_observer);
+    if (found) {
+      sendMessage({ hasVideos: true });
+      for (const element of videoElements) {
+        attachVideoListeners(element, intersection_observer);
+      }
+    } else {
+      sendMessage({ hasVideos: hasVideos() });
+      if (retries > 0) {
+        setTimeout(() => observeExistingVideos(retries - 1), 1000);
+      }
     }
   }
 
   // Initial observation when DOM is loaded
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", observeExistingVideos);
+    document.addEventListener("DOMContentLoaded", () =>
+      observeExistingVideos(),
+    );
   } else {
     observeExistingVideos();
+  }
+
+  function showToast(message) {
+    let container = document.getElementById("vap-toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "vap-toast-container";
+      Object.assign(container.style, {
+        position: "fixed",
+        top: "20px",
+        right: "20px",
+        zIndex: "999999",
+        pointerEvents: "none",
+      });
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement("div");
+    toast.textContent = message;
+    Object.assign(toast.style, {
+      background: "rgba(0, 0, 0, 0.7)",
+      color: "white",
+      padding: "8px 12px",
+      marginBottom: "8px",
+      borderRadius: "4px",
+      fontFamily: "sans-serif",
+      fontSize: "14px",
+      boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
+      opacity: "0",
+      transition: "opacity 0.3s ease-in-out",
+    });
+
+    container.appendChild(toast);
+
+    void toast.offsetWidth;
+
+    toast.style.opacity = "1";
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      setTimeout(() => {
+        toast.remove();
+        if (container.childNodes.length === 0) {
+          container.remove();
+        }
+      }, 300);
+    }, 1000);
   }
 
   // Watch for dynamically added video elements

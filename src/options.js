@@ -19,6 +19,7 @@ function localizeUI() {
 const options = {
   autopause: true,
   autoresume: true,
+  muteVideo: false,
   scrollpause: false,
   lockpause: true,
   lockresume: true,
@@ -32,6 +33,9 @@ const options = {
   pauseDelay: 0,
   resumeDelay: 0,
   excludedDomains: [],
+  includedDomains: [],
+  audioFading: false,
+  fadeDuration: 200,
   audioFading: false,
   fadeDuration: 200,
   showPipButton: false,
@@ -42,7 +46,7 @@ async function save_options() {
   const storage = {};
 
   for (const option in options) {
-    if (option === "excludedDomains") {
+    if (option === "excludedDomains" || option === "includedDomains") {
       const domains = document.getElementById(option).value.split("\n");
       storage[option] = domains
         .map((domain) => domain.trim())
@@ -78,7 +82,7 @@ async function save_options() {
 async function restore_options() {
   const items = await env.storage.sync.get(options);
   for (const opt in items) {
-    if (opt === "excludedDomains") {
+    if (opt === "excludedDomains" || opt === "includedDomains") {
       document.getElementById(opt).value = items[opt].join("\n");
     } else if (
       opt === "pauseDelay" ||
@@ -133,17 +137,24 @@ version.textContent = "v" + env.runtime.getManifest().version;
 localizeUI();
 
 // Restore options on load and when they change in the store
-document.addEventListener("DOMContentLoaded", restore_options);
+document.addEventListener("DOMContentLoaded", async () => {
+  await restore_options();
+});
+
 env.storage.onChanged.addListener(async (_changes, _namespace) => {
   await restore_options();
 });
 
 // Listen to changes of options
 for (const option in options) {
-  document
-    .getElementById(option)
-    .addEventListener("change", async () => await save_options());
+  const el = document.getElementById(option);
+  if (el) {
+    el.addEventListener("change", async () => {
+      await save_options();
+    });
+  }
 }
+
 document
   .getElementById("disabledTabs")
   .addEventListener("change", async () => await save_options());

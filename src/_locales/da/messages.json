@@ -142,5 +142,21 @@
   "pipTitle": {
     "message": "Skift billede-i-billede",
     "description": "Title text for the PiP button"
+  },
+  "muteVideo": {
+    "message": "Slå lyd fra video i stedet for at pause",
+    "description": "Auto-translated"
+  },
+  "commandSpeedUp": {
+    "message": "Øg afspilningshastighed",
+    "description": "Auto-translated"
+  },
+  "commandSpeedDown": {
+    "message": "Sænk afspilningshastighed",
+    "description": "Auto-translated"
+  },
+  "commandSpeedReset": {
+    "message": "Reset playback speed",
+    "description": "Command description for resetting playback speed"
   }
 }
