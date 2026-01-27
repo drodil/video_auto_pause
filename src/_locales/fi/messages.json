@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Videon automaattitauko",
+    "message": "Video Auto Pause",
     "description": "Name of the extension"
   },
   "extDescription": {
@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "Tehty ♥:lla",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Ota laajennus käyttöön/pois käytöstä",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Ota käyttöön/pois käytöstä nykyisellä välilehdellä",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Toista/keskeytä",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Mykistä/poista mykistys",
+    "description": "Command description for toggling mute"
   }
 }

@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "동영상 자동 일시중지",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "탭 포커스를 잃었을 때 동영상 서비스를 중지하고 포커스 시 다시 시작합니다",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "설정",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "고급 설정",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "단축키",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "탭 전환 시 동영상 일시중지",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "탭으로 돌아올 때 동영상 다시 시작",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "브라우저가 포커스를 잃으면 동영상 일시중지",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "브라우저가 포커스를 얻으면 동영상 다시 시작",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "현재 탭에서 확장 프로그램 사용 안 함",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "전체 화면 시 사용 안 함",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "확장 프로그램 완전히 사용 안 함",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "컴퓨터 잠금 시 동영상 일시중지",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "컴퓨터 잠금 해제 시 동영상 다시 시작",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "화면 밖으로 스크롤 시 동영상 일시중지",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "커서가 브라우저 창을 벗어나면 일시중지",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "수동 일시중지 후 자동 다시 시작 방지",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "콘솔에 디버그 메시지 표시",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "확장 프로그램 메뉴에서 단축키를 구성할 수 있습니다",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "GitHub에서 소스 보기",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Patreon에서 후원하기",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "♥으로 제작됨",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "확장 프로그램 사용/사용 안 함",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "활성 탭에서 사용/사용 안 함",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "재생/일시중지 전환",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "음소거 전환",
+    "description": "Command description for toggling mute"
+  }
+}

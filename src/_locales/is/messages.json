@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Stöðvar margar vídeóþjónustur þegar flipi missir fókus og heldur áfram við fókus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Stillingar",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Ítarlegar stillingar",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Flýtilyklar",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Gera hlé á myndbandi þegar skipt er um flipa",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Halda myndbandi áfram þegar komið er aftur í flipa",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Gera hlé þegar vafri missir fókus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Halda áfram þegar vafri fær fókus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Gera viðbót óvirka fyrir þennan flipa",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Gera óvirkt í fullskjá",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Gera viðbót alveg óvirka",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Gera hlé þegar tölvu er læst",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Halda áfram þegar tölva er opnuð",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Gera hlé þegar skrunað er úr augsýn",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Gera hlé þegar bendill fer út úr vafraglugga",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Koma í veg fyrir sjálfvirka spilun eftir handvirkt hlé",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Sýna villuleitartilkynningar í stjórnborði",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Þú getur stillt flýtilykla í Viðbætur valmyndinni",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Skoða frumkóða á GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Styrktaraðilar",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Styðja á Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Gert með ♥ af",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Kveikja/slökkva á viðbót",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Kveikja/slökkva á virkum flipa",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Spila/pása",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Þagga/afþagga",
+    "description": "Command description for toggling mute"
+  }
+}

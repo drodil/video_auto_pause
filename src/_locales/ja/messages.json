@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "♥ を込めて作成",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "拡張機能を有効/無効にする",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "アクティブなタブで有効/無効にする",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "再生/一時停止の切り替え",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "ミュートの切り替え",
+    "description": "Command description for toggling mute"
   }
 }

@@ -90,5 +90,21 @@
   "madeWithLove": {
     "message": "♥ के साथ बनाया गया",
     "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "एक्सटेंशन सक्षम/अक्षम करें",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "सक्रिय टैब पर सक्षम/अक्षम करें",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "प्ले/पॉज़ टॉगल करें",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "म्यूट टॉगल करें",
+    "description": "Command description for toggling mute"
   }
 }

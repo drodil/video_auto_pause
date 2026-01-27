@@ -25,8 +25,8 @@
   "scripts": {
     "build": "npm run build:chrome && npm run build:firefox",
     "lint": "npm run prepare:firefox && web-ext lint --source-dir ./src/",
-    "prepare:chrome": "cp manifests/chrome.json src/manifest.json",
-    "prepare:firefox": "cp manifests/firefox.json src/manifest.json",
+    "prepare:chrome": "shx cp manifests/chrome.json src/manifest.json",
+    "prepare:firefox": "shx cp manifests/firefox.json src/manifest.json",
     "start:chrome": "npm run prepare:chrome && web-ext run --source-dir src/ --target chromium",
     "debug:chrome": "npm run prepare:chrome && web-ext run --devtools --source-dir src/ --target chromium",
     "build:chrome": "npm run prepare:chrome && web-ext build --overwrite-dest --source-dir src/ --filename chrome.zip",
@@ -38,9 +38,10 @@
     "prettier:fix": "prettier --write ."
   },
   "devDependencies": {
+    "prettier": "^3.8.0",
+    "shx": "^0.4.0",
     "standard-version": "^9.5.0",
-    "web-ext": "^9.2.0",
-    "prettier": "^3.8.0"
+    "web-ext": "^9.2.0"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Stopt meerdere videoservices bij tabblad-onscherpte en gaat door bij focus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Instellingen",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Geavanceerde instellingen",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Sneltoetsen",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Video pauzeren bij wisselen van tabblad",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Video hervatten bij terugkeren naar tabblad",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Video pauzeren wanneer browser focus verliest",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Video hervatten wanneer browser focus krijgt",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Extensie uitschakelen voor huidig tabblad",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Uitschakelen bij volledig scherm",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Extensie volledig uitschakelen",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Video pauzeren wanneer computer vergrendeld is",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Video hervatten wanneer computer ontgrendeld is",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Video pauzeren wanneer uit beeld gescrold",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Pauzeren wanneer cursor browservenster verlaat",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Voorkom automatisch hervatten na handmatige pauze",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Toon debug-berichten in console",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Je kunt sneltoetsen configureren in het Extensies-menu",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Bekijk broncode op GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Steun op Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Gemaakt met ♥ door",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Extensie inschakelen/uitschakelen",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Inschakelen/uitschakelen op actief tabblad",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Afspelen/pauzeren wisselen",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Dempen wisselen",
+    "description": "Command description for toggling mute"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Sekme odağını kaybettiğinde birden fazla video hizmetini durdurur ve odaklandığında devam ettirir",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Ayarlar",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Gelişmiş Ayarlar",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Kısayol Tuşları",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Sekme değiştirildiğinde videoyu duraklat",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Sekmeye dönüldüğünde videoyu devam ettir",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Tarayıcı odağı kaybettiğinde videoyu duraklat",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Tarayıcı odağı aldığında videoyu devam ettir",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Mevcut sekme için uzantıyı devre dışı bırak",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Video tam ekrandayken devre dışı bırak",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Uzantıyı tamamen devre dışı bırak",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Bilgisayar kilitlendiğinde videoyu duraklat",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Bilgisayar kilidi açıldığında videoyu devam ettir",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Görünüm dışına kaydırıldığında videoyu duraklat",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "İmleç tarayıcı penceresinden çıktığında duraklat",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Manuel duraklatmadan sonra otomatik devam etmeyi önle",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Konsolda hata ayıklama mesajlarını göster",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Uzantılar menüsünde kısayol tuşlarını yapılandırabilirsiniz",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "GitHub'da Kaynağı Görüntüle",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Patreon'da Destekle",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "♥ ile yapıldı",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Uzantıyı etkinleştir/devre dışı bırak",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Aktif sekmede etkinleştir/devre dışı bırak",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Oynat/Duraklat geçişi",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Sesi aç/kapat",
+    "description": "Command description for toggling mute"
+  }
+}

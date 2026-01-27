@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "يوقف خدمات الفيديو المتعددة عند فقدان التركيز على علامة التبويب ويستأنف عند التركيز",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "الإعدادات",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "إعدادات متقدمة",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "مفاتيح الاختصار",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "إيقاف الفيديو مؤقتًا عند تبديل علامات التبويب",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "استئناف الفيديو عند العودة إلى علامة التبويب",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "إيقاف الفيديو مؤقتًا عند فقدان المتصفح للتركيز",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "استئناف الفيديو عند حصول المتصفح على التركيز",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "تعطيل الإضافة لعلامة التبويب الحالية",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "تعطيل عند ملء الشاشة",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "تعطيل الإضافة تمامًا",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "إيقاف الفيديو مؤقتًا عند قفل الكمبيوتر",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "استئناف الفيديو عند إلغاء قفل الكمبيوتر",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "إيقاف الفيديو مؤقتًا عند التمرير خارج العرض",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "إيقاف مؤقت عند مغادرة المؤشر لنافذة المتصفح",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "منع الاستئناف التلقائي بعد الإيقاف المؤقت اليدوي",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "إظهار رسائل التصحيح في وحدة التحكم",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "يمكنك تكوين مفاتيح الاختصار في قائمة الإضافات",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "عرض المصدر على GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "ادعمنا على Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "صنع بـ ♥ بواسطة",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "تفعيل/تعطيل الإضافة",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "تفعيل/تعطيل في علامة التبويب الحالية",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "تبديل التشغيل/الإيقاف المؤقت",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "تبديل كتم الصوت",
+    "description": "Command description for toggling mute"
+  }
+}

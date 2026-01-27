@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Video Auto Pause",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Stopper flere videotjenester når fanen mister fokus og fortsetter ved fokus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Innstillinger",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Avanserte innstillinger",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Hurtigtaster",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Pause video ved bytte av fane",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Fortsett video når du returnerer til fanen",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Pause video når nettleseren mister fokus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Fortsett video når nettleseren får fokus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Deaktiver utvidelse for nåværende fane",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Deaktiver i fullskjerm",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Deaktiver utvidelsen helt",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Pause video når datamaskinen låses",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Fortsett video når datamaskinen låses opp",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Pause video når den rulles ut av syne",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Pause når markøren forlater nettleservinduet",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Forhindre automatisk fortsettelse etter manuell pause",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Vis feilsøkingsmeldinger i konsollen",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Du kan konfigurere hurtigtaster i utvidelsesmenyen",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Se kildekode på GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Støtt på Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Laget med ♥ av",
+    "description": "Footer text"
+  },
+  "commandToggleExtension": {
+    "message": "Aktiver/deaktiver utvidelse",
+    "description": "Command description for toggling extension"
+  },
+  "commandToggleTab": {
+    "message": "Aktiver/deaktiver på aktiv fane",
+    "description": "Command description for toggling on active tab"
+  },
+  "commandTogglePlay": {
+    "message": "Bytt spill/pause",
+    "description": "Command description for toggling play/pause"
+  },
+  "commandToggleMute": {
+    "message": "Bytt demp",
+    "description": "Command description for toggling mute"
+  }
+}

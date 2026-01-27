@@ -40,28 +40,28 @@
         "default": "Ctrl+Shift+K",
         "mac": "Command+Shift+K"
       },
-      "description": "Toggle auto pause/resume"
+      "description": "__MSG_commandToggleExtension__"
     },
     "toggle-tab": {
       "suggested_key": {
         "default": "Ctrl+Shift+L",
         "mac": "Command+Shift+L"
       },
-      "description": "Disable/enable on active tab"
+      "description": "__MSG_commandToggleTab__"
     },
     "toggle-play": {
       "suggested_key": {
         "default": "Ctrl+Shift+Space",
         "mac": "Command+Shift+Space"
       },
-      "description": "Toggle play/pause"
+      "description": "__MSG_commandTogglePlay__"
     },
     "toggle_mute": {
       "suggested_key": {
         "default": "Ctrl+Shift+O",
         "mac": "Command+Shift+O"
       },
-      "description": "Toggle mute"
+      "description": "__MSG_commandToggleMute__"
     }
   },
   "manifest_version": 3
