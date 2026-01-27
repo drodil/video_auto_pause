@@ -2,12 +2,12 @@ if (window.autoPauseInjected !== true) {
   const env = chrome.runtime ? chrome : browser;
   window.autoPauseInjected = true;
   const manuallyPausedVideos = new WeakMap();
+  const detectedVideos = new Set();
   let automaticallyPaused = false;
 
   let options = {
     autopause: true,
     autoresume: true,
-
     muteVideo: false,
     scrollpause: false,
     lockpause: true,
@@ -41,9 +41,9 @@ if (window.autoPauseInjected !== true) {
       if (options.disabled === true) {
         options.autopause = false;
         options.autoresume = false;
-
         options.muteVideo = false;
-        ((options.scrollpause = false), (options.lockpause = false));
+        options.scrollpause = false;
+        options.lockpause = false;
         options.lockresume = false;
         options.focuspause = false;
         options.focusresume = false;
@@ -56,7 +56,69 @@ if (window.autoPauseInjected !== true) {
         options.fadeDuration = 200;
         options.showPipButton = false;
       }
+      toggleCursorTracking(options.cursorTracking);
     });
+  }
+
+  function onMouseMove(event) {
+    if (isCursorNearEdge(event)) {
+      if (!cursorNearEdgeTimeout) {
+        cursorNearEdgeTimeout = setTimeout(function () {
+          debugLog(`Cursor near window edge, sending message`);
+          sendMessage({ cursorNearEdge: true });
+          cursorNearEdgeTimeout = null;
+        }, 200);
+      }
+    } else {
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      if (!cursorOutsideWindow) {
+        debugLog(`Cursor not near window edge, sending message`);
+        sendMessage({ cursorNearEdge: false });
+      }
+    }
+  }
+
+  function onMouseLeave(event) {
+    if (
+      event.relatedTarget === null ||
+      event.relatedTarget.nodeName === "HTML"
+    ) {
+      debugLog(`Cursor left the window, sending message`);
+      cursorOutsideWindow = true;
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      sendMessage({ cursorNearEdge: true });
+    }
+  }
+
+  function onMouseEnter(_event) {
+    if (cursorOutsideWindow) {
+      debugLog(`Cursor entered the window, sending message`);
+      cursorOutsideWindow = false;
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+      sendMessage({ cursorNearEdge: false });
+    }
+  }
+
+  let cursorTrackingEnabled = false;
+  function toggleCursorTracking(enable) {
+    if (enable && !cursorTrackingEnabled) {
+      debugLog("Enabling cursor tracking listeners");
+      window.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseleave", onMouseLeave);
+      document.addEventListener("mouseenter", onMouseEnter);
+      cursorTrackingEnabled = true;
+    } else if (!enable && cursorTrackingEnabled) {
+      debugLog("Disabling cursor tracking listeners");
+      window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseleave", onMouseLeave);
+      document.removeEventListener("mouseenter", onMouseEnter);
+      cursorTrackingEnabled = false;
+      clearTimeout(cursorNearEdgeTimeout);
+      cursorNearEdgeTimeout = null;
+    }
   }
 
   env.storage.onChanged.addListener(async function (changes, namespace) {
@@ -79,7 +141,7 @@ if (window.autoPauseInjected !== true) {
       togglePipButtons();
     }
 
-    if ("disabled" in changes) {
+    if ("disabled" in changes || "cursorTracking" in changes) {
       refresh_settings();
     }
   });
@@ -97,62 +159,6 @@ if (window.autoPauseInjected !== true) {
 
   let cursorNearEdgeTimeout;
   let cursorOutsideWindow = false;
-
-  // Listen for mousemove events
-  window.addEventListener("mousemove", async function (event) {
-    if (!options.cursorTracking) {
-      return;
-    }
-    if (isCursorNearEdge(event)) {
-      // If the cursor is near the edge, set a timeout
-      if (!cursorNearEdgeTimeout) {
-        cursorNearEdgeTimeout = setTimeout(function () {
-          debugLog(`Cursor near window edge, sending message`);
-          sendMessage({ cursorNearEdge: true });
-          cursorNearEdgeTimeout = null;
-        }, 200); // Wait for 200ms to infer user intention
-      }
-    } else {
-      // If the cursor moves away from the edge, clear the timeout
-      clearTimeout(cursorNearEdgeTimeout);
-      cursorNearEdgeTimeout = null;
-      if (!cursorOutsideWindow) {
-        debugLog(`Cursor not near window edge, sending message`);
-        sendMessage({ cursorNearEdge: false });
-      }
-    }
-  });
-
-  // Listen for mouse leaving the window
-  document.addEventListener("mouseleave", function (event) {
-    if (!options.cursorTracking) {
-      return;
-    }
-    if (
-      event.relatedTarget === null ||
-      event.relatedTarget.nodeName === "HTML"
-    ) {
-      debugLog(`Cursor left the window, sending message`);
-      cursorOutsideWindow = true;
-      clearTimeout(cursorNearEdgeTimeout);
-      cursorNearEdgeTimeout = null;
-      sendMessage({ cursorNearEdge: true });
-    }
-  });
-
-  // Listen for mouse entering the window
-  document.addEventListener("mouseenter", function (_event) {
-    if (!options.cursorTracking) {
-      return;
-    }
-    if (cursorOutsideWindow) {
-      debugLog(`Cursor entered the window, sending message`);
-      cursorOutsideWindow = false;
-      clearTimeout(cursorNearEdgeTimeout);
-      cursorNearEdgeTimeout = null;
-      sendMessage({ cursorNearEdge: false });
-    }
-  });
 
   // Send message to service worker
   function sendMessage(message) {
@@ -197,27 +203,241 @@ if (window.autoPauseInjected !== true) {
   });
 
   const hasVideos = () => {
-    // Standard check
-    if (document.getElementsByTagName("video").length >= 1) {
-      return true;
-    }
-
-    // Check for common player wrappers or Shadow DOM if we can
-    // Some sites use custom elements that might contain videos in shadow roots
-    const shadowHosts = document.querySelectorAll("*");
-    for (let i = 0; i < shadowHosts.length; i++) {
-      if (
-        shadowHosts[i].shadowRoot &&
-        shadowHosts[i].shadowRoot.querySelector("video")
-      ) {
-        return true;
-      }
-    }
-
-    return false;
+    return detectedVideos.size > 0;
   };
 
-  // Listen media commands from the service worker
+  const activeFades = new WeakMap();
+  const originalVolumes = new WeakMap();
+
+  const fadeAudio = (video, targetVolume, duration) => {
+    if (!options.audioFading) return Promise.resolve();
+
+    debugLog(`Fading audio for ${video} to ${targetVolume} over ${duration}ms`);
+    if (activeFades.has(video)) {
+      const activeFade = activeFades.get(video);
+      activeFade.cancelled = true;
+      activeFades.delete(video);
+    }
+
+    const fadeState = {
+      cancelled: false,
+      startTime: performance.now(),
+      targetVolume: targetVolume,
+    };
+    activeFades.set(video, fadeState);
+
+    return new Promise((resolve) => {
+      const startVolume = video.volume;
+      const volumeChange = targetVolume - startVolume;
+      const startTime = fadeState.startTime;
+
+      const animate = () => {
+        if (fadeState.cancelled) {
+          return;
+        }
+
+        const currentTime = performance.now();
+        const elapsed = currentTime - startTime;
+
+        if (elapsed >= duration) {
+          video.volume = targetVolume;
+          activeFades.delete(video);
+          resolve();
+          return;
+        }
+
+        const newVolume = startVolume + volumeChange * (elapsed / duration);
+        video.volume = Math.max(0, Math.min(1, newVolume));
+
+        if (document.hidden) {
+          setTimeout(animate, 16);
+        } else {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      if (document.hidden) {
+        setTimeout(animate, 16);
+      } else {
+        requestAnimationFrame(animate);
+      }
+    });
+  };
+
+  const propagateToIframes = (action) => {
+    const iframeElements = document.getElementsByTagName("iframe");
+    for (const element of iframeElements) {
+      try {
+        if (action === "stop") {
+          element.contentWindow.postMessage(
+            JSON.stringify({ event: "command", func: "pauseVideo" }),
+            "*",
+          );
+        } else if (action === "resume") {
+          element.contentWindow.postMessage(
+            JSON.stringify({ event: "command", func: "playVideo" }),
+            "*",
+          );
+        }
+      } catch (e) {
+        debugLog(e);
+      }
+    }
+  };
+
+  const pauseVideo = async (video) => {
+    if (document.pictureInPictureElement === video) {
+      debugLog(`Ignoring stop command for ${video} because it is in PiP`);
+      return;
+    }
+
+    automaticallyPaused = true;
+    if (options.audioFading && !video.paused) {
+      if (!originalVolumes.has(video)) {
+        originalVolumes.set(video, video.volume);
+      }
+
+      await fadeAudio(video, 0, options.fadeDuration);
+      video.pause();
+
+      if (options.fadeDuration > 1000) {
+        video.currentTime = Math.max(
+          0,
+          video.currentTime - options.fadeDuration / 1000,
+        );
+      }
+
+      if (originalVolumes.has(video)) {
+        video.volume = originalVolumes.get(video);
+        originalVolumes.delete(video);
+      }
+    } else {
+      video.pause();
+    }
+  };
+
+  const resumeVideo = async (video) => {
+    debugLog(`Attempting to resume video: paused=${video.paused}`);
+    automaticallyPaused = false;
+
+    let targetVolume = video.volume;
+    if (originalVolumes.has(video)) {
+      targetVolume = originalVolumes.get(video);
+      originalVolumes.delete(video);
+    } else if (video.volume === 0 && !activeFades.has(video)) {
+      targetVolume = 1.0;
+    }
+
+    if (!video.ended) {
+      if (options.audioFading) {
+        if (video.paused) {
+          video.volume = 0;
+        }
+
+        await video.play();
+        await fadeAudio(video, targetVolume, options.fadeDuration);
+      } else {
+        await video.play();
+      }
+    }
+  };
+
+  const handleMuteAction = async (video, action) => {
+    if (action === "toggle_mute") {
+      video.muted = !video.muted;
+    } else if (action === "mute" && !video.muted) {
+      automaticallyPaused = true;
+      if (options.audioFading) {
+        if (!originalVolumes.has(video)) {
+          originalVolumes.set(video, video.volume);
+        }
+        await fadeAudio(video, 0, options.fadeDuration);
+        video.muted = true;
+        if (originalVolumes.has(video)) {
+          video.volume = originalVolumes.get(video);
+          originalVolumes.delete(video);
+        }
+      } else {
+        video.muted = true;
+      }
+    } else if (action === "unmute" && video.muted) {
+      automaticallyPaused = false;
+      let targetVolume = video.volume;
+      if (originalVolumes.has(video)) {
+        targetVolume = originalVolumes.get(video);
+        originalVolumes.delete(video);
+      } else if (video.volume === 0 && !activeFades.has(video)) {
+        targetVolume = 1.0;
+      }
+
+      if (options.audioFading) {
+        video.volume = 0;
+        video.muted = false;
+        await fadeAudio(video, targetVolume, options.fadeDuration);
+      } else {
+        video.muted = false;
+      }
+    }
+  };
+
+  const handleSpeedAction = (video, command) => {
+    let newRate = video.playbackRate;
+    if (command === "speed-up") {
+      newRate += 0.25;
+    } else if (command === "speed-down") {
+      newRate = Math.max(0.25, newRate - 0.25);
+    } else if (command === "speed-reset") {
+      newRate = 1.0;
+    }
+    video.playbackRate = newRate;
+    showToast(`Speed: ${newRate}x`);
+  };
+
+  const handleVideoAction = async (video, request) => {
+    const isManuallyPaused = manuallyPausedVideos.get(video);
+
+    switch (request.action) {
+      case "stop":
+        if (!isManuallyPaused) {
+          await pauseVideo(video);
+        }
+        break;
+      case "resume":
+        if ((video.paused || activeFades.has(video)) && !isManuallyPaused) {
+          await resumeVideo(video);
+        } else {
+          debugLog(
+            `Resume blocked: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
+          );
+        }
+        break;
+      case "mute":
+      case "unmute":
+      case "toggle_mute":
+        await handleMuteAction(video, request.action);
+        break;
+      case "toggle":
+        if (video.paused && !isManuallyPaused) {
+          if (!video.ended) {
+            await video.play();
+          }
+          automaticallyPaused = false;
+        } else if (!isManuallyPaused) {
+          video.pause();
+          automaticallyPaused = true;
+        }
+        break;
+      case "speed":
+        handleSpeedAction(video, request.command);
+        break;
+      case "check":
+        break;
+      default:
+        debugLog(`Unknown action: ${request.action}`);
+        break;
+    }
+  };
+
   env.runtime.onMessage.addListener(
     async function (request, sender, sendResponse) {
       if (!("action" in request)) {
@@ -225,223 +445,23 @@ if (window.autoPauseInjected !== true) {
       }
       debugLog(`Received message: ${JSON.stringify(request)}`);
 
-      const videoElements = document.getElementsByTagName("video");
-      sendMessage({ hasVideos: hasVideos() });
+      if (request.action === "check") {
+        sendMessage({ hasVideos: hasVideos() });
+        sendResponse({});
+        return true;
+      }
 
       if (document.fullscreenElement && options.disableOnFullscreen) {
         debugLog(`Document is in fullscreen mode, ignoring all commands`);
         return true;
       }
 
-      const iframeElements = document.getElementsByTagName("iframe");
+      propagateToIframes(request.action);
 
-      for (const element of iframeElements) {
-        const iframe = element;
+      const videoElements = document.getElementsByTagName("video");
+      for (const video of videoElements) {
         try {
-          if (request.action === "stop") {
-            iframe.contentWindow.postMessage(
-              JSON.stringify({ event: "command", func: "pauseVideo" }),
-              "*",
-            );
-          } else if (request.action === "resume") {
-            iframe.contentWindow.postMessage(
-              JSON.stringify({ event: "command", func: "playVideo" }),
-              "*",
-            );
-          }
-        } catch (e) {
-          debugLog(e);
-        }
-      }
-
-      const activeFades = new WeakMap();
-      const originalVolumes = new WeakMap();
-
-      const fadeAudio = (video, targetVolume, duration) => {
-        if (!options.audioFading) return Promise.resolve();
-
-        debugLog(
-          `Fading audio for ${video} to ${targetVolume} over ${duration}ms`,
-        );
-        if (activeFades.has(video)) {
-          const activeFade = activeFades.get(video);
-          activeFade.cancelled = true;
-          activeFades.delete(video);
-        }
-
-        const fadeState = {
-          cancelled: false,
-          startTime: performance.now(),
-          targetVolume: targetVolume,
-        };
-        activeFades.set(video, fadeState);
-
-        return new Promise((resolve) => {
-          const startVolume = video.volume;
-          const volumeChange = targetVolume - startVolume;
-          const startTime = fadeState.startTime;
-
-          const animate = () => {
-            if (fadeState.cancelled) {
-              return;
-            }
-
-            const currentTime = performance.now();
-            const elapsed = currentTime - startTime;
-
-            if (elapsed >= duration) {
-              video.volume = targetVolume;
-              activeFades.delete(video);
-              resolve();
-              return;
-            }
-
-            const newVolume = startVolume + volumeChange * (elapsed / duration);
-            video.volume = Math.max(0, Math.min(1, newVolume));
-
-            if (document.hidden) {
-              setTimeout(animate, 16);
-            } else {
-              requestAnimationFrame(animate);
-            }
-          };
-
-          if (document.hidden) {
-            setTimeout(animate, 16);
-          } else {
-            requestAnimationFrame(animate);
-          }
-        });
-      };
-
-      for (const element of videoElements) {
-        try {
-          const video = element;
-          const isManuallyPaused = manuallyPausedVideos.get(video);
-
-          if (request.action === "stop" && !isManuallyPaused) {
-            if (document.pictureInPictureElement === video) {
-              debugLog(
-                `Ignoring stop command for ${video} because it is in PiP`,
-              );
-              continue;
-            }
-
-            automaticallyPaused = true;
-            if (options.audioFading && !video.paused) {
-              if (!originalVolumes.has(video)) {
-                originalVolumes.set(video, video.volume);
-              }
-
-              fadeAudio(video, 0, options.fadeDuration).then(() => {
-                video.pause();
-
-                if (options.fadeDuration > 1000) {
-                  video.currentTime = Math.max(
-                    0,
-                    video.currentTime - options.fadeDuration / 1000,
-                  );
-                }
-
-                if (originalVolumes.has(video)) {
-                  video.volume = originalVolumes.get(video);
-                  originalVolumes.delete(video);
-                }
-              });
-            } else {
-              video.pause();
-            }
-          } else if (
-            request.action === "resume" &&
-            (video.paused || activeFades.has(video)) &&
-            !isManuallyPaused
-          ) {
-            debugLog(
-              `Attempting to resume video: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
-            );
-            automaticallyPaused = false;
-
-            let targetVolume = video.volume;
-            if (originalVolumes.has(video)) {
-              targetVolume = originalVolumes.get(video);
-              originalVolumes.delete(video);
-            } else if (video.volume === 0 && !activeFades.has(video)) {
-              targetVolume = 1.0;
-            }
-
-            if (!video.ended) {
-              if (options.audioFading) {
-                if (video.paused) {
-                  video.volume = 0;
-                }
-
-                await video.play();
-                fadeAudio(video, targetVolume, options.fadeDuration);
-              } else {
-                await video.play();
-              }
-            }
-          } else if (request.action === "resume") {
-            debugLog(
-              `Resume blocked: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
-            );
-          } else if (request.action === "toggle_mute") {
-            video.muted = !video.muted;
-          } else if (request.action === "mute" && !video.muted) {
-            automaticallyPaused = true;
-            if (options.audioFading) {
-              if (!originalVolumes.has(video)) {
-                originalVolumes.set(video, video.volume);
-              }
-              fadeAudio(video, 0, options.fadeDuration).then(() => {
-                video.muted = true;
-                if (originalVolumes.has(video)) {
-                  video.volume = originalVolumes.get(video);
-                  originalVolumes.delete(video);
-                }
-              });
-            } else {
-              video.muted = true;
-            }
-          } else if (request.action === "unmute" && video.muted) {
-            automaticallyPaused = false;
-            let targetVolume = video.volume;
-            if (originalVolumes.has(video)) {
-              targetVolume = originalVolumes.get(video);
-              originalVolumes.delete(video);
-            } else if (video.volume === 0 && !activeFades.has(video)) {
-              targetVolume = 1.0;
-            }
-
-            if (options.audioFading) {
-              video.volume = 0;
-              video.muted = false;
-              fadeAudio(video, targetVolume, options.fadeDuration);
-            } else {
-              video.muted = false;
-            }
-          } else if (request.action === "toggle") {
-            if (video.paused && !isManuallyPaused) {
-              if (!video.ended) {
-                await video.play();
-              }
-              automaticallyPaused = false;
-            } else if (!isManuallyPaused) {
-              video.pause();
-              automaticallyPaused = true;
-            }
-          } else if (request.action === "speed") {
-            let newRate = video.playbackRate;
-            if (request.command === "speed-up") {
-              newRate += 0.25;
-            } else if (request.command === "speed-down") {
-              newRate = Math.max(0.25, newRate - 0.25);
-            } else if (request.command === "speed-reset") {
-              newRate = 1.0;
-            }
-            video.playbackRate = newRate;
-            showToast(`Speed: ${newRate}x`);
-          }
+          await handleVideoAction(video, request);
         } catch (e) {
           debugLog(e);
         }
@@ -452,6 +472,8 @@ if (window.autoPauseInjected !== true) {
   );
 
   function attachVideoListeners(videoElement, intersection_observer) {
+    detectedVideos.add(videoElement);
+
     if (videoElement.dataset.autoPauseListenerAttached) {
       return;
     }
@@ -706,12 +728,26 @@ if (window.autoPauseInjected !== true) {
 
   // Watch for dynamically added video elements
   const videoObserver = new MutationObserver(function (mutations) {
+    let changed = false;
     for (const mutation of mutations) {
+      for (const node of mutation.removedNodes) {
+        if (node.tagName === "VIDEO") {
+          detectedVideos.delete(node);
+          changed = true;
+        } else if (node.getElementsByTagName) {
+          const videos = node.getElementsByTagName("video");
+          for (const video of videos) {
+            detectedVideos.delete(video);
+          }
+          if (videos.length > 0) changed = true;
+        }
+      }
+
       for (const node of mutation.addedNodes) {
         if (node.tagName === "VIDEO") {
           debugLog(`New video element detected`);
           attachVideoListeners(node, intersection_observer);
-          sendMessage({ hasVideos: hasVideos() });
+          changed = true;
         } else if (node.getElementsByTagName) {
           const videos = node.getElementsByTagName("video");
           if (videos.length > 0) {
@@ -719,10 +755,23 @@ if (window.autoPauseInjected !== true) {
             for (const element of videos) {
               attachVideoListeners(element, intersection_observer);
             }
-            sendMessage({ hasVideos: hasVideos() });
+            changed = true;
+          }
+        }
+        if (node.shadowRoot) {
+          const videos = node.shadowRoot.querySelectorAll("video");
+          if (videos.length > 0) {
+            for (const video of videos) {
+              attachVideoListeners(video, intersection_observer);
+            }
+            changed = true;
           }
         }
       }
+    }
+
+    if (changed) {
+      sendMessage({ hasVideos: hasVideos() });
     }
   });
 
