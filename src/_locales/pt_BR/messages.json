@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "Alternar mudo",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "Atrasos (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "Atraso na Pausa",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "Atraso na Retomada",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "Exclusões de Domínio",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "Digite os domínios a serem excluídos (um por linha):",
+    "description": "Description for domain exclusions textarea"
   }
 }

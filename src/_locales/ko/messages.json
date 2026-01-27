@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "음소거 전환",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "지연 (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "일시 중지 지연",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "재개 지연",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "도메인 제외",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "제외할 도메인 입력 (한 줄에 하나씩):",
+    "description": "Description for domain exclusions textarea"
   }
 }

@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "Переключить звук",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "Задержки (мс)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "Задержка паузы",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "Задержка возобновления",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "Исключения доменов",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "Введите домены для исключения (по одному в строке):",
+    "description": "Description for domain exclusions textarea"
   }
 }
