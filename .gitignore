@@ -5,3 +5,6 @@ Archive.zip
 web-ext-artifacts
 node_modules
 src/manifest.json
+playwright-report/
+test-results/
+test-dist/

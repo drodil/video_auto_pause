@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <h1>Video Auto Pause Test</h1>
+    <video
+      id="v"
+      src="https://www.w3schools.com/html/mov_bbb.mp4"
+      controls
+      loop
+      muted
+      playsinline
+      autoplay
+    ></video>
+    <script>
+      console.log("Video page loaded");
+      const v = document.getElementById("v");
+      v.onplay = () => console.log("Video playing");
+      v.onpause = () => console.log("Video paused");
+    </script>
+  </body>
+</html>

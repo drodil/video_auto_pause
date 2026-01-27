@@ -288,8 +288,10 @@ if (window.autoPauseInjected !== true) {
 
           if (request.action === "stop" && !isManuallyPaused) {
             if (document.pictureInPictureElement === video) {
-                 debugLog(`Ignoring stop command for ${video} because it is in PiP`);
-                 continue;
+              debugLog(
+                `Ignoring stop command for ${video} because it is in PiP`,
+              );
+              continue;
             }
 
             automaticallyPaused = true;
@@ -392,15 +394,15 @@ if (window.autoPauseInjected !== true) {
       debugLog(
         `Pause event: automaticallyPaused=${automaticallyPaused}, manualPause=${options.manualPause}`,
       );
-      
-      // Ignore pause events during PiP exit
+
       if (videoElement.dataset.returningFromPiP === "true") {
-          debugLog("Ignoring pause event during PiP exit and enforcing playback");
-          // If the browser paused it, force it to play again (seamless return)
-          if (!document.hidden) {
-              videoElement.play().catch(e => debugLog(`Failed to auto-resume from PiP: ${e}`));
-          }
-          return;
+        debugLog("Ignoring pause event during PiP exit and enforcing playback");
+        if (!document.hidden) {
+          videoElement
+            .play()
+            .catch((e) => debugLog(`Failed to auto-resume from PiP: ${e}`));
+        }
+        return;
       }
 
       if (!automaticallyPaused && options.manualPause) {
@@ -465,21 +467,19 @@ if (window.autoPauseInjected !== true) {
     btn.addEventListener("mouseleave", hideBtn);
 
     video.addEventListener("enterpictureinpicture", () => {
-        debugLog("Entered Picture-in-Picture");
+      debugLog("Entered Picture-in-Picture");
     });
 
     video.addEventListener("leavepictureinpicture", () => {
-        debugLog("Left Picture-in-Picture");
-        // Mark that we are returning from PiP to prevent "manual pause" detection
-        video.dataset.returningFromPiP = "true";
-        setTimeout(() => {
-             delete video.dataset.returningFromPiP;
-        }, 1000);
-        
-        // Ensure we don't treat the transition as a manual pause if it continues playing
-        if (!video.paused) {
-             manuallyPausedVideos.delete(video);
-        }
+      debugLog("Left Picture-in-Picture");
+      video.dataset.returningFromPiP = "true";
+      setTimeout(() => {
+        delete video.dataset.returningFromPiP;
+      }, 1000);
+
+      if (!video.paused) {
+        manuallyPausedVideos.delete(video);
+      }
     });
 
     btn.addEventListener("click", async (e) => {
