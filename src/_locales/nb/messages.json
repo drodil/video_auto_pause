@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Skriv inn domener som skal ekskluderes (ett per linje):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Lydfading",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Fading varighet (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Vis Bilde-i-bilde-knapp",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Bytt bilde-i-bilde",
+    "description": "Title text for the PiP button"
   }
 }

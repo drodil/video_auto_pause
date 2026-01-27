@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "除外するドメインを入力してください (1行に1つ):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "オーディオフェード",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "フェード期間 (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "ピクチャーインピクチャーボタンを表示",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "ピクチャーインピクチャーを切り替え",
+    "description": "Title text for the PiP button"
   }
 }

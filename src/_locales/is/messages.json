@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Sláðu inn lén til að útiloka (eitt í hverri línu):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Hljóðdofnun",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Dofnunartími (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Sýna Mynd-í-mynd hnapp",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Skipta Mynd-í-mynd",
+    "description": "Title text for the PiP button"
   }
 }

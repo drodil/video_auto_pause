@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "输入要排除的域名（每行一个）：",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "音频淡入淡出",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "淡入淡出持续时间（毫秒）",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "显示画中画按钮",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "切换画中画",
+    "description": "Title text for the PiP button"
   }
 }

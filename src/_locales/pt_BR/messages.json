@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Digite os domínios a serem excluídos (um por linha):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Desvanecimento de Áudio",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Duração do Desvanecimento (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Mostrar Botão Picture-in-Picture",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Alternar Picture-in-Picture",
+    "description": "Title text for the PiP button"
   }
 }
