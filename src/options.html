@@ -340,7 +340,32 @@
               <input type="checkbox" id="debugMode" />
               <span class="label-text" data-i18n="debugMode">Show debug messages in console</span>
             </label>
+            <div style="margin-top: 12px; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+              <span style="font-size: 13px; font-weight: 500; color: #374151; display: block; margin-bottom: 8px;" data-i18n="delays">Delays (ms)</span>
+              <div style="display: flex; gap: 12px;">
+                <div style="flex: 1;">
+                   <label for="pauseDelay" style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 2px;" data-i18n="pauseDelay">Pause Delay</label>
+                   <input type="number" id="pauseDelay" min="0" step="100" style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px;" placeholder="0">
+                </div>
+                <div style="flex: 1;">
+                   <label for="resumeDelay" style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 2px;" data-i18n="resumeDelay">Resume Delay</label>
+                   <input type="number" id="resumeDelay" min="0" step="100" style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px;" placeholder="0">
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div class="container section">
+        <button class="collapsible_button">
+          <span data-i18n="domainExclusions">Domain Exclusions</span>
+        </button>
+        <div class="collapsible_content">
+           <div style="margin-top: 8px;">
+             <p data-i18n="domainExclusionsDescription" style="margin-bottom: 6px;">Enter domains to exclude (one per line):</p>
+             <textarea id="excludedDomains" rows="5" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace; font-size: 12px; resize: vertical;" placeholder="example.com&#10;youtube.com"></textarea>
+           </div>
         </div>
       </div>
 

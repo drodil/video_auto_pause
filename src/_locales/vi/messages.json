@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "Chuyển đổi tắt tiếng",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "Trì hoãn (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "Trì hoãn tạm dừng",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "Trì hoãn tiếp tục",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "Loại trừ tên miền",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "Nhập các tên miền cần loại trừ (mỗi dòng một):",
+    "description": "Description for domain exclusions textarea"
   }
 }

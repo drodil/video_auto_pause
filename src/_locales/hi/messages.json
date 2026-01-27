@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "म्यूट टॉगल करें",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "देरी (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "विराम देरी",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "पुनararambh देरी",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "डोमेन बहिष्कार",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "बाहर करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
+    "description": "Description for domain exclusions textarea"
   }
 }

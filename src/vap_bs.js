@@ -21,6 +21,9 @@ let options = {
   cursorTracking: false,
   debugMode: false,
   disableOnFullscreen: true,
+  pauseDelay: 0,
+  resumeDelay: 0,
+  excludedDomains: [],
 };
 
 function debugLog(message) {
@@ -56,6 +59,9 @@ async function refresh_settings() {
     options.cursorTracking = false;
     options.debugMode = false;
     options.disableOnFullscreen = true;
+    options.pauseDelay = 0;
+    options.resumeDelay = 0;
+    options.excludedDomains = [];
   }
 
   disabledTabs =
@@ -88,7 +94,16 @@ function isEnabledForTab(tab) {
     return false;
   }
 
-  return !disabledTabs.includes(tab.id);
+  if (!disabledTabs.includes(tab.id)) {
+    if (tab.url) {
+      const url = new URL(tab.url);
+      if (options.excludedDomains.some((domain) => url.hostname.includes(domain))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 // Functionality to send messages to tabs
@@ -110,12 +125,45 @@ function sendMessage(tab, message) {
 }
 
 // Media conrol functions
+let pauseTimeouts = {};
+let resumeTimeouts = {};
+
 function stop(tab) {
-  sendMessage(tab, { action: "stop" });
+  if (resumeTimeouts[tab.id]) {
+    clearTimeout(resumeTimeouts[tab.id]);
+    delete resumeTimeouts[tab.id];
+  }
+
+  if (options.pauseDelay > 0) {
+    if (pauseTimeouts[tab.id]) {
+        return;
+    }
+    pauseTimeouts[tab.id] = setTimeout(() => {
+        sendMessage(tab, { action: "stop" });
+        delete pauseTimeouts[tab.id];
+    }, options.pauseDelay);
+  } else {
+    sendMessage(tab, { action: "stop" });
+  }
 }
 
 function resume(tab) {
-  sendMessage(tab, { action: "resume" });
+  if (pauseTimeouts[tab.id]) {
+    clearTimeout(pauseTimeouts[tab.id]);
+    delete pauseTimeouts[tab.id];
+  }
+
+  if (options.resumeDelay > 0) {
+    if (resumeTimeouts[tab.id]) {
+        return;
+    }
+    resumeTimeouts[tab.id] = setTimeout(() => {
+        sendMessage(tab, { action: "resume" });
+        delete resumeTimeouts[tab.id];
+    }, options.resumeDelay);
+  } else {
+    sendMessage(tab, { action: "resume" });
+  }
 }
 
 function toggle(tab) {

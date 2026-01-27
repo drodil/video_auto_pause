@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "Stummschaltung umschalten",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "Verzögerungen (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "Pause-Verzögerung",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "Fortsetzungs-Verzögerung",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "Domain-Ausschlüsse",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "Geben Sie auszuschließende Domains ein (eine pro Zeile):",
+    "description": "Description for domain exclusions textarea"
   }
 }

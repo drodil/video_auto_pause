@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "切換靜音",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "延遲 (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "暫停延遲",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "恢復延遲",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "網域排除",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "輸入要排除的網域（每行一個）：",
+    "description": "Description for domain exclusions textarea"
   }
 }

@@ -106,5 +106,25 @@
   "commandToggleMute": {
     "message": "Bisukan/suarakan",
     "description": "Command description for toggling mute"
+  },
+  "delays": {
+    "message": "Penundaan (ms)",
+    "description": "Label for delays section"
+  },
+  "pauseDelay": {
+    "message": "Penundaan Jeda",
+    "description": "Label for pause delay input"
+  },
+  "resumeDelay": {
+    "message": "Penundaan Lanjut",
+    "description": "Label for resume delay input"
+  },
+  "domainExclusions": {
+    "message": "Pengecualian Domain",
+    "description": "Label for domain exclusions section"
+  },
+  "domainExclusionsDescription": {
+    "message": "Masukkan domain yang akan dikecualikan (satu per baris):",
+    "description": "Description for domain exclusions textarea"
   }
 }

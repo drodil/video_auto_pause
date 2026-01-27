@@ -29,6 +29,9 @@ const options = {
   manualPause: true,
   debugMode: false,
   disableOnFullscreen: false,
+  pauseDelay: 0,
+  resumeDelay: 0,
+  excludedDomains: [],
 };
 
 // Saves options to chrome storage
@@ -36,7 +39,14 @@ async function save_options() {
   const storage = {};
 
   for (const option in options) {
-    storage[option] = document.getElementById(option).checked;
+    if (option === "excludedDomains") {
+      const domains = document.getElementById(option).value.split("\n");
+      storage[option] = domains.map((domain) => domain.trim()).filter((domain) => domain.length > 0);
+    } else if (option === "pauseDelay" || option === "resumeDelay") {
+        storage[option] = parseInt(document.getElementById(option).value) || 0;
+    } else {
+      storage[option] = document.getElementById(option).checked;
+    }
   }
   await env.storage.sync.set(storage);
 
@@ -59,7 +69,13 @@ async function save_options() {
 async function restore_options() {
   const items = await env.storage.sync.get(options);
   for (const opt in items) {
-    document.getElementById(opt).checked = items[opt];
+     if (opt === "excludedDomains") {
+        document.getElementById(opt).value = items[opt].join("\n");
+     } else if (opt === "pauseDelay" || opt === "resumeDelay") {
+        document.getElementById(opt).value = items[opt];
+     } else {
+        document.getElementById(opt).checked = items[opt];
+     }
   }
 
   for (const option in options) {
