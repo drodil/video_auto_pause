@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/drodil/video_auto_pause/compare/v1.12.0...v1.13.0) (2026-01-27)
+
+
+### Features
+
+* mute instead pause + bug fixes ([8e8dc53](https://github.com/drodil/video_auto_pause/commit/8e8dc5398a539484f80b217f765268feea88f153))
+
+
+### Bug Fixes
+
+* **ci:** use xvfb-run for playwright tests ([995e6c8](https://github.com/drodil/video_auto_pause/commit/995e6c88447aa4efa939786b127b17e43a086938))
+* icon handling + perf improvements ([f28ceef](https://github.com/drodil/video_auto_pause/commit/f28ceefb1af34a1c87bb6fec253fcb82a0801321))
+* update upload-artifact ([f7d77a7](https://github.com/drodil/video_auto_pause/commit/f7d77a7cb71b465d993cf01ac16b3cb1c6693fbb))
+
 ## [1.12.0](https://github.com/drodil/video_auto_pause/compare/v1.11.4...v1.12.0) (2026-01-27)
 
 ### Features
