@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Автопауза Видео",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Останавливает несколько видеосервисов при потере фокуса вкладки и продолжает при возврате",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Настройки",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Расширенные настройки",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Горячие клавиши",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Приостанавливать видео при переключении вкладок",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Возобновлять видео при возврате на вкладку",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Приостанавливать видео при потере фокуса браузера",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Возобновлять видео при получении фокуса браузера",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Отключить расширение для текущей вкладки",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Отключить при полноэкранном режиме видео",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Полностью отключить расширение",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Приостанавливать видео при блокировке компьютера",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Возобновлять видео при разблокировке компьютера",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Приостанавливать видео при прокрутке за пределы видимости",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Приостанавливать при выходе курсора из окна браузера",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Предотвращать автовозобновление после ручной паузы",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Показывать отладочные сообщения в консоли",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Вы можете настроить горячие клавиши в меню Расширения",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Посмотреть исходный код на GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Поддержать на Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Сделано с ♥",
+    "description": "Footer text"
+  }
+}

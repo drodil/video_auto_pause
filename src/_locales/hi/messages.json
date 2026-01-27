@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "वीडियो ऑटो पॉज़",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "टैब अनफोकस होने पर कई वीडियो सेवाओं को रोकता है और फोकस पर जारी रखता है",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "सेटिंग्स",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "उन्नत सेटिंग्स",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "हॉटकी",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "टैब बदलते समय वीडियो रोकें",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "टैब पर लौटने पर वीडियो जारी रखें",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "ब्राउज़र फोकस खोने पर वीडियो रोकें",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "ब्राउज़र फोकस प्राप्त करने पर वीडियो जारी रखें",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "वर्तमान टैब के लिए एक्सटेंशन अक्षम करें",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "वीडियो फुलस्क्रीन होने पर अक्षम करें",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "एक्सटेंशन पूरी तरह से अक्षम करें",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "कंप्यूटर लॉक होने पर वीडियो रोकें",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "कंप्यूटर अनलॉक होने पर वीडियो जारी रखें",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "स्क्रॉल से बाहर होने पर वीडियो रोकें",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "कर्सर ब्राउज़र विंडो छोड़ने पर रोकें",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "मैनुअल पॉज़ के बाद ऑटो-रिज्यूम रोकें",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "कंसोल में डीबग संदेश दिखाएं",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "आप एक्सटेंशन मेनू में हॉटकी कॉन्फ़िगर कर सकते हैं",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "GitHub पर सोर्स देखें",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Patreon पर समर्थन करें",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "♥ के साथ बनाया गया",
+    "description": "Footer text"
+  }
+}

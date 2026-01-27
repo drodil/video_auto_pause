@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "ビデオ自動一時停止",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "タブのフォーカスが外れたときに複数の動画サービスを停止し、フォーカス時に再開します",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "詳細設定",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "ホットキー",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "タブを切り替えたときに動画を一時停止",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "タブに戻ったときに動画を再開",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "ブラウザがフォーカスを失ったときに動画を一時停止",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "ブラウザがフォーカスを得たときに動画を再開",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "現在のタブで拡張機能を無効にする",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "動画が全画面表示のときに無効にする",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "拡張機能を完全に無効にする",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "コンピューターがロックされたときに動画を一時停止",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "コンピューターがロック解除されたときに動画を再開",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "スクロールして見えなくなったときに動画を一時停止",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "カーソルがブラウザウィンドウから離れたときに一時停止",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "手動一時停止後の自動再開を防止",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "コンソールにデバッグメッセージを表示",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "拡張機能メニューでホットキーを設定できます",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "GitHubでソースを表示",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Patreonでサポート",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "♥ を込めて作成",
+    "description": "Footer text"
+  }
+}

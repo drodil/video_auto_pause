@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Videon automaattitauko",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Pysäyttää useita videopalveluita välilehden taustaessa ja jatkaa fokusoinnissa",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Asetukset",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Lisäasetukset",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Pikanäppäimet",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Keskeytä video välilehteä vaihdettaessa",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Jatka videota palatessa välilehdelle",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Keskeytä video kun selain menettää fokuksen",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Jatka videota kun selain saa fokuksen",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Poista laajennus käytöstä nykyisellä välilehdellä",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Poista käytöstä kun video on koko näytöllä",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Poista laajennus kokonaan käytöstä",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Keskeytä video kun tietokone lukitaan",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Jatka videota kun tietokoneen lukitus avataan",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Keskeytä video kun vieritetään pois näkyvistä",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Keskeytä kun kursori poistuu selainikkunasta",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Estä automaattinen jatko manuaalisen keskeytyksen jälkeen",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Näytä virheenkorjausviestit konsolissa",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Voit määrittää pikanäppäimet Laajennukset-valikossa",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Näytä lähdekoodi GitHubissa",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Tue Patreonissa",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Tehty ♥:lla",
+    "description": "Footer text"
+  }
+}

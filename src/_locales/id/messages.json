@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "Jeda Video Otomatis",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Menghentikan beberapa layanan video saat tab tidak fokus dan melanjutkan saat fokus",
+    "description": "Description of the extension"
+  },
+  "settings": {
+    "message": "Pengaturan",
+    "description": "Settings section header"
+  },
+  "advancedSettings": {
+    "message": "Pengaturan Lanjutan",
+    "description": "Advanced settings section header"
+  },
+  "hotkeys": {
+    "message": "Tombol Pintas",
+    "description": "Hotkeys section header"
+  },
+  "autopause": {
+    "message": "Jeda video saat berpindah tab",
+    "description": "Enable auto pause when switching tabs"
+  },
+  "autoresume": {
+    "message": "Lanjutkan video saat kembali ke tab",
+    "description": "Enable auto resume when returning to tab"
+  },
+  "focuspause": {
+    "message": "Jeda video saat browser kehilangan fokus",
+    "description": "Enable auto pause when browser window loses focus"
+  },
+  "focusresume": {
+    "message": "Lanjutkan video saat browser mendapat fokus",
+    "description": "Enable auto resume when browser window gains focus"
+  },
+  "disabledTabs": {
+    "message": "Nonaktifkan ekstensi untuk tab saat ini",
+    "description": "Disable extension for the current tab"
+  },
+  "disableOnFullscreen": {
+    "message": "Nonaktifkan saat video layar penuh",
+    "description": "Disable extension when video is in fullscreen mode"
+  },
+  "disabled": {
+    "message": "Nonaktifkan ekstensi sepenuhnya",
+    "description": "Disable extension completely"
+  },
+  "lockpause": {
+    "message": "Jeda video saat komputer dikunci",
+    "description": "Enable auto pause when computer is locked"
+  },
+  "lockresume": {
+    "message": "Lanjutkan video saat komputer dibuka",
+    "description": "Enable auto resume when computer is unlocked"
+  },
+  "scrollpause": {
+    "message": "Jeda video saat digulir keluar tampilan",
+    "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "cursorTracking": {
+    "message": "Jeda saat kursor meninggalkan jendela browser",
+    "description": "Enable cursor tracking to pause when cursor leaves window"
+  },
+  "manualPause": {
+    "message": "Cegah lanjut otomatis setelah jeda manual",
+    "description": "Manual pause disables auto resume"
+  },
+  "debugMode": {
+    "message": "Tampilkan pesan debug di konsol",
+    "description": "Enable debug mode"
+  },
+  "hotkeysDescription": {
+    "message": "Anda dapat mengonfigurasi tombol pintas di menu Ekstensi",
+    "description": "Description text for hotkeys section"
+  },
+  "viewSourceOnGitHub": {
+    "message": "Lihat Sumber di GitHub",
+    "description": "Link text for GitHub repository"
+  },
+  "githubSponsors": {
+    "message": "GitHub Sponsors",
+    "description": "Link text for GitHub Sponsors"
+  },
+  "supportOnPatreon": {
+    "message": "Dukung di Patreon",
+    "description": "Link text for Patreon support"
+  },
+  "madeWithLove": {
+    "message": "Dibuat dengan ♥ oleh",
+    "description": "Footer text"
+  }
+}

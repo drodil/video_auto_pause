@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Auto Pause options</title>
+    <title>__MSG_extName__</title>
     <style>
       @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap";
 
@@ -20,6 +20,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        direction: __MSG_@@bidi_dir__;
       }
 
       .wrapper {
@@ -267,43 +268,43 @@
       <div class="header">
         <h2>
           <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />
-          Video Auto Pause
+          <span data-i18n="extName">Video Auto Pause</span>
         </h2>
       </div>
 
       <div class="container section">
         <button class="collapsible_button active">
-          <span>Settings</span>
+          <span data-i18n="settings">Settings</span>
         </button>
         <div class="collapsible_content" style="max-height: 1000px;">
           <div style="margin-top: 8px;">
             <label>
               <input type="checkbox" id="autopause" />
-              <span class="label-text">Pause video when switching tabs</span>
+              <span class="label-text" data-i18n="autopause">Pause video when switching tabs</span>
             </label>
             <label>
               <input type="checkbox" id="autoresume" />
-              <span class="label-text">Resume video when returning to tab</span>
+              <span class="label-text" data-i18n="autoresume">Resume video when returning to tab</span>
             </label>
             <label>
               <input type="checkbox" id="focuspause" />
-              <span class="label-text">Pause video when browser loses focus</span>
+              <span class="label-text" data-i18n="focuspause">Pause video when browser loses focus</span>
             </label>
             <label>
               <input type="checkbox" id="focusresume" />
-              <span class="label-text">Resume video when browser gains focus</span>
+              <span class="label-text" data-i18n="focusresume">Resume video when browser gains focus</span>
             </label>
             <label>
               <input type="checkbox" id="disabledTabs" />
-              <span class="label-text">Disable extension for current tab</span>
+              <span class="label-text" data-i18n="disabledTabs">Disable extension for current tab</span>
             </label>
             <label>
               <input type="checkbox" id="disableOnFullscreen" />
-              <span class="label-text">Disable when video is fullscreen</span>
+              <span class="label-text" data-i18n="disableOnFullscreen">Disable when video is fullscreen</span>
             </label>
             <label>
               <input type="checkbox" id="disabled" />
-              <span class="label-text">Disable extension completely</span>
+              <span class="label-text" data-i18n="disabled">Disable extension completely</span>
             </label>
           </div>
         </div>
@@ -311,33 +312,33 @@
 
       <div class="container section">
         <button class="collapsible_button">
-          <span>Advanced Settings</span>
+          <span data-i18n="advancedSettings">Advanced Settings</span>
         </button>
         <div class="collapsible_content">
           <div style="margin-top: 8px;">
             <label>
               <input type="checkbox" id="lockpause" />
-              <span class="label-text">Pause video when computer is locked</span>
+              <span class="label-text" data-i18n="lockpause">Pause video when computer is locked</span>
             </label>
             <label>
               <input type="checkbox" id="lockresume" />
-              <span class="label-text">Resume video when computer is unlocked</span>
+              <span class="label-text" data-i18n="lockresume">Resume video when computer is unlocked</span>
             </label>
             <label>
               <input type="checkbox" id="scrollpause" />
-              <span class="label-text">Pause video when scrolled out of view</span>
+              <span class="label-text" data-i18n="scrollpause">Pause video when scrolled out of view</span>
             </label>
             <label>
               <input type="checkbox" id="cursorTracking" />
-              <span class="label-text">Pause when cursor leaves browser window</span>
+              <span class="label-text" data-i18n="cursorTracking">Pause when cursor leaves browser window</span>
             </label>
             <label>
               <input type="checkbox" id="manualPause" />
-              <span class="label-text">Prevent auto-resume after manual pause</span>
+              <span class="label-text" data-i18n="manualPause">Prevent auto-resume after manual pause</span>
             </label>
             <label>
               <input type="checkbox" id="debugMode" />
-              <span class="label-text">Show debug messages in console</span>
+              <span class="label-text" data-i18n="debugMode">Show debug messages in console</span>
             </label>
           </div>
         </div>
@@ -345,33 +346,33 @@
 
       <div class="container section">
         <button class="collapsible_button">
-          <span>Hotkeys</span>
+          <span data-i18n="hotkeys">Hotkeys</span>
         </button>
         <div class="collapsible_content">
           <div id="hotkeys" style="margin-top: 8px;"></div>
-          <p>You can configure hotkeys in the Extensions menu</p>
+          <p data-i18n="hotkeysDescription">You can configure hotkeys in the Extensions menu</p>
         </div>
       </div>
 
 
       <div class="container section">
         <div class="support-links">
-          <a href="https://github.com/sponsors/drodil" target="_blank" class="support-link">
+          <a href="https://github.com/sponsors/drodil" target="_blank" class="support-link" data-i18n="githubSponsors">
             GitHub Sponsors
           </a>
-          <a href="https://patreon.com/drodil" target="_blank" class="support-link">
+          <a href="https://patreon.com/drodil" target="_blank" class="support-link" data-i18n="supportOnPatreon">
             Support on Patreon
           </a>
         </div>
         <p style="text-align: center; margin-top: 12px;">
-          <a href="https://github.com/drodil/video_auto_pause" target="_blank">
+          <a href="https://github.com/drodil/video_auto_pause" target="_blank" data-i18n="viewSourceOnGitHub">
             View Source on GitHub
           </a>
         </p>
       </div>
 
       <div class="footer">
-        <p>Made with &hearts; by <a href="https://github.com/drodil" target="_blank">drodil</a></p>
+        <p><span data-i18n="madeWithLove">Made with &hearts; by</span> <a href="https://github.com/drodil" target="_blank">drodil</a></p>
         <p id="version"></p>
       </div>
     </div>
