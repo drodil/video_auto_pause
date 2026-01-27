@@ -231,7 +231,40 @@ function changeIcon(disabled) {
         },
       });
     }
-  }, 150);
+  }, 200);
+}
+
+async function refreshIcon(tabId) {
+  let tab;
+  if (tabId) {
+    try {
+      tab = await env.tabs.get(tabId);
+    } catch (e) {
+      return;
+    }
+  } else {
+    const tabs = await env.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    if (tabs.length > 0) {
+      tab = tabs[0];
+    }
+  }
+
+  if (!tab) {
+    return;
+  }
+
+  const hasVideosInTab = tabVideos[tab.id]
+    ? Object.values(tabVideos[tab.id]).some((v) => v)
+    : false;
+  const enabled = isEnabledForTab(tab);
+
+  debugLog(
+    `Refreshing icon for tab ${tab.id}: enabled=${enabled}, hasVideos=${hasVideosInTab}`,
+  );
+  changeIcon(!(enabled && hasVideosInTab));
 }
 
 // Listen options changes
@@ -240,12 +273,7 @@ env.storage.onChanged.addListener(async function () {
 
   const tabs = await env.tabs.query({ active: true });
 
-  const enabledTab = tabs.find((t) => isEnabledForTab(t) && t.active);
-  if (enabledTab) {
-    changeIcon(false);
-  } else {
-    changeIcon(true);
-  }
+  await refreshIcon();
 
   for (const element of tabs) {
     if (isEnabledForTab(element) && element.active) {
@@ -291,11 +319,12 @@ env.tabs.onActivated.addListener(async function (info) {
   }
 
   previous_tab = info.tabId;
+  await refreshIcon(info.tabId);
 });
 
 env.tabs.onCreated.addListener(async function (tab) {
   if (!tab.url) {
-    changeIcon(true);
+    await refreshIcon(tab.id);
   }
 });
 
@@ -303,12 +332,12 @@ env.tabs.onCreated.addListener(async function (tab) {
 env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   sendMessage(tab, { action: "check" });
 
-  if (!isEnabledForTab(tab)) {
-    return;
+  if (changeInfo.status === "loading") {
+    delete tabVideos[tabId];
   }
 
   if (tab.active) {
-    changeIcon(false);
+    await refreshIcon(tabId);
   }
 
   if (
@@ -364,6 +393,7 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
     }
 
     previous_window = windowId;
+    await refreshIcon();
   }
 });
 
@@ -388,7 +418,7 @@ env.runtime.onMessage.addListener(
       debugLog(
         `Tab ${sender.tab.id} has videos: ${anyFrameHasVideos} (frame ${sender.frameId}: ${request.hasVideos})`,
       );
-      changeIcon(!(anyFrameHasVideos && isEnabledForTab(sender.tab)));
+      await refreshIcon(sender.tab.id);
     }
 
     if ("windowFocused" in request) {
@@ -435,26 +465,21 @@ env.runtime.onMessage.addListener(
       }
     }
 
-    await env.storage.sync.get("cursorTracking", function (result) {
-      if (result.cursorTracking && "cursorNearEdge" in request) {
-        // Handle cursor near edge changes
-        if (request.cursorNearEdge && options.autopause) {
-          debugLog(
-            `Nearing window edge, stopping videos in tab ${sender.tab.id}`,
-          );
-          stop(sender.tab);
-        } else if (
-          !request.cursorNearEdge &&
-          options.autoresume &&
-          sender.tab.active
-        ) {
-          debugLog(
-            `Returned to window, resuming videos in tab ${sender.tab.id}`,
-          );
-          resume(sender.tab);
-        }
+    if (options.cursorTracking && "cursorNearEdge" in request) {
+      if (request.cursorNearEdge && options.autopause) {
+        debugLog(
+          `Nearing window edge, stopping videos in tab ${sender.tab.id}`,
+        );
+        stop(sender.tab);
+      } else if (
+        !request.cursorNearEdge &&
+        options.autoresume &&
+        sender.tab.active
+      ) {
+        debugLog(`Returned to window, resuming videos in tab ${sender.tab.id}`);
+        resume(sender.tab);
       }
-    });
+    }
 
     sendResponse({});
     return true;
