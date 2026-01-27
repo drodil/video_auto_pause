@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "أدخل المجالات لاستبعادها (واحد في كل سطر):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "تلاشي الصوت",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "مدة التلاشي (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "إظهار زر صورة داخل صورة",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "تبديل صورة داخل صورة",
+    "description": "Title text for the PiP button"
   }
 }

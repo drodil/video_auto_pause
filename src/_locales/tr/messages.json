@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Hariç tutulacak alan adlarını girin (satır başına bir tane):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Ses Azalması",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Azalma Süresi (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Resim içinde Resim Düğmesini Göster",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Resim içinde Resim'i Aç/Kapat",
+    "description": "Title text for the PiP button"
   }
 }

@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Nhập các tên miền cần loại trừ (mỗi dòng một):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Làm mờ âm thanh",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Thời gian làm mờ (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Hiển thị nút Hình-trong-Hình",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Chuyển đổi Hình-trong-Hình",
+    "description": "Title text for the PiP button"
   }
 }

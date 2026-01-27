@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Masukkan domain yang akan dikecualikan (satu per baris):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Pudar Audio",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Durasi Pudar (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Tampilkan Tombol Gambar-dalam-Gambar",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Alihkan Gambar-dalam-Gambar",
+    "description": "Title text for the PiP button"
   }
 }

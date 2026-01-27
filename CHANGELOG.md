@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.11.4](https://github.com/drodil/video_auto_pause/compare/v1.11.3...v1.11.4) (2026-01-26)
 
-
 ### Bug Fixes
 
-* new window tab creation ([624dd9d](https://github.com/drodil/video_auto_pause/commit/624dd9da9a1bfe7f0db3ab6305b5c6f075024bfa))
+- new window tab creation ([624dd9d](https://github.com/drodil/video_auto_pause/commit/624dd9da9a1bfe7f0db3ab6305b5c6f075024bfa))
 
 ### [1.11.3](https://github.com/drodil/video_auto_pause/compare/v1.11.2...v1.11.3) (2026-01-21)
 

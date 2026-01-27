@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Voer domeinen in om uit te sluiten (één per regel):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Audio Fading",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Fading duur (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Toon Beeld-in-Beeld-knop",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Schakel Beeld-in-Beeld in/uit",
+    "description": "Title text for the PiP button"
   }
 }

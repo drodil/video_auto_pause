@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "बाहर करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "ऑडियो फ़ेडिंग",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "फ़ेड अवधि (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "पिक्चर-इन-पिक्चर बटन दिखाएं",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "पिक्चर-इन-पिक्चर टॉगल करें",
+    "description": "Title text for the PiP button"
   }
 }

@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Введіть домени для виключення (один у рядку):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Згасання звуку",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Тривалість згасання (мс)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Показувати кнопку Картинка-в-картинці",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Перемкнути Картинка-в-картинці",
+    "description": "Title text for the PiP button"
   }
 }

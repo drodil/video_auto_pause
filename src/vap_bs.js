@@ -97,7 +97,9 @@ function isEnabledForTab(tab) {
   if (!disabledTabs.includes(tab.id)) {
     if (tab.url) {
       const url = new URL(tab.url);
-      if (options.excludedDomains.some((domain) => url.hostname.includes(domain))) {
+      if (
+        options.excludedDomains.some((domain) => url.hostname.includes(domain))
+      ) {
         return false;
       }
     }
@@ -136,11 +138,11 @@ function stop(tab) {
 
   if (options.pauseDelay > 0) {
     if (pauseTimeouts[tab.id]) {
-        return;
+      return;
     }
     pauseTimeouts[tab.id] = setTimeout(() => {
-        sendMessage(tab, { action: "stop" });
-        delete pauseTimeouts[tab.id];
+      sendMessage(tab, { action: "stop" });
+      delete pauseTimeouts[tab.id];
     }, options.pauseDelay);
   } else {
     sendMessage(tab, { action: "stop" });
@@ -155,11 +157,11 @@ function resume(tab) {
 
   if (options.resumeDelay > 0) {
     if (resumeTimeouts[tab.id]) {
-        return;
+      return;
     }
     resumeTimeouts[tab.id] = setTimeout(() => {
-        sendMessage(tab, { action: "resume" });
-        delete resumeTimeouts[tab.id];
+      sendMessage(tab, { action: "resume" });
+      delete resumeTimeouts[tab.id];
     }, options.resumeDelay);
   } else {
     sendMessage(tab, { action: "resume" });

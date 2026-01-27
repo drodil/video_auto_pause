@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "Введите домены для исключения (по одному в строке):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "Звуковое затухание",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "Длительность затухания (мс)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "Показать кнопку Картинка-в-картинке",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "Переключить Картинка-в-картинке",
+    "description": "Title text for the PiP button"
   }
 }

@@ -32,6 +32,9 @@ const options = {
   pauseDelay: 0,
   resumeDelay: 0,
   excludedDomains: [],
+  audioFading: false,
+  fadeDuration: 200,
+  showPipButton: false,
 };
 
 // Saves options to chrome storage
@@ -41,9 +44,15 @@ async function save_options() {
   for (const option in options) {
     if (option === "excludedDomains") {
       const domains = document.getElementById(option).value.split("\n");
-      storage[option] = domains.map((domain) => domain.trim()).filter((domain) => domain.length > 0);
-    } else if (option === "pauseDelay" || option === "resumeDelay") {
-        storage[option] = parseInt(document.getElementById(option).value) || 0;
+      storage[option] = domains
+        .map((domain) => domain.trim())
+        .filter((domain) => domain.length > 0);
+    } else if (
+      option === "pauseDelay" ||
+      option === "resumeDelay" ||
+      option === "fadeDuration"
+    ) {
+      storage[option] = parseInt(document.getElementById(option).value) || 0;
     } else {
       storage[option] = document.getElementById(option).checked;
     }
@@ -69,13 +78,17 @@ async function save_options() {
 async function restore_options() {
   const items = await env.storage.sync.get(options);
   for (const opt in items) {
-     if (opt === "excludedDomains") {
-        document.getElementById(opt).value = items[opt].join("\n");
-     } else if (opt === "pauseDelay" || opt === "resumeDelay") {
-        document.getElementById(opt).value = items[opt];
-     } else {
-        document.getElementById(opt).checked = items[opt];
-     }
+    if (opt === "excludedDomains") {
+      document.getElementById(opt).value = items[opt].join("\n");
+    } else if (
+      opt === "pauseDelay" ||
+      opt === "resumeDelay" ||
+      opt === "fadeDuration"
+    ) {
+      document.getElementById(opt).value = items[opt];
+    } else {
+      document.getElementById(opt).checked = items[opt];
+    }
   }
 
   for (const option in options) {
@@ -105,7 +118,7 @@ env.commands.getAll(function (commands) {
     }
     const tag = document.createElement("p");
     const text = document.createTextNode(
-      commands[i].shortcut + " - " + commands[i].description
+      commands[i].shortcut + " - " + commands[i].description,
     );
     tag.appendChild(text);
     hotkeysDiv.appendChild(tag);

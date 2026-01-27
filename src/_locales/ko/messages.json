@@ -126,5 +126,21 @@
   "domainExclusionsDescription": {
     "message": "제외할 도메인 입력 (한 줄에 하나씩):",
     "description": "Description for domain exclusions textarea"
+  },
+  "audioFading": {
+    "message": "오디오 페이딩",
+    "description": "Label for audio fading checkbox"
+  },
+  "fadeDuration": {
+    "message": "페이드 지속 시간 (ms)",
+    "description": "Label for fade duration input"
+  },
+  "showPipButton": {
+    "message": "PIP 버튼 표시",
+    "description": "Label for PiP button checkbox"
+  },
+  "pipTitle": {
+    "message": "PIP 전환",
+    "description": "Title text for the PiP button"
   }
 }
