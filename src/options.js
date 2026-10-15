@@ -25,6 +25,7 @@ function localizeUI() {
   if (!env?.i18n) {
     return;
   }
+  document.documentElement.lang = env.i18n.getUILanguage();
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const messageName = element.dataset.i18n;
     const message = env.i18n.getMessage(messageName);

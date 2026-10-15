@@ -1246,6 +1246,32 @@ test.describe("Video Auto Pause Extension", () => {
     await cdp.detach();
   });
 
+  test("keeps settings usable in a narrow touch viewport and sets document language", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.setViewportSize({ width: 320, height: 720 });
+    const cdp = await context.newCDPSession(optionsPage);
+    await cdp.send("Emulation.setTouchEmulationEnabled", {
+      enabled: true,
+      maxTouchPoints: 1,
+      configuration: "mobile",
+    });
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    const wrapperBounds = await optionsPage.locator("#wrapper").boundingBox();
+    expect(wrapperBounds.width).toBeLessThanOrEqual(320);
+    await expect(optionsPage.locator("html")).toHaveAttribute(
+      "lang",
+      await optionsPage.evaluate(() => chrome.i18n.getUILanguage()),
+    );
+    const checkboxLabel = optionsPage.locator("label:has(#autopause)");
+    await expect(checkboxLabel).toHaveCSS("min-height", "44px");
+    await cdp.detach();
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,

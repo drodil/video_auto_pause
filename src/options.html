@@ -29,7 +29,7 @@
       }
 
       .wrapper {
-        width: 380px;
+        width: min(380px, 100vw);
         background: #ffffff;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         overflow-y: auto;
@@ -560,6 +560,22 @@
         border-color: #d1d5db;
         background: white;
         color: #4b5563;
+      }
+
+      :focus-visible {
+        outline: 2px solid #4338ca;
+        outline-offset: 2px;
+      }
+
+      @media (pointer: coarse) {
+        label {
+          min-height: 44px;
+        }
+
+        button,
+        [role="button"] {
+          min-height: 44px;
+        }
       }
     </style>
   </head>
