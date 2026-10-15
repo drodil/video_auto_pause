@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Ekki tókst að virkja þessa stillingu.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Spóla til baka við endurræsingu (sekúndur; 0 til að slökkva)",
+    "description": "Automatic resume rewind setting"
   }
 }

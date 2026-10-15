@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "यह मोड लागू नहीं हो सका।",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "फिर से चलने पर पीछे करें (सेकंड; बंद करने के लिए 0)",
+    "description": "Automatic resume rewind setting"
   }
 }

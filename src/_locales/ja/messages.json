@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "モードを適用できませんでした。",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "再開時に巻き戻す（秒、0 で無効）",
+    "description": "Automatic resume rewind setting"
   }
 }

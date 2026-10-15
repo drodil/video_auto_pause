@@ -10,6 +10,7 @@ if (window.autoPauseInjected !== true) {
   const automaticallyPausedVideos = new WeakSet();
   const extensionMutedVideos = new WeakMap();
   const automaticPauseStartedAt = new WeakMap();
+  const automaticPausePositions = new WeakMap();
   const scheduledActions = new WeakMap();
   const observedRoots = new WeakSet();
   const observedMedia = new WeakSet();
@@ -370,6 +371,10 @@ if (window.autoPauseInjected !== true) {
     if (videoActionTokens.get(video) === actionToken && !video.paused) {
       automaticallyPausedVideos.add(video);
       automaticPauseStartedAt.set(video, Date.now());
+      automaticPausePositions.set(video, {
+        time: video.currentTime,
+        pausedAt: Date.now(),
+      });
       video.pause();
       sendMessage({ statsEvent: "pause" });
     }
@@ -386,6 +391,24 @@ if (window.autoPauseInjected !== true) {
     if (options.audioFading && targetVolume !== undefined && video.paused) {
       setVideoVolume(video, 0);
     }
+    const pausePosition = automaticPausePositions.get(video);
+    if (
+      pausePosition &&
+      options.rewindSeconds > 0 &&
+      Number.isFinite(video.duration) &&
+      video.duration > 0
+    ) {
+      const awaySeconds = Math.max(0, (Date.now() - pausePosition.pausedAt) / 1000);
+      const rewindSeconds = Math.min(
+        options.rewindSeconds * 2,
+        options.rewindSeconds * (1 + awaySeconds / 60),
+      );
+      try {
+        video.currentTime = Math.max(0, pausePosition.time - rewindSeconds);
+      } catch (error) {
+        console.error("Video Auto Pause could not rewind the video:", error);
+      }
+    }
     try {
       extensionInitiatedPlays.add(video);
       await video.play();
@@ -395,6 +418,7 @@ if (window.autoPauseInjected !== true) {
       extensionPausedVideos.delete(video);
       automaticallyPausedVideos.delete(video);
       originalVolumes.delete(video);
+      automaticPausePositions.delete(video);
       const pauseStartedAt = automaticPauseStartedAt.get(video);
       if (pauseStartedAt !== undefined) {
         automaticPauseStartedAt.delete(video);

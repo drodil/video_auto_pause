@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Nie udało się zastosować tego trybu.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Przewiń przy wznowieniu (sekundy; 0 wyłącza)",
+    "description": "Automatic resume rewind setting"
   }
 }

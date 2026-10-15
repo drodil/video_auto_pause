@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "تعذر تطبيق هذا الوضع.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "الترجيع عند الاستئناف (بالثواني؛ 0 للتعطيل)",
+    "description": "Automatic resume rewind setting"
   }
 }

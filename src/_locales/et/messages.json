@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Seda režiimi ei saanud rakendada.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Tagasikerimine jätkamisel (sekundites; 0 keelab)",
+    "description": "Automatic resume rewind setting"
   }
 }

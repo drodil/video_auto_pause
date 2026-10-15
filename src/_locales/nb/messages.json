@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Kunne ikke bruke denne modusen.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Spol tilbake ved gjenopptakelse (sekunder; 0 for å deaktivere)",
+    "description": "Automatic resume rewind setting"
   }
 }

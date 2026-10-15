@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "无法应用此模式。",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "恢复播放时倒退（秒；0 表示关闭）",
+    "description": "Automatic resume rewind setting"
   }
 }

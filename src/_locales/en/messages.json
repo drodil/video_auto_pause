@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Could not apply this mode.",
     "description": "Failed preset status"
+  },
+  "rewindSeconds": {
+    "message": "Rewind on resume (seconds; 0 to disable)",
+    "description": "Amount of time to rewind after automatic resume"
   }
 }

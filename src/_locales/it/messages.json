@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Impossibile applicare questa modalità.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Riavvolgi alla ripresa (secondi; 0 per disattivare)",
+    "description": "Automatic resume rewind setting"
   }
 }

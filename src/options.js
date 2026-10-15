@@ -46,9 +46,12 @@ function readOption(option, element) {
       .map((domain) => domain.trim())
       .filter((domain) => domain.length > 0);
   }
-  if (["pauseDelay", "resumeDelay", "fadeDuration"].includes(option)) {
+  if (["pauseDelay", "resumeDelay", "fadeDuration", "rewindSeconds"].includes(option)) {
     const value = Number(element.value);
-    return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+    const maximum = option === "rewindSeconds" ? 60 : Number.POSITIVE_INFINITY;
+    return Number.isFinite(value)
+      ? Math.min(maximum, Math.max(0, Math.floor(value)))
+      : 0;
   }
   return element.checked;
 }
@@ -167,7 +170,11 @@ async function restore_options(changedKeys = Object.keys(options)) {
     }
     if (opt === "excludedDomains" || opt === "includedDomains") {
       element.value = items[opt].join("\n");
-    } else if (["pauseDelay", "resumeDelay", "fadeDuration"].includes(opt)) {
+    } else if (
+      ["pauseDelay", "resumeDelay", "fadeDuration", "rewindSeconds"].includes(
+        opt,
+      )
+    ) {
       element.value = Math.max(0, Number(items[opt]) || 0);
     } else {
       element.checked = Boolean(items[opt]);

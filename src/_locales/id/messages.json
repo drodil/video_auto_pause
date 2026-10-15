@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Mode ini tidak dapat diterapkan.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Putar mundur saat dilanjutkan (detik; 0 untuk menonaktifkan)",
+    "description": "Automatic resume rewind setting"
   }
 }

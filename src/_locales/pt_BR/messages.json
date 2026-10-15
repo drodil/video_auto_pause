@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Não foi possível aplicar este modo.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Retroceder ao retomar (segundos; 0 para desativar)",
+    "description": "Automatic resume rewind setting"
   }
 }

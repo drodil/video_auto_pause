@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Bu mod uygulanamadı.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Devam ederken geri sar (saniye; devre dışı bırakmak için 0)",
+    "description": "Automatic resume rewind setting"
   }
 }

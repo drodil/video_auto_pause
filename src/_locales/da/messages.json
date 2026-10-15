@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Denne tilstand kunne ikke anvendes.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Spol tilbage ved genoptagelse (sekunder; 0 for at deaktivere)",
+    "description": "Automatic resume rewind setting"
   }
 }

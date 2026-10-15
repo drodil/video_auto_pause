@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Tilan käyttöönotto epäonnistui.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Kelaa taaksepäin jatkettaessa (sekuntia; 0 poistaa käytöstä)",
+    "description": "Automatic resume rewind setting"
   }
 }

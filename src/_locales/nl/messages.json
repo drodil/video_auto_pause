@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Deze modus kon niet worden toegepast.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Terugspoelen bij hervatten (seconden; 0 om uit te schakelen)",
+    "description": "Automatic resume rewind setting"
   }
 }

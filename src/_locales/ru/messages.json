@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Не удалось применить этот режим.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Перемотка назад при возобновлении (секунды; 0 — выкл.)",
+    "description": "Automatic resume rewind setting"
   }
 }

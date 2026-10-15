@@ -14,6 +14,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   disableOnFullscreen: true,
   pauseDelay: 0,
   resumeDelay: 0,
+  rewindSeconds: 3,
   excludedDomains: [],
   includedDomains: [],
   audioFading: false,

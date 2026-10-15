@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Không thể áp dụng chế độ này.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Tua lùi khi tiếp tục (giây; 0 để tắt)",
+    "description": "Automatic resume rewind setting"
   }
 }

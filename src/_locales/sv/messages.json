@@ -250,5 +250,9 @@
   "presetFailed": {
     "message": "Det gick inte att tillämpa läget.",
     "description": "Preset selector text"
+  },
+  "rewindSeconds": {
+    "message": "Spola tillbaka vid återupptagning (sekunder; 0 för att inaktivera)",
+    "description": "Automatic resume rewind setting"
   }
 }

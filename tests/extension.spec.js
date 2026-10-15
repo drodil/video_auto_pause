@@ -280,6 +280,90 @@ test.describe("Video Auto Pause Extension", () => {
       });
   });
 
+  test("rewinds automatically resumed finite videos by the configured amount", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      rewindSeconds: 4,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await expect
+      .poll(() =>
+        video.evaluate((element) => Number.isFinite(element.duration)),
+      )
+      .toBe(true);
+
+    const startTime = await video.evaluate((element) => {
+      const target = Math.min(
+        element.duration - 1,
+        Math.max(5, element.duration / 2),
+      );
+      element.currentTime = target;
+      return target;
+    });
+    await video.evaluate((element) => element.play());
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", true);
+
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect
+      .poll(() => video.evaluate((element) => element.currentTime))
+      .toBeLessThan(startTime - 3);
+  });
+
+  test("does not rewind live streams when they resume", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      rewindSeconds: 4,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    const startTime = await video.evaluate((element) => {
+      element.currentTime = 5;
+      Object.defineProperty(element, "duration", {
+        configurable: true,
+        get: () => Number.POSITIVE_INFINITY,
+      });
+      return element.currentTime;
+    });
+    await video.evaluate((element) => element.play());
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", true);
+
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect
+      .poll(() => video.evaluate((element) => element.currentTime))
+      .toBeGreaterThan(startTime - 0.5);
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,
