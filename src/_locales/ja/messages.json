@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "再開時に巻き戻す（秒、0 で無効）",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "ライブ配信を一時停止せずにミュート",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "広告中はミュートし、終了後に一時停止",
+    "description": "Live stream and ad handling setting"
   }
 }

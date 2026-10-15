@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "الترجيع عند الاستئناف (بالثواني؛ 0 للتعطيل)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "كتم البث المباشر بدلًا من إيقافه مؤقتًا",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "كتم الصوت أثناء الإعلانات ثم الإيقاف المؤقت عند انتهائها",
+    "description": "Live stream and ad handling setting"
   }
 }

@@ -55,6 +55,8 @@ if (window.autoPauseInjected !== true) {
           focusresume: false,
           cursorTracking: false,
           blockAutoplay: false,
+          liveStreamMute: false,
+          muteDuringAds: false,
           prioritizeActiveTabMedia: false,
           singleVideoPlayback: false,
           debugMode: false,
@@ -438,6 +440,36 @@ if (window.autoPauseInjected !== true) {
     }
   };
 
+  const isAdPlaying = () => Boolean(document.querySelector(".ad-showing"));
+
+  const waitForAdToFinish = (video, actionToken) => {
+    if (videoActionTokens.get(video) !== actionToken || !video.isConnected) {
+      return Promise.resolve(false);
+    }
+    if (!isAdPlaying()) {
+      return Promise.resolve(true);
+    }
+    return new Promise((resolve) => {
+      const observer = new MutationObserver(() => {
+        if (
+          videoActionTokens.get(video) !== actionToken ||
+          !video.isConnected ||
+          !isAdPlaying()
+        ) {
+          observer.disconnect();
+          resolve(
+            videoActionTokens.get(video) === actionToken && video.isConnected,
+          );
+        }
+      });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      });
+    });
+  };
+
   const handleMuteAction = async (video, action, actionToken) => {
     if (action === "toggle_mute") {
       activeFades.get(video)?.cancel();
@@ -504,12 +536,43 @@ if (window.autoPauseInjected !== true) {
       case "stop":
         if (
           !isManuallyPaused &&
+          options.liveStreamMute &&
+          video instanceof HTMLVideoElement &&
+          video.duration === Number.POSITIVE_INFINITY
+        ) {
+          await handleMuteAction(video, "mute", actionToken);
+          break;
+        }
+        if (
+          !isManuallyPaused &&
+          options.muteDuringAds &&
+          isAdPlaying()
+        ) {
+          await handleMuteAction(video, "mute", actionToken);
+          if (
+            videoActionTokens.get(video) === actionToken &&
+            (await waitForAdToFinish(video, actionToken))
+          ) {
+            await pauseVideo(video, actionToken, request.immediate === true);
+          }
+          break;
+        }
+        if (
+          !isManuallyPaused &&
           (!extensionPausedVideos.has(video) || !video.paused)
         ) {
           await pauseVideo(video, actionToken, request.immediate === true);
         }
         break;
       case "resume":
+        if (options.muteDuringAds && isAdPlaying()) {
+          if (!(await waitForAdToFinish(video, actionToken))) {
+            break;
+          }
+        }
+        if (extensionMutedVideos.has(video)) {
+          await handleMuteAction(video, "unmute", actionToken);
+        }
         if (
           (extensionPausedVideos.has(video) || video.paused) &&
           !isManuallyPaused

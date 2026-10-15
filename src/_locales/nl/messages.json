@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Terugspoelen bij hervatten (seconden; 0 om uit te schakelen)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Livestreams dempen in plaats van pauzeren",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Dempen tijdens advertenties en pauzeren zodra ze zijn afgelopen",
+    "description": "Live stream and ad handling setting"
   }
 }

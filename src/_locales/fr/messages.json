@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Reculer lors de la reprise (secondes ; 0 pour désactiver)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Couper le son des directs au lieu de les mettre en pause",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Couper le son pendant les publicités, puis mettre en pause à leur fin",
+    "description": "Live stream and ad handling setting"
   }
 }

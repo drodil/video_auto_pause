@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Spóla til baka við endurræsingu (sekúndur; 0 til að slökkva)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Þagga beinar útsendingar í stað þess að gera hlé",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Þagga meðan á auglýsingum stendur og gera hlé þegar þeim lýkur",
+    "description": "Live stream and ad handling setting"
   }
 }

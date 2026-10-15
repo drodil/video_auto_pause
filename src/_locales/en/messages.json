@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Rewind on resume (seconds; 0 to disable)",
     "description": "Amount of time to rewind after automatic resume"
+  },
+  "liveStreamMute": {
+    "message": "Mute live streams instead of pausing",
+    "description": "Mute live videos when an automatic pause would occur"
+  },
+  "muteDuringAds": {
+    "message": "Mute during ads, then pause when they end",
+    "description": "Mute media while a recognized ad is playing"
   }
 }

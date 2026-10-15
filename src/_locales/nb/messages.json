@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Spol tilbake ved gjenopptakelse (sekunder; 0 for å deaktivere)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Demp direktestrømmer i stedet for å sette dem på pause",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Demp under annonser, og sett på pause når de er ferdige",
+    "description": "Live stream and ad handling setting"
   }
 }

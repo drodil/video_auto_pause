@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "恢复播放时倒退（秒；0 表示关闭）",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "将直播静音而不是暂停",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "广告播放时静音，广告结束后暂停",
+    "description": "Live stream and ad handling setting"
   }
 }

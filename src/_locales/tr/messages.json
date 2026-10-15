@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Devam ederken geri sar (saniye; devre dışı bırakmak için 0)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Canlı yayınları duraklatmak yerine sessize al",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Reklamlar sırasında sessize al, bitince duraklat",
+    "description": "Live stream and ad handling setting"
   }
 }

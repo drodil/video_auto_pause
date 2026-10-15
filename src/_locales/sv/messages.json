@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Spola tillbaka vid återupptagning (sekunder; 0 för att inaktivera)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Ljud av för liveströmmar i stället för att pausa",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Ljud av under annonser och pausa när de är slut",
+    "description": "Live stream and ad handling setting"
   }
 }

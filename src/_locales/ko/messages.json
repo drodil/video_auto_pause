@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "다시 재생할 때 되감기(초, 0이면 사용 안 함)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "실시간 스트림을 일시 정지하는 대신 음소거",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "광고 중 음소거하고 광고가 끝나면 일시 정지",
+    "description": "Live stream and ad handling setting"
   }
 }

@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Putar mundur saat dilanjutkan (detik; 0 untuk menonaktifkan)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Bisukan siaran langsung alih-alih menjedanya",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Bisukan selama iklan, lalu jeda setelah iklan selesai",
+    "description": "Live stream and ad handling setting"
   }
 }

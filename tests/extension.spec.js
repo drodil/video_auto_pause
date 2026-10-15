@@ -364,6 +364,100 @@ test.describe("Video Auto Pause Extension", () => {
       .toBeGreaterThan(startTime - 0.5);
   });
 
+  test("mutes live streams instead of pausing them when switching tabs", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      liveStreamMute: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate(async (element) => {
+      await element.play();
+      element.muted = false;
+    });
+    const worker = context.serviceWorkers()[0];
+    const tabId = await worker.evaluate(
+      (url) =>
+        new Promise((resolve) =>
+          chrome.tabs.query({ url }, (tabs) => resolve(tabs[0]?.id)),
+        ),
+      `http://localhost:${port}/video.html`,
+    );
+    await worker.evaluate((id) =>
+      chrome.scripting.executeScript({
+        target: { tabId: id },
+        world: "ISOLATED",
+        func: () => {
+          Object.defineProperty(document.querySelector("#v"), "duration", {
+            configurable: true,
+            get: () => Number.POSITIVE_INFINITY,
+          });
+        },
+      }),
+    tabId);
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", true);
+
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("muted", false);
+  });
+
+  test("mutes videos during ads, then pauses them once the ad ends", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      muteDuringAds: true,
+      liveStreamMute: false,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate(async (element) => {
+      await element.play();
+      element.muted = false;
+      const ad = document.createElement("div");
+      ad.className = "ad-showing";
+      ad.id = "test-ad";
+      document.body.append(ad);
+    });
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", true);
+
+    await page.locator("#test-ad").evaluate((ad) => ad.remove());
+    await expect(video).toHaveJSProperty("paused", true);
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", false);
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,

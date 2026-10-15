@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Tagasikerimine jätkamisel (sekundites; 0 keelab)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Vaigista otseülekanded peatamise asemel",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Vaigista reklaamide ajal ja peata nende lõppedes",
+    "description": "Live stream and ad handling setting"
   }
 }

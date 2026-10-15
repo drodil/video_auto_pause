@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Retroceder ao retomar (segundos; 0 para desativar)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Silenciar transmissões ao vivo em vez de pausá-las",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Silenciar durante anúncios e pausar quando terminarem",
+    "description": "Live stream and ad handling setting"
   }
 }

@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Kelaa taaksepäin jatkettaessa (sekuntia; 0 poistaa käytöstä)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Mykistä suorat lähetykset keskeyttämisen sijaan",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Mykistä mainosten ajaksi ja keskeytä niiden päätyttyä",
+    "description": "Live stream and ad handling setting"
   }
 }

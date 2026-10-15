@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Tua lùi khi tiếp tục (giây; 0 để tắt)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Tắt tiếng luồng trực tiếp thay vì tạm dừng",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Tắt tiếng khi có quảng cáo rồi tạm dừng khi quảng cáo kết thúc",
+    "description": "Live stream and ad handling setting"
   }
 }

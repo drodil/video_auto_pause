@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "फिर से चलने पर पीछे करें (सेकंड; बंद करने के लिए 0)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "लाइव स्ट्रीम रोकने के बजाय म्यूट करें",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "विज्ञापन के दौरान म्यूट करें और उसके बाद वीडियो रोकें",
+    "description": "Live stream and ad handling setting"
   }
 }

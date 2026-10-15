@@ -254,5 +254,13 @@
   "rewindSeconds": {
     "message": "Перемотка назад при возобновлении (секунды; 0 — выкл.)",
     "description": "Automatic resume rewind setting"
+  },
+  "liveStreamMute": {
+    "message": "Отключать звук трансляций вместо паузы",
+    "description": "Live stream and ad handling setting"
+  },
+  "muteDuringAds": {
+    "message": "Отключать звук во время рекламы и ставить на паузу после неё",
+    "description": "Live stream and ad handling setting"
   }
 }
