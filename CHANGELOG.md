@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/drodil/video_auto_pause/compare/v1.13.0...v1.14.0) (2026-10-15)
+
+
+### Features
+
+* prioritize active media and expand browser coverage ([3fb5c29](https://github.com/drodil/video_auto_pause/commit/3fb5c29955d98f64aeeecfde129843b701223311)), closes [#4](https://github.com/drodil/video_auto_pause/issues/4) [#5](https://github.com/drodil/video_auto_pause/issues/5) [#8](https://github.com/drodil/video_auto_pause/issues/8) [#15](https://github.com/drodil/video_auto_pause/issues/15) [#16](https://github.com/drodil/video_auto_pause/issues/16) [#19](https://github.com/drodil/video_auto_pause/issues/19) [#20](https://github.com/drodil/video_auto_pause/issues/20)
+
+
+### Bug Fixes
+
+* update Firefox add-on link ([984cc7b](https://github.com/drodil/video_auto_pause/commit/984cc7b1cb68cd5dc5358903672d75ab1d9c415a))
+
 ## [1.13.0](https://github.com/drodil/video_auto_pause/compare/v1.12.0...v1.13.0) (2026-01-27)
 
 
