@@ -139,6 +139,74 @@
     "message": "サイトの URL とブラウザーを含む報告の下書きを開きます。送信するまでデータは送られません。",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "プロファイルとバックアップ",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "設定をエクスポート",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "設定をインポート",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "設定をエクスポートしました。",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "設定をエクスポートできませんでした。",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "設定をインポートしました。",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "設定をインポートできませんでした。JSON ファイルを確認してください。",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "プロファイル名",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "例：仕事",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "現在の設定をプロファイルとして保存",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "プロファイルを適用",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "プロファイルを削除",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "プロファイルを選択",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "プロファイルを保存しました。",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "プロファイルを適用しました。",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "プロファイルを削除しました。",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "プロファイルを更新できませんでした。",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "サイト設定を削除",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "ドメインに自動適用",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

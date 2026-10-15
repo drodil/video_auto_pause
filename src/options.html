@@ -380,6 +380,33 @@
         margin-bottom: 8px;
       }
 
+      .profile-actions {
+        display: flex;
+        gap: 8px;
+        margin: 8px 0;
+      }
+
+      .profile-actions button {
+        flex: 1;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 7px;
+        background: white;
+        color: #374151;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      #profileName,
+      #profileSelect {
+        width: 100%;
+        margin: 4px 0;
+        padding: 6px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font: inherit;
+      }
+
       #pinCurrentTab,
       .sleep-timer-controls button {
         width: 100%;
@@ -683,6 +710,77 @@
                 </label>
               </div>
             </div>
+          </div>
+
+          <div class="container section">
+            <h4 data-i18n="profilesAndBackup">Profiles &amp; backup</h4>
+            <div class="profile-actions">
+              <button
+                type="button"
+                id="exportSettings"
+                data-i18n="exportSettings"
+              >
+                Export settings
+              </button>
+              <button
+                type="button"
+                id="importSettings"
+                data-i18n="importSettings"
+              >
+                Import settings
+              </button>
+              <input
+                type="file"
+                id="importSettingsFile"
+                accept="application/json,.json"
+                hidden
+              />
+            </div>
+            <p id="settingsImportStatus" role="status" aria-live="polite"></p>
+            <label for="profileName" data-i18n="profileName"
+              >Profile name</label
+            >
+            <input
+              type="text"
+              id="profileName"
+              maxlength="40"
+              autocomplete="off"
+              data-i18n-placeholder="profileNamePlaceholder"
+              placeholder="e.g. Work"
+            />
+            <label for="profileDomains" data-i18n="profileDomains"
+              >Automatically apply to domains</label
+            >
+            <input
+              type="text"
+              id="profileDomains"
+              autocomplete="off"
+              data-i18n-placeholder="profileDomainsPlaceholder"
+              placeholder="example.com, work.example.org"
+            />
+            <button type="button" id="saveProfile" data-i18n="saveProfile">
+              Save profile
+            </button>
+            <select id="profileSelect" aria-label="Profiles"></select>
+            <div class="profile-actions">
+              <button
+                type="button"
+                id="applyProfile"
+                data-i18n="applyProfile"
+                disabled
+              >
+                Apply profile
+              </button>
+              <button
+                type="button"
+                id="deleteProfile"
+                data-i18n="deleteProfile"
+                disabled
+              >
+                Delete profile
+              </button>
+            </div>
+            <p id="profileStatus" role="status" aria-live="polite"></p>
           </div>
 
           <div class="container section">

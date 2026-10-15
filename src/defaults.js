@@ -98,6 +98,39 @@ globalThis.VAP_OPTIONS_FOR_SITE = (hostname, settings) => {
   };
 };
 
+globalThis.VAP_PROFILE_FOR_SITE = (hostname, profiles) =>
+  (Array.isArray(profiles) ? profiles : [])
+    .filter(
+      (profile) =>
+        profile &&
+        profile.settings &&
+        Array.isArray(profile.domains) &&
+        profile.domains.some((domain) =>
+          VAP_MATCHES_DOMAIN(hostname, [domain]),
+        ),
+    )
+    .sort((left, right) => {
+      const longestMatch = (profile) =>
+        Math.max(
+          ...profile.domains
+            .filter((domain) => VAP_MATCHES_DOMAIN(hostname, [domain]))
+            .map((domain) => VAP_NORMALIZE_DOMAIN(domain).length),
+        );
+      return longestMatch(right) - longestMatch(left);
+    })[0];
+
+globalThis.VAP_SETTINGS_FOR_PROFILE = (settings, profiles, hostname) => {
+  const profile = VAP_PROFILE_FOR_SITE(hostname, profiles);
+  if (!profile) {
+    return settings;
+  }
+  return {
+    ...settings,
+    ...profile.settings,
+    disabled: settings.disabled,
+  };
+};
+
 globalThis.VAP_MIGRATE_DOMAIN_SETTINGS = async (storage) => {
   const stored = await storage.get(null);
   if (stored.vapSiteRulesVersion >= 1) {

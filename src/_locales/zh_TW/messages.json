@@ -139,6 +139,74 @@
     "message": "開啟包含網站網址與瀏覽器資訊的回報草稿；除非你提交回報，否則不會傳送任何資料。",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "設定檔與備份",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "匯出設定",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "匯入設定",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "設定已匯出。",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "無法匯出設定。",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "設定已匯入。",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "無法匯入設定。請檢查 JSON 檔案。",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "設定檔名稱",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "例如：工作",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "將目前設定儲存為設定檔",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "套用設定檔",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "刪除設定檔",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "選擇設定檔",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "設定檔已儲存。",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "設定檔已套用。",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "設定檔已刪除。",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "無法更新設定檔。",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "刪除網站設定",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "自動套用至網域",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

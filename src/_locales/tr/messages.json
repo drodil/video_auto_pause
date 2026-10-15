@@ -139,6 +139,74 @@
     "message": "Site adresi ve tarayıcı bilgilerini içeren bir taslak açar; siz göndermeden hiçbir veri iletilmez.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiller ve yedekleme",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Ayarları dışa aktar",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Ayarları içe aktar",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Ayarlar dışa aktarıldı.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Ayarlar dışa aktarılamadı.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Ayarlar içe aktarıldı.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Ayarlar içe aktarılamadı. JSON dosyasını kontrol edin.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profil adı",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "ör. İş",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Geçerli ayarları profil olarak kaydet",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Profili uygula",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Profili sil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Bir profil seçin",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil kaydedildi.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil uygulandı.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil silindi.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profil güncellenemedi.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Site ayarlarını sil",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Alan adlarına otomatik uygula",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

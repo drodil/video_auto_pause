@@ -22,6 +22,7 @@ if (window.autoPauseInjected !== true) {
   let lastVisibility = null;
   let userInteracted = false;
   let options = { ...DEFAULT_OPTIONS };
+  let profiles = [];
 
   function recordUserInteraction(event) {
     if (!event.isTrusted) {
@@ -45,9 +46,18 @@ if (window.autoPauseInjected !== true) {
     const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
     const savedOptions = { ...DEFAULT_OPTIONS, ...stored };
     const hostname = location.hostname.toLowerCase();
-    const effectiveOptions = VAP_OPTIONS_FOR_SITE(hostname, savedOptions);
-    const siteEnabled = VAP_SITE_ENABLED(hostname, savedOptions);
-    options = savedOptions.disabled
+    const storedProfiles = await env.storage.local.get("vapProfiles");
+    profiles = Array.isArray(storedProfiles.vapProfiles)
+      ? storedProfiles.vapProfiles
+      : [];
+    const profileOptions = VAP_SETTINGS_FOR_PROFILE(
+      savedOptions,
+      profiles,
+      hostname,
+    );
+    const effectiveOptions = VAP_OPTIONS_FOR_SITE(hostname, profileOptions);
+    const siteEnabled = VAP_SITE_ENABLED(hostname, profileOptions);
+    options = profileOptions.disabled
       ? {
           ...effectiveOptions,
           autopause: false,
@@ -170,10 +180,11 @@ if (window.autoPauseInjected !== true) {
         refreshPinState();
       }
     }
-    if (
-      namespace !== "sync" ||
-      !Object.keys(changes).some((key) => key in DEFAULT_OPTIONS)
-    ) {
+    const profileChanged = namespace === "local" && "vapProfiles" in changes;
+    const settingsChanged =
+      namespace === "sync" &&
+      Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
+    if (!profileChanged && !settingsChanged) {
       return;
     }
     settingsReady = refresh_settings();

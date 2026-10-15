@@ -139,6 +139,74 @@
     "message": "打开包含网站地址和浏览器信息的报告草稿；除非你提交报告，否则不会发送任何数据。",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "配置文件与备份",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "导出设置",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "导入设置",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "设置已导出。",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "无法导出设置。",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "设置已导入。",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "无法导入设置。请检查 JSON 文件。",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "配置文件名称",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "例如：工作",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "将当前设置保存为配置文件",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "应用配置文件",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "删除配置文件",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "选择配置文件",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "配置文件已保存。",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "配置文件已应用。",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "配置文件已删除。",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "无法更新配置文件。",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "删除网站设置",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "自动应用到域名",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

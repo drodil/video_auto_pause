@@ -139,6 +139,74 @@
     "message": "Avab raporti mustandi saidi aadressi ja brauseriga; midagi ei saadeta enne, kui raporti ise esitad.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiilid ja varundus",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Ekspordi seaded",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Impordi seaded",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Seaded eksporditud.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Seadeid ei saanud eksportida.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Seaded imporditud.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Seadeid ei saanud importida. Kontrolli JSON-faili.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profiili nimi",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "nt Töö",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Salvesta praegused seaded profiilina",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Rakenda profiil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Kustuta profiil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Vali profiil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profiil salvestatud.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profiil rakendatud.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profiil kustutatud.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profiili ei saanud uuendada.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Kustuta saidi seaded",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Rakenda domeenidele automaatselt",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

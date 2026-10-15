@@ -139,6 +139,74 @@
     "message": "Otwiera szkic zgłoszenia z adresem witryny i przeglądarką; nic nie zostanie wysłane, dopóki go nie wyślesz.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profile i kopia zapasowa",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Eksportuj ustawienia",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Importuj ustawienia",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Ustawienia wyeksportowano.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Nie udało się wyeksportować ustawień.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Ustawienia zaimportowano.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Nie udało się zaimportować ustawień. Sprawdź plik JSON.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Nazwa profilu",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "np. Praca",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Zapisz bieżące ustawienia jako profil",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Zastosuj profil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Usuń profil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Wybierz profil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil zapisany.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil zastosowany.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil usunięty.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Nie udało się zaktualizować profilu.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Usuń ustawienia witryny",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Automatycznie stosuj w domenach",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

@@ -139,6 +139,74 @@
     "message": "Avaa ilmoitusluonnoksen, jossa ovat sivuston osoite ja selain; mitään ei lähetetä ennen lähettämistäsi.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiilit ja varmuuskopio",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Vie asetukset",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Tuo asetukset",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Asetukset viety.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Asetusten vienti epäonnistui.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Asetukset tuotu.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Asetusten tuonti epäonnistui. Tarkista JSON-tiedosto.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profiilin nimi",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "esim. Työ",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Tallenna nykyiset asetukset profiiliksi",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Käytä profiilia",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Poista profiili",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Valitse profiili",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profiili tallennettu.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profiili käytössä.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profiili poistettu.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profiilin päivitys epäonnistui.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Poista sivuston asetukset",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Käytä automaattisesti verkkotunnuksissa",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

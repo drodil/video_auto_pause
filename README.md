@@ -41,6 +41,11 @@ sleep timer to pause active videos across tabs.
 Peek mode can keep a video playing when its window loses focus while the
 pointer remains over that video.
 
+Settings can be exported to or imported from a versioned JSON backup. You can
+also save named settings profiles and optionally associate each with one or more
+domains; the most specific matching profile is applied automatically, while
+domains without a matching profile continue using the global settings.
+
 ## Player compatibility
 
 The extension controls standard HTML video elements across sites. YouTube also

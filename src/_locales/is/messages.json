@@ -139,6 +139,74 @@
     "message": "Opnar drög að tilkynningu með vefslóð og vafra; ekkert er sent fyrr en þú sendir hana.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Snið og afrit",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Flytja út stillingar",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Flytja inn stillingar",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Stillingar fluttar út.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Ekki tókst að flytja út stillingar.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Stillingar fluttar inn.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Ekki tókst að flytja inn stillingar. Athugaðu JSON-skrána.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Heiti sniðs",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "t.d. Vinna",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Vista núverandi stillingar sem snið",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Virkja snið",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Eyða sniði",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Veldu snið",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Snið vistað.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Snið virkjað.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Sniði eytt.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Ekki tókst að uppfæra snið.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Styrktaraðilar",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Eyða stillingum vefsvæðis",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Nota sjálfkrafa á lén",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

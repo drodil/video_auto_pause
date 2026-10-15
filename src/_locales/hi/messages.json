@@ -139,6 +139,74 @@
     "message": "साइट और ब्राउज़र के विवरण वाला रिपोर्ट ड्राफ़्ट खोलता है; आपके भेजने तक कुछ भी नहीं भेजा जाता।",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "प्रोफ़ाइल और बैकअप",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "सेटिंग निर्यात करें",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "सेटिंग आयात करें",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "सेटिंग निर्यात की गईं।",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "सेटिंग निर्यात नहीं हो सकीं।",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "सेटिंग आयात की गईं।",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "सेटिंग आयात नहीं हो सकीं। JSON फ़ाइल जाँचें।",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "प्रोफ़ाइल का नाम",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "जैसे: काम",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "मौजूदा सेटिंग को प्रोफ़ाइल के रूप में सहेजें",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "प्रोफ़ाइल लागू करें",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "प्रोफ़ाइल हटाएँ",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "प्रोफ़ाइल चुनें",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "प्रोफ़ाइल सहेजी गई।",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "प्रोफ़ाइल लागू की गई।",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "प्रोफ़ाइल हटाई गई।",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "प्रोफ़ाइल अपडेट नहीं हो सकी।",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "साइट सेटिंग हटाएँ",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "डोमेन पर अपने-आप लागू करें",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

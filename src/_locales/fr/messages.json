@@ -139,6 +139,74 @@
     "message": "Ouvre un brouillon avec l’origine du site et le navigateur ; rien n’est envoyé avant votre validation.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profils et sauvegarde",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Exporter les paramètres",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Importer les paramètres",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Paramètres exportés.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Impossible d’exporter les paramètres.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Paramètres importés.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Impossible d’importer les paramètres. Vérifiez le fichier JSON.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Nom du profil",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "ex. Travail",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Enregistrer les paramètres actuels comme profil",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Appliquer le profil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Supprimer le profil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Choisir un profil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil enregistré.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil appliqué.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil supprimé.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Impossible de mettre à jour le profil.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Supprimer les paramètres du site",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Appliquer automatiquement aux domaines",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

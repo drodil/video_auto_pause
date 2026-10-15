@@ -139,6 +139,74 @@
     "message": "사이트 주소와 브라우저가 포함된 신고 초안을 엽니다. 직접 제출하기 전에는 데이터가 전송되지 않습니다.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "프로필 및 백업",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "설정 내보내기",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "설정 가져오기",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "설정을 내보냈습니다.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "설정을 내보낼 수 없습니다.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "설정을 가져왔습니다.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "설정을 가져올 수 없습니다. JSON 파일을 확인하세요.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "프로필 이름",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "예: 업무",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "현재 설정을 프로필로 저장",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "프로필 적용",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "프로필 삭제",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "프로필 선택",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "프로필을 저장했습니다.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "프로필을 적용했습니다.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "프로필을 삭제했습니다.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "프로필을 업데이트할 수 없습니다.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "사이트 설정 삭제",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "도메인에 자동 적용",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

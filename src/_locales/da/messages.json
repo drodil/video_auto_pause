@@ -139,6 +139,74 @@
     "message": "Åbner en rapportkladde med webstedets adresse og browser; intet sendes, før du selv indsender rapporten.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiler og sikkerhedskopi",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Eksportér indstillinger",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Importér indstillinger",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Indstillinger eksporteret.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Indstillinger kunne ikke eksporteres.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Indstillinger importeret.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Indstillinger kunne ikke importeres. Kontrollér JSON-filen.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profilnavn",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "f.eks. Arbejde",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Gem aktuelle indstillinger som profil",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Anvend profil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Slet profil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Vælg en profil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil gemt.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil anvendt.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil slettet.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profilen kunne ikke opdateres.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Slet webstedsindstillinger",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Anvend automatisk på domæner",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

@@ -16,6 +16,7 @@ let tabVideos = {}; // { tabId: { frameId: boolean } }
 let tabVisibility = {};
 let tabMedia = {};
 let tabVideoHover = {};
+let profiles = [];
 let priorityTabId = -1;
 let priorityHistory = [];
 let priorityOperation = Promise.resolve();
@@ -82,6 +83,9 @@ function isWithinQuietHours(start, end, date = new Date()) {
 function getIdleDetectionInterval() {
   const configuredTimeouts = [
     Number(options.idlePauseMinutes),
+    ...(Array.isArray(profiles)
+      ? profiles.map((profile) => Number(profile?.settings?.idlePauseMinutes))
+      : []),
     ...(Array.isArray(options.siteRules)
       ? options.siteRules.map((rule) =>
           Number(rule?.overrides?.idlePauseMinutes),
@@ -209,6 +213,10 @@ async function registerContentScriptIfNeeded() {
 async function refresh_settings() {
   const result = await env.storage.sync.get(DEFAULT_OPTIONS);
   options = { ...DEFAULT_OPTIONS, ...result };
+  const storedProfiles = await env.storage.local.get("vapProfiles");
+  profiles = Array.isArray(storedProfiles.vapProfiles)
+    ? storedProfiles.vapProfiles
+    : [];
   debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
   disabledTabs = (await sessionStorage.get("disabledTabs")).disabledTabs ?? [];
   pinnedTabs = (await sessionStorage.get("pinnedTabs")).pinnedTabs ?? [];
@@ -316,14 +324,17 @@ function isEnabledForTab(tab) {
     return false;
   }
 
-  return VAP_SITE_ENABLED(hostname, options);
+  const settings = VAP_SETTINGS_FOR_PROFILE(options, profiles, hostname);
+  return VAP_SITE_ENABLED(hostname, settings);
 }
 
 function tabOptions(tab) {
   if (!tab?.url) {
     return options;
   }
-  return VAP_OPTIONS_FOR_SITE(new URL(tab.url).hostname.toLowerCase(), options);
+  const hostname = new URL(tab.url).hostname.toLowerCase();
+  const settings = VAP_SETTINGS_FOR_PROFILE(options, profiles, hostname);
+  return VAP_OPTIONS_FOR_SITE(hostname, settings);
 }
 
 // Functionality to send messages to tabs
@@ -541,7 +552,9 @@ env.storage.onChanged.addListener(async function (changes, areaName) {
     Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
   const relevantTabChange =
     (areaName === "session" || areaName === "local") &&
-    ("disabledTabs" in changes || "pinnedTabs" in changes);
+    ("disabledTabs" in changes ||
+      "pinnedTabs" in changes ||
+      (areaName === "local" && "vapProfiles" in changes));
   if (!relevantSyncChange && !relevantTabChange) {
     return;
   }

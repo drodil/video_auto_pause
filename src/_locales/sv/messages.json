@@ -139,6 +139,74 @@
     "message": "Öppnar ett rapportutkast med webbplatsens adress och webbläsare; inget skickas förrän du skickar rapporten.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiler och säkerhetskopia",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Exportera inställningar",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Importera inställningar",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Inställningarna har exporterats.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Det gick inte att exportera inställningarna.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Inställningarna har importerats.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Det gick inte att importera inställningarna. Kontrollera JSON-filen.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profilnamn",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "t.ex. Arbete",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Spara aktuella inställningar som profil",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Använd profil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Ta bort profil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Välj en profil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil sparad.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil använd.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil borttagen.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Det gick inte att uppdatera profilen.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Ta bort webbplatsinställningar",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Tillämpa automatiskt på domäner",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

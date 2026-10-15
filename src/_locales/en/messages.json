@@ -143,6 +143,74 @@
     "message": "Opens a report draft with the site origin and browser; nothing is sent unless you submit it.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profiles & backup",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Export settings",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Import settings",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Settings exported.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Could not export settings.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Settings imported.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Could not import settings. Check the JSON file.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profile name",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "e.g. Work",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Save current settings as profile",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Apply profile",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Delete profile",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Choose a profile",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profile saved.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profile applied.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profile deleted.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Could not update profile.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Delete site settings",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Automatically apply to domains",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

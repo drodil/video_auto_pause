@@ -139,6 +139,74 @@
     "message": "Opent een melding met de site en browser; er wordt niets verzonden totdat je de melding indient.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profielen en back-up",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Instellingen exporteren",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Instellingen importeren",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Instellingen geëxporteerd.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Instellingen konden niet worden geëxporteerd.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Instellingen geïmporteerd.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Instellingen konden niet worden geïmporteerd. Controleer het JSON-bestand.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Profielnaam",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "bijv. Werk",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Huidige instellingen als profiel opslaan",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Profiel toepassen",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Profiel verwijderen",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Kies een profiel",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profiel opgeslagen.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profiel toegepast.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profiel verwijderd.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profiel kon niet worden bijgewerkt.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Site-instellingen verwijderen",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Automatisch toepassen op domeinen",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

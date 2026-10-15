@@ -139,6 +139,74 @@
     "message": "Mở bản nháp có địa chỉ trang web và trình duyệt; không gửi dữ liệu cho đến khi bạn gửi báo cáo.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Hồ sơ và sao lưu",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Xuất cài đặt",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Nhập cài đặt",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Đã xuất cài đặt.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Không thể xuất cài đặt.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Đã nhập cài đặt.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Không thể nhập cài đặt. Hãy kiểm tra tệp JSON.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Tên hồ sơ",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "ví dụ: Công việc",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Lưu cài đặt hiện tại thành hồ sơ",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Áp dụng hồ sơ",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Xóa hồ sơ",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Chọn hồ sơ",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Đã lưu hồ sơ.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Đã áp dụng hồ sơ.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Đã xóa hồ sơ.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Không thể cập nhật hồ sơ.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Xóa cài đặt trang",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Tự động áp dụng cho các tên miền",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

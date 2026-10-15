@@ -139,6 +139,74 @@
     "message": "يفتح مسودة بلاغ تتضمن عنوان الموقع والمتصفح؛ لن تُرسل أي بيانات حتى ترسل البلاغ بنفسك.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "الملفات الشخصية والنسخ الاحتياطي",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "تصدير الإعدادات",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "استيراد الإعدادات",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "تم تصدير الإعدادات.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "تعذّر تصدير الإعدادات.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "تم استيراد الإعدادات.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "تعذّر استيراد الإعدادات. تحقّق من ملف JSON.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "اسم الملف الشخصي",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "مثل: العمل",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "حفظ الإعدادات الحالية كملف شخصي",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "تطبيق الملف الشخصي",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "حذف الملف الشخصي",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "اختر ملفًا شخصيًا",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "تم حفظ الملف الشخصي.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "تم تطبيق الملف الشخصي.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "تم حذف الملف الشخصي.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "تعذّر تحديث الملف الشخصي.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "حذف إعدادات الموقع",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "التطبيق تلقائيًا على النطاقات",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }

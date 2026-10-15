@@ -2,6 +2,7 @@
 const env = chrome.runtime ? chrome : browser;
 const tabStorage = env.storage.session ?? env.storage.local;
 const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
+const SETTINGS_SCHEMA_VERSION = 1;
 const siteOverrideOptions = Object.entries(DEFAULT_OPTIONS).filter(
   ([option, value]) =>
     !["disabled", "onlyConfiguredSites", "siteRules"].includes(option) &&
@@ -36,6 +37,13 @@ function localizeUI() {
     const message = env.i18n.getMessage(element.dataset.i18nTitle);
     if (message) {
       element.title = message;
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const message = env.i18n.getMessage(element.dataset.i18nPlaceholder);
+    if (message) {
+      element.placeholder = message;
     }
   });
 
@@ -344,6 +352,250 @@ async function updateSiteReportLink() {
   link.href = issueUrl.toString();
 }
 
+function validateSettingsPayload(payload) {
+  if (
+    !payload ||
+    payload.schemaVersion !== SETTINGS_SCHEMA_VERSION ||
+    !payload.settings ||
+    typeof payload.settings !== "object" ||
+    Array.isArray(payload.settings)
+  ) {
+    throw new Error("Unsupported or invalid settings file.");
+  }
+  const imported = {};
+  for (const [option, defaultValue] of Object.entries(DEFAULT_OPTIONS)) {
+    if (!Object.prototype.hasOwnProperty.call(payload.settings, option)) {
+      continue;
+    }
+    const value = payload.settings[option];
+    if (option === "siteRules") {
+      if (!Array.isArray(value)) {
+        throw new Error("Site rules must be an array.");
+      }
+      imported.siteRules = value.map((rule) => {
+        const domain = VAP_NORMALIZE_DOMAIN(rule?.domain);
+        if (!domain || !/^[a-z\d.-]+$/i.test(domain)) {
+          throw new Error("A site rule has an invalid domain.");
+        }
+        if (rule.enabled !== undefined && typeof rule.enabled !== "boolean") {
+          throw new Error(`Site rule ${domain} has an invalid enabled value.`);
+        }
+        if (
+          rule.overrides !== undefined &&
+          (!rule.overrides ||
+            typeof rule.overrides !== "object" ||
+            Array.isArray(rule.overrides))
+        ) {
+          throw new Error(`Site rule ${domain} has invalid overrides.`);
+        }
+        const overrides = {};
+        for (const [name, override] of Object.entries(rule.overrides ?? {})) {
+          const optionDefault = DEFAULT_OPTIONS[name];
+          if (
+            !siteOverrideOptions.some(([option]) => option === name) ||
+            typeof optionDefault !== typeof override
+          ) {
+            throw new Error(
+              `Site rule ${domain} has an invalid ${name} value.`,
+            );
+          }
+          if (typeof optionDefault === "number") {
+            if (!Number.isFinite(override) || override < 0) {
+              throw new Error(
+                `Site rule ${domain} has an invalid ${name} value.`,
+              );
+            }
+            const maximum =
+              name === "rewindSeconds"
+                ? 60
+                : name === "playbackSpeed"
+                  ? 4
+                  : name === "idlePauseMinutes"
+                    ? 240
+                    : Number.POSITIVE_INFINITY;
+            const bounded = Math.min(maximum, override);
+            overrides[name] =
+              name === "playbackSpeed"
+                ? Math.round(bounded * 4) / 4
+                : Math.floor(bounded);
+          } else {
+            overrides[name] = override;
+          }
+        }
+        return {
+          domain,
+          enabled: rule.enabled !== false,
+          overrides,
+        };
+      });
+      continue;
+    }
+    if (typeof value !== typeof defaultValue) {
+      throw new Error(`The ${option} setting has an invalid type.`);
+    }
+    if (typeof defaultValue === "number") {
+      if (!Number.isFinite(value) || value < 0) {
+        throw new Error(`The ${option} setting has an invalid value.`);
+      }
+      const maximum =
+        option === "rewindSeconds"
+          ? 60
+          : option === "playbackSpeed"
+            ? 4
+            : option === "idlePauseMinutes"
+              ? 240
+              : Number.POSITIVE_INFINITY;
+      imported[option] = Math.min(maximum, value);
+      if (option === "playbackSpeed") {
+        imported[option] = Math.round(imported[option] * 4) / 4;
+      } else {
+        imported[option] = Math.floor(imported[option]);
+      }
+      continue;
+    }
+    if (
+      ["quietHoursStart", "quietHoursEnd"].includes(option) &&
+      value !== "" &&
+      !/^([01]\d|2[0-3]):[0-5]\d$/.test(value)
+    ) {
+      throw new Error(`The ${option} setting must use 24-hour time.`);
+    }
+    imported[option] = value;
+  }
+  if (Object.keys(imported).length === 0) {
+    throw new Error("The settings file does not contain supported settings.");
+  }
+  return imported;
+}
+
+async function exportSettings() {
+  const status = document.getElementById("settingsImportStatus");
+  try {
+    const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+    const payload = {
+      schemaVersion: SETTINGS_SCHEMA_VERSION,
+      exportedAt: new Date().toISOString(),
+      settings: { ...DEFAULT_OPTIONS, ...settings },
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `video-auto-pause-settings-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    status.textContent = env.i18n.getMessage("settingsExported");
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("settingsExportFailed");
+    console.error("Video Auto Pause could not export settings:", error);
+  }
+}
+
+async function importSettingsFile(file) {
+  const status = document.getElementById("settingsImportStatus");
+  try {
+    const payload = JSON.parse(await file.text());
+    const settings = validateSettingsPayload(payload);
+    await env.storage.sync.set(settings);
+    status.textContent = env.i18n.getMessage("settingsImported");
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("settingsImportFailed");
+    console.error("Video Auto Pause could not import settings:", error);
+  }
+}
+
+async function restoreProfiles() {
+  const select = document.getElementById("profileSelect");
+  const stored = await env.storage.local.get("vapProfiles");
+  const profiles = Array.isArray(stored.vapProfiles)
+    ? stored.vapProfiles.filter(
+        (profile) =>
+          profile &&
+          typeof profile.name === "string" &&
+          profile.settings &&
+          typeof profile.settings === "object",
+      )
+    : [];
+  select.replaceChildren();
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = env.i18n.getMessage("profileSelectPlaceholder");
+  select.setAttribute("aria-label", placeholder.textContent);
+  select.appendChild(placeholder);
+  for (const profile of profiles) {
+    const option = document.createElement("option");
+    option.value = profile.name;
+    option.textContent = profile.name;
+    option.dataset.domains = Array.isArray(profile.domains)
+      ? profile.domains.join(", ")
+      : "";
+    select.appendChild(option);
+  }
+  document.getElementById("applyProfile").disabled = true;
+  document.getElementById("deleteProfile").disabled = true;
+}
+
+async function saveProfile() {
+  const name = document.getElementById("profileName").value.trim();
+  if (!name || name.length > 40) {
+    throw new Error("Profile names must contain 1 to 40 characters.");
+  }
+  const domains = document
+    .getElementById("profileDomains")
+    .value.split(/[,\s]+/)
+    .map(VAP_NORMALIZE_DOMAIN)
+    .filter(Boolean);
+  if (domains.some((domain) => !/^[a-z\d.-]+$/i.test(domain))) {
+    throw new Error("A profile domain is invalid.");
+  }
+  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
+  const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+  const updated = (Array.isArray(vapProfiles) ? vapProfiles : []).filter(
+    (profile) =>
+      typeof profile?.name !== "string" ||
+      profile.name.toLowerCase() !== name.toLowerCase(),
+  );
+  updated.push({
+    name,
+    domains: [...new Set(domains)],
+    settings: { ...DEFAULT_OPTIONS, ...settings },
+  });
+  await env.storage.local.set({ vapProfiles: updated });
+  await restoreProfiles();
+  document.getElementById("profileSelect").value = name;
+  document.getElementById("applyProfile").disabled = false;
+  document.getElementById("deleteProfile").disabled = false;
+}
+
+async function applySelectedProfile() {
+  const name = document.getElementById("profileSelect").value;
+  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
+  const profile = (Array.isArray(vapProfiles) ? vapProfiles : []).find(
+    (entry) => entry?.name === name,
+  );
+  if (!profile) {
+    throw new Error("Select a saved profile first.");
+  }
+  await env.storage.sync.set(
+    validateSettingsPayload({
+      schemaVersion: SETTINGS_SCHEMA_VERSION,
+      settings: profile.settings,
+    }),
+  );
+}
+
+async function deleteSelectedProfile() {
+  const name = document.getElementById("profileSelect").value;
+  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
+  const updated = (Array.isArray(vapProfiles) ? vapProfiles : []).filter(
+    (profile) => profile?.name !== name,
+  );
+  await env.storage.local.set({ vapProfiles: updated });
+  await restoreProfiles();
+}
+
 function readOption(option, element) {
   if (
     [
@@ -607,6 +859,11 @@ env.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === "local" && "vapSleepTimerExpiresAt" in changes) {
       void restoreSleepTimer();
     }
+    if (namespace === "local" && "vapProfiles" in changes) {
+      void restoreProfiles().catch((error) => {
+        console.error("Video Auto Pause could not restore profiles:", error);
+      });
+    }
   }
 });
 
@@ -657,6 +914,9 @@ if (env.runtime.getManifest().browser_specific_settings?.gecko) {
 
 void restoreStats();
 void restoreSleepTimer();
+void restoreProfiles().catch((error) => {
+  console.error("Video Auto Pause could not restore profiles:", error);
+});
 
 document.getElementById("startSleepTimer")?.addEventListener("click", () => {
   void updateSleepTimer("start");
@@ -664,6 +924,66 @@ document.getElementById("startSleepTimer")?.addEventListener("click", () => {
 document.getElementById("cancelSleepTimer")?.addEventListener("click", () => {
   void updateSleepTimer("cancel");
 });
+document.getElementById("exportSettings")?.addEventListener("click", () => {
+  void exportSettings();
+});
+document.getElementById("importSettings")?.addEventListener("click", () => {
+  document.getElementById("importSettingsFile").click();
+});
+document
+  .getElementById("importSettingsFile")
+  ?.addEventListener("change", (event) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    if (file) {
+      void importSettingsFile(file);
+    }
+    input.value = "";
+  });
+document.getElementById("saveProfile")?.addEventListener("click", async () => {
+  const status = document.getElementById("profileStatus");
+  try {
+    await saveProfile();
+    status.textContent = env.i18n.getMessage("profileSaved");
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("profileFailed");
+    console.error("Video Auto Pause could not save a profile:", error);
+  }
+});
+document.getElementById("applyProfile")?.addEventListener("click", async () => {
+  const status = document.getElementById("profileStatus");
+  try {
+    await applySelectedProfile();
+    status.textContent = env.i18n.getMessage("profileApplied");
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("profileFailed");
+    console.error("Video Auto Pause could not apply a profile:", error);
+  }
+});
+document
+  .getElementById("deleteProfile")
+  ?.addEventListener("click", async () => {
+    const status = document.getElementById("profileStatus");
+    try {
+      await deleteSelectedProfile();
+      status.textContent = env.i18n.getMessage("profileDeleted");
+    } catch (error) {
+      status.textContent = env.i18n.getMessage("profileFailed");
+      console.error("Video Auto Pause could not delete a profile:", error);
+    }
+  });
+document
+  .getElementById("profileSelect")
+  ?.addEventListener("change", (event) => {
+    const selected = Boolean(event.currentTarget.value);
+    document.getElementById("applyProfile").disabled = !selected;
+    document.getElementById("deleteProfile").disabled = !selected;
+    document.getElementById("profileName").value = selected
+      ? event.currentTarget.value
+      : "";
+    document.getElementById("profileDomains").value =
+      event.currentTarget.selectedOptions[0]?.dataset.domains ?? "";
+  });
 
 // Listen to changes of options
 for (const option in options) {

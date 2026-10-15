@@ -68,6 +68,7 @@ const test = base.extend({
     if (browserName === "chromium") {
       context = await chromium.launchPersistentContext(userDataDir, {
         headless: false,
+        acceptDownloads: true,
         args: [
           `--disable-extensions-except=${chromeExtensionPath}`,
           `--load-extension=${chromeExtensionPath}`,
@@ -550,6 +551,25 @@ test.describe("Video Auto Pause Extension", () => {
       "sleepTimerFailed",
       "reportSite",
       "reportSiteDescription",
+      "profilesAndBackup",
+      "exportSettings",
+      "importSettings",
+      "settingsExported",
+      "settingsExportFailed",
+      "settingsImported",
+      "settingsImportFailed",
+      "profileName",
+      "profileNamePlaceholder",
+      "profileDomains",
+      "profileDomainsPlaceholder",
+      "saveProfile",
+      "applyProfile",
+      "deleteProfile",
+      "profileSelectPlaceholder",
+      "profileSaved",
+      "profileApplied",
+      "profileDeleted",
+      "profileFailed",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -565,6 +585,203 @@ test.describe("Video Auto Pause Extension", () => {
         ).toBeTruthy();
       }
     }
+  });
+
+  test("exports and validates versioned settings JSON", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: false,
+      rewindSeconds: 4,
+      siteRules: [
+        {
+          domain: "example.com",
+          enabled: true,
+          overrides: { playbackSpeed: 1.5 },
+        },
+      ],
+    });
+    const worker = context.serviceWorkers()[0];
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+
+    const downloadPromise = optionsPage.waitForEvent("download");
+    await optionsPage.locator("#exportSettings").click();
+    const download = await downloadPromise;
+    const exported = JSON.parse(fs.readFileSync(await download.path(), "utf8"));
+    expect(exported.schemaVersion).toBe(1);
+    expect(exported.settings).toMatchObject({
+      autopause: false,
+      rewindSeconds: 4,
+      siteRules: [
+        {
+          domain: "example.com",
+          overrides: { playbackSpeed: 1.5 },
+        },
+      ],
+    });
+
+    const importedPayload = {
+      schemaVersion: 1,
+      settings: {
+        autopause: true,
+        rewindSeconds: 12,
+        quietHoursStart: "21:30",
+        siteRules: [
+          {
+            domain: "media.example",
+            enabled: false,
+            overrides: { playbackSpeed: 2 },
+          },
+        ],
+      },
+    };
+    await optionsPage.locator("#importSettingsFile").setInputFiles({
+      name: "settings.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(importedPayload)),
+    });
+    await expect(optionsPage.locator("#settingsImportStatus")).toContainText(
+      "imported",
+    );
+    await expect
+      .poll(() =>
+        worker.evaluate(() =>
+          chrome.storage.sync.get([
+            "autopause",
+            "rewindSeconds",
+            "quietHoursStart",
+            "siteRules",
+          ]),
+        ),
+      )
+      .toMatchObject({
+        autopause: true,
+        rewindSeconds: 12,
+        quietHoursStart: "21:30",
+        siteRules: [
+          {
+            domain: "media.example",
+            enabled: false,
+            overrides: { playbackSpeed: 2 },
+          },
+        ],
+      });
+
+    await optionsPage.locator("#importSettingsFile").setInputFiles({
+      name: "unsupported.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(
+        JSON.stringify({ schemaVersion: 999, settings: { autopause: false } }),
+      ),
+    });
+    await expect(optionsPage.locator("#settingsImportStatus")).toContainText(
+      "Could not import",
+    );
+    await expect
+      .poll(() => worker.evaluate(() => chrome.storage.sync.get("autopause")))
+      .toMatchObject({ autopause: true });
+  });
+
+  test("saves, applies, and deletes named settings profiles", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      quietHoursStart: "20:00",
+      quietHoursEnd: "07:00",
+    });
+    const worker = context.serviceWorkers()[0];
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+    await optionsPage.locator("#profileName").fill("Work");
+    await optionsPage.locator("#saveProfile").click();
+    await expect(optionsPage.locator("#profileStatus")).toContainText("saved");
+    await expect(optionsPage.locator("#profileSelect")).toHaveValue("Work");
+
+    await worker.evaluate(
+      () =>
+        new Promise((resolve) =>
+          chrome.storage.sync.set(
+            { autopause: false, quietHoursStart: "", quietHoursEnd: "" },
+            resolve,
+          ),
+        ),
+    );
+    await optionsPage.locator("#applyProfile").click();
+    await expect(optionsPage.locator("#profileStatus")).toContainText(
+      "applied",
+    );
+    await expect
+      .poll(() =>
+        worker.evaluate(() =>
+          chrome.storage.sync.get([
+            "autopause",
+            "quietHoursStart",
+            "quietHoursEnd",
+          ]),
+        ),
+      )
+      .toMatchObject({
+        autopause: true,
+        quietHoursStart: "20:00",
+        quietHoursEnd: "07:00",
+      });
+
+    await optionsPage.locator("#deleteProfile").click();
+    await expect(optionsPage.locator("#profileStatus")).toContainText(
+      "deleted",
+    );
+    await expect(optionsPage.locator("#profileSelect option")).toHaveCount(1);
+  });
+
+  test("applies the most specific matching hostname profile", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://video.localhost:${port}/video.html`);
+    await context.updateSettings({ playbackSpeed: 1 });
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage.locator("#profileName").fill("Base");
+    await optionsPage.locator("#profileDomains").fill("localhost");
+    await optionsPage.locator("#saveProfile").click();
+    await optionsPage.locator("#profileName").fill("Specific");
+    await optionsPage.locator("#profileDomains").fill("video.localhost");
+    await optionsPage.locator("#playbackSpeed").fill("2");
+    await optionsPage.locator("#playbackSpeed").press("Tab");
+    await optionsPage.locator("#saveProfile").click();
+
+    const profileSelection = await worker.evaluate(() =>
+      VAP_PROFILE_FOR_SITE("video.localhost", [
+        {
+          name: "Base",
+          domains: ["localhost"],
+          settings: { playbackSpeed: 1.5 },
+        },
+        {
+          name: "Specific",
+          domains: ["video.localhost"],
+          settings: { playbackSpeed: 2 },
+        },
+      ]),
+    );
+    expect(profileSelection.name).toBe("Specific");
+    await page.reload();
+    await expect
+      .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
+      .toBe(2);
   });
 
   test("rewinds automatically resumed finite videos by the configured amount", async ({

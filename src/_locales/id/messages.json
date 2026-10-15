@@ -139,6 +139,74 @@
     "message": "Membuka draf laporan berisi alamat situs dan browser; tidak ada data yang dikirim sampai Anda mengirim laporan.",
     "description": "Privacy note for the report link."
   },
+  "profilesAndBackup": {
+    "message": "Profil & cadangan",
+    "description": "Settings profile and backup controls."
+  },
+  "exportSettings": {
+    "message": "Ekspor setelan",
+    "description": "Export extension settings as JSON."
+  },
+  "importSettings": {
+    "message": "Impor setelan",
+    "description": "Import settings from a JSON file."
+  },
+  "settingsExported": {
+    "message": "Setelan diekspor.",
+    "description": "Export completion status."
+  },
+  "settingsExportFailed": {
+    "message": "Setelan tidak dapat diekspor.",
+    "description": "Export error status."
+  },
+  "settingsImported": {
+    "message": "Setelan diimpor.",
+    "description": "Import completion status."
+  },
+  "settingsImportFailed": {
+    "message": "Setelan tidak dapat diimpor. Periksa file JSON.",
+    "description": "Import error status."
+  },
+  "profileName": {
+    "message": "Nama profil",
+    "description": "Name for a saved settings profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "mis. Kerja",
+    "description": "Example profile name."
+  },
+  "saveProfile": {
+    "message": "Simpan setelan saat ini sebagai profil",
+    "description": "Save current settings to a profile."
+  },
+  "applyProfile": {
+    "message": "Terapkan profil",
+    "description": "Apply the selected profile."
+  },
+  "deleteProfile": {
+    "message": "Hapus profil",
+    "description": "Delete the selected profile."
+  },
+  "profileSelectPlaceholder": {
+    "message": "Pilih profil",
+    "description": "Choose a saved profile."
+  },
+  "profileSaved": {
+    "message": "Profil disimpan.",
+    "description": "Profile saved status."
+  },
+  "profileApplied": {
+    "message": "Profil diterapkan.",
+    "description": "Profile applied status."
+  },
+  "profileDeleted": {
+    "message": "Profil dihapus.",
+    "description": "Profile deleted status."
+  },
+  "profileFailed": {
+    "message": "Profil tidak dapat diperbarui.",
+    "description": "Profile operation error status."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
@@ -486,5 +554,13 @@
   "siteRuleDelete": {
     "message": "Hapus pengaturan situs",
     "description": "Delete the current site rule"
+  },
+  "profileDomains": {
+    "message": "Terapkan otomatis ke domain",
+    "description": "Domains that automatically select this saved settings profile."
+  },
+  "profileDomainsPlaceholder": {
+    "message": "example.com, work.example.org",
+    "description": "Comma-separated domain examples for profile matching."
   }
 }
