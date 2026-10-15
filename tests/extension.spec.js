@@ -182,6 +182,38 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", false);
   });
 
+  test("should resume browser-blocked autoplay when activating a background tab", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ manualPause: false });
+    await page.goto(`http://localhost:${port}/`);
+
+    const worker = context.serviceWorkers()[0];
+    const [backgroundPage] = await Promise.all([
+      context.waitForEvent("page"),
+      worker.evaluate(
+        (url) =>
+          new Promise((resolve) =>
+            chrome.tabs.create({ url, active: false }, resolve),
+          ),
+        `http://localhost:${port}/video.html`,
+      ),
+    ]);
+    await backgroundPage.waitForLoadState();
+    const video = backgroundPage.locator("#v");
+    await expect(video).toBeAttached();
+    await video.evaluate((element) => {
+      element.autoplay = false;
+      element.removeAttribute("autoplay");
+      element.pause();
+    });
+    await expect(video).toHaveJSProperty("paused", true);
+
+    await backgroundPage.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+  });
+
   test("should block autoplay until the user interacts with the page", async ({
     page,
     context,
@@ -529,7 +561,10 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", false);
   });
 
-  test("should not pause video in a disabled tab", async ({ page, context }) => {
+  test("should not pause video in a disabled tab", async ({
+    page,
+    context,
+  }) => {
     await page.goto(`http://localhost:${port}/video.html`);
     const video = page.locator("#v");
     await video.evaluate((element) => element.play());

@@ -374,7 +374,7 @@ if (window.autoPauseInjected !== true) {
 
   const resumeVideo = async (video, actionToken) => {
     debugLog(`Attempting to resume video: paused=${video.paused}`);
-    if (!extensionPausedVideos.has(video) || video.ended) {
+    if (video.ended || (!extensionPausedVideos.has(video) && !video.paused)) {
       return;
     }
 
@@ -475,7 +475,10 @@ if (window.autoPauseInjected !== true) {
         }
         break;
       case "resume":
-        if (extensionPausedVideos.has(video) && !isManuallyPaused) {
+        if (
+          (extensionPausedVideos.has(video) || video.paused) &&
+          !isManuallyPaused
+        ) {
           await resumeVideo(video, actionToken);
         } else {
           debugLog(
