@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "啟用影片頁面快速鍵"
+  },
+  "contentShortcutsDescription": {
+    "message": "頁面在前景時快速鍵才會作用。留白可停用對應操作。"
+  },
+  "seekBackwardShortcut": {
+    "message": "倒轉"
+  },
+  "seekForwardShortcut": {
+    "message": "快轉"
+  },
+  "frameBackwardShortcut": {
+    "message": "上一格"
+  },
+  "frameForwardShortcut": {
+    "message": "下一格"
+  },
+  "toggleLoopShortcut": {
+    "message": "設定或清除 A-B 循環"
+  },
+  "bookmarkShortcut": {
+    "message": "儲存播放標記"
+  },
+  "screenshotShortcut": {
+    "message": "儲存影片畫格"
+  },
+  "togglePipShortcut": {
+    "message": "切換子母畫面"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "切換字幕"
+  },
+  "contentShortcutsConflict": {
+    "message": "每個操作都必須使用不同按鍵。"
+  },
+  "contentShortcutsSaved": {
+    "message": "快速鍵已儲存。"
+  },
+  "shortcutBookmarkSaved": {
+    "message": "已在 $1 儲存標記。"
+  },
+  "shortcutFrameSaved": {
+    "message": "影片畫格已儲存。"
+  },
+  "shortcutFrameUnavailable": {
+    "message": "無法擷取此畫格（可能受到保護）。"
+  },
+  "shortcutLoopStart": {
+    "message": "循環起點已設為 $1。"
+  },
+  "shortcutLoopEnd": {
+    "message": "已設定從 $1 到 $2 的循環。"
+  },
+  "shortcutLoopCleared": {
+    "message": "已清除 A-B 循環。"
+  },
+  "shortcutActionUnsupported": {
+    "message": "目前影片不支援此操作。"
+  },
+  "shortcutActionFailed": {
+    "message": "快速鍵操作失敗。"
   }
 }

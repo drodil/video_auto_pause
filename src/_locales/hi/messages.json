@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "वीडियो पेज शॉर्टकट चालू करें"
+  },
+  "contentShortcutsDescription": {
+    "message": "पेज सक्रिय होने पर शॉर्टकट काम करते हैं। कार्रवाई बंद करने के लिए कुंजी खाली छोड़ें।"
+  },
+  "seekBackwardShortcut": {
+    "message": "पीछे जाएँ"
+  },
+  "seekForwardShortcut": {
+    "message": "आगे जाएँ"
+  },
+  "frameBackwardShortcut": {
+    "message": "पिछला फ़्रेम"
+  },
+  "frameForwardShortcut": {
+    "message": "अगला फ़्रेम"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-B लूप सेट या साफ़ करें"
+  },
+  "bookmarkShortcut": {
+    "message": "प्लेबैक मार्कर सहेजें"
+  },
+  "screenshotShortcut": {
+    "message": "वीडियो फ़्रेम सहेजें"
+  },
+  "togglePipShortcut": {
+    "message": "पिक्चर-इन-पिक्चर टॉगल करें"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "कैप्शन टॉगल करें"
+  },
+  "contentShortcutsConflict": {
+    "message": "हर कार्रवाई के लिए अलग कुंजी होनी चाहिए।"
+  },
+  "contentShortcutsSaved": {
+    "message": "शॉर्टकट कुंजियाँ सहेजी गईं।"
+  },
+  "shortcutBookmarkSaved": {
+    "message": "$1 पर मार्कर सहेजा गया।"
+  },
+  "shortcutFrameSaved": {
+    "message": "वीडियो फ़्रेम सहेजा गया।"
+  },
+  "shortcutFrameUnavailable": {
+    "message": "यह फ़्रेम कैप्चर नहीं किया जा सकता (संभवतः सुरक्षित है)।"
+  },
+  "shortcutLoopStart": {
+    "message": "$1 पर लूप शुरू करें।"
+  },
+  "shortcutLoopEnd": {
+    "message": "$1 से $2 तक लूप सेट है।"
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B लूप साफ़ किया गया।"
+  },
+  "shortcutActionUnsupported": {
+    "message": "यह कार्रवाई इस वीडियो पर समर्थित नहीं है।"
+  },
+  "shortcutActionFailed": {
+    "message": "शॉर्टकट कार्रवाई विफल हुई."
   }
 }

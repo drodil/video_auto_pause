@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Sneltoetsen op videopagina’s inschakelen"
+  },
+  "contentShortcutsDescription": {
+    "message": "Sneltoetsen werken wanneer de pagina actief is. Laat een toets leeg om de actie uit te schakelen."
+  },
+  "seekBackwardShortcut": {
+    "message": "Terugspoelen"
+  },
+  "seekForwardShortcut": {
+    "message": "Vooruitspoelen"
+  },
+  "frameBackwardShortcut": {
+    "message": "Vorig frame"
+  },
+  "frameForwardShortcut": {
+    "message": "Volgend frame"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-B-lus instellen of wissen"
+  },
+  "bookmarkShortcut": {
+    "message": "Afspeelmarkering opslaan"
+  },
+  "screenshotShortcut": {
+    "message": "Videoframe opslaan"
+  },
+  "togglePipShortcut": {
+    "message": "Picture-in-picture schakelen"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Ondertiteling schakelen"
+  },
+  "contentShortcutsConflict": {
+    "message": "Elke actie moet een eigen toets hebben."
+  },
+  "contentShortcutsSaved": {
+    "message": "Sneltoetsen opgeslagen."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Markering opgeslagen op $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videoframe opgeslagen."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Dit videoframe kan niet worden vastgelegd (mogelijk is het beschermd)."
+  },
+  "shortcutLoopStart": {
+    "message": "Lus begint op $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Lus ingesteld van $1 tot $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B-lus gewist."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Deze actie wordt niet ondersteund voor deze video."
+  },
+  "shortcutActionFailed": {
+    "message": "Sneltoetsactie mislukt."
   }
 }

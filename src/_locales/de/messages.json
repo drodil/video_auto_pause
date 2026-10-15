@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Tastenkürzel auf Videoseiten aktivieren"
+  },
+  "contentShortcutsDescription": {
+    "message": "Tastenkürzel funktionieren bei fokussierter Seite. Ein leeres Feld deaktiviert die Aktion."
+  },
+  "seekBackwardShortcut": {
+    "message": "Zurückspringen"
+  },
+  "seekForwardShortcut": {
+    "message": "Vorspringen"
+  },
+  "frameBackwardShortcut": {
+    "message": "Vorheriges Einzelbild"
+  },
+  "frameForwardShortcut": {
+    "message": "Nächstes Einzelbild"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-B-Schleife setzen oder löschen"
+  },
+  "bookmarkShortcut": {
+    "message": "Wiedergabemarke speichern"
+  },
+  "screenshotShortcut": {
+    "message": "Videobild speichern"
+  },
+  "togglePipShortcut": {
+    "message": "Bild-in-Bild umschalten"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Untertitel umschalten"
+  },
+  "contentShortcutsConflict": {
+    "message": "Jede Aktion benötigt eine eigene Taste."
+  },
+  "contentShortcutsSaved": {
+    "message": "Tastenkürzel gespeichert."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Marke bei $1 gespeichert."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videobild gespeichert."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Dieses Videobild kann nicht aufgenommen werden (möglicherweise geschützt)."
+  },
+  "shortcutLoopStart": {
+    "message": "Schleifenstart bei $1 gesetzt."
+  },
+  "shortcutLoopEnd": {
+    "message": "Schleife von $1 bis $2 gesetzt."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B-Schleife gelöscht."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Diese Aktion wird für das aktuelle Video nicht unterstützt."
+  },
+  "shortcutActionFailed": {
+    "message": "Tastenkürzel-Aktion fehlgeschlagen."
   }
 }

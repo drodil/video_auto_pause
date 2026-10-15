@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Aktifkan pintasan di halaman video"
+  },
+  "contentShortcutsDescription": {
+    "message": "Pintasan berfungsi saat halaman aktif. Kosongkan tombol untuk menonaktifkan tindakan."
+  },
+  "seekBackwardShortcut": {
+    "message": "Mundur"
+  },
+  "seekForwardShortcut": {
+    "message": "Maju"
+  },
+  "frameBackwardShortcut": {
+    "message": "Bingkai sebelumnya"
+  },
+  "frameForwardShortcut": {
+    "message": "Bingkai berikutnya"
+  },
+  "toggleLoopShortcut": {
+    "message": "Atur atau hapus loop A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Simpan penanda pemutaran"
+  },
+  "screenshotShortcut": {
+    "message": "Simpan bingkai video"
+  },
+  "togglePipShortcut": {
+    "message": "Alihkan Gambar-dalam-Gambar"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Alihkan teks"
+  },
+  "contentShortcutsConflict": {
+    "message": "Setiap tindakan harus memakai tombol yang berbeda."
+  },
+  "contentShortcutsSaved": {
+    "message": "Tombol pintasan disimpan."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Penanda disimpan pada $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Bingkai video disimpan."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Bingkai video ini tidak dapat diambil (mungkin dilindungi)."
+  },
+  "shortcutLoopStart": {
+    "message": "Awal loop diatur pada $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Loop diatur dari $1 hingga $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Loop A-B dihapus."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Tindakan ini tidak didukung untuk video saat ini."
+  },
+  "shortcutActionFailed": {
+    "message": "Tindakan pintasan gagal."
   }
 }

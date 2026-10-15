@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Bật phím tắt trên trang video"
+  },
+  "contentShortcutsDescription": {
+    "message": "Phím tắt hoạt động khi trang được chọn. Để trống phím để tắt thao tác."
+  },
+  "seekBackwardShortcut": {
+    "message": "Tua lùi"
+  },
+  "seekForwardShortcut": {
+    "message": "Tua tới"
+  },
+  "frameBackwardShortcut": {
+    "message": "Khung hình trước"
+  },
+  "frameForwardShortcut": {
+    "message": "Khung hình tiếp theo"
+  },
+  "toggleLoopShortcut": {
+    "message": "Đặt hoặc xóa vòng lặp A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Lưu dấu mốc phát"
+  },
+  "screenshotShortcut": {
+    "message": "Lưu khung hình video"
+  },
+  "togglePipShortcut": {
+    "message": "Bật/tắt Hình trong hình"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Bật/tắt phụ đề"
+  },
+  "contentShortcutsConflict": {
+    "message": "Mỗi thao tác phải dùng một phím riêng."
+  },
+  "contentShortcutsSaved": {
+    "message": "Đã lưu phím tắt."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Đã lưu dấu mốc tại $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Đã lưu khung hình video."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Không thể chụp khung hình này (có thể bị bảo vệ)."
+  },
+  "shortcutLoopStart": {
+    "message": "Đã đặt điểm bắt đầu vòng lặp tại $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Đã đặt vòng lặp từ $1 đến $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Đã xóa vòng lặp A-B."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Thao tác này không được hỗ trợ cho video hiện tại."
+  },
+  "shortcutActionFailed": {
+    "message": "Thao tác phím tắt không thành công."
   }
 }

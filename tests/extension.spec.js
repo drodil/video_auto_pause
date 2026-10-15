@@ -413,6 +413,106 @@ test.describe("Video Auto Pause Extension", () => {
       .toBe(1.25);
   });
 
+  test("uses remapped in-page video shortcuts and ignores editable controls", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      contentShortcutsEnabled: true,
+      contentShortcutKeys: {
+        seekBackward: "k",
+        seekForward: "",
+        frameBackward: "",
+        frameForward: "",
+        toggleLoop: "",
+        bookmark: "",
+        screenshot: "",
+        togglePip: "",
+        toggleCaptions: "",
+      },
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => {
+      element.pause();
+      element.currentTime = 5;
+    });
+    await page.keyboard.press("k");
+    await expect
+      .poll(() => video.evaluate((element) => element.currentTime))
+      .toBe(0);
+
+    await video.evaluate((element) => (element.currentTime = 5));
+    await page.evaluate(() => {
+      const input = document.createElement("input");
+      input.id = "shortcut-test-input";
+      document.body.appendChild(input);
+      input.focus();
+    });
+    await page.keyboard.press("k");
+    await expect
+      .poll(() => video.evaluate((element) => element.currentTime))
+      .toBe(5);
+  });
+
+  test("supports A-B loops, local playback markers, and caption shortcuts", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ contentShortcutsEnabled: true });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => {
+      element.pause();
+      element.currentTime = 1;
+    });
+    await page.keyboard.press("b");
+    await video.evaluate((element) => (element.currentTime = 3));
+    await page.keyboard.press("b");
+    await video.evaluate((element) => {
+      element.currentTime = 4;
+      element.dispatchEvent(new Event("timeupdate"));
+    });
+    await expect
+      .poll(() => video.evaluate((element) => element.currentTime))
+      .toBe(1);
+
+    await page.keyboard.press("m");
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          chrome.storage.local.get("vapVideoBookmarks"),
+        ),
+      )
+      .toMatchObject({
+        vapVideoBookmarks: [
+          expect.objectContaining({
+            title: "Test",
+            time: 1,
+          }),
+        ],
+      });
+
+    await video.evaluate((element) => {
+      element.addTextTrack("captions", "English", "en");
+    });
+    await page.keyboard.press("c");
+    await expect
+      .poll(() => video.evaluate((element) => element.textTracks[0].mode))
+      .toBe("showing");
+  });
+
   test("a per-site autopause override inherits the rest of the defaults", async ({
     page,
     context,
@@ -570,6 +670,27 @@ test.describe("Video Auto Pause Extension", () => {
       "profileApplied",
       "profileDeleted",
       "profileFailed",
+      "contentShortcutsEnabled",
+      "contentShortcutsDescription",
+      "seekBackwardShortcut",
+      "seekForwardShortcut",
+      "frameBackwardShortcut",
+      "frameForwardShortcut",
+      "toggleLoopShortcut",
+      "bookmarkShortcut",
+      "screenshotShortcut",
+      "togglePipShortcut",
+      "toggleCaptionsShortcut",
+      "contentShortcutsConflict",
+      "contentShortcutsSaved",
+      "shortcutBookmarkSaved",
+      "shortcutFrameSaved",
+      "shortcutFrameUnavailable",
+      "shortcutLoopStart",
+      "shortcutLoopEnd",
+      "shortcutLoopCleared",
+      "shortcutActionUnsupported",
+      "shortcutActionFailed",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(

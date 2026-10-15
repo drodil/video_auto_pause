@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Aktivera kortkommandon på videosidor"
+  },
+  "contentShortcutsDescription": {
+    "message": "Kortkommandon fungerar när sidan är aktiv. Lämna en tangent tom för att inaktivera åtgärden."
+  },
+  "seekBackwardShortcut": {
+    "message": "Spola bakåt"
+  },
+  "seekForwardShortcut": {
+    "message": "Spola framåt"
+  },
+  "frameBackwardShortcut": {
+    "message": "Föregående bildruta"
+  },
+  "frameForwardShortcut": {
+    "message": "Nästa bildruta"
+  },
+  "toggleLoopShortcut": {
+    "message": "Ange eller rensa A-B-loop"
+  },
+  "bookmarkShortcut": {
+    "message": "Spara uppspelningsmarkör"
+  },
+  "screenshotShortcut": {
+    "message": "Spara videobildruta"
+  },
+  "togglePipShortcut": {
+    "message": "Växla bild-i-bild"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Växla textning"
+  },
+  "contentShortcutsConflict": {
+    "message": "Varje åtgärd måste ha en egen tangent."
+  },
+  "contentShortcutsSaved": {
+    "message": "Kortkommandon sparade."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Markör sparad vid $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videobildruta sparad."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Det går inte att fånga bildrutan (den kan vara skyddad)."
+  },
+  "shortcutLoopStart": {
+    "message": "Loopstart inställd vid $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Loop inställd från $1 till $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B-loop rensad."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Åtgärden stöds inte för den här videon."
+  },
+  "shortcutActionFailed": {
+    "message": "Kortkommandot misslyckades."
   }
 }

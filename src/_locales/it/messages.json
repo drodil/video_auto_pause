@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Attiva le scorciatoie nelle pagine video"
+  },
+  "contentShortcutsDescription": {
+    "message": "Le scorciatoie funzionano quando la pagina è attiva. Lascia un tasto vuoto per disattivare l’azione."
+  },
+  "seekBackwardShortcut": {
+    "message": "Indietro"
+  },
+  "seekForwardShortcut": {
+    "message": "Avanti"
+  },
+  "frameBackwardShortcut": {
+    "message": "Fotogramma precedente"
+  },
+  "frameForwardShortcut": {
+    "message": "Fotogramma successivo"
+  },
+  "toggleLoopShortcut": {
+    "message": "Imposta o cancella il ciclo A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Salva indicatore di riproduzione"
+  },
+  "screenshotShortcut": {
+    "message": "Salva fotogramma video"
+  },
+  "togglePipShortcut": {
+    "message": "Attiva/disattiva Picture-in-Picture"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Attiva/disattiva sottotitoli"
+  },
+  "contentShortcutsConflict": {
+    "message": "Ogni azione deve usare un tasto diverso."
+  },
+  "contentShortcutsSaved": {
+    "message": "Scorciatoie salvate."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Indicatore salvato a $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Fotogramma video salvato."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Impossibile acquisire questo fotogramma (potrebbe essere protetto)."
+  },
+  "shortcutLoopStart": {
+    "message": "Inizio ciclo impostato a $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Ciclo impostato da $1 a $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Ciclo A-B cancellato."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Questa azione non è supportata per il video corrente."
+  },
+  "shortcutActionFailed": {
+    "message": "Azione della scorciatoia non riuscita."
   }
 }

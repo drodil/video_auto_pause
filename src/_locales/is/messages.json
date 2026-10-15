@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Virkja flýtilykla á myndbandssíðum"
+  },
+  "contentShortcutsDescription": {
+    "message": "Flýtilyklar virka þegar síðan er virk. Skildu reit eftir auðan til að slökkva á aðgerð."
+  },
+  "seekBackwardShortcut": {
+    "message": "Leita aftur"
+  },
+  "seekForwardShortcut": {
+    "message": "Leita áfram"
+  },
+  "frameBackwardShortcut": {
+    "message": "Fyrri rammi"
+  },
+  "frameForwardShortcut": {
+    "message": "Næsti rammi"
+  },
+  "toggleLoopShortcut": {
+    "message": "Setja eða hreinsa A-B lykkju"
+  },
+  "bookmarkShortcut": {
+    "message": "Vista spilunarmerki"
+  },
+  "screenshotShortcut": {
+    "message": "Vista myndramma"
+  },
+  "togglePipShortcut": {
+    "message": "Skipta um mynd-í-mynd"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Skipta um skjátexta"
+  },
+  "contentShortcutsConflict": {
+    "message": "Hver aðgerð þarf sinn eigin lykil."
+  },
+  "contentShortcutsSaved": {
+    "message": "Flýtilyklar vistaðir."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Merki vistað við $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Myndrammi vistaður."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Ekki er hægt að taka þennan ramma (hann gæti verið varinn)."
+  },
+  "shortcutLoopStart": {
+    "message": "Lykkja byrjar við $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Lykkja sett frá $1 til $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B lykkja hreinsuð."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Þessi aðgerð er ekki studd fyrir myndbandið."
+  },
+  "shortcutActionFailed": {
+    "message": "Aðgerð flýtilykils mistókst."
   }
 }

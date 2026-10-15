@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Luba videolehe kiirklahvid"
+  },
+  "contentShortcutsDescription": {
+    "message": "Kiirklahvid toimivad aktiivsel lehel. Toimingu keelamiseks jäta klahviväli tühjaks."
+  },
+  "seekBackwardShortcut": {
+    "message": "Keri tagasi"
+  },
+  "seekForwardShortcut": {
+    "message": "Keri edasi"
+  },
+  "frameBackwardShortcut": {
+    "message": "Eelmine kaader"
+  },
+  "frameForwardShortcut": {
+    "message": "Järgmine kaader"
+  },
+  "toggleLoopShortcut": {
+    "message": "Määra või eemalda A-B kordus"
+  },
+  "bookmarkShortcut": {
+    "message": "Salvesta taasesitusmarker"
+  },
+  "screenshotShortcut": {
+    "message": "Salvesta videokaader"
+  },
+  "togglePipShortcut": {
+    "message": "Lülita pilt-pildis režiimi"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Lülita subtiitreid"
+  },
+  "contentShortcutsConflict": {
+    "message": "Igal toimingul peab olema erinev klahv."
+  },
+  "contentShortcutsSaved": {
+    "message": "Kiirklahvid salvestati."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Marker salvestati kohas $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videokaader salvestati."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Seda videokaadrit ei saa jäädvustada (see võib olla kaitstud)."
+  },
+  "shortcutLoopStart": {
+    "message": "Korduse algus määrati kohas $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Kordus määrati vahemikule $1–$2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B kordus eemaldati."
+  },
+  "shortcutActionUnsupported": {
+    "message": "See toiming pole praeguse video puhul toetatud."
+  },
+  "shortcutActionFailed": {
+    "message": "Kiirklahvi toiming nurjus."
   }
 }

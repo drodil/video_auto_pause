@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Увімкнути комбінації клавіш на сторінках відео"
+  },
+  "contentShortcutsDescription": {
+    "message": "Комбінації працюють, коли сторінка активна. Залиште поле порожнім, щоб вимкнути дію."
+  },
+  "seekBackwardShortcut": {
+    "message": "Перемотати назад"
+  },
+  "seekForwardShortcut": {
+    "message": "Перемотати вперед"
+  },
+  "frameBackwardShortcut": {
+    "message": "Попередній кадр"
+  },
+  "frameForwardShortcut": {
+    "message": "Наступний кадр"
+  },
+  "toggleLoopShortcut": {
+    "message": "Установити або очистити цикл A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Зберегти позначку відтворення"
+  },
+  "screenshotShortcut": {
+    "message": "Зберегти кадр відео"
+  },
+  "togglePipShortcut": {
+    "message": "Перемкнути «картинка в картинці»"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Перемкнути субтитри"
+  },
+  "contentShortcutsConflict": {
+    "message": "Для кожної дії потрібна окрема клавіша."
+  },
+  "contentShortcutsSaved": {
+    "message": "Комбінації клавіш збережено."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Позначку збережено на $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Кадр відео збережено."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Не вдалося захопити цей кадр (можливо, він захищений)."
+  },
+  "shortcutLoopStart": {
+    "message": "Початок циклу встановлено на $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Цикл установлено від $1 до $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Цикл A-B очищено."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Ця дія не підтримується поточним відео."
+  },
+  "shortcutActionFailed": {
+    "message": "Не вдалося виконати дію комбінації клавіш."
   }
 }

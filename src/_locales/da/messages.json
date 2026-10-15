@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Aktivér genveje på videosider"
+  },
+  "contentShortcutsDescription": {
+    "message": "Genveje virker, når siden er aktiv. Lad et felt være tomt for at deaktivere handlingen."
+  },
+  "seekBackwardShortcut": {
+    "message": "Søg tilbage"
+  },
+  "seekForwardShortcut": {
+    "message": "Søg frem"
+  },
+  "frameBackwardShortcut": {
+    "message": "Forrige billede"
+  },
+  "frameForwardShortcut": {
+    "message": "Næste billede"
+  },
+  "toggleLoopShortcut": {
+    "message": "Angiv eller ryd A-B-loop"
+  },
+  "bookmarkShortcut": {
+    "message": "Gem afspilningsmarkør"
+  },
+  "screenshotShortcut": {
+    "message": "Gem videobillede"
+  },
+  "togglePipShortcut": {
+    "message": "Skift billede-i-billede"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Skift undertekster"
+  },
+  "contentShortcutsConflict": {
+    "message": "Hver handling skal have sin egen tast."
+  },
+  "contentShortcutsSaved": {
+    "message": "Genvejstaster gemt."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Markør gemt ved $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videobillede gemt."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Videobilledet kan ikke optages (det kan være beskyttet)."
+  },
+  "shortcutLoopStart": {
+    "message": "Loopstart angivet ved $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Loop angivet fra $1 til $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B-loop ryddet."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Handlingen understøttes ikke for denne video."
+  },
+  "shortcutActionFailed": {
+    "message": "Genvejshandlingen mislykkedes."
   }
 }

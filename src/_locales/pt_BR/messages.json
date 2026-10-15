@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Ativar atalhos na página de vídeo"
+  },
+  "contentShortcutsDescription": {
+    "message": "Os atalhos funcionam quando a página está em foco. Deixe uma tecla vazia para desativar a ação."
+  },
+  "seekBackwardShortcut": {
+    "message": "Voltar"
+  },
+  "seekForwardShortcut": {
+    "message": "Avançar"
+  },
+  "frameBackwardShortcut": {
+    "message": "Quadro anterior"
+  },
+  "frameForwardShortcut": {
+    "message": "Próximo quadro"
+  },
+  "toggleLoopShortcut": {
+    "message": "Definir ou limpar loop A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Salvar marcador de reprodução"
+  },
+  "screenshotShortcut": {
+    "message": "Salvar quadro do vídeo"
+  },
+  "togglePipShortcut": {
+    "message": "Alternar Picture-in-Picture"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Alternar legendas"
+  },
+  "contentShortcutsConflict": {
+    "message": "Cada ação deve usar uma tecla diferente."
+  },
+  "contentShortcutsSaved": {
+    "message": "Atalhos salvos."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Marcador salvo em $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Quadro do vídeo salvo."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Não é possível capturar este quadro (ele pode estar protegido)."
+  },
+  "shortcutLoopStart": {
+    "message": "Início do loop definido em $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Loop definido de $1 até $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Loop A-B apagado."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Esta ação não é compatível com o vídeo atual."
+  },
+  "shortcutActionFailed": {
+    "message": "Falha ao executar o atalho."
   }
 }

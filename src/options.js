@@ -321,6 +321,17 @@ async function deleteSiteRule(domain) {
 }
 
 const options = DEFAULT_OPTIONS;
+const contentShortcutActions = [
+  ["seekBackward", "contentShortcutSeekBackward"],
+  ["seekForward", "contentShortcutSeekForward"],
+  ["frameBackward", "contentShortcutFrameBackward"],
+  ["frameForward", "contentShortcutFrameForward"],
+  ["toggleLoop", "contentShortcutToggleLoop"],
+  ["bookmark", "contentShortcutBookmark"],
+  ["screenshot", "contentShortcutScreenshot"],
+  ["togglePip", "contentShortcutTogglePip"],
+  ["toggleCaptions", "contentShortcutToggleCaptions"],
+];
 
 async function getCurrentWebTab() {
   const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
@@ -428,6 +439,30 @@ function validateSettingsPayload(payload) {
           overrides,
         };
       });
+      continue;
+    }
+    if (option === "contentShortcutKeys") {
+      if (!value || typeof value !== "object" || Array.isArray(value)) {
+        throw new Error("The content shortcut keys setting is invalid.");
+      }
+      const shortcutKeys = { ...DEFAULT_OPTIONS.contentShortcutKeys };
+      for (const [action, key] of Object.entries(value)) {
+        if (
+          !Object.prototype.hasOwnProperty.call(shortcutKeys, action) ||
+          typeof key !== "string" ||
+          key.length > 20
+        ) {
+          throw new Error("The content shortcut keys setting is invalid.");
+        }
+        shortcutKeys[action] = key.trim();
+      }
+      const assignedKeys = Object.values(shortcutKeys)
+        .filter(Boolean)
+        .map((key) => key.toLowerCase());
+      if (new Set(assignedKeys).size !== assignedKeys.length) {
+        throw new Error("The content shortcut keys must be unique.");
+      }
+      imported[option] = shortcutKeys;
       continue;
     }
     if (typeof value !== typeof defaultValue) {
@@ -649,6 +684,42 @@ async function save_option(option) {
   }
 }
 
+function restoreContentShortcutKeys(keys = {}) {
+  for (const [action, id] of contentShortcutActions) {
+    const input = document.getElementById(id);
+    input.value = keys[action] ?? DEFAULT_OPTIONS.contentShortcutKeys[action];
+  }
+  setContentShortcutInputsDisabled();
+}
+
+function setContentShortcutInputsDisabled() {
+  const enabled = document.getElementById("contentShortcutsEnabled").checked;
+  document
+    .getElementById("contentShortcutSettings")
+    .querySelectorAll("input")
+    .forEach((input) => {
+      input.disabled = !enabled;
+    });
+}
+
+async function saveContentShortcutKeys() {
+  const keys = {};
+  for (const [action, id] of contentShortcutActions) {
+    keys[action] = document.getElementById(id).value.trim();
+  }
+  const assignedKeys = Object.values(keys)
+    .filter(Boolean)
+    .map((key) => key.toLowerCase());
+  if (new Set(assignedKeys).size !== assignedKeys.length) {
+    document.getElementById("contentShortcutsStatus").textContent =
+      env.i18n.getMessage("contentShortcutsConflict");
+    return;
+  }
+  await env.storage.sync.set({ contentShortcutKeys: keys });
+  document.getElementById("contentShortcutsStatus").textContent =
+    env.i18n.getMessage("contentShortcutsSaved");
+}
+
 function updateAudioFadingVisibility() {
   const settings = document.getElementById("audioFadingSettings");
   const enabled = document.getElementById("audioFading")?.checked;
@@ -759,6 +830,7 @@ async function restore_options(changedKeys = Object.keys(options)) {
       element.checked = Boolean(items[opt]);
     }
   }
+  restoreContentShortcutKeys(items.contentShortcutKeys);
 
   updateAudioFadingVisibility();
 
@@ -993,9 +1065,23 @@ for (const option in options) {
       if (option === "audioFading") {
         updateAudioFadingVisibility();
       }
+      if (option === "contentShortcutsEnabled") {
+        setContentShortcutInputsDisabled();
+      }
       await save_option(option);
     });
   }
+}
+
+for (const [, id] of contentShortcutActions) {
+  document.getElementById(id).addEventListener("change", () => {
+    void saveContentShortcutKeys().catch((error) => {
+      console.error(
+        "Video Auto Pause could not save content shortcuts:",
+        error,
+      );
+    });
+  });
 }
 
 buildSiteSettingsFields();

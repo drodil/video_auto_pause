@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Ota käyttöön videosivun pikanäppäimet"
+  },
+  "contentShortcutsDescription": {
+    "message": "Pikanäppäimet toimivat, kun sivu on aktiivinen. Tyhjä näppäin poistaa toiminnon käytöstä."
+  },
+  "seekBackwardShortcut": {
+    "message": "Siirry taaksepäin"
+  },
+  "seekForwardShortcut": {
+    "message": "Siirry eteenpäin"
+  },
+  "frameBackwardShortcut": {
+    "message": "Edellinen ruutu"
+  },
+  "frameForwardShortcut": {
+    "message": "Seuraava ruutu"
+  },
+  "toggleLoopShortcut": {
+    "message": "Aseta tai poista A–B-silmukka"
+  },
+  "bookmarkShortcut": {
+    "message": "Tallenna toistomerkki"
+  },
+  "screenshotShortcut": {
+    "message": "Tallenna videokuva"
+  },
+  "togglePipShortcut": {
+    "message": "Vaihda kuva kuvassa -tilaa"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Vaihda tekstityksiä"
+  },
+  "contentShortcutsConflict": {
+    "message": "Jokaisella toiminnolla on oltava eri näppäin."
+  },
+  "contentShortcutsSaved": {
+    "message": "Pikanäppäimet tallennettu."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Merkki tallennettiin kohtaan $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videokuva tallennettiin."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Tätä videokuvaa ei voi tallentaa (se voi olla suojattu)."
+  },
+  "shortcutLoopStart": {
+    "message": "Silmukan alku asetettiin kohtaan $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Silmukka asetettiin välille $1–$2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A–B-silmukka poistettu."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Tämä toiminto ei ole tuettu tässä videossa."
+  },
+  "shortcutActionFailed": {
+    "message": "Pikanäppäintoiminto epäonnistui."
   }
 }

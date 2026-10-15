@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Enable in-page video shortcuts"
+  },
+  "contentShortcutsDescription": {
+    "message": "Shortcuts work while the page is focused. Leave a key blank to disable an action."
+  },
+  "seekBackwardShortcut": {
+    "message": "Seek backward"
+  },
+  "seekForwardShortcut": {
+    "message": "Seek forward"
+  },
+  "frameBackwardShortcut": {
+    "message": "Previous frame"
+  },
+  "frameForwardShortcut": {
+    "message": "Next frame"
+  },
+  "toggleLoopShortcut": {
+    "message": "Set or clear A-B loop"
+  },
+  "bookmarkShortcut": {
+    "message": "Save playback marker"
+  },
+  "screenshotShortcut": {
+    "message": "Save video frame"
+  },
+  "togglePipShortcut": {
+    "message": "Toggle Picture-in-Picture"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Toggle captions"
+  },
+  "contentShortcutsConflict": {
+    "message": "Each action must use a different key."
+  },
+  "contentShortcutsSaved": {
+    "message": "Shortcut keys saved."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Marker saved at $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Video frame saved."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "This video frame cannot be captured (it may be protected)."
+  },
+  "shortcutLoopStart": {
+    "message": "Loop start set at $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Loop set from $1 to $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B loop cleared."
+  },
+  "shortcutActionUnsupported": {
+    "message": "This action is not supported for the current video."
+  },
+  "shortcutActionFailed": {
+    "message": "The shortcut action failed."
   }
 }

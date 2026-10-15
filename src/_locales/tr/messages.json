@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Video sayfası kısayollarını etkinleştir"
+  },
+  "contentShortcutsDescription": {
+    "message": "Kısayollar sayfa odaktayken çalışır. Bir işlemi devre dışı bırakmak için tuşu boş bırakın."
+  },
+  "seekBackwardShortcut": {
+    "message": "Geri sar"
+  },
+  "seekForwardShortcut": {
+    "message": "İleri sar"
+  },
+  "frameBackwardShortcut": {
+    "message": "Önceki kare"
+  },
+  "frameForwardShortcut": {
+    "message": "Sonraki kare"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-B döngüsünü ayarla veya temizle"
+  },
+  "bookmarkShortcut": {
+    "message": "Oynatma işaretini kaydet"
+  },
+  "screenshotShortcut": {
+    "message": "Video karesini kaydet"
+  },
+  "togglePipShortcut": {
+    "message": "Resim içinde resim modunu değiştir"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Altyazıları değiştir"
+  },
+  "contentShortcutsConflict": {
+    "message": "Her işlem için farklı bir tuş kullanılmalıdır."
+  },
+  "contentShortcutsSaved": {
+    "message": "Kısayollar kaydedildi."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "$1 konumuna işaret kaydedildi."
+  },
+  "shortcutFrameSaved": {
+    "message": "Video karesi kaydedildi."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Bu video karesi yakalanamıyor (korumalı olabilir)."
+  },
+  "shortcutLoopStart": {
+    "message": "Döngü başlangıcı $1 olarak ayarlandı."
+  },
+  "shortcutLoopEnd": {
+    "message": "$1 ile $2 arasında döngü ayarlandı."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B döngüsü temizlendi."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Bu işlem geçerli videoda desteklenmiyor."
+  },
+  "shortcutActionFailed": {
+    "message": "Kısayol işlemi başarısız oldu."
   }
 }

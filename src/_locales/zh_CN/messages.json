@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "启用视频页面快捷键"
+  },
+  "contentShortcutsDescription": {
+    "message": "页面处于焦点时快捷键生效。留空可停用对应操作。"
+  },
+  "seekBackwardShortcut": {
+    "message": "后退"
+  },
+  "seekForwardShortcut": {
+    "message": "前进"
+  },
+  "frameBackwardShortcut": {
+    "message": "上一帧"
+  },
+  "frameForwardShortcut": {
+    "message": "下一帧"
+  },
+  "toggleLoopShortcut": {
+    "message": "设置或清除 A-B 循环"
+  },
+  "bookmarkShortcut": {
+    "message": "保存播放标记"
+  },
+  "screenshotShortcut": {
+    "message": "保存视频帧"
+  },
+  "togglePipShortcut": {
+    "message": "切换画中画"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "切换字幕"
+  },
+  "contentShortcutsConflict": {
+    "message": "每个操作必须使用不同的按键。"
+  },
+  "contentShortcutsSaved": {
+    "message": "快捷键已保存。"
+  },
+  "shortcutBookmarkSaved": {
+    "message": "已在 $1 保存标记。"
+  },
+  "shortcutFrameSaved": {
+    "message": "视频帧已保存。"
+  },
+  "shortcutFrameUnavailable": {
+    "message": "无法捕获此视频帧（可能受版权保护）。"
+  },
+  "shortcutLoopStart": {
+    "message": "循环起点已设为 $1。"
+  },
+  "shortcutLoopEnd": {
+    "message": "已设置从 $1 到 $2 的循环。"
+  },
+  "shortcutLoopCleared": {
+    "message": "已清除 A-B 循环。"
+  },
+  "shortcutActionUnsupported": {
+    "message": "当前视频不支持此操作。"
+  },
+  "shortcutActionFailed": {
+    "message": "快捷键操作失败。"
   }
 }

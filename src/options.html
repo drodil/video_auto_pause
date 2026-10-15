@@ -880,6 +880,130 @@
                     >Play only one source at a time</span
                   >
                 </label>
+                <label>
+                  <input type="checkbox" id="contentShortcutsEnabled" />
+                  <span class="label-text" data-i18n="contentShortcutsEnabled"
+                    >Enable in-page video shortcuts</span
+                  >
+                </label>
+                <p data-i18n="contentShortcutsDescription">
+                  Shortcuts apply when the page is focused. Leave a key blank to
+                  disable that action.
+                </p>
+                <div
+                  id="contentShortcutSettings"
+                  style="
+                    display: grid;
+                    grid-template-columns: minmax(0, 1fr) minmax(80px, 120px);
+                    gap: 6px;
+                    align-items: center;
+                  "
+                >
+                  <label
+                    for="contentShortcutSeekBackward"
+                    data-i18n="seekBackwardShortcut"
+                    >Seek backward</label
+                  >
+                  <input
+                    id="contentShortcutSeekBackward"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutSeekForward"
+                    data-i18n="seekForwardShortcut"
+                    >Seek forward</label
+                  >
+                  <input
+                    id="contentShortcutSeekForward"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutFrameBackward"
+                    data-i18n="frameBackwardShortcut"
+                    >Previous frame</label
+                  >
+                  <input
+                    id="contentShortcutFrameBackward"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutFrameForward"
+                    data-i18n="frameForwardShortcut"
+                    >Next frame</label
+                  >
+                  <input
+                    id="contentShortcutFrameForward"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutToggleLoop"
+                    data-i18n="toggleLoopShortcut"
+                    >Set or clear A-B loop</label
+                  >
+                  <input
+                    id="contentShortcutToggleLoop"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutBookmark"
+                    data-i18n="bookmarkShortcut"
+                    >Save playback marker</label
+                  >
+                  <input
+                    id="contentShortcutBookmark"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutScreenshot"
+                    data-i18n="screenshotShortcut"
+                    >Save video frame</label
+                  >
+                  <input
+                    id="contentShortcutScreenshot"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutTogglePip"
+                    data-i18n="togglePipShortcut"
+                    >Toggle Picture-in-Picture</label
+                  >
+                  <input
+                    id="contentShortcutTogglePip"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                  <label
+                    for="contentShortcutToggleCaptions"
+                    data-i18n="toggleCaptionsShortcut"
+                    >Toggle captions</label
+                  >
+                  <input
+                    id="contentShortcutToggleCaptions"
+                    type="text"
+                    maxlength="20"
+                    autocomplete="off"
+                  />
+                </div>
+                <p
+                  id="contentShortcutsStatus"
+                  role="status"
+                  aria-live="polite"
+                ></p>
                 <div style="margin-top: 12px">
                   <label
                     for="idlePauseMinutes"

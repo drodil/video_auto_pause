@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "動画ページのショートカットを有効にする"
+  },
+  "contentShortcutsDescription": {
+    "message": "ページがアクティブなときに動作します。操作を無効にするにはキーを空欄にします。"
+  },
+  "seekBackwardShortcut": {
+    "message": "巻き戻し"
+  },
+  "seekForwardShortcut": {
+    "message": "早送り"
+  },
+  "frameBackwardShortcut": {
+    "message": "前のフレーム"
+  },
+  "frameForwardShortcut": {
+    "message": "次のフレーム"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-Bループの設定／解除"
+  },
+  "bookmarkShortcut": {
+    "message": "再生位置マーカーを保存"
+  },
+  "screenshotShortcut": {
+    "message": "動画フレームを保存"
+  },
+  "togglePipShortcut": {
+    "message": "ピクチャー イン ピクチャーの切り替え"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "字幕の切り替え"
+  },
+  "contentShortcutsConflict": {
+    "message": "各操作には異なるキーを設定してください。"
+  },
+  "contentShortcutsSaved": {
+    "message": "ショートカットを保存しました。"
+  },
+  "shortcutBookmarkSaved": {
+    "message": "$1 にマーカーを保存しました。"
+  },
+  "shortcutFrameSaved": {
+    "message": "動画フレームを保存しました。"
+  },
+  "shortcutFrameUnavailable": {
+    "message": "このフレームを取得できません（保護されている可能性があります）。"
+  },
+  "shortcutLoopStart": {
+    "message": "$1 にループ開始位置を設定しました。"
+  },
+  "shortcutLoopEnd": {
+    "message": "$1 から $2 までループします。"
+  },
+  "shortcutLoopCleared": {
+    "message": "A-Bループを解除しました。"
+  },
+  "shortcutActionUnsupported": {
+    "message": "この操作は現在の動画ではサポートされていません。"
+  },
+  "shortcutActionFailed": {
+    "message": "ショートカット操作に失敗しました。"
   }
 }

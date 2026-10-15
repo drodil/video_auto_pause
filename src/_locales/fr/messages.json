@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Activer les raccourcis sur les pages vidéo"
+  },
+  "contentShortcutsDescription": {
+    "message": "Les raccourcis fonctionnent lorsque la page est active. Laissez une touche vide pour désactiver l’action."
+  },
+  "seekBackwardShortcut": {
+    "message": "Reculer"
+  },
+  "seekForwardShortcut": {
+    "message": "Avancer"
+  },
+  "frameBackwardShortcut": {
+    "message": "Image précédente"
+  },
+  "frameForwardShortcut": {
+    "message": "Image suivante"
+  },
+  "toggleLoopShortcut": {
+    "message": "Définir ou effacer la boucle A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Enregistrer un repère de lecture"
+  },
+  "screenshotShortcut": {
+    "message": "Enregistrer l’image vidéo"
+  },
+  "togglePipShortcut": {
+    "message": "Activer/désactiver l’incrustation vidéo"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Activer/désactiver les sous-titres"
+  },
+  "contentShortcutsConflict": {
+    "message": "Chaque action doit utiliser une touche différente."
+  },
+  "contentShortcutsSaved": {
+    "message": "Raccourcis enregistrés."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Repère enregistré à $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Image vidéo enregistrée."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Impossible de capturer cette image (elle est peut-être protégée)."
+  },
+  "shortcutLoopStart": {
+    "message": "Début de boucle défini à $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Boucle définie de $1 à $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Boucle A-B effacée."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Cette action n’est pas prise en charge pour cette vidéo."
+  },
+  "shortcutActionFailed": {
+    "message": "Échec de l’action du raccourci."
   }
 }

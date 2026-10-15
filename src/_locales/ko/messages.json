@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "동영상 페이지 단축키 사용"
+  },
+  "contentShortcutsDescription": {
+    "message": "페이지가 활성화되어 있을 때 작동합니다. 동작을 사용하지 않으려면 키를 비워 두세요."
+  },
+  "seekBackwardShortcut": {
+    "message": "뒤로 이동"
+  },
+  "seekForwardShortcut": {
+    "message": "앞으로 이동"
+  },
+  "frameBackwardShortcut": {
+    "message": "이전 프레임"
+  },
+  "frameForwardShortcut": {
+    "message": "다음 프레임"
+  },
+  "toggleLoopShortcut": {
+    "message": "A-B 반복 설정 또는 해제"
+  },
+  "bookmarkShortcut": {
+    "message": "재생 위치 표시 저장"
+  },
+  "screenshotShortcut": {
+    "message": "동영상 프레임 저장"
+  },
+  "togglePipShortcut": {
+    "message": "화면 속 화면 전환"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "자막 전환"
+  },
+  "contentShortcutsConflict": {
+    "message": "각 동작에는 서로 다른 키를 지정해야 합니다."
+  },
+  "contentShortcutsSaved": {
+    "message": "단축키를 저장했습니다."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "$1에 표시를 저장했습니다."
+  },
+  "shortcutFrameSaved": {
+    "message": "동영상 프레임을 저장했습니다."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "이 프레임을 캡처할 수 없습니다(보호된 콘텐츠일 수 있음)."
+  },
+  "shortcutLoopStart": {
+    "message": "$1에서 반복 시작을 설정했습니다."
+  },
+  "shortcutLoopEnd": {
+    "message": "$1부터 $2까지 반복합니다."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B 반복을 해제했습니다."
+  },
+  "shortcutActionUnsupported": {
+    "message": "현재 동영상에서 지원되지 않는 동작입니다."
+  },
+  "shortcutActionFailed": {
+    "message": "단축키 동작에 실패했습니다."
   }
 }

@@ -46,6 +46,11 @@ also save named settings profiles and optionally associate each with one or more
 domains; the most specific matching profile is applied automatically, while
 domains without a matching profile continue using the global settings.
 
+Advanced settings can enable configurable in-page video shortcuts for seeking,
+frame stepping, A-B looping, playback markers, frame capture, Picture-in-Picture,
+and captions. Shortcuts are disabled by default and can be left blank
+individually to avoid conflicts with a site's own controls.
+
 ## Player compatibility
 
 The extension controls standard HTML video elements across sites. YouTube also

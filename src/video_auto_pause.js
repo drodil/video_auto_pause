@@ -18,6 +18,8 @@ if (window.autoPauseInjected !== true) {
   const visibleVideos = new Set();
   const hoveredVideos = new Set();
   const overlayPinRefreshers = new Set();
+  const videoLoops = new WeakMap();
+  const videosWithLoopListeners = new WeakSet();
   let videoObserver;
   let lastVisibility = null;
   let userInteracted = false;
@@ -308,6 +310,253 @@ if (window.autoPauseInjected !== true) {
       (video) => video.isConnected,
     );
   }
+
+  function getShortcutVideo() {
+    const videos = allVideos();
+    return (
+      videos.find((video) => !video.paused && !video.ended) ??
+      [...visibleVideos].find((video) => video.isConnected) ??
+      videos[0]
+    );
+  }
+
+  function showShortcutStatus(message) {
+    let status = document.getElementById("vap-shortcut-status");
+    if (!status) {
+      status = document.createElement("div");
+      status.id = "vap-shortcut-status";
+      Object.assign(status.style, {
+        position: "fixed",
+        right: "16px",
+        bottom: "16px",
+        zIndex: "2147483647",
+        padding: "8px 12px",
+        borderRadius: "6px",
+        background: "rgba(0, 0, 0, 0.8)",
+        color: "white",
+        font: "13px sans-serif",
+        pointerEvents: "none",
+      });
+      document.documentElement.appendChild(status);
+    }
+    status.textContent = message;
+    clearTimeout(status._vapTimeout);
+    status._vapTimeout = setTimeout(() => status.remove(), 1800);
+  }
+
+  function formatMediaTime(seconds) {
+    const wholeSeconds = Math.floor(Math.max(0, seconds));
+    return `${Math.floor(wholeSeconds / 60)}:${String(wholeSeconds % 60).padStart(2, "0")}`;
+  }
+
+  function getShortcutAction(event) {
+    const keys = options.contentShortcutKeys;
+    if (!keys || typeof keys !== "object") {
+      return null;
+    }
+    return (
+      Object.entries(keys).find(
+        ([, key]) =>
+          typeof key === "string" &&
+          key.trim() &&
+          key.trim().toLowerCase() === event.key.toLowerCase(),
+      )?.[0] ?? null
+    );
+  }
+
+  function addVideoBookmark(video) {
+    void (async () => {
+      const { vapVideoBookmarks = [] } =
+        await env.storage.local.get("vapVideoBookmarks");
+      const bookmarks = Array.isArray(vapVideoBookmarks)
+        ? vapVideoBookmarks
+        : [];
+      bookmarks.push({
+        title: document.title,
+        url: location.href,
+        time: video.currentTime,
+        createdAt: Date.now(),
+      });
+      await env.storage.local.set({
+        vapVideoBookmarks: bookmarks.slice(-100),
+      });
+      showShortcutStatus(
+        env.i18n.getMessage("shortcutBookmarkSaved", [
+          formatMediaTime(video.currentTime),
+        ]),
+      );
+    })().catch((error) => {
+      console.error(
+        "Video Auto Pause could not save a playback marker:",
+        error,
+      );
+      showShortcutStatus(env.i18n.getMessage("shortcutActionFailed"));
+    });
+  }
+
+  function saveVideoFrame(video) {
+    if (!video.videoWidth || !video.videoHeight) {
+      showShortcutStatus(env.i18n.getMessage("shortcutFrameUnavailable"));
+      return;
+    }
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext("2d").drawImage(video, 0, 0);
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          showShortcutStatus(env.i18n.getMessage("shortcutActionFailed"));
+          return;
+        }
+        const imageUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = imageUrl;
+        link.download = `video-frame-${formatMediaTime(video.currentTime).replace(":", "-")}.png`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(imageUrl), 1000);
+        showShortcutStatus(env.i18n.getMessage("shortcutFrameSaved"));
+      }, "image/png");
+    } catch (error) {
+      console.error("Video Auto Pause could not capture a video frame:", error);
+      showShortcutStatus(env.i18n.getMessage("shortcutFrameUnavailable"));
+    }
+  }
+
+  function toggleVideoLoop(video) {
+    const loop = videoLoops.get(video);
+    if (!loop) {
+      videoLoops.set(video, { start: video.currentTime, end: null });
+      if (!videosWithLoopListeners.has(video)) {
+        video.addEventListener("timeupdate", () => {
+          const activeLoop = videoLoops.get(video);
+          if (
+            activeLoop &&
+            activeLoop.end !== null &&
+            video.currentTime >= activeLoop.end
+          ) {
+            video.currentTime = activeLoop.start;
+          }
+        });
+        videosWithLoopListeners.add(video);
+      }
+      showShortcutStatus(
+        env.i18n.getMessage("shortcutLoopStart", [
+          formatMediaTime(video.currentTime),
+        ]),
+      );
+    } else if (loop.end === null && video.currentTime > loop.start) {
+      loop.end = video.currentTime;
+      showShortcutStatus(
+        env.i18n.getMessage("shortcutLoopEnd", [
+          formatMediaTime(loop.start),
+          formatMediaTime(loop.end),
+        ]),
+      );
+    } else {
+      videoLoops.delete(video);
+      showShortcutStatus(env.i18n.getMessage("shortcutLoopCleared"));
+    }
+  }
+
+  async function runContentShortcut(action, video) {
+    switch (action) {
+      case "seekBackward":
+      case "seekForward": {
+        const delta = action === "seekBackward" ? -10 : 10;
+        const duration = Number.isFinite(video.duration)
+          ? video.duration
+          : Number.POSITIVE_INFINITY;
+        video.currentTime = Math.max(
+          0,
+          Math.min(duration, video.currentTime + delta),
+        );
+        break;
+      }
+      case "frameBackward":
+      case "frameForward": {
+        video.pause();
+        const duration = Number.isFinite(video.duration)
+          ? video.duration
+          : Number.POSITIVE_INFINITY;
+        video.currentTime = Math.max(
+          0,
+          Math.min(
+            duration,
+            video.currentTime + (action === "frameBackward" ? -1 / 30 : 1 / 30),
+          ),
+        );
+        break;
+      }
+      case "toggleLoop":
+        toggleVideoLoop(video);
+        break;
+      case "bookmark":
+        addVideoBookmark(video);
+        break;
+      case "screenshot":
+        saveVideoFrame(video);
+        break;
+      case "togglePip":
+        if (
+          !document.pictureInPictureEnabled ||
+          video.disablePictureInPicture
+        ) {
+          showShortcutStatus(env.i18n.getMessage("shortcutActionUnsupported"));
+        } else if (document.pictureInPictureElement === video) {
+          await document.exitPictureInPicture();
+        } else {
+          await video.requestPictureInPicture();
+        }
+        break;
+      case "toggleCaptions": {
+        const tracks = [...video.textTracks].filter((track) =>
+          ["captions", "subtitles"].includes(track.kind),
+        );
+        if (tracks.length === 0) {
+          showShortcutStatus(env.i18n.getMessage("shortcutActionUnsupported"));
+          break;
+        }
+        const enable = tracks.every((track) => track.mode !== "showing");
+        for (const track of tracks) {
+          track.mode = enable ? "showing" : "disabled";
+        }
+        break;
+      }
+      default:
+        return;
+    }
+  }
+
+  function handleContentShortcut(event) {
+    if (
+      !options.contentShortcutsEnabled ||
+      options.disabled ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.repeat ||
+      event.target?.closest?.(
+        "input, textarea, select, [contenteditable='true'], [role='textbox']",
+      ) ||
+      !VAP_SITE_ENABLED(location.hostname.toLowerCase(), options)
+    ) {
+      return;
+    }
+    const action = getShortcutAction(event);
+    const video = action && getShortcutVideo();
+    if (!video) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    void runContentShortcut(action, video).catch((error) => {
+      console.error(`Video Auto Pause shortcut failed (${action}):`, error);
+      showShortcutStatus(env.i18n.getMessage("shortcutActionFailed"));
+    });
+  }
+
+  document.addEventListener("keydown", handleContentShortcut, true);
 
   function allMedia() {
     return [

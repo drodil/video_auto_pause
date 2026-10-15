@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Включить горячие клавиши на страницах с видео"
+  },
+  "contentShortcutsDescription": {
+    "message": "Горячие клавиши работают, когда страница активна. Оставьте клавишу пустой, чтобы отключить действие."
+  },
+  "seekBackwardShortcut": {
+    "message": "Перемотать назад"
+  },
+  "seekForwardShortcut": {
+    "message": "Перемотать вперёд"
+  },
+  "frameBackwardShortcut": {
+    "message": "Предыдущий кадр"
+  },
+  "frameForwardShortcut": {
+    "message": "Следующий кадр"
+  },
+  "toggleLoopShortcut": {
+    "message": "Установить или сбросить цикл A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Сохранить метку воспроизведения"
+  },
+  "screenshotShortcut": {
+    "message": "Сохранить кадр видео"
+  },
+  "togglePipShortcut": {
+    "message": "Включить или выключить картинку в картинке"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Включить или выключить субтитры"
+  },
+  "contentShortcutsConflict": {
+    "message": "Для каждого действия нужна отдельная клавиша."
+  },
+  "contentShortcutsSaved": {
+    "message": "Горячие клавиши сохранены."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Метка сохранена на $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Кадр видео сохранён."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Не удалось сохранить кадр (возможно, он защищён)."
+  },
+  "shortcutLoopStart": {
+    "message": "Начало цикла установлено на $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Цикл установлен с $1 по $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Цикл A-B сброшен."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Это действие не поддерживается текущим видео."
+  },
+  "shortcutActionFailed": {
+    "message": "Не удалось выполнить действие горячей клавиши."
   }
 }

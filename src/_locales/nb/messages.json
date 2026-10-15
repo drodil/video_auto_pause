@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Aktiver snarveier på videosider"
+  },
+  "contentShortcutsDescription": {
+    "message": "Snarveier fungerer når siden er aktiv. La en tast stå tom for å deaktivere handlingen."
+  },
+  "seekBackwardShortcut": {
+    "message": "Spol tilbake"
+  },
+  "seekForwardShortcut": {
+    "message": "Spol frem"
+  },
+  "frameBackwardShortcut": {
+    "message": "Forrige bilde"
+  },
+  "frameForwardShortcut": {
+    "message": "Neste bilde"
+  },
+  "toggleLoopShortcut": {
+    "message": "Angi eller fjern A-B-løkke"
+  },
+  "bookmarkShortcut": {
+    "message": "Lagre avspillingsmarkør"
+  },
+  "screenshotShortcut": {
+    "message": "Lagre videobilde"
+  },
+  "togglePipShortcut": {
+    "message": "Bytt bilde-i-bilde"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Bytt teksting"
+  },
+  "contentShortcutsConflict": {
+    "message": "Hver handling må ha en egen tast."
+  },
+  "contentShortcutsSaved": {
+    "message": "Snarveier lagret."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Markør lagret ved $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Videobilde lagret."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Dette videobildet kan ikke tas (det kan være beskyttet)."
+  },
+  "shortcutLoopStart": {
+    "message": "Løkkestart satt til $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Løkke satt fra $1 til $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "A-B-løkke fjernet."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Handlingen støttes ikke for denne videoen."
+  },
+  "shortcutActionFailed": {
+    "message": "Snarveihandlingen mislyktes."
   }
 }

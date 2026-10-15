@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "تفعيل اختصارات الفيديو داخل الصفحة"
+  },
+  "contentShortcutsDescription": {
+    "message": "تعمل الاختصارات عندما تكون الصفحة مركّزة. اترك المفتاح فارغًا لتعطيل الإجراء."
+  },
+  "seekBackwardShortcut": {
+    "message": "الرجوع للخلف"
+  },
+  "seekForwardShortcut": {
+    "message": "التقديم للأمام"
+  },
+  "frameBackwardShortcut": {
+    "message": "الإطار السابق"
+  },
+  "frameForwardShortcut": {
+    "message": "الإطار التالي"
+  },
+  "toggleLoopShortcut": {
+    "message": "تعيين أو مسح التكرار A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "حفظ علامة التشغيل"
+  },
+  "screenshotShortcut": {
+    "message": "حفظ إطار الفيديو"
+  },
+  "togglePipShortcut": {
+    "message": "تبديل صورة داخل صورة"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "تبديل التسميات التوضيحية"
+  },
+  "contentShortcutsConflict": {
+    "message": "يجب تخصيص مفتاح مختلف لكل إجراء."
+  },
+  "contentShortcutsSaved": {
+    "message": "تم حفظ مفاتيح الاختصار."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "حُفظت العلامة عند $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "تم حفظ إطار الفيديو."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "يتعذر التقاط هذا الإطار (قد يكون محميًا)."
+  },
+  "shortcutLoopStart": {
+    "message": "تم تعيين بداية التكرار عند $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "تم التكرار من $1 إلى $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "تم مسح تكرار A-B."
+  },
+  "shortcutActionUnsupported": {
+    "message": "هذا الإجراء غير مدعوم للفيديو الحالي."
+  },
+  "shortcutActionFailed": {
+    "message": "تعذر تنفيذ إجراء الاختصار."
   }
 }

@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Włącz skróty na stronach wideo"
+  },
+  "contentShortcutsDescription": {
+    "message": "Skróty działają, gdy strona jest aktywna. Pozostaw klawisz pusty, aby wyłączyć działanie."
+  },
+  "seekBackwardShortcut": {
+    "message": "Przewiń wstecz"
+  },
+  "seekForwardShortcut": {
+    "message": "Przewiń do przodu"
+  },
+  "frameBackwardShortcut": {
+    "message": "Poprzednia klatka"
+  },
+  "frameForwardShortcut": {
+    "message": "Następna klatka"
+  },
+  "toggleLoopShortcut": {
+    "message": "Ustaw lub wyczyść pętlę A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Zapisz znacznik odtwarzania"
+  },
+  "screenshotShortcut": {
+    "message": "Zapisz klatkę wideo"
+  },
+  "togglePipShortcut": {
+    "message": "Przełącz obraz w obrazie"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Przełącz napisy"
+  },
+  "contentShortcutsConflict": {
+    "message": "Każde działanie musi mieć inny klawisz."
+  },
+  "contentShortcutsSaved": {
+    "message": "Zapisano skróty."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Zapisano znacznik w $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Zapisano klatkę wideo."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "Nie można przechwycić tej klatki (może być chroniona)."
+  },
+  "shortcutLoopStart": {
+    "message": "Ustawiono początek pętli w $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Ustawiono pętlę od $1 do $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Wyczyszczono pętlę A-B."
+  },
+  "shortcutActionUnsupported": {
+    "message": "To działanie nie jest obsługiwane dla tego wideo."
+  },
+  "shortcutActionFailed": {
+    "message": "Nie udało się wykonać skrótu."
   }
 }

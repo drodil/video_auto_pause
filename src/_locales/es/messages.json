@@ -562,5 +562,68 @@
   "profileDomainsPlaceholder": {
     "message": "example.com, work.example.org",
     "description": "Comma-separated domain examples for profile matching."
+  },
+  "contentShortcutsEnabled": {
+    "message": "Activar atajos en la página de vídeo"
+  },
+  "contentShortcutsDescription": {
+    "message": "Los atajos funcionan cuando la página está enfocada. Deja una tecla vacía para desactivar la acción."
+  },
+  "seekBackwardShortcut": {
+    "message": "Retroceder"
+  },
+  "seekForwardShortcut": {
+    "message": "Avanzar"
+  },
+  "frameBackwardShortcut": {
+    "message": "Fotograma anterior"
+  },
+  "frameForwardShortcut": {
+    "message": "Fotograma siguiente"
+  },
+  "toggleLoopShortcut": {
+    "message": "Establecer o borrar bucle A-B"
+  },
+  "bookmarkShortcut": {
+    "message": "Guardar marcador de reproducción"
+  },
+  "screenshotShortcut": {
+    "message": "Guardar fotograma de vídeo"
+  },
+  "togglePipShortcut": {
+    "message": "Alternar imagen en imagen"
+  },
+  "toggleCaptionsShortcut": {
+    "message": "Alternar subtítulos"
+  },
+  "contentShortcutsConflict": {
+    "message": "Cada acción debe usar una tecla distinta."
+  },
+  "contentShortcutsSaved": {
+    "message": "Atajos guardados."
+  },
+  "shortcutBookmarkSaved": {
+    "message": "Marcador guardado en $1."
+  },
+  "shortcutFrameSaved": {
+    "message": "Fotograma guardado."
+  },
+  "shortcutFrameUnavailable": {
+    "message": "No se puede capturar este fotograma (puede estar protegido)."
+  },
+  "shortcutLoopStart": {
+    "message": "Inicio del bucle en $1."
+  },
+  "shortcutLoopEnd": {
+    "message": "Bucle establecido de $1 a $2."
+  },
+  "shortcutLoopCleared": {
+    "message": "Bucle A-B borrado."
+  },
+  "shortcutActionUnsupported": {
+    "message": "Esta acción no es compatible con el vídeo actual."
+  },
+  "shortcutActionFailed": {
+    "message": "No se pudo ejecutar el atajo."
   }
 }
