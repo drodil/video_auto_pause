@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Tắt tiếng khi có quảng cáo rồi tạm dừng khi quảng cáo kết thúc",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Hiện các nút điều khiển video có thể kéo",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Di chuyển",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Phát video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Tạm dừng video",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Bật trang web",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Tắt trang web",
+    "description": "On-video controls text"
   }
 }

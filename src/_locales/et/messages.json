@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Vaigista reklaamide ajal ja peata nende lõppedes",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Kuva lohistatavaid video juhtnuppe",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Liiguta",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Esita video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Peata video",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Veebisait sees",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Veebisait väljas",
+    "description": "On-video controls text"
   }
 }

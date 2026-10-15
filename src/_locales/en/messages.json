@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Mute during ads, then pause when they end",
     "description": "Mute media while a recognized ad is playing"
+  },
+  "showVideoOverlay": {
+    "message": "Show draggable on-video controls",
+    "description": "Enable the optional video overlay"
+  },
+  "overlayDragHandle": {
+    "message": "Move",
+    "description": "Accessible label for the draggable overlay handle"
+  },
+  "overlayPlay": {
+    "message": "Play video",
+    "description": "Overlay play button label"
+  },
+  "overlayPause": {
+    "message": "Pause video",
+    "description": "Overlay pause button label"
+  },
+  "overlaySiteOn": {
+    "message": "Site on",
+    "description": "Site is enabled in the overlay"
+  },
+  "overlaySiteOff": {
+    "message": "Site off",
+    "description": "Site is disabled in the overlay"
   }
 }

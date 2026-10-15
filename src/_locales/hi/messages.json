@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "विज्ञापन के दौरान म्यूट करें और उसके बाद वीडियो रोकें",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "वीडियो पर खिसकाए जा सकने वाले नियंत्रण दिखाएँ",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "खिसकाएँ",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "वीडियो चलाएँ",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "वीडियो रोकें",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "साइट चालू",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "साइट बंद",
+    "description": "On-video controls text"
   }
 }

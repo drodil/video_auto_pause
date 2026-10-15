@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Silenciar durante anúncios e pausar quando terminarem",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Mostrar controles de vídeo arrastáveis",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Mover",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Reproduzir vídeo",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Pausar vídeo",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Site ativado",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Site desativado",
+    "description": "On-video controls text"
   }
 }

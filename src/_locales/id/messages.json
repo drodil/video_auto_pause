@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Bisukan selama iklan, lalu jeda setelah iklan selesai",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Tampilkan kontrol video yang dapat digeser",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Pindahkan",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Putar video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Jeda video",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Situs aktif",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Situs nonaktif",
+    "description": "On-video controls text"
   }
 }

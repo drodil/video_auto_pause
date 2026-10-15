@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "광고 중 음소거하고 광고가 끝나면 일시 정지",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "드래그 가능한 동영상 컨트롤 표시",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "이동",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "동영상 재생",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "동영상 일시 정지",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "사이트 켜짐",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "사이트 꺼짐",
+    "description": "On-video controls text"
   }
 }

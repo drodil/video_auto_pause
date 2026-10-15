@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Mykistä mainosten ajaksi ja keskeytä niiden päätyttyä",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Näytä siirrettävät videon ohjaimet",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Siirrä",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Toista video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Keskeytä video",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Sivusto käytössä",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Sivusto pois käytöstä",
+    "description": "On-video controls text"
   }
 }

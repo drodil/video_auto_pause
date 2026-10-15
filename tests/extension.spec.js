@@ -458,6 +458,55 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("muted", false);
   });
 
+  test("shows draggable video controls for playback, speed, and site rules", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      showVideoOverlay: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    const overlay = page.locator(".vap-video-overlay");
+    await expect(overlay).toBeAttached({ timeout: 10000 });
+    await video.hover();
+    await expect(overlay).toHaveCSS("opacity", "1");
+
+    await overlay.locator('[data-action="toggle"]').click();
+    await expect(video).toHaveJSProperty("paused", true);
+    await overlay.locator('[data-action="toggle"]').click();
+    await expect(video).toHaveJSProperty("paused", false);
+    await overlay.locator('[data-action="speed-up"]').click();
+    await expect(video).toHaveJSProperty("playbackRate", 1.25);
+
+    const before = await overlay.boundingBox();
+    const dragHandle = overlay.locator('[title="Move"]');
+    await dragHandle.hover();
+    await page.mouse.down();
+    await page.mouse.move(before.x + 70, before.y + 35);
+    await page.mouse.up();
+    const after = await overlay.boundingBox();
+    expect(Math.abs(after.x - before.x) + Math.abs(after.y - before.y)).toBeGreaterThan(10);
+
+    const siteToggle = overlay.locator('[data-action="site-toggle"]');
+    await siteToggle.click();
+    await expect(siteToggle).toHaveAttribute("aria-pressed", "false");
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const { excludedDomains = [] } =
+            await chrome.storage.sync.get("excludedDomains");
+          return excludedDomains.includes("localhost");
+        }),
+      )
+      .toBe(true);
+    await siteToggle.click();
+    await expect(siteToggle).toHaveAttribute("aria-pressed", "true");
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,

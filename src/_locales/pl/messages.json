@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Wyciszaj podczas reklam, a po ich zakończeniu wstrzymuj odtwarzanie",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Pokaż przesuwane elementy sterujące wideo",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Przenieś",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Odtwórz wideo",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Wstrzymaj wideo",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Witryna włączona",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Witryna wyłączona",
+    "description": "On-video controls text"
   }
 }

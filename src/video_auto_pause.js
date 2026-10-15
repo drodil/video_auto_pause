@@ -62,10 +62,12 @@ if (window.autoPauseInjected !== true) {
           debugMode: false,
           audioFading: false,
           showPipButton: false,
+          showVideoOverlay: false,
         }
       : savedOptions;
     toggleCursorTracking(options.cursorTracking);
     togglePipButtons();
+    toggleVideoOverlays();
   }
 
   let settingsReady = refresh_settings();
@@ -807,6 +809,9 @@ if (window.autoPauseInjected !== true) {
     if (options.showPipButton) {
       injectPipButton(videoElement);
     }
+    if (options.showVideoOverlay) {
+      injectVideoOverlay(videoElement);
+    }
 
     intersection_observer.observe(videoElement);
     videoResizeObserver?.observe(videoElement);
@@ -991,6 +996,257 @@ if (window.autoPauseInjected !== true) {
       for (const video of videos) {
         const root = video.getRootNode();
         root.querySelectorAll?.(".vap-pip-btn").forEach((btn) => btn.remove());
+      }
+    }
+  }
+
+  let overlaySequence = 0;
+  const videoOverlayCleanups = new WeakMap();
+
+  function siteIsEnabled(hostname, settings) {
+    const matches = (entries) =>
+      entries.some((entry) => {
+        const domain = entry
+          .trim()
+          .toLowerCase()
+          .replace(/^[a-z][a-z\d+.-]*:\/\//, "")
+          .split(/[/?#]/, 1)[0]
+          .replace(/^\*\./, "")
+          .replace(/:\d+$/, "")
+          .replace(/\.$/, "");
+        return domain && (hostname === domain || hostname.endsWith(`.${domain}`));
+      });
+    return !matches(settings.excludedDomains ?? []) &&
+      ((settings.includedDomains ?? []).length === 0 ||
+        matches(settings.includedDomains));
+  }
+
+  async function toggleCurrentSite() {
+    const hostname = location.hostname.toLowerCase();
+    const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+    let excludedDomains = [...(settings.excludedDomains ?? [])];
+    const includedDomains = [...(settings.includedDomains ?? [])];
+    const enabled = siteIsEnabled(hostname, settings);
+    if (enabled) {
+      excludedDomains.push(hostname);
+    } else {
+      const matchesHostname = (entry) => {
+        const domain = entry
+          .trim()
+          .toLowerCase()
+          .replace(/^[a-z][a-z\d+.-]*:\/\//, "")
+          .split(/[/?#]/, 1)[0]
+          .replace(/^\*\./, "")
+          .replace(/:\d+$/, "")
+          .replace(/\.$/, "");
+        return domain && (hostname === domain || hostname.endsWith(`.${domain}`));
+      };
+      excludedDomains = excludedDomains.filter(
+        (entry) => !matchesHostname(entry),
+      );
+      if (includedDomains.length > 0 && !includedDomains.includes(hostname)) {
+        includedDomains.push(hostname);
+      }
+    }
+    await env.storage.sync.set({
+      excludedDomains,
+      includedDomains,
+    });
+  }
+
+  function injectVideoOverlay(video) {
+    if (video.dataset.vapOverlayId) {
+      return;
+    }
+    let container = video.parentElement;
+    if (container?.classList.contains("html5-video-container")) {
+      container = container.parentElement;
+    }
+    if (!container) {
+      return;
+    }
+
+    const overlayId = `vap-video-overlay-${++overlaySequence}`;
+    const overlay = document.createElement("div");
+    overlay.className = "vap-video-overlay";
+    overlay.dataset.overlayId = overlayId;
+    Object.assign(overlay.style, {
+      position: "absolute",
+      right: "12px",
+      bottom: "12px",
+      zIndex: "2147483647",
+      display: "flex",
+      alignItems: "center",
+      gap: "4px",
+      padding: "5px",
+      borderRadius: "8px",
+      background: "rgba(0, 0, 0, 0.78)",
+      color: "white",
+      opacity: "0",
+      transition: "opacity 150ms ease",
+      pointerEvents: "auto",
+      font: "12px sans-serif",
+      touchAction: "none",
+    });
+    const buttonStyle = {
+      border: "0",
+      borderRadius: "5px",
+      padding: "6px 8px",
+      background: "transparent",
+      color: "white",
+      cursor: "pointer",
+      font: "inherit",
+    };
+    const addButton = (action, label, displayText = label) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.action = action;
+      button.title = label;
+      button.setAttribute("aria-label", label);
+      button.textContent = displayText;
+      Object.assign(button.style, buttonStyle);
+      overlay.appendChild(button);
+      return button;
+    };
+    const handle = document.createElement("span");
+    handle.textContent = env.i18n.getMessage("overlayDragHandle");
+    handle.title = handle.textContent;
+    handle.style.cursor = "grab";
+    handle.style.padding = "4px";
+    overlay.appendChild(handle);
+    const playButton = addButton(
+      "toggle",
+      env.i18n.getMessage("commandTogglePlay"),
+    );
+    const slowerButton = addButton(
+      "speed-down",
+      env.i18n.getMessage("commandSpeedDown"),
+      "-",
+    );
+    const fasterButton = addButton(
+      "speed-up",
+      env.i18n.getMessage("commandSpeedUp"),
+      "+",
+    );
+    const speedLabel = document.createElement("span");
+    speedLabel.className = "vap-speed-label";
+    overlay.appendChild(speedLabel);
+    const siteButton = addButton("site-toggle", "");
+
+    const refreshOverlay = () => {
+      playButton.textContent = video.paused ? "▶" : "Ⅱ";
+      playButton.title = video.paused
+        ? env.i18n.getMessage("overlayPlay")
+        : env.i18n.getMessage("overlayPause");
+      playButton.setAttribute("aria-label", playButton.title);
+      speedLabel.textContent = `${video.playbackRate.toFixed(2)}×`;
+      const enabled = siteIsEnabled(location.hostname.toLowerCase(), options);
+      siteButton.textContent = enabled
+        ? env.i18n.getMessage("overlaySiteOn")
+        : env.i18n.getMessage("overlaySiteOff");
+      siteButton.setAttribute("aria-pressed", String(enabled));
+    };
+    refreshOverlay();
+
+    playButton.addEventListener("click", () => {
+      void handleVideoAction(video, { action: "toggle" }).catch((error) => {
+        console.error("Video Auto Pause overlay could not toggle playback:", error);
+      });
+    });
+    slowerButton.addEventListener("click", () => {
+      handleSpeedAction(video, "speed-down");
+      refreshOverlay();
+    });
+    fasterButton.addEventListener("click", () => {
+      handleSpeedAction(video, "speed-up");
+      refreshOverlay();
+    });
+    siteButton.addEventListener("click", async () => {
+      try {
+        await toggleCurrentSite();
+        const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
+        options = { ...options, ...stored };
+        refreshOverlay();
+      } catch (error) {
+        console.error("Video Auto Pause overlay could not update this site:", error);
+      }
+    });
+    video.addEventListener("play", refreshOverlay);
+    video.addEventListener("pause", refreshOverlay);
+    video.addEventListener("ratechange", refreshOverlay);
+
+    let hideTimeout;
+    const show = () => {
+      clearTimeout(hideTimeout);
+      overlay.style.opacity = "1";
+      hideTimeout = setTimeout(() => {
+        if (!overlay.matches(":hover")) {
+          overlay.style.opacity = "0";
+        }
+      }, 2000);
+    };
+    const hideAfterLeave = () => {
+      hideTimeout = setTimeout(() => {
+        overlay.style.opacity = "0";
+      }, 800);
+    };
+    container.addEventListener("mouseenter", show);
+    container.addEventListener("mousemove", show);
+    container.addEventListener("mouseleave", hideAfterLeave);
+    overlay.addEventListener("mouseenter", show);
+
+    let dragStart;
+    handle.addEventListener("pointerdown", (event) => {
+      dragStart = {
+        x: event.clientX,
+        y: event.clientY,
+        left: overlay.offsetLeft,
+        top: overlay.offsetTop,
+      };
+      overlay.style.right = "auto";
+      overlay.style.bottom = "auto";
+      overlay.style.left = `${dragStart.left}px`;
+      overlay.style.top = `${dragStart.top}px`;
+      handle.setPointerCapture(event.pointerId);
+    });
+    handle.addEventListener("pointermove", (event) => {
+      if (!dragStart) {
+        return;
+      }
+      overlay.style.left = `${dragStart.left + event.clientX - dragStart.x}px`;
+      overlay.style.top = `${dragStart.top + event.clientY - dragStart.y}px`;
+    });
+    handle.addEventListener("pointerup", () => {
+      dragStart = undefined;
+    });
+    handle.addEventListener("pointercancel", () => {
+      dragStart = undefined;
+    });
+
+    if (window.getComputedStyle(container).position === "static") {
+      container.style.position = "relative";
+    }
+    video.dataset.vapOverlayId = overlayId;
+    container.appendChild(overlay);
+    videoOverlayCleanups.set(video, () => {
+      clearTimeout(hideTimeout);
+      container.removeEventListener("mouseenter", show);
+      container.removeEventListener("mousemove", show);
+      container.removeEventListener("mouseleave", hideAfterLeave);
+      overlay.remove();
+      delete video.dataset.vapOverlayId;
+    });
+  }
+
+  function toggleVideoOverlays() {
+    if (options.showVideoOverlay && !options.disabled) {
+      for (const video of allVideos()) {
+        injectVideoOverlay(video);
+      }
+    } else {
+      for (const video of allVideos()) {
+        videoOverlayCleanups.get(video)?.();
+        videoOverlayCleanups.delete(video);
       }
     }
   }
@@ -1180,6 +1436,8 @@ if (window.autoPauseInjected !== true) {
         }
         for (const media of mediaElements) {
           if (media instanceof HTMLVideoElement) {
+            videoOverlayCleanups.get(media)?.();
+            videoOverlayCleanups.delete(media);
             detectedVideos.delete(media);
             visibleVideos.delete(media);
             intersection_observer.unobserve(media);

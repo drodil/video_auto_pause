@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Couper le son pendant les publicités, puis mettre en pause à leur fin",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Afficher les commandes vidéo déplaçables",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Déplacer",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Lire la vidéo",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Mettre la vidéo en pause",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Site activé",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Site désactivé",
+    "description": "On-video controls text"
   }
 }

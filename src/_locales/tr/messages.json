@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Reklamlar sırasında sessize al, bitince duraklat",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Sürüklenebilir video kontrollerini göster",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Taşı",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Videoyu oynat",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Videoyu duraklat",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Site açık",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Site kapalı",
+    "description": "On-video controls text"
   }
 }

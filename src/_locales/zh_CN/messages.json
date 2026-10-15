@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "广告播放时静音，广告结束后暂停",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "显示可拖动的视频控件",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "移动",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "播放视频",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "暂停视频",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "网站已启用",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "网站已停用",
+    "description": "On-video controls text"
   }
 }

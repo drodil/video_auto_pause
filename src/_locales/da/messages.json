@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Slå lyden fra under annoncer, og sæt på pause, når de slutter",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Vis trækbare videokontroller",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Flyt",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Afspil video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Sæt video på pause",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Websted til",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Websted fra",
+    "description": "On-video controls text"
   }
 }

@@ -20,6 +20,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   audioFading: false,
   fadeDuration: 200,
   showPipButton: false,
+  showVideoOverlay: false,
   blockAutoplay: false,
   liveStreamMute: true,
   muteDuringAds: true,

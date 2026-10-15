@@ -17,6 +17,9 @@ keyboard shortcuts, and links to the settings.
 The welcome page and settings popup also include one-click modes for studying,
 background music, binge watching, and battery-saving sessions.
 
+An optional on-video control lets you toggle playback, adjust speed, and disable
+automatic handling for the current site without opening the popup.
+
 ## Installing
 
 #### Chrome Web Store

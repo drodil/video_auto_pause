@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Отключать звук во время рекламы и ставить на паузу после неё",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Показывать перетаскиваемые элементы управления видео",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Переместить",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Воспроизвести видео",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Приостановить видео",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Сайт включён",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Сайт выключен",
+    "description": "On-video controls text"
   }
 }

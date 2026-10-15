@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "広告中はミュートし、終了後に一時停止",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "ドラッグ可能な動画コントロールを表示",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "移動",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "動画を再生",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "動画を一時停止",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "サイト有効",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "サイト無効",
+    "description": "On-video controls text"
   }
 }

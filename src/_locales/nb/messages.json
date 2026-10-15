@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Demp under annonser, og sett på pause når de er ferdige",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Vis flyttbare videokontroller",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Flytt",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Spill av video",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Sett video på pause",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Nettsted på",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Nettsted av",
+    "description": "On-video controls text"
   }
 }

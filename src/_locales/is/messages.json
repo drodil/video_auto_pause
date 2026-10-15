@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Þagga meðan á auglýsingum stendur og gera hlé þegar þeim lýkur",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Sýna færanlegar myndstýringar",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Færa",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Spila myndskeið",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Gera hlé á myndskeiði",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Vefsvæði virkt",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Vefsvæði óvirkt",
+    "description": "On-video controls text"
   }
 }

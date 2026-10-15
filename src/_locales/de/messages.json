@@ -262,5 +262,29 @@
   "muteDuringAds": {
     "message": "Während Werbung stummschalten und danach pausieren",
     "description": "Live stream and ad handling setting"
+  },
+  "showVideoOverlay": {
+    "message": "Verschiebbare Videosteuerung anzeigen",
+    "description": "On-video controls text"
+  },
+  "overlayDragHandle": {
+    "message": "Verschieben",
+    "description": "On-video controls text"
+  },
+  "overlayPlay": {
+    "message": "Video abspielen",
+    "description": "On-video controls text"
+  },
+  "overlayPause": {
+    "message": "Video pausieren",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOn": {
+    "message": "Website an",
+    "description": "On-video controls text"
+  },
+  "overlaySiteOff": {
+    "message": "Website aus",
+    "description": "On-video controls text"
   }
 }
