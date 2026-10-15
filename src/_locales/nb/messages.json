@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Kunne ikke kopiere ukesammendraget.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Velg en modus",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Studier / forelesninger",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Bakgrunnsmusikk",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Maraton / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Batterisparing / møter",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Modus brukt",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Kunne ikke bruke denne modusen.",
+    "description": "Preset selector text"
   }
 }

@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Ringkasan mingguan tidak dapat disalin.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Pilih mode",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Belajar / kuliah",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Musik latar",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Maraton / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Hemat baterai / rapat",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Mode diterapkan",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Mode ini tidak dapat diterapkan.",
+    "description": "Preset selector text"
   }
 }

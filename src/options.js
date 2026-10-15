@@ -245,6 +245,20 @@ document.getElementById("shareStats")?.addEventListener("click", () => {
   void copyWeeklyStats();
 });
 
+document.querySelectorAll("[data-preset]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const preset = globalThis.VAP_PRESETS[button.dataset.preset];
+    const status = document.getElementById("presetStatus");
+    try {
+      await env.storage.sync.set(preset);
+      status.textContent = env.i18n.getMessage("presetApplied");
+    } catch (error) {
+      status.textContent = env.i18n.getMessage("presetFailed");
+      console.error("Video Auto Pause could not apply the selected preset:", error);
+    }
+  });
+});
+
 if (env.runtime.getManifest().browser_specific_settings?.gecko) {
   document.getElementById("rateExtension").href =
     "https://addons.mozilla.org/firefox/addon/video-auto-pause/";

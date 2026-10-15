@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "تعذر نسخ ملخص الأسبوع.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "اختر وضعًا",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "الدراسة / المحاضرات",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "موسيقى في الخلفية",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "المشاهدة المتواصلة / التلفاز",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "توفير البطارية / الاجتماعات",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "تم تطبيق الوضع",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "تعذر تطبيق هذا الوضع.",
+    "description": "Preset selector text"
   }
 }

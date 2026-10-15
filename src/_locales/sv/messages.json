@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Det gick inte att kopiera veckosammanfattningen.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Välj ett läge",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Studier / föreläsningar",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Bakgrundsmusik",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Maratontittande / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Batterisparläge / möten",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Läget har tillämpats",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Det gick inte att tillämpa läget.",
+    "description": "Preset selector text"
   }
 }

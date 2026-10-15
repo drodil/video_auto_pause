@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Wochenübersicht konnte nicht kopiert werden.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Modus auswählen",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Lernen / Vorlesungen",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Hintergrundmusik",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Serien / Fernsehen",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Energiesparen / Besprechungen",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Modus angewendet",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Dieser Modus konnte nicht angewendet werden.",
+    "description": "Preset selector text"
   }
 }

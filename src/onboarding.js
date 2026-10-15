@@ -29,5 +29,20 @@ document.getElementById("openSettings").addEventListener("click", () => {
   void env.runtime.openOptionsPage();
 });
 
+document.querySelectorAll("[data-preset]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const status = document.getElementById("presetStatus");
+    try {
+      await env.storage.sync.set(
+        globalThis.VAP_PRESETS[button.dataset.preset],
+      );
+      status.textContent = env.i18n.getMessage("presetApplied");
+    } catch (error) {
+      status.textContent = env.i18n.getMessage("presetFailed");
+      console.error("Video Auto Pause could not apply the selected preset:", error);
+    }
+  });
+});
+
 localizePage();
 showHotkeys();

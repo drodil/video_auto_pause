@@ -226,6 +226,60 @@ test.describe("Video Auto Pause Extension", () => {
       .toBe(true);
   });
 
+  test("applies a preset from onboarding and the settings popup", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const onboarding = context
+      .pages()
+      .find((candidate) => candidate.url().endsWith("/onboarding.html"));
+    await expect(onboarding.locator("[data-preset=study]")).toBeVisible();
+    await onboarding.locator("[data-preset=study]").click();
+    await expect(onboarding.locator("#presetStatus")).toContainText("applied");
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const settings = await chrome.storage.sync.get([
+            "autopause",
+            "focuspause",
+            "focusresume",
+            "rewindSeconds",
+          ]);
+          return settings;
+        }),
+      )
+      .toMatchObject({
+        autopause: true,
+        focuspause: true,
+        focusresume: true,
+        rewindSeconds: 5,
+      });
+
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+    await optionsPage.locator("[data-preset=saver]").click();
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          chrome.storage.sync.get([
+            "autopause",
+            "autoresume",
+            "scrollpause",
+            "blockAutoplay",
+          ]),
+        ),
+      )
+      .toMatchObject({
+        autopause: true,
+        autoresume: false,
+        scrollpause: true,
+        blockAutoplay: true,
+      });
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,

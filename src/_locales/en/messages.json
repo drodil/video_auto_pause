@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Could not copy the weekly summary.",
     "description": "Failed statistics copy status"
+  },
+  "presetTitle": {
+    "message": "Choose a mode",
+    "description": "Heading for preset controls"
+  },
+  "presetStudy": {
+    "message": "Study / lectures",
+    "description": "Study preset button"
+  },
+  "presetMusic": {
+    "message": "Background music",
+    "description": "Background music preset button"
+  },
+  "presetBinge": {
+    "message": "Binge / TV",
+    "description": "Binge watching preset button"
+  },
+  "presetSaver": {
+    "message": "Battery saver / meetings",
+    "description": "Battery saver preset button"
+  },
+  "presetApplied": {
+    "message": "Mode applied",
+    "description": "Successful preset status"
+  },
+  "presetFailed": {
+    "message": "Could not apply this mode.",
+    "description": "Failed preset status"
   }
 }

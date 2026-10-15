@@ -341,6 +341,36 @@
         cursor: pointer;
         font: inherit;
       }
+
+      .preset-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .preset-grid button,
+      .onboarding-presets button {
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 9px 6px;
+        background: white;
+        color: #374151;
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .preset-grid button:hover,
+      .onboarding-presets button:hover {
+        background: #eef2ff;
+        border-color: #667eea;
+      }
+
+      .preset-grid button:focus-visible,
+      .onboarding-presets button:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
+      }
     </style>
   </head>
 
@@ -351,6 +381,25 @@
           <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />
           <span data-i18n="extName">Video Auto Pause</span>
         </h2>
+      </div>
+
+      <div class="container section">
+        <h4 data-i18n="presetTitle">Choose a mode</h4>
+        <div class="preset-grid">
+          <button type="button" data-preset="study" data-i18n="presetStudy">
+            Study / lectures
+          </button>
+          <button type="button" data-preset="music" data-i18n="presetMusic">
+            Background music
+          </button>
+          <button type="button" data-preset="binge" data-i18n="presetBinge">
+            Binge / TV
+          </button>
+          <button type="button" data-preset="saver" data-i18n="presetSaver">
+            Battery saver / meetings
+          </button>
+        </div>
+        <p id="presetStatus" role="status" aria-live="polite"></p>
       </div>
 
       <div class="container section">
@@ -738,6 +787,7 @@
       </div>
     </div>
     <script src="defaults.js"></script>
+    <script src="presets.js"></script>
     <script src="options.js"></script>
   </body>
 </html>

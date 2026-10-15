@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "無法複製每週摘要。",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "選擇模式",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "學習 / 講座",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "背景音樂",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "連續觀看 / 電視",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "省電 / 會議",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "已套用模式",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "無法套用此模式。",
+    "description": "Preset selector text"
   }
 }

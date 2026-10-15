@@ -14,6 +14,9 @@ Features some useful keyboard shortcuts to control videos in the window.
 On first install, a short welcome page explains the main behaviors, shows available
 keyboard shortcuts, and links to the settings.
 
+The welcome page and settings popup also include one-click modes for studying,
+background music, binge watching, and battery-saving sessions.
+
 ## Installing
 
 #### Chrome Web Store

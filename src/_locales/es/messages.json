@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "No se pudo copiar el resumen semanal.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Elige un modo",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Estudio / clases",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Música de fondo",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Maratón / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Ahorro de batería / reuniones",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Modo aplicado",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "No se pudo aplicar este modo.",
+    "description": "Preset selector text"
   }
 }

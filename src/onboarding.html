@@ -85,6 +85,12 @@
         margin-top: 24px;
       }
 
+      .onboarding-presets {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
       button {
         border: 0;
         border-radius: 8px;
@@ -172,6 +178,24 @@
       <p class="pin-prompt" data-i18n="onboardingPin">
         Pin the extension to your toolbar for quick access.
       </p>
+      <section>
+        <h2 data-i18n="presetTitle">Choose a mode</h2>
+        <div class="onboarding-presets">
+          <button type="button" data-preset="study" data-i18n="presetStudy">
+            Study / lectures
+          </button>
+          <button type="button" data-preset="music" data-i18n="presetMusic">
+            Background music
+          </button>
+          <button type="button" data-preset="binge" data-i18n="presetBinge">
+            Binge / TV
+          </button>
+          <button type="button" data-preset="saver" data-i18n="presetSaver">
+            Battery saver / meetings
+          </button>
+        </div>
+        <p id="presetStatus" role="status" aria-live="polite"></p>
+      </section>
       <section id="hotkeys">
         <h2 data-i18n="hotkeys">Hotkeys</h2>
         <div id="hotkeyList"></div>
@@ -182,6 +206,7 @@
         </button>
       </div>
     </main>
+    <script src="presets.js"></script>
     <script src="onboarding.js"></script>
   </body>
 </html>

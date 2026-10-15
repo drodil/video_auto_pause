@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Ugens oversigt kunne ikke kopieres.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Vælg en tilstand",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Studie / forelæsninger",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Baggrundsmusik",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Maraton / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Batterisparer / møder",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Tilstand anvendt",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Denne tilstand kunne ikke anvendes.",
+    "description": "Preset selector text"
   }
 }

@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Nädala kokkuvõtet ei saanud kopeerida.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Vali režiim",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Õppimine / loengud",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Taustamuusika",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Järjest vaatamine / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Akusääst / koosolekud",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Režiim rakendatud",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Seda režiimi ei saanud rakendada.",
+    "description": "Preset selector text"
   }
 }

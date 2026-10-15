@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "Không thể sao chép tóm tắt tuần.",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "Chọn chế độ",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "Học tập / bài giảng",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "Nhạc nền",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "Xem liên tục / TV",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "Tiết kiệm pin / cuộc họp",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "Đã áp dụng chế độ",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "Không thể áp dụng chế độ này.",
+    "description": "Preset selector text"
   }
 }

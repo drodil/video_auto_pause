@@ -222,5 +222,33 @@
   "statsCopyFailed": {
     "message": "週間サマリーをコピーできませんでした。",
     "description": "Local weekly statistics text"
+  },
+  "presetTitle": {
+    "message": "モードを選択",
+    "description": "Preset selector text"
+  },
+  "presetStudy": {
+    "message": "勉強 / 講義",
+    "description": "Preset selector text"
+  },
+  "presetMusic": {
+    "message": "バックグラウンド音楽",
+    "description": "Preset selector text"
+  },
+  "presetBinge": {
+    "message": "一気見 / テレビ",
+    "description": "Preset selector text"
+  },
+  "presetSaver": {
+    "message": "バッテリー節約 / 会議",
+    "description": "Preset selector text"
+  },
+  "presetApplied": {
+    "message": "モードを適用しました",
+    "description": "Preset selector text"
+  },
+  "presetFailed": {
+    "message": "モードを適用できませんでした。",
+    "description": "Preset selector text"
   }
 }
