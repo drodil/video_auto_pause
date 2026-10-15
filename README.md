@@ -16,7 +16,7 @@ https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 
 #### Firefox Web Store
 
-https://addons.mozilla.org/en-US/firefox/addon/youtube-auto-pause/
+https://addons.mozilla.org/en-US/firefox/addon/video-auto-pause/
 
 **From releases**
 
