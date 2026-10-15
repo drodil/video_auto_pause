@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "अगले वीडियो का स्वचालित प्लेबैक रोक दिया गया।"
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "ऑडियो आउटपुट डिस्कनेक्ट होने पर वीडियो रोकें"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "सीमित समर्थन: संगत ब्राउज़र पहले उपलब्ध ऑडियो आउटपुट हटने पर वीडियो रोकते हैं।"
   }
 }

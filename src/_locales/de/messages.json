@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Die automatische Wiedergabe des nächsten Videos wurde gestoppt."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Videos pausieren, wenn ein Audioausgang getrennt wird"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Best-Effort-Funktion: Unterstützte Browser pausieren, wenn ein zuvor verfügbarer Audioausgang verschwindet."
   }
 }

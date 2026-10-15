@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Pemutaran otomatis video berikutnya dihentikan."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Jeda video saat output audio terputus"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Upaya terbaik: browser yang didukung menjeda video saat output audio yang sebelumnya tersedia menghilang."
   }
 }

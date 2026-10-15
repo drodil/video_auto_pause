@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Se detuvo la reproducción automática del siguiente vídeo."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Pausar vídeos cuando se desconecte una salida de audio"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Mejor esfuerzo: los navegadores compatibles pausan cuando desaparece una salida de audio disponible anteriormente."
   }
 }

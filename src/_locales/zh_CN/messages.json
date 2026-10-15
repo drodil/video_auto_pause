@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "已停止自动播放下一个视频。"
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "音频输出设备断开时暂停视频"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "尽力支持：受支持的浏览器会在先前可用的音频输出设备消失时暂停视频。"
   }
 }

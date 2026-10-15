@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Автоматичне відтворення наступного відео зупинено."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Призупиняти відео після від’єднання аудіовиходу"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "За можливості: підтримувані браузери призупиняють відео, коли раніше доступний аудіовихід зникає."
   }
 }

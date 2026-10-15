@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "La riproduzione automatica del video successivo è stata interrotta."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Metti in pausa i video quando un'uscita audio si disconnette"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Supporto best effort: i browser compatibili mettono in pausa quando scompare un'uscita audio precedentemente disponibile."
   }
 }

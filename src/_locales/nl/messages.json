@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Automatisch afspelen van de volgende video is gestopt."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Video's pauzeren wanneer een audio-uitgang wordt losgekoppeld"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Best effort: ondersteunde browsers pauzeren wanneer een eerder beschikbare audio-uitgang verdwijnt."
   }
 }

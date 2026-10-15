@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "다음 동영상의 자동 재생을 중지했습니다."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "오디오 출력 장치 연결이 끊기면 동영상 일시 중지"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "최선의 지원 방식입니다. 지원 브라우저는 이전에 사용 가능했던 오디오 출력 장치가 사라지면 동영상을 일시 중지합니다."
   }
 }

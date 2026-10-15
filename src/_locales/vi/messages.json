@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Đã dừng tự động phát video tiếp theo."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Tạm dừng video khi thiết bị đầu ra âm thanh bị ngắt kết nối"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Hỗ trợ tùy trình duyệt: trình duyệt được hỗ trợ sẽ tạm dừng khi thiết bị đầu ra từng khả dụng biến mất."
   }
 }

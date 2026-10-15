@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Automatic playback of the next video was stopped."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Pause videos when an audio output disconnects"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Best effort: supported browsers pause when a previously available audio output disappears."
   }
 }

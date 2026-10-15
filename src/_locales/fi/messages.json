@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Seuraavan videon automaattinen toisto pysäytettiin."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Keskeytä videot äänilaitteen irrotessa"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Parhaan mahdollisen tuen mukaan: tuetut selaimet keskeyttävät toiston, kun aiemmin käytettävissä ollut äänilaite katoaa."
   }
 }

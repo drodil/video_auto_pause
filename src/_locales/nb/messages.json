@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Automatisk avspilling av neste video ble stoppet."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Sett videoer på pause når en lydutgang kobles fra"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Best mulig støtte: støttede nettlesere setter videoen på pause når en tidligere tilgjengelig lydutgang forsvinner."
   }
 }

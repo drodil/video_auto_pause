@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Sjálfvirk spilun næsta myndbands var stöðvuð."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Gera hlé á myndböndum þegar hljóðúttak aftengist"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Takmarkaður stuðningur: studdir vafrar gera hlé þegar áður tiltækt hljóðúttak hverfur."
   }
 }

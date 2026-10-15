@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Automatyczne odtwarzanie następnego filmu zostało zatrzymane."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Wstrzymuj filmy po odłączeniu wyjścia audio"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Najlepsze możliwe działanie: obsługiwane przeglądarki wstrzymują film po zniknięciu wcześniej dostępnego wyjścia audio."
   }
 }

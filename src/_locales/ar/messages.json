@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "تم إيقاف التشغيل التلقائي للفيديو التالي."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "إيقاف الفيديو عند انقطاع مخرج الصوت"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "أفضل جهد: توقف المتصفحات المدعومة التشغيل عند اختفاء مخرج صوت كان متاحًا."
   }
 }

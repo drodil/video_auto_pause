@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Järgmise video automaatne esitamine peatati."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Peata videod heli väljundseadme ühenduse katkestamisel"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "Parim võimalik tugi: ühilduvad brauserid peatavad video, kui varem saadaolev heliväljund kaob."
   }
 }

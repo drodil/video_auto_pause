@@ -40,6 +40,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   },
   idlePauseMinutes: 0,
   pauseOnLowBattery: false,
+  pauseOnAudioOutputDisconnect: false,
   quietHoursStart: "",
   quietHoursEnd: "",
   peekMode: false,

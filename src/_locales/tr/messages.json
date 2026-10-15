@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "Sonraki videonun otomatik oynatılması durduruldu."
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "Ses çıkışı bağlantısı kesildiğinde videoları duraklat"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "En iyi çaba: desteklenen tarayıcılar daha önce kullanılabilen bir ses çıkışı kaybolduğunda videoyu duraklatır."
   }
 }

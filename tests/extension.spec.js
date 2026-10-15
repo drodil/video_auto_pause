@@ -698,6 +698,8 @@ test.describe("Video Auto Pause Extension", () => {
       "audioAllowListPlaceholder",
       "pauseOnLowBattery",
       "pauseOnLowBatteryDescription",
+      "pauseOnAudioOutputDisconnect",
+      "pauseOnAudioOutputDisconnectDescription",
       "pauseAtEnd",
       "pauseAtEndNotice",
     ];
@@ -1809,6 +1811,28 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       )
       .toMatchObject({ pauseOnLowBattery: true });
+  });
+
+  test("stores the optional audio-output disconnect preference", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await optionsPage.locator("#pauseOnAudioOutputDisconnect").check();
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          chrome.storage.sync.get("pauseOnAudioOutputDisconnect"),
+        ),
+      )
+      .toMatchObject({ pauseOnAudioOutputDisconnect: true });
   });
 
   test("prevents automatic next playback after a video ends", async ({

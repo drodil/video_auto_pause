@@ -32,6 +32,8 @@ if (window.autoPauseInjected !== true) {
   let autoDocumentPipWindow = null;
   let batteryStatus = null;
   let batteryListenersRegistered = false;
+  let audioOutputDeviceIds = null;
+  let audioDeviceListenerRegistered = false;
   const batteryPausedVideos = new WeakSet();
 
   function recordUserInteraction(event) {
@@ -115,6 +117,12 @@ if (window.autoPauseInjected !== true) {
     void updateBatteryAwareness().catch((error) => {
       console.error("Video Auto Pause could not monitor battery state:", error);
     });
+    void updateAudioOutputAwareness().catch((error) => {
+      console.error(
+        "Video Auto Pause could not monitor audio output devices:",
+        error,
+      );
+    });
   }
 
   async function applyBatteryPolicy() {
@@ -171,6 +179,51 @@ if (window.autoPauseInjected !== true) {
       debugLog("Battery Status API is unavailable in this browser");
     }
     await applyBatteryPolicy();
+  }
+
+  async function updateAudioOutputAwareness() {
+    const mediaDevices = navigator.mediaDevices;
+    if (
+      !options.pauseOnAudioOutputDisconnect ||
+      !mediaDevices?.enumerateDevices
+    ) {
+      audioOutputDeviceIds = null;
+      return;
+    }
+    if (
+      !audioDeviceListenerRegistered &&
+      typeof mediaDevices.addEventListener === "function"
+    ) {
+      mediaDevices.addEventListener("devicechange", () => {
+        void updateAudioOutputAwareness().catch((error) => {
+          console.error(
+            "Video Auto Pause could not check audio output devices:",
+            error,
+          );
+        });
+      });
+      audioDeviceListenerRegistered = true;
+    }
+    const devices = await mediaDevices.enumerateDevices();
+    const currentOutputs = new Set(
+      devices
+        .filter((device) => device.kind === "audiooutput")
+        .map((device) => device.deviceId)
+        .filter(Boolean),
+    );
+    const disconnected =
+      audioOutputDeviceIds !== null &&
+      [...audioOutputDeviceIds].some(
+        (deviceId) => !currentOutputs.has(deviceId),
+      );
+    audioOutputDeviceIds = currentOutputs;
+    if (disconnected) {
+      for (const video of allVideos()) {
+        if (!video.paused) {
+          await handleVideoAction(video, { action: "stop", immediate: true });
+        }
+      }
+    }
   }
 
   async function openVideoInPictureInPicture(video) {

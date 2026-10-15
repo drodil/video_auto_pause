@@ -652,5 +652,11 @@
   },
   "pauseAtEndNotice": {
     "message": "次の動画の自動再生を停止しました。"
+  },
+  "pauseOnAudioOutputDisconnect": {
+    "message": "音声出力が切断されたときに動画を一時停止"
+  },
+  "pauseOnAudioOutputDisconnectDescription": {
+    "message": "ベストエフォート機能です。対応ブラウザーでは、利用可能だった音声出力が消えると動画を一時停止します。"
   }
 }
