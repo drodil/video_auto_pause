@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Notar Battery Status API vafrans þegar hún er í boði. Myndbönd halda áfram þegar flipinn verður virkur eða hleðsla hefst."
+  },
+  "pauseAtEnd": {
+    "message": "Stöðva sjálfvirka spilun næsta myndbands í lokin"
+  },
+  "pauseAtEndNotice": {
+    "message": "Sjálfvirk spilun næsta myndbands var stöðvuð."
   }
 }

@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Varsa tarayıcının Battery Status API'sini kullanır. Sekme etkinleştiğinde veya şarj başladığında videolar devam eder."
+  },
+  "pauseAtEnd": {
+    "message": "Video bittiğinde sonraki videonun otomatik oynatılmasını durdur"
+  },
+  "pauseAtEndNotice": {
+    "message": "Sonraki videonun otomatik oynatılması durduruldu."
   }
 }

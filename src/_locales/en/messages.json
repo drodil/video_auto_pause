@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Uses the browser Battery Status API when available. Videos resume when the tab becomes active or charging begins."
+  },
+  "pauseAtEnd": {
+    "message": "Stop automatic playback of the next video at the end"
+  },
+  "pauseAtEndNotice": {
+    "message": "Automatic playback of the next video was stopped."
   }
 }

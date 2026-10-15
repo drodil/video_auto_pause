@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Utilise l’API d’état de la batterie du navigateur si elle est disponible. Les vidéos reprennent lorsque l’onglet devient actif ou que la charge commence."
+  },
+  "pauseAtEnd": {
+    "message": "Arrêter la lecture automatique de la vidéo suivante à la fin"
+  },
+  "pauseAtEndNotice": {
+    "message": "La lecture automatique de la vidéo suivante a été arrêtée."
   }
 }

@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Bruger browserens batteristatus-API, hvis den er tilgængelig. Videoer genoptages, når fanen bliver aktiv, eller opladningen begynder."
+  },
+  "pauseAtEnd": {
+    "message": "Stop automatisk afspilning af næste video ved slutningen"
+  },
+  "pauseAtEndNotice": {
+    "message": "Automatisk afspilning af næste video blev stoppet."
   }
 }

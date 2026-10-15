@@ -8,6 +8,7 @@ if (window.autoPauseInjected !== true) {
   const extensionPausedVideos = new WeakSet();
   const extensionInitiatedPlays = new WeakSet();
   const automaticallyPausedVideos = new WeakSet();
+  const autoNextPausedVideos = new WeakSet();
   const extensionMutedVideos = new WeakMap();
   const automaticPauseStartedAt = new WeakMap();
   const automaticPausePositions = new WeakMap();
@@ -23,6 +24,8 @@ if (window.autoPauseInjected !== true) {
   let videoObserver;
   let lastVisibility = null;
   let userInteracted = false;
+  let lastUserInteractionAt = 0;
+  let lastVideoEndedAt = 0;
   let options = { ...DEFAULT_OPTIONS };
   let profiles = [];
   let autoPipVideo = null;
@@ -36,8 +39,7 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     userInteracted = true;
-    document.removeEventListener("pointerdown", recordUserInteraction, true);
-    document.removeEventListener("keydown", recordUserInteraction, true);
+    lastUserInteractionAt = Date.now();
   }
 
   document.addEventListener("pointerdown", recordUserInteraction, true);
@@ -286,6 +288,22 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener(
     "play",
     (event) => {
+      const video = event.target;
+      if (
+        options.pauseAtEnd &&
+        video instanceof HTMLVideoElement &&
+        lastVideoEndedAt > 0 &&
+        Date.now() - lastVideoEndedAt < 15000 &&
+        Date.now() - lastUserInteractionAt > 1500
+      ) {
+        autoNextPausedVideos.add(video);
+        video.pause();
+        event.stopImmediatePropagation();
+        automaticallyPausedVideos.add(video);
+        sendMessage({ statsEvent: "autoplayBlocked" });
+        showToast(env.i18n.getMessage("pauseAtEndNotice"));
+        return;
+      }
       if (document.hidden && event.target?.tagName === "VIDEO") {
         void applyBatteryPolicy().catch((error) => {
           console.error(
@@ -293,6 +311,48 @@ if (window.autoPauseInjected !== true) {
             error,
           );
         });
+      }
+    },
+    true,
+  );
+  document.addEventListener(
+    "ended",
+    (event) => {
+      if (options.pauseAtEnd && event.target instanceof HTMLVideoElement) {
+        lastVideoEndedAt = Date.now();
+      }
+    },
+    true,
+  );
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (!options.disableAutoplayNext || event.isTrusted) {
+        return;
+      }
+      const control = event.target?.closest?.(
+        "button, a, [role='button'], [tabindex]",
+      );
+      if (!control) {
+        return;
+      }
+      const description = [
+        control.getAttribute("aria-label"),
+        control.getAttribute("title"),
+        control.getAttribute("data-testid"),
+        control.textContent,
+        control.className,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      if (
+        /(?:^|\b)(?:next video|next episode|play next|up next|next)(?:\b|$)/.test(
+          description,
+        )
+      ) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
       }
     },
     true,
@@ -890,7 +950,11 @@ if (window.autoPauseInjected !== true) {
 
   const resumeVideo = async (video, actionToken) => {
     debugLog(`Attempting to resume video: paused=${video.paused}`);
-    if (video.ended || (!extensionPausedVideos.has(video) && !video.paused)) {
+    if (
+      video.ended ||
+      autoNextPausedVideos.has(video) ||
+      (!extensionPausedVideos.has(video) && !video.paused)
+    ) {
       return;
     }
 
@@ -1152,6 +1216,7 @@ if (window.autoPauseInjected !== true) {
         break;
       case "toggle":
         if (video.paused) {
+          autoNextPausedVideos.delete(video);
           manuallyPausedVideos.delete(video);
           extensionPausedVideos.delete(video);
           if (!video.ended) {
@@ -1432,6 +1497,7 @@ if (window.autoPauseInjected !== true) {
 
     videoElement.addEventListener("play", (_e) => {
       debugLog(`Video resumed`);
+      autoNextPausedVideos.delete(videoElement);
       if (
         options.blockAutoplay &&
         !userInteracted &&

@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Usa l’API sullo stato della batteria del browser, se disponibile. I video riprendono quando la scheda diventa attiva o inizia la ricarica."
+  },
+  "pauseAtEnd": {
+    "message": "Interrompi la riproduzione automatica del video successivo alla fine"
+  },
+  "pauseAtEndNotice": {
+    "message": "La riproduzione automatica del video successivo è stata interrotta."
   }
 }

@@ -25,6 +25,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   showVideoOverlay: false,
   blockAutoplay: false,
   disableAutoplayNext: false,
+  pauseAtEnd: false,
   contentShortcutsEnabled: false,
   contentShortcutKeys: {
     seekBackward: "j",

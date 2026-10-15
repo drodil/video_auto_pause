@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Używa interfejsu Battery Status API przeglądarki, jeśli jest dostępny. Filmy są wznawiane po aktywowaniu karty lub rozpoczęciu ładowania."
+  },
+  "pauseAtEnd": {
+    "message": "Zatrzymaj automatyczne odtwarzanie następnego filmu po zakończeniu"
+  },
+  "pauseAtEndNotice": {
+    "message": "Automatyczne odtwarzanie następnego filmu zostało zatrzymane."
   }
 }

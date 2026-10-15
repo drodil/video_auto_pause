@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Usa a API de status da bateria do navegador quando disponível. Os vídeos retomam quando a guia fica ativa ou o carregamento começa."
+  },
+  "pauseAtEnd": {
+    "message": "Parar a reprodução automática do próximo vídeo ao terminar"
+  },
+  "pauseAtEndNotice": {
+    "message": "A reprodução automática do próximo vídeo foi interrompida."
   }
 }

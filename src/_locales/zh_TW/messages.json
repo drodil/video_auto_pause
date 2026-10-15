@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "可用時使用瀏覽器 Battery Status API。分頁變成使用中或開始充電時會恢復影片。"
+  },
+  "pauseAtEnd": {
+    "message": "影片結束時停止自動播放下一部影片"
+  },
+  "pauseAtEndNotice": {
+    "message": "已停止自動播放下一部影片。"
   }
 }

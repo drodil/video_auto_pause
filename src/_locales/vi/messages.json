@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Sử dụng Battery Status API của trình duyệt nếu có. Video sẽ tiếp tục khi tab được kích hoạt hoặc bắt đầu sạc."
+  },
+  "pauseAtEnd": {
+    "message": "Dừng tự động phát video tiếp theo khi video kết thúc"
+  },
+  "pauseAtEndNotice": {
+    "message": "Đã dừng tự động phát video tiếp theo."
   }
 }

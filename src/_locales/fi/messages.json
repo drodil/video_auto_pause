@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Käyttää selaimen akun tilan rajapintaa, jos se on saatavilla. Videot jatkuvat, kun välilehti aktivoidaan tai lataus alkaa."
+  },
+  "pauseAtEnd": {
+    "message": "Pysäytä seuraavan videon automaattinen toisto nykyisen lopussa"
+  },
+  "pauseAtEndNotice": {
+    "message": "Seuraavan videon automaattinen toisto pysäytettiin."
   }
 }

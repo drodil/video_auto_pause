@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Verwendet die Battery-Status-API des Browsers, sofern verfügbar. Videos werden fortgesetzt, wenn der Tab aktiv wird oder der Ladevorgang beginnt."
+  },
+  "pauseAtEnd": {
+    "message": "Automatische Wiedergabe des nächsten Videos am Ende stoppen"
+  },
+  "pauseAtEndNotice": {
+    "message": "Die automatische Wiedergabe des nächsten Videos wurde gestoppt."
   }
 }

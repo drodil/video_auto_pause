@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Usa la API de estado de batería del navegador cuando está disponible. Los vídeos se reanudan al activar la pestaña o comenzar la carga."
+  },
+  "pauseAtEnd": {
+    "message": "Detener la reproducción automática del siguiente vídeo al finalizar"
+  },
+  "pauseAtEndNotice": {
+    "message": "Se detuvo la reproducción automática del siguiente vídeo."
   }
 }

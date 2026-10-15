@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Menggunakan Battery Status API browser jika tersedia. Video dilanjutkan saat tab aktif atau pengisian daya dimulai."
+  },
+  "pauseAtEnd": {
+    "message": "Hentikan pemutaran video berikutnya secara otomatis di akhir"
+  },
+  "pauseAtEndNotice": {
+    "message": "Pemutaran otomatis video berikutnya dihentikan."
   }
 }

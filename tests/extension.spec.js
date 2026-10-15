@@ -698,6 +698,8 @@ test.describe("Video Auto Pause Extension", () => {
       "audioAllowListPlaceholder",
       "pauseOnLowBattery",
       "pauseOnLowBatteryDescription",
+      "pauseAtEnd",
+      "pauseAtEndNotice",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1807,6 +1809,57 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       )
       .toMatchObject({ pauseOnLowBattery: true });
+  });
+
+  test("prevents automatic next playback after a video ends", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      pauseAtEnd: true,
+      disableAutoplayNext: true,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await page.evaluate(() => {
+      const control = document.createElement("button");
+      control.setAttribute("aria-label", "Next episode");
+      control.addEventListener("click", () => {
+        window.nextEpisodeClicked = true;
+      });
+      document.body.append(control);
+      control.click();
+    });
+    expect(
+      await page.evaluate(() => window.nextEpisodeClicked),
+    ).toBeUndefined();
+
+    await page.evaluate(async () => {
+      const current = document.querySelector("#v");
+      current.dispatchEvent(new Event("ended"));
+      const next = document.createElement("video");
+      next.id = "automatic-next";
+      next.src = current.currentSrc;
+      next.muted = true;
+      document.body.append(next);
+      try {
+        await next.play();
+      } catch (error) {
+        if (!["AbortError", "NotAllowedError"].includes(error.name)) {
+          throw error;
+        }
+      }
+    });
+    await expect
+      .poll(() =>
+        page.locator("#automatic-next").evaluate((element) => element.paused),
+      )
+      .toBe(true);
   });
 
   test("should clamp negative delay values in the options page", async ({

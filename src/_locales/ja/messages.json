@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "利用可能な場合はブラウザーの Battery Status API を使用します。タブがアクティブになるか充電が始まると動画を再開します。"
+  },
+  "pauseAtEnd": {
+    "message": "動画の終了時に次の動画の自動再生を停止"
+  },
+  "pauseAtEndNotice": {
+    "message": "次の動画の自動再生を停止しました。"
   }
 }

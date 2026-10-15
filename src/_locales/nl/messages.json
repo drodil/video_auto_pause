@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "Gebruikt de batterijstatus-API van de browser indien beschikbaar. Video's worden hervat wanneer het tabblad actief wordt of het opladen begint."
+  },
+  "pauseAtEnd": {
+    "message": "Automatisch afspelen van de volgende video aan het einde stoppen"
+  },
+  "pauseAtEndNotice": {
+    "message": "Automatisch afspelen van de volgende video is gestopt."
   }
 }

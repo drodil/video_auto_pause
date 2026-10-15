@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "지원되는 경우 브라우저 Battery Status API를 사용합니다. 탭이 활성화되거나 충전이 시작되면 동영상을 다시 재생합니다."
+  },
+  "pauseAtEnd": {
+    "message": "동영상이 끝나면 다음 동영상 자동 재생 중지"
+  },
+  "pauseAtEndNotice": {
+    "message": "다음 동영상의 자동 재생을 중지했습니다."
   }
 }

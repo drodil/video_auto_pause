@@ -646,5 +646,11 @@
   },
   "pauseOnLowBatteryDescription": {
     "message": "在可用时使用浏览器 Battery Status API。标签页变为活动状态或开始充电时恢复视频。"
+  },
+  "pauseAtEnd": {
+    "message": "视频结束时停止自动播放下一个视频"
+  },
+  "pauseAtEndNotice": {
+    "message": "已停止自动播放下一个视频。"
   }
 }
