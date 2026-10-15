@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Peata kõik 30 minuti pärast",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Käivita unetaimer",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Kestus (minutites)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Tühista unetaimer",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Diagnostikat ei saanud kopeerida."
+  },
+  "allowAudio": {
+    "message": "Luba ainult heli taasesitus"
+  },
+  "profileDefault": {
+    "message": "Vaikimisi"
+  },
+  "settingsSaveFailed": {
+    "message": "Seadeid ei saanud salvestada. Kontrolli, kas sünkroonimälu on saadaval."
   }
 }

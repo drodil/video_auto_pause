@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30分後にすべて一時停止",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "スリープタイマーを開始",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "時間（分）",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "スリープタイマーをキャンセル",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "診断情報をコピーできませんでした。"
+  },
+  "allowAudio": {
+    "message": "音声のみの再生を許可"
+  },
+  "profileDefault": {
+    "message": "デフォルト"
+  },
+  "settingsSaveFailed": {
+    "message": "設定を保存できませんでした。ブラウザーの同期ストレージが利用可能か確認してください。"
   }
 }

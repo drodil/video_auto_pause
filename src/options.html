@@ -4,580 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>__MSG_extName__</title>
-    <style>
-      @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap";
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
-        font-weight: 400;
-        padding: 0;
-        margin: 0;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        direction: __MSG_ @@bidi_dir__;
-      }
-
-      .wrapper {
-        width: min(380px, 100vw);
-        background: #ffffff;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-
-      .header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 12px;
-        text-align: center;
-      }
-
-      .header h2 {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
-
-      #logo {
-        width: 20px;
-        height: 20px;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-      }
-
-      .container {
-        padding: 12px 14px;
-      }
-
-      .section {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      .section:last-child {
-        margin-bottom: 0;
-      }
-
-      h4 {
-        font-size: 11px;
-        font-weight: 600;
-        color: #374151;
-        margin: 0 0 6px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      label {
-        cursor: pointer;
-        color: #1f2937;
-        display: flex;
-        align-items: center;
-        font-size: 13px;
-        padding: 6px 8px;
-        margin: 1px 0;
-        border-radius: 4px;
-        transition: all 0.2s ease;
-        user-select: none;
-      }
-
-      label:hover {
-        background-color: #f3f4f6;
-      }
-
-      input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 16px;
-        height: 16px;
-        border: 2px solid #d1d5db;
-        border-radius: 3px;
-        margin-right: 8px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.2s ease;
-        flex-shrink: 0;
-        background: white;
-      }
-
-      input[type="checkbox"]:hover {
-        border-color: #667eea;
-      }
-
-      input[type="checkbox"]:checked {
-        background: #667eea;
-        border-color: #667eea;
-      }
-
-      input[type="checkbox"]:checked::after {
-        content: "";
-        position: absolute;
-        left: 4px;
-        top: 1px;
-        width: 3px;
-        height: 7px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-
-      input[type="checkbox"]:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      label:has(input:disabled) {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      label:has(input:disabled):hover {
-        background-color: transparent;
-      }
-
-      .label-text {
-        flex: 1;
-      }
-
-      p {
-        margin: 6px 0;
-        font-size: 12px;
-        color: #6b7280;
-      }
-
-      a {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
-      }
-
-      a:hover {
-        color: #764ba2;
-        text-decoration: underline;
-      }
-
-      .collapsible_button {
-        cursor: pointer;
-        color: #667eea;
-        background-color: #f3f4f6;
-        padding: 8px 10px;
-        width: 100%;
-        border: 2px solid transparent;
-        border-radius: 4px;
-        text-align: left;
-        outline: none;
-        font-size: 13px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .collapsible_button:hover {
-        background-color: #e5e7eb;
-        border-color: #667eea;
-      }
-
-      .collapsible_button::after {
-        content: "\25BC";
-        font-size: 12px;
-        transition: transform 0.2s ease;
-      }
-
-      .collapsible_button.active::after {
-        transform: rotate(180deg);
-      }
-
-      .collapsible_content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        padding: 0 2px;
-      }
-
-      #hotkeys p {
-        background: #f9fafb;
-        padding: 6px 8px;
-        border-radius: 4px;
-        border-left: 3px solid #667eea;
-        font-family:
-          "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
-        font-size: 12px;
-        color: #374151;
-        margin: 4px 0;
-      }
-
-      /* Disabled state styling */
-      input:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      input:disabled + .label-text {
-        text-decoration: line-through;
-        opacity: 0.6;
-        color: #9ca3af;
-      }
-
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 16px;
-        background: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-        font-size: 11px;
-      }
-
-      .footer p {
-        margin: 0;
-      }
-
-      #version {
-        color: #9ca3af;
-        font-weight: 500;
-      }
-
-      .support-links {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        padding: 0;
-      }
-
-      .support-link {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white !important;
-        text-align: center;
-        padding: 8px 10px;
-        border-radius: 4px;
-        transition: all 0.2s ease;
-        font-weight: 500;
-        font-size: 12px;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-      }
-
-      .support-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        text-decoration: none;
-      }
-
-      .domain-list-heading {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 6px;
-      }
-
-      .domain-list-heading p {
-        margin: 0;
-      }
-
-      .domain-add-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        flex: 0 0 28px;
-        padding: 0;
-        border: 1px solid #d1d5db;
-        border-radius: 4px;
-        background: white;
-        color: #4b5563;
-        font-size: 18px;
-        line-height: 1;
-        cursor: pointer;
-      }
-
-      .domain-add-button:hover {
-        border-color: #667eea;
-        background: #f3f4f6;
-        color: #667eea;
-      }
-
-      .domain-add-button:focus-visible {
-        outline: 2px solid #667eea;
-        outline-offset: 2px;
-      }
-
-      #statsSummary {
-        padding: 8px;
-        border-radius: 4px;
-        background: #f3f4f6;
-        line-height: 1.5;
-      }
-
-      #statsActions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .preset-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 6px;
-      }
-
-      .preset-grid button,
-      .onboarding-presets button {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 9px 6px;
-        background: white;
-        color: #374151;
-        font: inherit;
-        font-size: 12px;
-        cursor: pointer;
-      }
-
-      .preset-grid button:hover,
-      .onboarding-presets button:hover {
-        background: #eef2ff;
-        border-color: #667eea;
-      }
-
-      .preset-grid button:focus-visible,
-      .onboarding-presets button:focus-visible {
-        outline: 2px solid #667eea;
-        outline-offset: 2px;
-      }
-
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      .sleep-timer-controls {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 8px;
-      }
-
-      .profile-actions {
-        display: flex;
-        gap: 8px;
-        margin: 8px 0;
-      }
-
-      .profile-actions button {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 4px;
-        padding: 7px;
-        background: white;
-        color: #374151;
-        cursor: pointer;
-        font: inherit;
-      }
-
-      #profileName,
-      #profileSelect {
-        width: 100%;
-        margin: 4px 0;
-        padding: 6px;
-        border: 1px solid #d1d5db;
-        border-radius: 4px;
-        font: inherit;
-      }
-
-      #pinCurrentTab,
-      .sleep-timer-controls button {
-        width: 100%;
-        border: 1px solid #667eea;
-        border-radius: 6px;
-        padding: 9px;
-        background: #eef2ff;
-        color: #4338ca;
-        font: inherit;
-        font-weight: 500;
-        cursor: pointer;
-      }
-
-      #siteRuleList {
-        margin: 8px 0 0;
-        padding: 0;
-        list-style: none;
-        max-height: 220px;
-        overflow-y: auto;
-      }
-
-      #siteRuleList li {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 8px;
-        padding: 6px 0;
-        border-top: 1px solid #e5e7eb;
-      }
-
-      #siteRuleList li span {
-        flex: 1;
-        overflow-wrap: anywhere;
-      }
-
-      #siteRuleList button[data-open-site-rule] {
-        border: 0;
-        background: transparent;
-        color: #4f46e5;
-        cursor: pointer;
-        font: inherit;
-        font-weight: 500;
-        text-align: left;
-      }
-
-      #siteRuleList button {
-        flex: 0 0 auto;
-      }
-
-      #settingsViews {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .settings-view {
-        width: 100%;
-        transition: transform 0.25s ease;
-      }
-
-      #globalSettingsView {
-        position: relative;
-      }
-
-      #settingsViews.site-open #globalSettingsView {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translateX(-100%);
-      }
-
-      #siteSettingsView {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translateX(100%);
-      }
-
-      #settingsViews.site-open #siteSettingsView {
-        position: relative;
-        transform: translateX(0);
-      }
-
-      .site-settings-header {
-        padding: 12px 14px 4px;
-      }
-
-      #backToGlobal {
-        border: 0;
-        padding: 0;
-        background: transparent;
-        color: #4f46e5;
-        cursor: pointer;
-        font: inherit;
-      }
-
-      #siteSettingsTitle {
-        margin: 10px 0 4px;
-        color: #1f2937;
-        font-size: 16px;
-      }
-
-      .site-setting-row {
-        margin: 6px 0;
-        padding: 8px;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-      }
-
-      .site-setting-row label {
-        padding: 0;
-      }
-
-      .site-setting-row > input[type="number"] {
-        width: 100%;
-        margin-top: 6px;
-        padding: 6px;
-        border: 1px solid #d1d5db;
-        border-radius: 4px;
-      }
-
-      .site-setting-customize {
-        color: #6b7280;
-        font-size: 11px;
-      }
-
-      .site-setting-value-label {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 6px;
-      }
-
-      .site-settings-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 12px;
-      }
-
-      .site-settings-actions button,
-      #addSiteRule {
-        border: 1px solid #667eea;
-        border-radius: 5px;
-        padding: 7px 10px;
-        background: #eef2ff;
-        color: #4338ca;
-        cursor: pointer;
-        font: inherit;
-      }
-
-      #deleteSiteSettings {
-        border-color: #d1d5db;
-        background: white;
-        color: #4b5563;
-      }
-
-      :focus-visible {
-        outline: 2px solid #4338ca;
-        outline-offset: 2px;
-      }
-
-      @media (pointer: coarse) {
-        label {
-          min-height: 44px;
-        }
-
-        button,
-        [role="button"] {
-          min-height: 44px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="fonts/inter.css" />
+    <link rel="stylesheet" href="options.css" />
   </head>
 
   <body>
@@ -587,101 +15,44 @@
           <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />
           <span data-i18n="extName">Video Auto Pause</span>
         </h2>
+        <button
+          id="pinCurrentTab"
+          type="button"
+          aria-label="Keep playing in this tab"
+          aria-pressed="false"
+          title="Keep playing in this tab"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M16 3a1 1 0 0 1 1 1v3l2 3v2h-6v8l-1 1-1-1v-8H5v-2l2-3V4a1 1 0 0 1 1-1z"
+            />
+          </svg>
+        </button>
+        <p id="pinStatus" role="status" aria-live="polite"></p>
       </div>
 
       <div id="settingsViews">
         <div id="globalSettingsView" class="settings-view">
-          <div class="container section">
-            <button id="pinCurrentTab" type="button" aria-pressed="false">
-              Keep playing in this tab
-            </button>
-            <p id="pinStatus" role="status" aria-live="polite"></p>
-            <div class="sleep-timer-controls">
-              <button
-                id="startSleepTimer"
-                type="button"
-                data-i18n="sleepTimerStart"
-              >
-                Pause everything in 30 minutes
-              </button>
-              <button
-                id="cancelSleepTimer"
-                type="button"
-                data-i18n="sleepTimerCancel"
-                hidden
-              >
-                Cancel sleep timer
-              </button>
-            </div>
-            <p id="sleepTimerStatus" role="status" aria-live="polite"></p>
-            <h4 data-i18n="presetTitle">Choose a mode</h4>
-            <div class="preset-grid">
-              <button
-                type="button"
-                data-preset="study"
-                data-i18n="presetStudy"
-                data-i18n-title="presetStudyDescription"
-                aria-describedby="presetStudyDescription"
-              >
-                Study / lectures
-              </button>
-              <button
-                type="button"
-                data-preset="music"
-                data-i18n="presetMusic"
-                data-i18n-title="presetMusicDescription"
-                aria-describedby="presetMusicDescription"
-              >
-                Background music
-              </button>
-              <button
-                type="button"
-                data-preset="binge"
-                data-i18n="presetBinge"
-                data-i18n-title="presetBingeDescription"
-                aria-describedby="presetBingeDescription"
-              >
-                Binge / TV
-              </button>
-              <button
-                type="button"
-                data-preset="saver"
-                data-i18n="presetSaver"
-                data-i18n-title="presetSaverDescription"
-                aria-describedby="presetSaverDescription"
-              >
-                Battery saver / meetings
-              </button>
-            </div>
-            <span
-              class="sr-only"
-              id="presetStudyDescription"
-              data-i18n="presetStudyDescription"
-            ></span>
-            <span
-              class="sr-only"
-              id="presetMusicDescription"
-              data-i18n="presetMusicDescription"
-            ></span>
-            <span
-              class="sr-only"
-              id="presetBingeDescription"
-              data-i18n="presetBingeDescription"
-            ></span>
-            <span
-              class="sr-only"
-              id="presetSaverDescription"
-              data-i18n="presetSaverDescription"
-            ></span>
-            <p id="presetStatus" role="status" aria-live="polite"></p>
+          <div id="activeProfileControl" class="container section" hidden>
+            <label
+              for="activeProfileSelect"
+              data-i18n="profileSelectPlaceholder"
+              >Select a saved profile</label
+            >
+            <select id="activeProfileSelect"></select>
           </div>
-
+          <p id="settingsSaveStatus" role="status" aria-live="polite"></p>
           <div class="container section">
-            <button class="collapsible_button active">
+            <button
+              class="collapsible_button active"
+              type="button"
+              aria-expanded="true"
+              aria-controls="settingsContent"
+            >
               <span data-i18n="settings">Settings</span>
             </button>
-            <div class="collapsible_content" style="max-height: 1000px">
-              <div style="margin-top: 8px">
+            <div class="collapsible_content expanded" id="settingsContent">
+              <div class="spacing-top-small">
                 <label>
                   <input type="checkbox" id="autopause" />
                   <span class="label-text" data-i18n="autopause"
@@ -729,82 +100,192 @@
           </div>
 
           <div class="container section">
-            <h4 data-i18n="profilesAndBackup">Profiles &amp; backup</h4>
-            <div class="profile-actions">
-              <button
-                type="button"
-                id="exportSettings"
-                data-i18n="exportSettings"
+            <div id="sleepTimerDurationControl" class="sleep-timer-duration">
+              <label for="sleepTimerMinutes" data-i18n="sleepTimerDuration"
+                >Duration (minutes)</label
               >
-                Export settings
+              <select id="sleepTimerMinutes">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="30" selected>30</option>
+                <option value="60">60</option>
+              </select>
+            </div>
+            <div class="sleep-timer-controls">
+              <button
+                id="startSleepTimer"
+                type="button"
+                class="button button-primary"
+                data-i18n="sleepTimerStart"
+              >
+                Pause everything in 30 minutes
               </button>
               <button
+                id="cancelSleepTimer"
                 type="button"
-                id="importSettings"
-                data-i18n="importSettings"
-              >
-                Import settings
-              </button>
-              <input
-                type="file"
-                id="importSettingsFile"
-                accept="application/json,.json"
+                class="button button-secondary"
+                data-i18n="sleepTimerCancel"
                 hidden
-              />
-            </div>
-            <p id="settingsImportStatus" role="status" aria-live="polite"></p>
-            <label for="profileName" data-i18n="profileName"
-              >Profile name</label
-            >
-            <input
-              type="text"
-              id="profileName"
-              maxlength="40"
-              autocomplete="off"
-              data-i18n-placeholder="profileNamePlaceholder"
-              placeholder="e.g. Work"
-            />
-            <label for="profileDomains" data-i18n="profileDomains"
-              >Automatically apply to domains</label
-            >
-            <input
-              type="text"
-              id="profileDomains"
-              autocomplete="off"
-              data-i18n-placeholder="profileDomainsPlaceholder"
-              placeholder="example.com, work.example.org"
-            />
-            <button type="button" id="saveProfile" data-i18n="saveProfile">
-              Save profile
-            </button>
-            <select id="profileSelect" aria-label="Profiles"></select>
-            <div class="profile-actions">
-              <button
-                type="button"
-                id="applyProfile"
-                data-i18n="applyProfile"
-                disabled
               >
-                Apply profile
-              </button>
-              <button
-                type="button"
-                id="deleteProfile"
-                data-i18n="deleteProfile"
-                disabled
-              >
-                Delete profile
+                Cancel sleep timer
               </button>
             </div>
-            <p id="profileStatus" role="status" aria-live="polite"></p>
+            <p id="sleepTimerStatus" role="status" aria-live="polite"></p>
+            <details class="preset-options">
+              <summary data-i18n="presetTitle">Choose a mode</summary>
+              <div class="preset-grid">
+                <button
+                  type="button"
+                  data-preset="study"
+                  data-i18n="presetStudy"
+                  data-i18n-title="presetStudyDescription"
+                  aria-describedby="presetStudyDescription"
+                >
+                  Study / lectures
+                </button>
+                <button
+                  type="button"
+                  data-preset="music"
+                  data-i18n="presetMusic"
+                  data-i18n-title="presetMusicDescription"
+                  aria-describedby="presetMusicDescription"
+                >
+                  Background music
+                </button>
+                <button
+                  type="button"
+                  data-preset="binge"
+                  data-i18n="presetBinge"
+                  data-i18n-title="presetBingeDescription"
+                  aria-describedby="presetBingeDescription"
+                >
+                  Binge / TV
+                </button>
+                <button
+                  type="button"
+                  data-preset="saver"
+                  data-i18n="presetSaver"
+                  data-i18n-title="presetSaverDescription"
+                  aria-describedby="presetSaverDescription"
+                >
+                  Battery saver / meetings
+                </button>
+              </div>
+              <span
+                class="sr-only"
+                id="presetStudyDescription"
+                data-i18n="presetStudyDescription"
+              ></span>
+              <span
+                class="sr-only"
+                id="presetMusicDescription"
+                data-i18n="presetMusicDescription"
+              ></span>
+              <span
+                class="sr-only"
+                id="presetBingeDescription"
+                data-i18n="presetBingeDescription"
+              ></span>
+              <span
+                class="sr-only"
+                id="presetSaverDescription"
+                data-i18n="presetSaverDescription"
+              ></span>
+              <p id="presetStatus" role="status" aria-live="polite"></p>
+            </details>
           </div>
 
           <div class="container section">
-            <button class="collapsible_button">
+            <button
+              class="collapsible_button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="profilesContent"
+            >
+              <span data-i18n="profilesAndBackup">Profiles &amp; backup</span>
+            </button>
+            <div class="collapsible_content" id="profilesContent">
+              <div class="profile-actions">
+                <button
+                  type="button"
+                  id="exportSettings"
+                  class="button button-secondary"
+                  data-i18n="exportSettings"
+                >
+                  Export settings
+                </button>
+                <button
+                  type="button"
+                  id="importSettings"
+                  class="button button-secondary"
+                  data-i18n="importSettings"
+                >
+                  Import settings
+                </button>
+                <input
+                  type="file"
+                  id="importSettingsFile"
+                  accept="application/json,.json"
+                  hidden
+                />
+              </div>
+              <p id="settingsImportStatus" role="status" aria-live="polite"></p>
+              <label for="profileName" data-i18n="profileName"
+                >Profile name</label
+              >
+              <input
+                type="text"
+                id="profileName"
+                maxlength="40"
+                autocomplete="off"
+                data-i18n-placeholder="profileNamePlaceholder"
+                placeholder="e.g. Work"
+              />
+              <button
+                type="button"
+                id="saveProfile"
+                class="button button-primary"
+                data-i18n="saveProfile"
+              >
+                Save profile
+              </button>
+              <select id="profileSelect" aria-label="Profiles"></select>
+              <div class="profile-actions">
+                <button
+                  type="button"
+                  id="applyProfile"
+                  class="button button-secondary"
+                  data-i18n="applyProfile"
+                  disabled
+                >
+                  Apply profile
+                </button>
+                <button
+                  type="button"
+                  id="deleteProfile"
+                  class="button button-danger"
+                  data-i18n="deleteProfile"
+                  disabled
+                >
+                  Delete profile
+                </button>
+              </div>
+              <p id="profileStatus" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="container section">
+            <button
+              class="collapsible_button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="advancedContent"
+            >
               <span data-i18n="advancedSettings">Advanced Settings</span>
             </button>
-            <div class="collapsible_content">
-              <div style="margin-top: 8px">
+            <div class="collapsible_content" id="advancedContent">
+              <div class="spacing-top-small">
                 <label>
                   <input type="checkbox" id="lockpause" />
                   <span class="label-text" data-i18n="lockpause"
@@ -873,25 +354,11 @@
                   >
                 </label>
                 <label>
-                  <input type="checkbox" id="handleAudio" />
-                  <span class="label-text" data-i18n="audioOnlySupport"
-                    >Also control audio-only players</span
+                  <input type="checkbox" id="allowAudio" />
+                  <span class="label-text" data-i18n="allowAudio"
+                    >Allow audio-only playback</span
                   >
                 </label>
-                <p data-i18n="audioOnlyDescription">
-                  Audio remains untouched by default. When enabled, audio on the
-                  listed domains is still allowed to continue playing.
-                </p>
-                <label for="audioAllowList" data-i18n="audioAllowList"
-                  >Always allow audio on these domains</label
-                >
-                <input
-                  type="text"
-                  id="audioAllowList"
-                  autocomplete="off"
-                  data-i18n-placeholder="audioAllowListPlaceholder"
-                  placeholder="open.spotify.com, music.youtube.com, soundcloud.com"
-                />
                 <label>
                   <input type="checkbox" id="blockAutoplay" />
                   <span class="label-text" data-i18n="blockAutoplay"
@@ -934,18 +401,18 @@
                     >Enable in-page video shortcuts</span
                   >
                 </label>
-                <p data-i18n="contentShortcutsDescription">
+                <p
+                  id="contentShortcutsDescription"
+                  data-i18n="contentShortcutsDescription"
+                  hidden
+                >
                   Shortcuts apply when the page is focused. Leave a key blank to
                   disable that action.
                 </p>
                 <div
                   id="contentShortcutSettings"
-                  style="
-                    display: grid;
-                    grid-template-columns: minmax(0, 1fr) minmax(80px, 120px);
-                    gap: 6px;
-                    align-items: center;
-                  "
+                  class="content-shortcut-settings"
+                  hidden
                 >
                   <label
                     for="contentShortcutSeekBackward"
@@ -1052,7 +519,7 @@
                   role="status"
                   aria-live="polite"
                 ></p>
-                <div style="margin-top: 12px">
+                <div class="spacing-top-medium">
                   <label>
                     <input type="checkbox" id="pauseOnLowBattery" />
                     <span class="label-text" data-i18n="pauseOnLowBattery"
@@ -1064,7 +531,7 @@
                     resume when the tab becomes active or charging begins.
                   </p>
                 </div>
-                <div style="margin-top: 12px">
+                <div class="spacing-top-medium">
                   <label>
                     <input type="checkbox" id="pauseOnAudioOutputDisconnect" />
                     <span
@@ -1078,88 +545,51 @@
                     available audio output disappears.
                   </p>
                 </div>
-                <div style="margin-top: 12px">
+                <div class="spacing-top-medium">
                   <label
+                    class="field-label"
                     for="idlePauseMinutes"
-                    style="
-                      font-size: 11px;
-                      color: #6b7280;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
                     data-i18n="idlePauseMinutes"
                     >Pause when inactive (minutes; 0 to disable)</label
                   >
                   <input
+                    class="form-control"
                     type="number"
                     id="idlePauseMinutes"
                     min="0"
                     max="240"
                     step="1"
-                    style="
-                      width: 100%;
-                      padding: 6px;
-                      border: 1px solid #d1d5db;
-                      border-radius: 4px;
-                    "
                   />
                 </div>
-                <div style="margin-top: 12px">
-                  <span
-                    style="
-                      font-size: 11px;
-                      color: #6b7280;
-                      display: block;
-                      margin-bottom: 4px;
-                    "
-                    data-i18n="quietHours"
+                <div class="spacing-top-medium">
+                  <span class="field-label-spaced" data-i18n="quietHours"
                     >Quiet hours (local time)</span
                   >
-                  <div style="display: flex; gap: 12px">
-                    <div style="flex: 1">
+                  <div class="field-row">
+                    <div class="flex-field">
                       <label
+                        class="field-label"
                         for="quietHoursStart"
-                        style="
-                          font-size: 11px;
-                          color: #6b7280;
-                          display: block;
-                          margin-bottom: 2px;
-                        "
                         data-i18n="quietHoursStart"
                         >Start</label
                       >
                       <input
+                        class="form-control"
                         type="time"
                         id="quietHoursStart"
-                        style="
-                          width: 100%;
-                          padding: 6px;
-                          border: 1px solid #d1d5db;
-                          border-radius: 4px;
-                        "
                       />
                     </div>
-                    <div style="flex: 1">
+                    <div class="flex-field">
                       <label
+                        class="field-label"
                         for="quietHoursEnd"
-                        style="
-                          font-size: 11px;
-                          color: #6b7280;
-                          display: block;
-                          margin-bottom: 2px;
-                        "
                         data-i18n="quietHoursEnd"
                         >End</label
                       >
                       <input
+                        class="form-control"
                         type="time"
                         id="quietHoursEnd"
-                        style="
-                          width: 100%;
-                          padding: 6px;
-                          border: 1px solid #d1d5db;
-                          border-radius: 4px;
-                        "
                       />
                     </div>
                   </div>
@@ -1170,175 +600,88 @@
                     >Show debug messages in console</span
                   >
                 </label>
-                <div
-                  style="
-                    margin-top: 12px;
-                    border-top: 1px solid #e5e7eb;
-                    padding-top: 12px;
-                  "
-                >
-                  <span
-                    style="
-                      font-size: 13px;
-                      font-weight: 500;
-                      color: #374151;
-                      display: block;
-                      margin-bottom: 8px;
-                    "
-                    data-i18n="delays"
+                <div class="advanced-section">
+                  <span class="section-label" data-i18n="delays"
                     >Delays (ms)</span
                   >
-                  <div style="display: flex; gap: 12px">
-                    <div style="flex: 1">
+                  <div class="field-row">
+                    <div class="flex-field">
                       <label
+                        class="field-label"
                         for="pauseDelay"
-                        style="
-                          font-size: 11px;
-                          color: #6b7280;
-                          display: block;
-                          margin-bottom: 2px;
-                        "
                         data-i18n="pauseDelay"
                         >Pause Delay</label
                       >
                       <input
+                        class="form-control"
                         type="number"
                         id="pauseDelay"
                         min="0"
                         step="100"
-                        style="
-                          width: 100%;
-                          padding: 6px;
-                          border: 1px solid #d1d5db;
-                          border-radius: 4px;
-                        "
                         placeholder="0"
                       />
                     </div>
-                    <div style="flex: 1">
+                    <div class="flex-field">
                       <label
+                        class="field-label"
                         for="resumeDelay"
-                        style="
-                          font-size: 11px;
-                          color: #6b7280;
-                          display: block;
-                          margin-bottom: 2px;
-                        "
                         data-i18n="resumeDelay"
                         >Resume Delay</label
                       >
                       <input
+                        class="form-control"
                         type="number"
                         id="resumeDelay"
                         min="0"
                         step="100"
-                        style="
-                          width: 100%;
-                          padding: 6px;
-                          border: 1px solid #d1d5db;
-                          border-radius: 4px;
-                        "
                         placeholder="0"
                       />
                     </div>
                   </div>
-                  <div style="margin-top: 10px">
+                  <div class="spacing-top-compact">
                     <label
+                      class="field-label"
                       for="rewindSeconds"
-                      style="
-                        font-size: 11px;
-                        color: #6b7280;
-                        display: block;
-                        margin-bottom: 2px;
-                      "
                       data-i18n="rewindSeconds"
                       >Rewind on resume (seconds; 0 to disable)</label
                     >
                     <input
+                      class="form-control"
                       type="number"
                       id="rewindSeconds"
                       min="0"
                       max="60"
                       step="1"
-                      style="
-                        width: 100%;
-                        padding: 6px;
-                        border: 1px solid #d1d5db;
-                        border-radius: 4px;
-                      "
                       placeholder="3"
                     />
                   </div>
-                  <div style="margin-top: 10px">
+                  <div class="spacing-top-compact">
                     <label
+                      class="field-label"
                       for="playbackSpeed"
-                      style="
-                        font-size: 11px;
-                        color: #6b7280;
-                        display: block;
-                        margin-bottom: 2px;
-                      "
                       data-i18n="playbackSpeed"
                       >Playback speed (0 = use the site's speed)</label
                     >
                     <input
+                      class="form-control"
                       type="number"
                       id="playbackSpeed"
                       min="0"
                       max="4"
                       step="0.25"
-                      style="
-                        width: 100%;
-                        padding: 6px;
-                        border: 1px solid #d1d5db;
-                        border-radius: 4px;
-                      "
                     />
                   </div>
-                  <div style="margin-top: 12px">
-                    <label
-                      style="
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        margin-bottom: 4px;
-                      "
+                  <div class="field-section">
+                    <label for="fadeDuration" data-i18n="fadeDuration"
+                      >Fade Duration (ms, 0 disables)</label
                     >
-                      <input type="checkbox" id="audioFading" />
-                      <span class="label-text" data-i18n="audioFading"
-                        >Audio Fading</span
-                      >
-                    </label>
-                    <div
-                      id="audioFadingSettings"
-                      hidden
-                      style="margin-left: 4px"
-                    >
-                      <label
-                        for="fadeDuration"
-                        style="
-                          font-size: 11px;
-                          color: #6b7280;
-                          display: block;
-                          margin-bottom: 2px;
-                        "
-                        data-i18n="fadeDuration"
-                        >Fade Duration (ms)</label
-                      >
-                      <input
-                        type="number"
-                        id="fadeDuration"
-                        min="0"
-                        step="50"
-                        style="
-                          width: 100%;
-                          padding: 6px;
-                          border: 1px solid #d1d5db;
-                          border-radius: 4px;
-                        "
-                        placeholder="200"
-                      />
-                    </div>
+                    <input
+                      type="number"
+                      id="fadeDuration"
+                      min="0"
+                      step="50"
+                      placeholder="0"
+                    />
                   </div>
                 </div>
               </div>
@@ -1346,11 +689,16 @@
           </div>
 
           <div class="container section">
-            <button class="collapsible_button">
+            <button
+              class="collapsible_button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="domainContent"
+            >
               <span data-i18n="domainSettings">Domain Settings</span>
             </button>
-            <div class="collapsible_content">
-              <div style="margin-top: 8px">
+            <div class="collapsible_content" id="domainContent">
+              <div class="spacing-top-small">
                 <label>
                   <input type="checkbox" id="onlyConfiguredSites" />
                   <span class="label-text" data-i18n="onlyConfiguredSites"
@@ -1358,7 +706,7 @@
                   >
                 </label>
 
-                <div id="siteRulesEditor" style="margin-top: 14px">
+                <div class="site-rules-editor-spacing" id="siteRulesEditor">
                   <p data-i18n="siteRuleIntro">
                     Configure an individual site without changing global
                     settings.
@@ -1366,6 +714,7 @@
                   <button
                     type="button"
                     id="addSiteRule"
+                    class="button button-primary"
                     data-i18n="siteRuleAdd"
                   >
                     Add current site
@@ -1375,15 +724,10 @@
                     >Filter site rules</label
                   >
                   <input
+                    class="form-control"
                     type="search"
                     id="siteRuleFilter"
                     autocomplete="off"
-                    style="
-                      width: 100%;
-                      padding: 6px;
-                      border: 1px solid #d1d5db;
-                      border-radius: 4px;
-                    "
                   />
                   <ul id="siteRuleList"></ul>
                 </div>
@@ -1392,11 +736,16 @@
           </div>
 
           <div class="container section">
-            <button class="collapsible_button">
+            <button
+              class="collapsible_button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="hotkeysContent"
+            >
               <span data-i18n="hotkeys">Hotkeys</span>
             </button>
-            <div class="collapsible_content">
-              <div id="hotkeys" style="margin-top: 8px"></div>
+            <div class="collapsible_content" id="hotkeysContent">
+              <div class="spacing-top-small" id="hotkeys"></div>
               <p data-i18n="hotkeysDescription">
                 You can configure hotkeys in the Extensions menu
               </p>
@@ -1424,7 +773,7 @@
               <a
                 href="https://github.com/sponsors/drodil"
                 target="_blank"
-                class="support-link"
+                class="support-link button"
                 data-i18n="githubSponsors"
               >
                 GitHub Sponsors
@@ -1432,7 +781,7 @@
               <a
                 href="https://patreon.com/drodil"
                 target="_blank"
-                class="support-link"
+                class="support-link button"
                 data-i18n="supportOnPatreon"
               >
                 Support on Patreon
@@ -1442,7 +791,7 @@
                 href="https://github.com/drodil/video_auto_pause/issues/new"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="support-link"
+                class="support-link button"
                 data-i18n="reportSite"
               >
                 Report a site
@@ -1450,6 +799,7 @@
               <button
                 type="button"
                 id="copyDiagnostics"
+                class="support-link button"
                 data-i18n="diagnosticsExport"
               >
                 Copy diagnostics
@@ -1460,7 +810,7 @@
               Copies browser details and settings to your clipboard. Nothing is
               sent automatically.
             </p>
-            <p style="text-align: center; margin-top: 12px">
+            <p class="centered-source-link">
               <a
                 href="https://github.com/drodil/video_auto_pause"
                 target="_blank"
@@ -1503,6 +853,7 @@
               <button
                 type="button"
                 id="saveSiteSettings"
+                class="button button-primary"
                 data-i18n="siteRuleSave"
               >
                 Save site settings
@@ -1510,6 +861,7 @@
               <button
                 type="button"
                 id="deleteSiteSettings"
+                class="button button-danger"
                 data-i18n="siteRuleDelete"
               >
                 Delete site settings

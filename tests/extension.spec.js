@@ -57,12 +57,18 @@ const startServer = async () => {
 };
 
 const test = base.extend({
-  context: async ({ browserName }, use) => {
+  context: async ({ browserName }, use, testInfo) => {
     if (!server) await startServer();
 
     const userDataDir = fs.mkdtempSync(
       path.join(os.tmpdir(), `${browserName}-user-data-`),
     );
+    const extensionTempDir = fs.mkdtempSync(
+      path.join(os.tmpdir(), `${browserName}-extension-`),
+    );
+    const testExtensionPath = path.join(extensionTempDir, "unpacked");
+    // Give each test its own extension ID to isolate Chrome Sync write quotas.
+    fs.cpSync(chromeExtensionPath, testExtensionPath, { recursive: true });
 
     let context;
     if (browserName === "chromium") {
@@ -70,8 +76,9 @@ const test = base.extend({
         headless: false,
         acceptDownloads: true,
         args: [
-          `--disable-extensions-except=${chromeExtensionPath}`,
-          `--load-extension=${chromeExtensionPath}`,
+          `--disable-extensions-except=${testExtensionPath}`,
+          `--load-extension=${testExtensionPath}`,
+          "--headless=new",
           "--no-sandbox",
           "--disable-gpu",
         ],
@@ -83,6 +90,8 @@ const test = base.extend({
     }
 
     let extensionId;
+    let suppressInitialOnboarding =
+      testInfo.title !== "opens a localized onboarding page on first install";
     const captureId = (url) => {
       if (url.startsWith("chrome-extension://")) {
         extensionId = url.split("/")[2];
@@ -97,6 +106,47 @@ const test = base.extend({
         captureId(sw.url());
       });
     }
+    const maybeCloseInitialOnboarding = (page) => {
+      if (
+        suppressInitialOnboarding &&
+        page.url().includes("/onboarding.html")
+      ) {
+        suppressInitialOnboarding = false;
+        void page.waitForLoadState("load").then(
+          () => {
+            if (!page.isClosed()) {
+              return page.close();
+            }
+          },
+          (error) => {
+            if (!page.isClosed()) {
+              console.error(
+                "Could not wait for the initial onboarding page:",
+                error,
+              );
+            }
+          },
+        );
+      }
+    };
+    for (const openPage of context.pages()) {
+      openPage.on("load", () => maybeCloseInitialOnboarding(openPage));
+      maybeCloseInitialOnboarding(openPage);
+    }
+    context.on("page", (openPage) => {
+      openPage.on("load", () => maybeCloseInitialOnboarding(openPage));
+      maybeCloseInitialOnboarding(openPage);
+    });
+
+    const initialWorker =
+      context.serviceWorkers()[0] ??
+      (await context.waitForEvent("serviceworker", { timeout: 10000 }));
+    await initialWorker.evaluate(async () => settingsReady);
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    for (const openPage of context.pages()) {
+      maybeCloseInitialOnboarding(openPage);
+    }
+    suppressInitialOnboarding = false;
 
     context.updateSettings = async (settings) => {
       if (!extensionId) {
@@ -118,27 +168,36 @@ const test = base.extend({
       }
       await worker.evaluate(async (newSettings) => {
         await settingsReady;
-        return new Promise((resolve, reject) =>
-          chrome.storage.sync.set(newSettings, () => {
-            const error = chrome.runtime.lastError;
-            if (error) {
-              reject(new Error(error.message));
-            } else {
-              resolve();
-            }
-          }),
+        await VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
+          chrome.storage.sync,
+          chrome.storage.local,
+          VAP_DEFAULT_OPTIONS,
+          newSettings,
         );
       }, settings);
+    };
+    context.getSettings = async () => {
+      const worker =
+        context
+          .serviceWorkers()
+          .find((candidate) => candidate.url().includes(extensionId)) ??
+        initialWorker;
+      return worker.evaluate(() =>
+        VAP_GET_ACTIVE_PROFILE_SETTINGS(
+          chrome.storage.sync,
+          chrome.storage.local,
+          VAP_DEFAULT_OPTIONS,
+        ),
+      );
     };
 
     await use(context);
     await context.close();
-    try {
-      fs.rmSync(userDataDir, { recursive: true, force: true });
-    } catch (e) {}
+    fs.rmSync(userDataDir, { recursive: true, force: true });
+    fs.rmSync(extensionTempDir, { recursive: true, force: true });
   },
   page: async ({ context }, use) => {
-    const page = (await context.pages()[0]) || (await context.newPage());
+    const page = await context.newPage();
     await use(page);
   },
 });
@@ -298,6 +357,24 @@ test.describe("Video Auto Pause Extension", () => {
     await optionsPage.locator('[data-site-value="resumeDelay"]').fill("500");
     await optionsPage.locator('[data-site-override="playbackSpeed"]').check();
     await optionsPage.locator('[data-site-value="playbackSpeed"]').fill("1.75");
+    await optionsPage.locator('[data-site-override="fadeDuration"]').check();
+    await optionsPage.locator('[data-site-value="fadeDuration"]').fill("450");
+    await optionsPage.locator('[data-site-override="allowAudio"]').check();
+    await optionsPage.locator('[data-site-value="allowAudio"]').uncheck();
+    await optionsPage.locator('[data-site-override="quietHoursStart"]').check();
+    await optionsPage
+      .locator('[data-site-value="quietHoursStart"]')
+      .fill("21:30");
+    await optionsPage.locator('[data-site-override="quietHoursEnd"]').check();
+    await optionsPage
+      .locator('[data-site-value="quietHoursEnd"]')
+      .fill("06:00");
+    await optionsPage
+      .locator('[data-site-override="contentShortcutKeys"]')
+      .check();
+    await optionsPage
+      .locator('[data-site-shortcut-value="seekBackward"]')
+      .fill("k");
     await optionsPage.locator("#saveSiteSettings").click();
     await expect(optionsPage.locator("#siteSettingsStatus")).toContainText(
       "saved",
@@ -306,9 +383,7 @@ test.describe("Video Auto Pause Extension", () => {
       "localhost",
     );
     await expect
-      .poll(() =>
-        worker.evaluate(async () => chrome.storage.sync.get("siteRules")),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({
         siteRules: [
           {
@@ -319,6 +394,13 @@ test.describe("Video Auto Pause Extension", () => {
               pauseDelay: 250,
               resumeDelay: 500,
               playbackSpeed: 1.75,
+              fadeDuration: 450,
+              allowAudio: false,
+              quietHoursStart: "21:30",
+              quietHoursEnd: "06:00",
+              contentShortcutKeys: expect.objectContaining({
+                seekBackward: "k",
+              }),
             },
           },
         ],
@@ -328,6 +410,12 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(
       optionsPage.locator('[data-site-value="muteVideo"]'),
     ).toBeChecked();
+    await expect(
+      optionsPage.locator('[data-site-value="fadeDuration"]'),
+    ).toHaveValue("450");
+    await expect(
+      optionsPage.locator('[data-site-shortcut-value="seekBackward"]'),
+    ).toHaveValue("k");
     await optionsPage.locator("#backToGlobal").click();
     await expect(optionsPage.locator("#siteSettingsView")).toHaveAttribute(
       "aria-hidden",
@@ -404,9 +492,7 @@ test.describe("Video Auto Pause Extension", () => {
     await optionsPage.locator("#playbackSpeed").fill("1.25");
     await optionsPage.locator("#playbackSpeed").press("Tab");
     await expect
-      .poll(() =>
-        worker.evaluate(async () => chrome.storage.sync.get("playbackSpeed")),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({ playbackSpeed: 1.25 });
     await expect
       .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
@@ -543,9 +629,10 @@ test.describe("Video Auto Pause Extension", () => {
     context,
   }) => {
     const worker = context.serviceWorkers()[0];
-    const onboarding = context
-      .pages()
-      .find((candidate) => candidate.url().endsWith("/onboarding.html"));
+    const onboarding = await context.newPage();
+    await onboarding.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("onboarding.html")),
+    );
     await expect(onboarding.locator("[data-preset=study]")).toBeVisible();
     const descriptions = [
       {
@@ -580,17 +667,7 @@ test.describe("Video Auto Pause Extension", () => {
     await onboarding.locator("[data-preset=study]").click();
     await expect(onboarding.locator("#presetStatus")).toContainText("applied");
     await expect
-      .poll(() =>
-        worker.evaluate(async () => {
-          const settings = await chrome.storage.sync.get([
-            "autopause",
-            "focuspause",
-            "focusresume",
-            "rewindSeconds",
-          ]);
-          return settings;
-        }),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({
         autopause: true,
         focuspause: true,
@@ -611,24 +688,156 @@ test.describe("Video Auto Pause Extension", () => {
         description.text,
       );
     }
+    await expect(optionsPage.locator("[data-preset]").first()).toBeHidden();
+    await optionsPage.locator(".preset-options summary").click();
+    await expect(optionsPage.locator("[data-preset=study]")).toBeVisible();
     await optionsPage.locator("[data-preset=saver]").click();
     await expect
-      .poll(() =>
-        worker.evaluate(async () =>
-          chrome.storage.sync.get([
-            "autopause",
-            "autoresume",
-            "scrollpause",
-            "blockAutoplay",
-          ]),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({
         autopause: true,
         autoresume: false,
         scrollpause: true,
         blockAutoplay: true,
       });
+  });
+
+  test("keeps optional controls compact and exposes profile switching as needed", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const popupPage = await context.newPage();
+    await popupPage.setViewportSize({ width: 1280, height: 800 });
+    await popupPage.goto(`${optionsUrl}?popup`);
+    const popupBounds = await popupPage.locator("#wrapper").boundingBox();
+    expect(popupBounds.width).toBe(800);
+    expect(popupBounds.height).toBe(600);
+
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+    await optionsPage.setViewportSize({ width: 1280, height: 800 });
+    const wrapperBounds = await optionsPage.locator("#wrapper").boundingBox();
+    expect(wrapperBounds.width).toBe(1080);
+    expect(wrapperBounds.height).toBeGreaterThanOrEqual(800);
+    await optionsPage.setViewportSize({ width: 430, height: 700 });
+    const narrowWrapperBounds = await optionsPage
+      .locator("#wrapper")
+      .boundingBox();
+    expect(narrowWrapperBounds.width).toBe(430);
+    expect(narrowWrapperBounds.height).toBeGreaterThanOrEqual(700);
+    await optionsPage.setViewportSize({ width: 1280, height: 800 });
+    await expect(optionsPage.locator("#activeProfileControl")).toBeHidden();
+    const pinButton = optionsPage.getByRole("button", {
+      name: "Keep playing in this tab",
+    });
+    await expect(pinButton).toBeVisible();
+    await expect(pinButton.locator("svg")).toHaveCount(1);
+    const pinBox = await pinButton.boundingBox();
+    expect(pinBox.width).toBeLessThanOrEqual(44);
+    await expect(optionsPage.locator("[data-preset]").first()).toBeHidden();
+    const presetDisclosure = optionsPage.locator(".preset-options summary");
+    const profilesDisclosure = optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Profiles & backup" });
+    const [presetDisclosureStyle, profilesDisclosureStyle] = await Promise.all([
+      presetDisclosure.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return [style.backgroundColor, style.fontSize, style.borderTopColor];
+      }),
+      profilesDisclosure.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return [style.backgroundColor, style.fontSize, style.borderTopColor];
+      }),
+    ]);
+    expect(presetDisclosureStyle).toEqual(profilesDisclosureStyle);
+    const [applyProfileBox, deleteProfileBox] = await Promise.all(
+      ["#applyProfile", "#deleteProfile"].map((selector) =>
+        optionsPage.locator(selector).boundingBox(),
+      ),
+    );
+    expect([applyProfileBox.width, applyProfileBox.height]).toEqual([
+      deleteProfileBox.width,
+      deleteProfileBox.height,
+    ]);
+    const [supportLinkStyle, diagnosticsButtonStyle] = await Promise.all([
+      optionsPage.locator(".support-link[href]").first().evaluate((element) => {
+        const style = getComputedStyle(element);
+        return [style.fontSize, style.padding, style.minHeight];
+      }),
+      optionsPage.locator("#copyDiagnostics").evaluate((element) => {
+        const style = getComputedStyle(element);
+        return [style.fontSize, style.padding, style.minHeight];
+      }),
+    ]);
+    expect(diagnosticsButtonStyle).toEqual(supportLinkStyle);
+    await presetDisclosure.click();
+    const presetColors = await optionsPage
+      .locator(".preset-grid [data-preset]")
+      .evaluateAll((elements) =>
+        elements.map((element) => getComputedStyle(element).backgroundColor),
+      );
+    expect(new Set(presetColors).size).toBe(4);
+    await presetDisclosure.click();
+    await expect(optionsPage.locator("#settingsContent")).toHaveClass(
+      /expanded/,
+    );
+    await expect(
+      optionsPage
+        .locator(".collapsible_button")
+        .filter({ hasText: "Profiles & backup" }),
+    ).toHaveAttribute("aria-expanded", "false");
+
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await expect(optionsPage.locator("#contentShortcutSettings")).toBeHidden();
+    await optionsPage.locator("#contentShortcutsEnabled").check();
+    await expect(optionsPage.locator("#contentShortcutSettings")).toBeVisible();
+    await optionsPage.locator("#contentShortcutsEnabled").uncheck();
+    await expect(optionsPage.locator("#contentShortcutSettings")).toBeHidden();
+
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Profiles & backup" })
+      .click();
+    const actionColors = await Promise.all(
+      ["#saveProfile", "#applyProfile", "#deleteProfile"].map((selector) =>
+        optionsPage
+          .locator(selector)
+          .evaluate((element) => getComputedStyle(element).backgroundColor),
+      ),
+    );
+    expect(new Set(actionColors).size).toBe(3);
+    await optionsPage.locator("#profileName").fill("Work");
+    await optionsPage.locator("#saveProfile").click();
+    await expect(optionsPage.locator("#profileStatus")).toContainText("saved");
+    await expect(optionsPage.locator("#activeProfileControl")).toBeVisible();
+    await expect(optionsPage.locator("#activeProfileSelect")).not.toHaveValue(
+      "default",
+    );
+  });
+
+  test("keeps onboarding usable on a narrow viewport", async ({ context }) => {
+    const worker = context.serviceWorkers()[0];
+    const onboarding = await context.newPage();
+    await onboarding.setViewportSize({ width: 320, height: 568 });
+    await onboarding.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("onboarding.html")),
+    );
+    await expect(
+      onboarding.getByRole("heading", { name: "Welcome to Video Auto Pause" }),
+    ).toBeVisible();
+    await expect(onboarding.locator("[data-preset]")).toHaveCount(4);
+    await expect(onboarding.locator("[data-preset]").first()).toBeVisible();
+    expect(
+      await onboarding.evaluate(
+        () => document.documentElement.scrollWidth > window.innerWidth,
+      ),
+    ).toBe(false);
   });
 
   test("includes all added settings messages in every locale", () => {
@@ -646,6 +855,7 @@ test.describe("Video Auto Pause Extension", () => {
       "peekMode",
       "disableAutoplayNext",
       "sleepTimerStart",
+      "sleepTimerDuration",
       "sleepTimerCancel",
       "sleepTimerSet",
       "sleepTimerFailed",
@@ -660,8 +870,6 @@ test.describe("Video Auto Pause Extension", () => {
       "settingsImportFailed",
       "profileName",
       "profileNamePlaceholder",
-      "profileDomains",
-      "profileDomainsPlaceholder",
       "saveProfile",
       "applyProfile",
       "deleteProfile",
@@ -692,10 +900,9 @@ test.describe("Video Auto Pause Extension", () => {
       "shortcutActionUnsupported",
       "shortcutActionFailed",
       "autoPipOnTabSwitch",
-      "audioOnlySupport",
-      "audioOnlyDescription",
-      "audioAllowList",
-      "audioAllowListPlaceholder",
+      "allowAudio",
+      "profileDefault",
+      "settingsSaveFailed",
       "pauseOnLowBattery",
       "pauseOnLowBatteryDescription",
       "pauseOnAudioOutputDisconnect",
@@ -744,6 +951,10 @@ test.describe("Video Auto Pause Extension", () => {
     );
     const optionsPage = await context.newPage();
     await optionsPage.goto(optionsUrl);
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Profiles & backup" })
+      .click();
 
     const downloadPromise = optionsPage.waitForEvent("download");
     await optionsPage.locator("#exportSettings").click();
@@ -760,6 +971,12 @@ test.describe("Video Auto Pause Extension", () => {
         },
       ],
     });
+    expect(exported.profiles).toHaveLength(1);
+    expect(exported.profiles[0]).toMatchObject({
+      id: "default",
+      name: "Default",
+    });
+    expect(exported.activeProfileId).toBe("default");
 
     const importedPayload = {
       schemaVersion: 1,
@@ -785,16 +1002,7 @@ test.describe("Video Auto Pause Extension", () => {
       "imported",
     );
     await expect
-      .poll(() =>
-        worker.evaluate(() =>
-          chrome.storage.sync.get([
-            "autopause",
-            "rewindSeconds",
-            "quietHoursStart",
-            "siteRules",
-          ]),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({
         autopause: true,
         rewindSeconds: 12,
@@ -819,105 +1027,170 @@ test.describe("Video Auto Pause Extension", () => {
       "Could not import",
     );
     await expect
-      .poll(() => worker.evaluate(() => chrome.storage.sync.get("autopause")))
+      .poll(() => context.getSettings())
       .toMatchObject({ autopause: true });
   });
 
-  test("saves, applies, and deletes named settings profiles", async ({
+  test("keeps global and site settings bound to the active profile", async ({
     page,
     context,
   }) => {
     await context.updateSettings({
       autopause: true,
-      quietHoursStart: "20:00",
-      quietHoursEnd: "07:00",
+      playbackSpeed: 1.5,
+      siteRules: [
+        {
+          domain: "localhost",
+          enabled: true,
+          overrides: { playbackSpeed: 2 },
+        },
+      ],
     });
     const worker = context.serviceWorkers()[0];
-    const optionsUrl = await worker.evaluate(() =>
-      chrome.runtime.getURL("options.html"),
-    );
+    await page.goto(`http://video.localhost:${port}/video.html`);
+    await expect
+      .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
+      .toBe(2);
     const optionsPage = await context.newPage();
-    await optionsPage.goto(optionsUrl);
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Profiles & backup" })
+      .click();
     await optionsPage.locator("#profileName").fill("Work");
     await optionsPage.locator("#saveProfile").click();
     await expect(optionsPage.locator("#profileStatus")).toContainText("saved");
-    await expect(optionsPage.locator("#profileSelect")).toHaveValue("Work");
-
-    await worker.evaluate(
-      () =>
-        new Promise((resolve) =>
-          chrome.storage.sync.set(
-            { autopause: false, quietHoursStart: "", quietHoursEnd: "" },
-            resolve,
-          ),
+    const workProfileId = await optionsPage
+      .locator("#activeProfileSelect")
+      .inputValue();
+    expect(workProfileId).not.toBe("default");
+    expect(
+      await worker.evaluate(
+        async () =>
+          (await chrome.storage.local.get("vapActiveProfileId"))
+            .vapActiveProfileId,
+      ),
+    ).toBe(workProfileId);
+    expect(
+      await worker.evaluate(async () =>
+        Object.prototype.hasOwnProperty.call(
+          await chrome.storage.sync.get("vapActiveProfileId"),
+          "vapActiveProfileId",
         ),
-    );
-    await optionsPage.locator("#applyProfile").click();
+      ),
+    ).toBe(false);
+
+    await context.updateSettings({
+      playbackSpeed: 1.25,
+      siteRules: [
+        {
+          domain: "video.localhost",
+          enabled: true,
+          overrides: { playbackSpeed: 1.75 },
+        },
+      ],
+    });
+    await expect
+      .poll(() => context.getSettings())
+      .toMatchObject({
+        playbackSpeed: 1.25,
+        siteRules: [
+          {
+            domain: "video.localhost",
+            overrides: { playbackSpeed: 1.75 },
+          },
+        ],
+      });
+
+    await optionsPage.locator("#activeProfileSelect").selectOption("default");
     await expect(optionsPage.locator("#profileStatus")).toContainText(
       "applied",
     );
     await expect
-      .poll(() =>
-        worker.evaluate(() =>
-          chrome.storage.sync.get([
-            "autopause",
-            "quietHoursStart",
-            "quietHoursEnd",
-          ]),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({
-        autopause: true,
-        quietHoursStart: "20:00",
-        quietHoursEnd: "07:00",
+        playbackSpeed: 1.5,
+        siteRules: [
+          {
+            domain: "localhost",
+            overrides: { playbackSpeed: 2 },
+          },
+        ],
       });
+    await optionsPage
+      .locator("#activeProfileSelect")
+      .selectOption(workProfileId);
+    await expect(optionsPage.locator("#profileStatus")).toContainText(
+      "applied",
+    );
+    await expect
+      .poll(() => context.getSettings())
+      .toMatchObject({
+        playbackSpeed: 1.25,
+        siteRules: [
+          {
+            domain: "video.localhost",
+            overrides: { playbackSpeed: 1.75 },
+          },
+        ],
+      });
+    await page.reload();
+    await expect(page.locator("#v")).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await expect
+      .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
+      .toBe(1.75);
+
+    const workProfile = await worker.evaluate(async (id) => {
+      const key = VAP_PROFILE_STORAGE_KEY(id);
+      return (await chrome.storage.sync.get(key))[key];
+    }, workProfileId);
+    expect(workProfile.settings.siteRules[0].overrides.playbackSpeed).toBe(
+      1.75,
+    );
+    expect(
+      await worker.evaluate(async () =>
+        Object.keys(await chrome.storage.local.get(null)).some((key) =>
+          key.startsWith("sitePlaybackRate:"),
+        ),
+      ),
+    ).toBe(false);
+
+    const downloadPromise = optionsPage.waitForEvent("download");
+    await optionsPage.locator("#exportSettings").click();
+    const backup = await downloadPromise;
+    const backupPayload = JSON.parse(
+      fs.readFileSync(await backup.path(), "utf8"),
+    );
+    expect(backupPayload.profiles).toHaveLength(2);
+    expect(backupPayload.activeProfileId).toBe(workProfileId);
+    await optionsPage.locator("#importSettingsFile").setInputFiles({
+      name: "profiles-backup.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(backupPayload)),
+    });
+    await expect(optionsPage.locator("#settingsImportStatus")).toContainText(
+      "imported",
+    );
+    await expect
+      .poll(() => context.getSettings())
+      .toMatchObject({ playbackSpeed: 1.25 });
 
     await optionsPage.locator("#deleteProfile").click();
     await expect(optionsPage.locator("#profileStatus")).toContainText(
       "deleted",
     );
-    await expect(optionsPage.locator("#profileSelect option")).toHaveCount(1);
-  });
-
-  test("applies the most specific matching hostname profile", async ({
-    page,
-    context,
-  }) => {
-    await page.goto(`http://video.localhost:${port}/video.html`);
-    await context.updateSettings({ playbackSpeed: 1 });
-    const worker = context.serviceWorkers()[0];
-    const optionsPage = await context.newPage();
-    await optionsPage.goto(
-      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
-    );
-    await optionsPage.locator("#profileName").fill("Base");
-    await optionsPage.locator("#profileDomains").fill("localhost");
-    await optionsPage.locator("#saveProfile").click();
-    await optionsPage.locator("#profileName").fill("Specific");
-    await optionsPage.locator("#profileDomains").fill("video.localhost");
-    await optionsPage.locator("#playbackSpeed").fill("2");
-    await optionsPage.locator("#playbackSpeed").press("Tab");
-    await optionsPage.locator("#saveProfile").click();
-
-    const profileSelection = await worker.evaluate(() =>
-      VAP_PROFILE_FOR_SITE("video.localhost", [
-        {
-          name: "Base",
-          domains: ["localhost"],
-          settings: { playbackSpeed: 1.5 },
-        },
-        {
-          name: "Specific",
-          domains: ["video.localhost"],
-          settings: { playbackSpeed: 2 },
-        },
-      ]),
-    );
-    expect(profileSelection.name).toBe("Specific");
-    await page.reload();
-    await expect
-      .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
-      .toBe(2);
+    await expect(optionsPage.locator("#activeProfileSelect")).toBeHidden();
+    await expect(optionsPage.locator("#profileSelect option")).toHaveCount(2);
+    await expect(optionsPage.locator("#deleteProfile")).toBeDisabled();
+    await expect(context.getSettings()).resolves.toMatchObject({
+      playbackSpeed: 1.5,
+    });
   });
 
   test("rewinds automatically resumed finite videos by the configured amount", async ({
@@ -1100,7 +1373,7 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("muted", false);
   });
 
-  test("recognizes generic and YouTube player ad markers", async ({
+  test("recognizes generic, third-party, and YouTube player ad markers", async ({
     page,
     context,
   }) => {
@@ -1122,7 +1395,7 @@ test.describe("Video Auto Pause Extension", () => {
     const otherTab = await context.newPage();
     await otherTab.goto(`http://localhost:${port}/`);
 
-    for (const marker of ["generic", "youtube"]) {
+    for (const marker of ["generic", "youtube", "shaka", "ima"]) {
       await page.bringToFront();
       await video.evaluate(async (element, markerType) => {
         await element.play();
@@ -1131,13 +1404,16 @@ test.describe("Video Auto Pause Extension", () => {
         ad.id = "test-ad-marker";
         if (markerType === "generic") {
           ad.dataset.adPlaying = "true";
-        } else {
+        } else if (markerType === "youtube") {
           ad.className = "video-ads ytp-ad-module";
           const activeOverlay = document.createElement("div");
           activeOverlay.className = "ytp-ad-player-overlay";
           activeOverlay.style.cssText =
             "position:fixed;width:10px;height:10px;top:0;left:0";
           ad.append(activeOverlay);
+        } else {
+          ad.className =
+            markerType === "shaka" ? "shaka-ad-container" : "vjs-ima3-ad-mode";
         }
         document.body.append(ad);
       }, marker);
@@ -1192,11 +1468,11 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(siteToggle).toHaveAttribute("aria-pressed", "false");
     const worker = context.serviceWorkers()[0];
     await expect
-      .poll(() =>
-        worker.evaluate(async () => {
-          const { siteRules = [] } = await chrome.storage.sync.get("siteRules");
-          return siteRules.find((rule) => rule.domain === "localhost")?.enabled;
-        }),
+      .poll(
+        async () =>
+          (await context.getSettings()).siteRules.find(
+            (rule) => rule.domain === "localhost",
+          )?.enabled,
       )
       .toBe(false);
     await siteToggle.click();
@@ -1213,10 +1489,13 @@ test.describe("Video Auto Pause Extension", () => {
     });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
     const video = page.locator("#v");
     const overlay = page.locator(".vap-video-overlay");
     await expect(overlay).toBeAttached({ timeout: 10000 });
     await overlay.evaluate((element) => (element.style.opacity = "1"));
+    await video.evaluate((element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
     const toggle = overlay.locator('[data-action="toggle"]');
     const bounds = await toggle.boundingBox();
     const cdp = await context.newCDPSession(page);
@@ -1267,6 +1546,10 @@ test.describe("Video Auto Pause Extension", () => {
       "lang",
       await optionsPage.evaluate(() => chrome.i18n.getUILanguage()),
     );
+    await expect(optionsPage.locator("html")).toHaveAttribute(
+      "dir",
+      await optionsPage.evaluate(() => chrome.i18n.getMessage("@@bidi_dir")),
+    );
     const checkboxLabel = optionsPage.locator("label:has(#autopause)");
     await expect(checkboxLabel).toHaveCSS("min-height", "44px");
     await cdp.detach();
@@ -1276,7 +1559,12 @@ test.describe("Video Auto Pause Extension", () => {
     page,
     context,
   }) => {
-    await context.updateSettings({ autopause: true, autoresume: true });
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      focuspause: true,
+      focusresume: true,
+    });
     await page.goto(`http://localhost:${port}/video.html`);
     await page.bringToFront();
     const video = page.locator("#v");
@@ -1286,11 +1574,8 @@ test.describe("Video Auto Pause Extension", () => {
       { timeout: 10000 },
     );
     await video.evaluate((element) => element.play());
-
-    const otherTab = await context.newPage();
-    await otherTab.goto(`http://localhost:${port}/`);
-    await otherTab.bringToFront();
-    await page.waitForTimeout(1000);
+    await expect(video).toHaveJSProperty("paused", false);
+    await page.evaluate(() => window.dispatchEvent(new Event("blur")));
     await expect(video).toHaveJSProperty("paused", true);
 
     const worker = context.serviceWorkers()[0];
@@ -1303,7 +1588,7 @@ test.describe("Video Auto Pause Extension", () => {
       )
       .toBe(1);
 
-    await page.bringToFront();
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(video).toHaveJSProperty("paused", false);
     await expect
       .poll(() =>
@@ -1319,6 +1604,7 @@ test.describe("Video Auto Pause Extension", () => {
 
   test("should pause video when switching tabs", async ({ page, context }) => {
     await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
 
     const video = page.locator("#v");
     await expect(video).toBeAttached();
@@ -1402,6 +1688,7 @@ test.describe("Video Auto Pause Extension", () => {
     context,
   }) => {
     await page.goto(`http://localhost:${port}/`);
+    await page.bringToFront();
     await page.evaluate(() => {
       const video = document.createElement("video");
       video.id = "spa-video";
@@ -1422,6 +1709,7 @@ test.describe("Video Auto Pause Extension", () => {
 
     const otherTab = await context.newPage();
     await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
     await expect(video).toHaveJSProperty("paused", true);
     await page.bringToFront();
     await expect(video).toHaveJSProperty("paused", false);
@@ -1448,6 +1736,7 @@ test.describe("Video Auto Pause Extension", () => {
     context,
   }) => {
     await page.goto(`http://localhost:${port}/`);
+    await page.bringToFront();
     await page.evaluate((frameUrl) => {
       const frame = document.createElement("iframe");
       frame.src = frameUrl;
@@ -1465,6 +1754,7 @@ test.describe("Video Auto Pause Extension", () => {
 
     const otherTab = await context.newPage();
     await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
     await expect(video).toHaveJSProperty("paused", true);
   });
 
@@ -1803,19 +2093,15 @@ test.describe("Video Auto Pause Extension", () => {
       .click();
     await optionsPage.locator("#autoPipOnTabSwitch").check();
     await expect
-      .poll(() =>
-        worker.evaluate(async () =>
-          chrome.storage.sync.get("autoPipOnTabSwitch"),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({ autoPipOnTabSwitch: true });
   });
 
-  test("controls audio-only players only when enabled and not allow-listed", async ({
+  test("allows audio globally and lets site rules override the choice", async ({
     page,
     context,
   }) => {
-    await context.updateSettings({ handleAudio: true, audioAllowList: "" });
+    await context.updateSettings({ allowAudio: true });
     await page.goto(`http://localhost:${port}/video.html`);
     await expect(page.locator("#v")).toHaveAttribute(
       "data-auto-pause-listener-attached",
@@ -1847,11 +2133,28 @@ test.describe("Video Auto Pause Extension", () => {
 
     await createAudioAndPlay();
     await sendStop();
+    await expect(page.locator("#audio-only")).toHaveJSProperty("paused", false);
+
+    await context.updateSettings({ allowAudio: false });
+    await page.reload();
+    await expect(page.locator("#v")).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await createAudioAndPlay();
+    await sendStop();
     await expect(page.locator("#audio-only")).toHaveJSProperty("paused", true);
 
     await context.updateSettings({
-      handleAudio: true,
-      audioAllowList: "localhost",
+      allowAudio: false,
+      siteRules: [
+        {
+          domain: "localhost",
+          enabled: true,
+          overrides: { allowAudio: true },
+        },
+      ],
     });
     await page.reload();
     await expect(page.locator("#v")).toHaveAttribute(
@@ -1878,11 +2181,7 @@ test.describe("Video Auto Pause Extension", () => {
       .click();
     await optionsPage.locator("#pauseOnLowBattery").check();
     await expect
-      .poll(() =>
-        worker.evaluate(async () =>
-          chrome.storage.sync.get("pauseOnLowBattery"),
-        ),
-      )
+      .poll(() => context.getSettings(), { timeout: 10000 })
       .toMatchObject({ pauseOnLowBattery: true });
   });
 
@@ -1900,11 +2199,7 @@ test.describe("Video Auto Pause Extension", () => {
       .click();
     await optionsPage.locator("#pauseOnAudioOutputDisconnect").check();
     await expect
-      .poll(() =>
-        worker.evaluate(async () =>
-          chrome.storage.sync.get("pauseOnAudioOutputDisconnect"),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({ pauseOnAudioOutputDisconnect: true });
   });
 
@@ -2069,16 +2364,7 @@ test.describe("Video Auto Pause Extension", () => {
     await pauseDelay.dispatchEvent("change");
 
     await expect
-      .poll(() =>
-        worker.evaluate(
-          () =>
-            new Promise((resolve) =>
-              chrome.storage.sync.get("pauseDelay", (result) =>
-                resolve(result.pauseDelay),
-              ),
-            ),
-        ),
-      )
+      .poll(async () => (await context.getSettings()).pauseDelay)
       .toBe(0);
   });
 
@@ -2103,14 +2389,7 @@ test.describe("Video Auto Pause Extension", () => {
     await pauseDelay.dispatchEvent("change");
 
     await expect
-      .poll(() =>
-        worker.evaluate(
-          () =>
-            new Promise((resolve) =>
-              chrome.storage.sync.get(["autopause", "pauseDelay"], resolve),
-            ),
-        ),
-      )
+      .poll(() => context.getSettings())
       .toMatchObject({ autopause: false, pauseDelay: 350 });
 
     await optionsPage.reload();
@@ -2123,9 +2402,13 @@ test.describe("Video Auto Pause Extension", () => {
   }) => {
     const worker = context.serviceWorkers()[0];
     const migrated = await worker.evaluate(async () => {
-      await chrome.storage.sync.remove("onlyConfiguredSites");
+      await chrome.storage.sync.clear();
       await chrome.storage.sync.set({
         vapSiteRulesVersion: 0,
+        audioFading: true,
+        fadeDuration: 350,
+        handleAudio: true,
+        audioAllowList: "music.example",
         siteRules: [
           {
             domain: "media.example.com",
@@ -2137,11 +2420,20 @@ test.describe("Video Auto Pause Extension", () => {
         includedDomains: ["allowed.example.com"],
         excludedDomains: ["blocked.example.com"],
       });
-      await VAP_MIGRATE_DOMAIN_SETTINGS(chrome.storage.sync);
-      return chrome.storage.sync.get(null);
+      const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+        chrome.storage.sync,
+        chrome.storage.local,
+        VAP_DEFAULT_OPTIONS,
+      );
+      const stored = await chrome.storage.sync.get(null);
+      return { settings, stored };
     });
-    expect(migrated.onlyConfiguredSites).toBe(true);
-    expect(migrated.siteRules).toEqual(
+    expect(migrated.settings.onlyConfiguredSites).toBe(true);
+    expect(migrated.settings).toMatchObject({
+      fadeDuration: 350,
+      allowAudio: false,
+    });
+    expect(migrated.settings.siteRules).toEqual(
       expect.arrayContaining([
         {
           domain: "media.example.com",
@@ -2161,15 +2453,78 @@ test.describe("Video Auto Pause Extension", () => {
           enabled: false,
           overrides: {},
         },
+        {
+          domain: "music.example",
+          enabled: true,
+          overrides: { allowAudio: true },
+        },
       ]),
     );
-    expect(migrated).not.toHaveProperty("includedDomains");
-    expect(migrated).not.toHaveProperty("excludedDomains");
+    expect(migrated.stored).not.toHaveProperty("includedDomains");
+    expect(migrated.stored).not.toHaveProperty("excludedDomains");
+    expect(migrated.stored).not.toHaveProperty("siteRules");
+    expect(migrated.stored.vapProfileIds).toContain("default");
   });
 
-  test("should show fade duration only when audio fading is enabled", async ({
+  test("keeps the active profile local while syncing available profiles", async ({
     context,
   }) => {
+    const worker = context.serviceWorkers()[0];
+    const result = await worker.evaluate(async () => {
+      await chrome.storage.sync.clear();
+      await chrome.storage.local.clear();
+      await chrome.storage.sync.set({
+        vapProfiles: [
+          {
+            id: "default",
+            name: "Default",
+            settings: { ...VAP_DEFAULT_OPTIONS, playbackSpeed: 1 },
+          },
+          {
+            id: "work",
+            name: "Work",
+            settings: { ...VAP_DEFAULT_OPTIONS, playbackSpeed: 1.5 },
+          },
+        ],
+        vapActiveProfileId: "work",
+      });
+      const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+        chrome.storage.sync,
+        chrome.storage.local,
+        VAP_DEFAULT_OPTIONS,
+      );
+      const storedSync = await chrome.storage.sync.get(null);
+      const activeProfile =
+        await chrome.storage.local.get("vapActiveProfileId");
+      await chrome.storage.local.clear();
+      const secondMachine = await VAP_ENSURE_PROFILES(
+        chrome.storage.sync,
+        chrome.storage.local,
+        VAP_DEFAULT_OPTIONS,
+      );
+      return {
+        firstMachineSpeed: settings.playbackSpeed,
+        firstMachineActiveId: activeProfile.vapActiveProfileId,
+        syncHasActiveId: Object.prototype.hasOwnProperty.call(
+          storedSync,
+          "vapActiveProfileId",
+        ),
+        secondMachineProfileIds: secondMachine.profiles.map(
+          (profile) => profile.id,
+        ),
+        secondMachineActiveId: secondMachine.activeProfileId,
+      };
+    });
+    expect(result).toMatchObject({
+      firstMachineSpeed: 1.5,
+      firstMachineActiveId: "work",
+      syncHasActiveId: false,
+      secondMachineProfileIds: ["default", "work"],
+      secondMachineActiveId: "default",
+    });
+  });
+
+  test("uses zero to disable audio fading", async ({ context }) => {
     const worker = context.serviceWorkers()[0];
     const extensionId = new URL(worker.url()).host;
     const optionsPage = await context.newPage();
@@ -2179,38 +2534,34 @@ test.describe("Video Auto Pause Extension", () => {
       .filter({ hasText: "Advanced Settings" })
       .click();
 
-    const audioFading = optionsPage.locator("#audioFading");
-    const audioFadingSettings = optionsPage.locator("#audioFadingSettings");
     const fadeDuration = optionsPage.locator("#fadeDuration");
-    await expect(audioFading).not.toBeChecked();
-    await expect(audioFadingSettings).toBeHidden();
-
-    await audioFading.check();
-    await expect(audioFadingSettings).toBeVisible();
+    await expect(fadeDuration).toHaveValue("0");
     await fadeDuration.fill("350");
     await fadeDuration.dispatchEvent("change");
+    const readFadeDuration = () =>
+      worker.evaluate(async () => {
+        const activeProfileId =
+          (await chrome.storage.local.get("vapActiveProfileId"))
+            .vapActiveProfileId ?? "default";
+        const key = `vapProfile:${activeProfileId}`;
+        return (await chrome.storage.sync.get(key))[key]?.settings
+          ?.fadeDuration;
+      });
     await expect
-      .poll(() =>
-        worker.evaluate(
-          () =>
-            new Promise((resolve) =>
-              chrome.storage.sync.get(["audioFading", "fadeDuration"], resolve),
-            ),
-        ),
-      )
-      .toMatchObject({ audioFading: true, fadeDuration: 350 });
+      .poll(readFadeDuration, { timeout: 10000 })
+      .toBe(350);
 
     await optionsPage.reload();
     await optionsPage
       .locator(".collapsible_button")
       .filter({ hasText: "Advanced Settings" })
       .click();
-    await expect(audioFading).toBeChecked();
-    await expect(audioFadingSettings).toBeVisible();
     await expect(fadeDuration).toHaveValue("350");
-
-    await audioFading.uncheck();
-    await expect(audioFadingSettings).toBeHidden();
+    await fadeDuration.fill("0");
+    await fadeDuration.dispatchEvent("change");
+    await expect
+      .poll(readFadeDuration, { timeout: 10000 })
+      .toBe(0);
   });
 
   test("should apply playback commands to the active tab", async ({
@@ -2369,22 +2720,9 @@ test.describe("Video Auto Pause Extension", () => {
     });
     await expect(video).toHaveJSProperty("paused", false);
 
-    const [popup] = await Promise.all([
-      context.waitForEvent("page"),
-      page.evaluate(() =>
-        window.open("about:blank", "_blank", "popup=yes,width=300,height=300"),
-      ),
-    ]);
-
-    await page.waitForTimeout(2000);
-
+    await page.evaluate(() => window.dispatchEvent(new Event("blur")));
     await expect(video).toHaveJSProperty("paused", true);
-
-    await popup.close();
-    await page.bringToFront();
-
-    await page.waitForTimeout(2000);
-
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(video).toHaveJSProperty("paused", false);
   });
 
@@ -2428,25 +2766,22 @@ test.describe("Video Auto Pause Extension", () => {
     await firstVideo.evaluate((element) => element.play());
     await expect(firstVideo).toHaveJSProperty("paused", false);
 
-    const [secondWindow] = await Promise.all([
-      context.waitForEvent("page"),
-      page.evaluate(() =>
-        window.open("about:blank", "_blank", "popup=yes,width=300,height=300"),
-      ),
-    ]);
-    await secondWindow.goto(`http://localhost:${port}/video.html`);
-    const secondVideo = secondWindow.locator("#v");
+    await page.evaluate(() => window.dispatchEvent(new Event("blur")));
+    await expect(firstVideo).toHaveJSProperty("paused", true);
+
+    const secondTab = await context.newPage();
+    await secondTab.goto(`http://localhost:${port}/video.html`);
+    await secondTab.bringToFront();
+    const secondVideo = secondTab.locator("#v");
     await secondVideo.evaluate((element) => element.play());
     await expect(secondVideo).toHaveJSProperty("paused", false);
+
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(firstVideo).toHaveJSProperty("paused", true);
 
     await page.bringToFront();
+    await page.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(firstVideo).toHaveJSProperty("paused", false);
-    await expect(secondVideo).toHaveJSProperty("paused", true);
-
-    await secondWindow.bringToFront();
-    await expect(secondVideo).toHaveJSProperty("paused", false);
-    await expect(firstVideo).toHaveJSProperty("paused", true);
   });
 
   test("should react to page blur and focus events", async ({
@@ -2655,7 +2990,15 @@ test.describe("Video Auto Pause Extension", () => {
       chrome.runtime.getURL("options.html"),
     );
     const optionsPage = await context.newPage();
-    await optionsPage.goto(optionsUrl);
+    await optionsPage.goto(`${optionsUrl}?popup`);
+    await expect(optionsPage.locator("#sleepTimerMinutes option")).toHaveText([
+      "5",
+      "10",
+      "15",
+      "30",
+      "60",
+    ]);
+    await optionsPage.locator("#sleepTimerMinutes").selectOption("5");
     await optionsPage.locator("#startSleepTimer").click();
     await expect(optionsPage.locator("#cancelSleepTimer")).toBeVisible();
     await expect
@@ -2668,7 +3011,7 @@ test.describe("Video Auto Pause Extension", () => {
           return Boolean(
             alarm &&
             stored.vapSleepTimerExpiresAt > Date.now() &&
-            stored.vapSleepTimerExpiresAt - Date.now() <= 30 * 60 * 1000,
+            stored.vapSleepTimerExpiresAt - Date.now() <= 5 * 60 * 1000,
           );
         }),
       )
@@ -2712,8 +3055,8 @@ test.describe("Video Auto Pause Extension", () => {
     page,
     context,
   }) => {
-    await context.updateSettings({ prioritizeActiveTabMedia: true });
     await page.goto(`http://localhost:${port}/`);
+    await page.bringToFront();
     await page.evaluate(() => {
       const audio = document.createElement("audio");
       audio.id = "audio-only";
@@ -2724,9 +3067,11 @@ test.describe("Video Auto Pause Extension", () => {
     const audio = page.locator("#audio-only");
     await audio.evaluate((element) => element.play());
     await expect(audio).toHaveJSProperty("paused", false);
+    await context.updateSettings({ prioritizeActiveTabMedia: true });
 
     const videoTab = await context.newPage();
     await videoTab.goto(`http://localhost:${port}/video.html`);
+    await videoTab.bringToFront();
     const video = videoTab.locator("#v");
     await video.evaluate((element) => element.play());
     await expect(video).toHaveJSProperty("paused", false);
@@ -2915,7 +3260,6 @@ test.describe("Video Auto Pause Extension", () => {
     await context.updateSettings({
       focuspause: true,
       focusresume: true,
-      audioFading: true,
       fadeDuration: 600,
     });
     await page.goto(`http://localhost:${port}/video.html`);

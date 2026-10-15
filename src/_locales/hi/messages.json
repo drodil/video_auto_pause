@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30 मिनट में सब कुछ रोकें",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "स्लीप टाइमर शुरू करें",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "अवधि (मिनट)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "स्लीप टाइमर रद्द करें",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "निदान कॉपी नहीं हो सका।"
+  },
+  "allowAudio": {
+    "message": "केवल-ऑडियो प्लेबैक की अनुमति दें"
+  },
+  "profileDefault": {
+    "message": "डिफ़ॉल्ट"
+  },
+  "settingsSaveFailed": {
+    "message": "सेटिंग सहेजी नहीं जा सकी। जाँचें कि ब्राउज़र का सिंक स्टोरेज उपलब्ध है।"
   }
 }

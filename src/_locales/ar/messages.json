@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "إيقاف كل شيء بعد 30 دقيقة",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "ابدأ مؤقت النوم",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "المدة (بالدقائق)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "إلغاء مؤقت النوم",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "تعذر نسخ معلومات التشخيص."
+  },
+  "allowAudio": {
+    "message": "السماح بتشغيل الصوت فقط"
+  },
+  "profileDefault": {
+    "message": "الافتراضي"
+  },
+  "settingsSaveFailed": {
+    "message": "تعذر حفظ الإعدادات. تحقق من توفر مساحة التخزين المتزامنة."
   }
 }

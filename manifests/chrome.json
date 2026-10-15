@@ -11,9 +11,7 @@
     "alarms"
   ],
   "default_locale": "en",
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
@@ -26,7 +24,7 @@
     "128": "images/icon_128.png"
   },
   "action": {
-    "default_popup": "options.html",
+    "default_popup": "options.html?popup",
     "default_icon": {
       "16": "images/icon_disabled_16.png",
       "32": "images/icon_disabled_32.png",

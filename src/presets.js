@@ -10,7 +10,7 @@ globalThis.VAP_PRESETS = Object.freeze({
   }),
   music: Object.freeze({
     muteVideo: true,
-    audioFading: true,
+    fadeDuration: 200,
     lockpause: false,
     lockresume: false,
     focuspause: false,

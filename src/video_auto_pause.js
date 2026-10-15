@@ -7,6 +7,7 @@ if (window.autoPauseInjected !== true) {
   const detectedAudio = new Set();
   const extensionPausedVideos = new WeakSet();
   const extensionInitiatedPlays = new WeakSet();
+  const pauseOnNextPlay = new WeakMap();
   const automaticallyPausedVideos = new WeakSet();
   const autoNextPausedVideos = new WeakSet();
   const extensionMutedVideos = new WeakMap();
@@ -28,7 +29,6 @@ if (window.autoPauseInjected !== true) {
   let lastVideoEndedAt = 0;
   let safeModeTriggered = false;
   let options = { ...DEFAULT_OPTIONS };
-  let profiles = [];
   let autoPipVideo = null;
   let autoDocumentPipWindow = null;
   let batteryStatus = null;
@@ -55,18 +55,13 @@ if (window.autoPauseInjected !== true) {
   }
 
   async function refresh_settings() {
-    const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
-    const savedOptions = { ...DEFAULT_OPTIONS, ...stored };
-    const hostname = location.hostname.toLowerCase();
-    const storedProfiles = await env.storage.local.get("vapProfiles");
-    profiles = Array.isArray(storedProfiles.vapProfiles)
-      ? storedProfiles.vapProfiles
-      : [];
-    const profileOptions = VAP_SETTINGS_FOR_PROFILE(
-      savedOptions,
-      profiles,
-      hostname,
+    const savedOptions = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
     );
+    const hostname = location.hostname.toLowerCase();
+    const profileOptions = savedOptions;
     const effectiveOptions = VAP_OPTIONS_FOR_SITE(hostname, profileOptions);
     const siteEnabled = VAP_SITE_ENABLED(hostname, profileOptions);
     options = profileOptions.disabled
@@ -88,7 +83,6 @@ if (window.autoPauseInjected !== true) {
           prioritizeActiveTabMedia: false,
           singleVideoPlayback: false,
           debugMode: false,
-          audioFading: false,
           showPipButton: false,
           showVideoOverlay: false,
         }
@@ -487,11 +481,13 @@ if (window.autoPauseInjected !== true) {
         refreshPinState();
       }
     }
-    const profileChanged = namespace === "local" && "vapProfiles" in changes;
     const settingsChanged =
-      namespace === "sync" &&
-      Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
-    if (!profileChanged && !settingsChanged) {
+      (namespace === "sync" &&
+        Object.keys(changes).some(
+          (key) => key === "vapProfileIds" || key.startsWith("vapProfile:"),
+        )) ||
+      (namespace === "local" && "vapActiveProfileId" in changes);
+    if (!settingsChanged) {
       return;
     }
     settingsReady = refresh_settings();
@@ -512,6 +508,7 @@ if (window.autoPauseInjected !== true) {
             }
           }
         }
+        reportMediaState();
         scheduleVideoArbitration();
         for (const video of allVideos()) {
           applySiteSpeed(video);
@@ -893,21 +890,14 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener("keydown", handleContentShortcut, true);
 
   function allMedia() {
-    const allowedAudioDomains = String(options.audioAllowList ?? "")
-      .split(/[,\s]+/)
-      .map(VAP_NORMALIZE_DOMAIN)
-      .filter(Boolean);
     return [
       ...new Set([...allVideos(), ...collectAudio(), ...detectedAudio]),
     ].filter(
       (media) =>
         media.isConnected &&
         (media.tagName !== "AUDIO" ||
-          (options.handleAudio &&
-            !VAP_MATCHES_DOMAIN(
-              location.hostname.toLowerCase(),
-              allowedAudioDomains,
-            ))),
+          !options.allowAudio ||
+          options.prioritizeActiveTabMedia),
     );
   }
 
@@ -943,7 +933,7 @@ if (window.autoPauseInjected !== true) {
   };
 
   const fadeAudio = (video, targetVolume, duration) => {
-    if (!options.audioFading || duration <= 0) {
+    if (duration <= 0) {
       setVideoVolume(video, targetVolume);
       return Promise.resolve();
     }
@@ -1010,7 +1000,7 @@ if (window.autoPauseInjected !== true) {
         setVideoVolume(video, originalVolumes.get(video));
         originalVolumes.delete(video);
       }
-    } else if (options.audioFading && !document.hidden) {
+    } else if (options.fadeDuration > 0 && !document.hidden) {
       const volume = video.volume;
       originalVolumes.set(video, volume);
       await fadeAudio(video, 0, options.fadeDuration);
@@ -1043,7 +1033,11 @@ if (window.autoPauseInjected !== true) {
 
     const targetVolume = originalVolumes.get(video);
     activeFades.get(video)?.cancel();
-    if (options.audioFading && targetVolume !== undefined && video.paused) {
+    if (
+      options.fadeDuration > 0 &&
+      targetVolume !== undefined &&
+      video.paused
+    ) {
       setVideoVolume(video, 0);
     }
     const pausePosition = automaticPausePositions.get(video);
@@ -1085,7 +1079,7 @@ if (window.autoPauseInjected !== true) {
           preventedSeconds: Math.max(0, (Date.now() - pauseStartedAt) / 1000),
         });
       }
-      if (options.audioFading && targetVolume !== undefined) {
+      if (options.fadeDuration > 0 && targetVolume !== undefined) {
         await fadeAudio(video, targetVolume, options.fadeDuration);
       }
     } catch (error) {
@@ -1100,7 +1094,9 @@ if (window.autoPauseInjected !== true) {
     ".ad-showing",
     ".ad-playing",
     ".vjs-ad-playing",
+    ".vjs-ima3-ad-mode",
     ".jw-flag-ads",
+    ".shaka-ad-container",
     '[data-ad-playing="true"]',
     '[data-ad-state="playing"]',
     '[data-is-ad="true"]',
@@ -1178,16 +1174,12 @@ if (window.autoPauseInjected !== true) {
       activeFades.get(video)?.cancel();
       video.muted = !video.muted;
       extensionMutedVideos.delete(video);
-    } else if (
-      action === "mute" &&
-      !video.muted &&
-      !extensionMutedVideos.has(video)
-    ) {
+    } else if (action === "mute" && !extensionMutedVideos.has(video)) {
       extensionMutedVideos.set(video, {
         muted: video.muted,
         volume: video.volume,
       });
-      if (options.audioFading && !document.hidden) {
+      if (options.fadeDuration > 0 && !document.hidden && !video.muted) {
         await fadeAudio(video, 0, options.fadeDuration);
         if (videoActionTokens.get(video) !== actionToken) {
           return;
@@ -1201,11 +1193,11 @@ if (window.autoPauseInjected !== true) {
       const original = extensionMutedVideos.get(video);
       extensionMutedVideos.delete(video);
       if (video.muted === true) {
-        if (options.audioFading && !document.hidden) {
+        if (options.fadeDuration > 0 && !document.hidden) {
           setVideoVolume(video, 0);
         }
         video.muted = original.muted;
-        if (options.audioFading && !document.hidden) {
+        if (options.fadeDuration > 0 && !document.hidden) {
           await fadeAudio(video, original.volume, options.fadeDuration);
         } else {
           setVideoVolume(video, original.volume);
@@ -1237,6 +1229,14 @@ if (window.autoPauseInjected !== true) {
 
     switch (request.action) {
       case "stop":
+        if (
+          !isManuallyPaused &&
+          video.paused &&
+          request.pausePendingPlay === true
+        ) {
+          pauseOnNextPlay.set(video, Date.now() + 2000);
+          break;
+        }
         if (
           !isManuallyPaused &&
           options.liveStreamMute &&
@@ -1527,6 +1527,13 @@ if (window.autoPauseInjected !== true) {
     videoElement.addEventListener("pointerleave", () => {
       reportVideoHover(videoElement, false);
     });
+    videoElement.addEventListener("volumechange", () => {
+      const original = extensionMutedVideos.get(videoElement);
+      if (original && !videoElement.muted) {
+        original.muted = false;
+        videoElement.muted = true;
+      }
+    });
     applySiteSpeed(videoElement);
     if (options.disableAutoplayNext) {
       videoElement.autoplay = false;
@@ -1579,6 +1586,19 @@ if (window.autoPauseInjected !== true) {
     });
 
     videoElement.addEventListener("play", (_e) => {
+      const pauseDeadline = pauseOnNextPlay.get(videoElement);
+      if (pauseDeadline !== undefined) {
+        if (
+          pauseDeadline >= Date.now() &&
+          !extensionInitiatedPlays.has(videoElement)
+        ) {
+          automaticallyPausedVideos.add(videoElement);
+          videoElement.pause();
+          scheduleVideoArbitration();
+          return;
+        }
+        pauseOnNextPlay.delete(videoElement);
+      }
       debugLog(`Video resumed`);
       autoNextPausedVideos.delete(videoElement);
       if (
@@ -1609,20 +1629,13 @@ if (window.autoPauseInjected !== true) {
       scheduleVideoArbitration();
     });
     videoElement.addEventListener("ratechange", () => {
-      const rule = siteRuleFor(location.hostname.toLowerCase());
-      if (Number.isFinite(rule?.speed)) {
+      const sitePlaybackSpeed = VAP_OPTIONS_FOR_SITE(
+        location.hostname.toLowerCase(),
+        options,
+      ).playbackSpeed;
+      if (Number.isFinite(sitePlaybackSpeed) && sitePlaybackSpeed > 0) {
         applySiteSpeed(videoElement);
-        return;
       }
-      const key = `sitePlaybackRate:${location.hostname.toLowerCase()}`;
-      env.storage.local
-        .set({ [key]: videoElement.playbackRate })
-        .catch((error) => {
-          console.error(
-            "Video Auto Pause could not save this site's speed:",
-            error,
-          );
-        });
     });
   }
 
@@ -1778,27 +1791,6 @@ if (window.autoPauseInjected !== true) {
       }
       return;
     }
-    const key = `sitePlaybackRate:${hostname}`;
-    env.storage.local
-      .get(key)
-      .then((stored) => {
-        const speed = stored[key];
-        if (
-          video.isConnected &&
-          Number.isFinite(speed) &&
-          speed >= 0.25 &&
-          speed <= 4 &&
-          Math.abs(video.playbackRate - speed) > 0.001
-        ) {
-          video.playbackRate = speed;
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "Video Auto Pause could not restore this site's speed:",
-          error,
-        );
-      });
   }
 
   function siteIsEnabled(hostname, settings) {
@@ -1807,7 +1799,11 @@ if (window.autoPauseInjected !== true) {
 
   async function toggleCurrentSite() {
     const hostname = location.hostname.toLowerCase();
-    const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+    const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+    );
     const siteRules = Array.isArray(settings.siteRules)
       ? [...settings.siteRules]
       : [];
@@ -1822,9 +1818,12 @@ if (window.autoPauseInjected !== true) {
         VAP_NORMALIZE_DOMAIN(updatedRule.domain),
     );
     updatedRules.push(updatedRule);
-    await env.storage.sync.set({
-      siteRules: updatedRules,
-    });
+    await VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+      { siteRules: updatedRules },
+    );
   }
 
   function injectVideoOverlay(video) {
@@ -1965,8 +1964,11 @@ if (window.autoPauseInjected !== true) {
     siteButton.addEventListener("click", async () => {
       try {
         await toggleCurrentSite();
-        const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
-        options = { ...options, ...stored };
+        options = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+          env.storage.sync,
+          env.storage.local,
+          DEFAULT_OPTIONS,
+        );
         refreshOverlay();
       } catch (error) {
         console.error(
@@ -2303,12 +2305,20 @@ if (window.autoPauseInjected !== true) {
 
   observeRoot(document);
   discoverShadowHosts(document);
-  void settingsReady.then(scheduleVideoArbitration).catch((error) => {
-    console.error(
-      "Video Auto Pause could not arbitrate initial playback:",
-      error,
-    );
-  });
+  void settingsReady
+    .then(() => {
+      for (const video of allVideos()) {
+        applySiteSpeed(video);
+      }
+      reportMediaState();
+      scheduleVideoArbitration();
+    })
+    .catch((error) => {
+      console.error(
+        "Video Auto Pause could not initialize playback settings:",
+        error,
+      );
+    });
   try {
     const attachShadow = Element.prototype.attachShadow;
     Element.prototype.attachShadow = function (init) {

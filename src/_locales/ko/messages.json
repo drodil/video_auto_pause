@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30분 후 모두 일시정지",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "취침 타이머 시작",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "시간(분)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "취침 타이머 취소",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "진단 정보를 복사할 수 없습니다."
+  },
+  "allowAudio": {
+    "message": "오디오 전용 재생 허용"
+  },
+  "profileDefault": {
+    "message": "기본값"
+  },
+  "settingsSaveFailed": {
+    "message": "설정을 저장할 수 없습니다. 브라우저 동기화 저장소를 사용할 수 있는지 확인하세요."
   }
 }

@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Tout mettre en pause dans 30 minutes",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Démarrer la minuterie de veille",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Durée (minutes)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Annuler la minuterie",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Impossible de copier les diagnostics."
+  },
+  "allowAudio": {
+    "message": "Autoriser la lecture audio uniquement"
+  },
+  "profileDefault": {
+    "message": "Par défaut"
+  },
+  "settingsSaveFailed": {
+    "message": "Impossible d’enregistrer les paramètres. Vérifiez que le stockage de synchronisation est disponible."
   }
 }

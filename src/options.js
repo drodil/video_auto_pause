@@ -1,24 +1,49 @@
 // Browser
+if (new URLSearchParams(window.location.search).has("popup")) {
+  document.body.classList.add("popup-view");
+}
+
 const env = chrome.runtime ? chrome : browser;
+const settingsView = document.querySelector(".wrapper");
+if (settingsView) {
+  settingsView.inert = true;
+  settingsView.setAttribute("aria-busy", "true");
+  document.body.classList.add("options-loading");
+}
 const tabStorage = env.storage.session ?? env.storage.local;
 const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
 const SETTINGS_SCHEMA_VERSION = 1;
+let optionsReady = Promise.resolve();
+let profileUpdateQueue = Promise.resolve();
+let optionsRestoreQueue = Promise.resolve();
 const siteOverrideOptions = Object.entries(DEFAULT_OPTIONS).filter(
   ([option, value]) =>
     !["disabled", "onlyConfiguredSites", "siteRules"].includes(option) &&
-    (typeof value === "boolean" || typeof value === "number"),
+    (typeof value === "boolean" ||
+      typeof value === "number" ||
+      ["quietHoursStart", "quietHoursEnd"].includes(option) ||
+      option === "contentShortcutKeys"),
 );
-let siteRulesMigration;
 let siteRulesCache = [];
 
-function migrateSiteRules() {
-  siteRulesMigration ??= VAP_MIGRATE_DOMAIN_SETTINGS(env.storage.sync).catch(
-    (error) => {
-      siteRulesMigration = undefined;
-      throw error;
-    },
+async function updateActiveProfileSettings(settingsPatch) {
+  await optionsReady;
+  const update = profileUpdateQueue.then(() =>
+    VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+      settingsPatch,
+    ),
   );
-  return siteRulesMigration;
+  profileUpdateQueue = update.catch(() => {});
+  await update;
+}
+
+function queueOptionsRestore(changedKeys) {
+  const restore = optionsRestoreQueue.then(() => restore_options(changedKeys));
+  optionsRestoreQueue = restore.catch(() => {});
+  return restore;
 }
 
 function localizeUI() {
@@ -26,6 +51,7 @@ function localizeUI() {
     return;
   }
   document.documentElement.lang = env.i18n.getUILanguage();
+  document.documentElement.dir = env.i18n.getMessage("@@bidi_dir") || "ltr";
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const messageName = element.dataset.i18n;
     const message = env.i18n.getMessage(messageName);
@@ -98,6 +124,35 @@ function buildSiteSettingsFields() {
         customize,
         document.createTextNode(env.i18n.getMessage("siteRuleCustomize")),
       );
+      if (option === "contentShortcutKeys") {
+        const shortcutFields = document.createElement("div");
+        shortcutFields.className = "site-shortcut-fields";
+        for (const [action, defaultKey] of Object.entries(defaultValue)) {
+          const label = document.createElement("label");
+          const name = document.createElement("span");
+          name.textContent = env.i18n.getMessage(`${action}Shortcut`);
+          const input = document.createElement("input");
+          input.type = "text";
+          input.maxLength = 20;
+          input.value = defaultKey;
+          input.dataset.siteShortcutValue = action;
+          input.disabled = true;
+          input.setAttribute("aria-label", name.textContent);
+          label.append(name, input);
+          shortcutFields.appendChild(label);
+        }
+        row.append(settingName, customizeLabel, shortcutFields);
+        customize.addEventListener("change", () => {
+          shortcutFields.querySelectorAll("input").forEach((input) => {
+            input.disabled = !customize.checked;
+            if (customize.checked) {
+              input.value = defaultValue[input.dataset.siteShortcutValue];
+            }
+          });
+        });
+        details.appendChild(row);
+        continue;
+      }
       const valueInput = document.createElement("input");
       valueInput.dataset.siteValue = option;
       valueInput.setAttribute("aria-label", env.i18n.getMessage(option));
@@ -111,20 +166,24 @@ function buildSiteSettingsFields() {
         );
         row.append(settingName, customizeLabel, valueLabel);
       } else {
-        valueInput.type = "number";
-        valueInput.min = "0";
-        valueInput.step =
-          option === "fadeDuration"
-            ? "50"
-            : option === "playbackSpeed"
-              ? "0.25"
-              : "1";
-        if (option === "rewindSeconds") {
-          valueInput.max = "60";
-        } else if (option === "playbackSpeed") {
-          valueInput.max = "4";
-        } else if (option === "idlePauseMinutes") {
-          valueInput.max = "240";
+        if (["quietHoursStart", "quietHoursEnd"].includes(option)) {
+          valueInput.type = "time";
+        } else {
+          valueInput.type = "number";
+          valueInput.min = "0";
+          valueInput.step =
+            option === "fadeDuration"
+              ? "50"
+              : option === "playbackSpeed"
+                ? "0.25"
+                : "1";
+          if (option === "rewindSeconds") {
+            valueInput.max = "60";
+          } else if (option === "playbackSpeed") {
+            valueInput.max = "4";
+          } else if (option === "idlePauseMinutes") {
+            valueInput.max = "240";
+          }
         }
         valueInput.value = String(defaultValue);
         row.append(settingName, customizeLabel, valueInput);
@@ -154,6 +213,20 @@ function setSiteSettingsValues(rule, settings) {
     const customize = document.querySelector(
       `[data-site-override="${option}"]`,
     );
+    if (option === "contentShortcutKeys") {
+      const values = customized
+        ? overrides[option]
+        : (settings[option] ?? defaultValue);
+      customize.checked = customized;
+      for (const [action, fallback] of Object.entries(defaultValue)) {
+        const input = document.querySelector(
+          `[data-site-shortcut-value="${action}"]`,
+        );
+        input.disabled = !customized;
+        input.value = values?.[action] ?? fallback;
+      }
+      continue;
+    }
     const valueInput = document.querySelector(`[data-site-value="${option}"]`);
     const value = customized
       ? overrides[option]
@@ -162,6 +235,8 @@ function setSiteSettingsValues(rule, settings) {
     valueInput.disabled = !customized;
     if (valueInput.type === "checkbox") {
       valueInput.checked = Boolean(value);
+    } else if (valueInput.type === "time") {
+      valueInput.value = typeof value === "string" ? value : "";
     } else {
       valueInput.value = Math.max(0, Number(value) || 0);
     }
@@ -177,7 +252,11 @@ async function openSiteSettings(domain) {
   const rule = siteRulesCache.find(
     (entry) => entry && VAP_NORMALIZE_DOMAIN(entry.domain) === normalizedDomain,
   ) ?? { domain: normalizedDomain, enabled: true, overrides: {} };
-  const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+  const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
   document.getElementById("siteSettingsTitle").textContent =
     env.i18n.getMessage("siteSettingsTitle", [normalizedDomain]);
   setSiteSettingsValues(rule, settings);
@@ -209,8 +288,12 @@ function closeSiteSettings() {
 }
 
 async function restoreSiteRules() {
-  const stored = await env.storage.sync.get("siteRules");
-  siteRulesCache = Array.isArray(stored.siteRules) ? stored.siteRules : [];
+  const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
+  siteRulesCache = Array.isArray(settings.siteRules) ? settings.siteRules : [];
   const list = document.getElementById("siteRuleList");
   list.replaceChildren();
   const filter = VAP_NORMALIZE_DOMAIN(
@@ -289,6 +372,24 @@ async function saveSiteSettings() {
       continue;
     }
     const valueInput = document.querySelector(`[data-site-value="${option}"]`);
+    if (option === "contentShortcutKeys") {
+      const keys = Object.fromEntries(
+        Object.entries(DEFAULT_OPTIONS.contentShortcutKeys).map(([action]) => [
+          action,
+          document
+            .querySelector(`[data-site-shortcut-value="${action}"]`)
+            .value.trim(),
+        ]),
+      );
+      const assignedKeys = Object.values(keys)
+        .filter(Boolean)
+        .map((key) => key.toLowerCase());
+      if (new Set(assignedKeys).size !== assignedKeys.length) {
+        throw new Error("Site shortcut keys must be unique.");
+      }
+      overrides[option] = keys;
+      continue;
+    }
     overrides[option] =
       valueInput.type === "checkbox"
         ? valueInput.checked
@@ -302,7 +403,7 @@ async function saveSiteSettings() {
     enabled: document.getElementById("siteRuleEnabled").checked,
     overrides,
   });
-  await env.storage.sync.set({ siteRules: updated });
+  await updateActiveProfileSettings({ siteRules: updated });
   siteRulesCache = updated;
   document.getElementById("siteSettingsStatus").textContent =
     env.i18n.getMessage("siteRuleSaved");
@@ -313,7 +414,7 @@ async function deleteSiteRule(domain) {
   const updated = siteRulesCache.filter(
     (rule) => VAP_NORMALIZE_DOMAIN(rule.domain) !== domain,
   );
-  await env.storage.sync.set({ siteRules: updated });
+  await updateActiveProfileSettings({ siteRules: updated });
   siteRulesCache = updated;
   await restoreSiteRules();
   if (editingSiteDomain === domain) {
@@ -335,7 +436,6 @@ const contentShortcutActions = [
 ];
 
 async function getCurrentWebTab() {
-  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
   const isWebTab = (tab) => {
     try {
       return ["http:", "https:", "file:"].includes(new URL(tab.url).protocol);
@@ -343,9 +443,16 @@ async function getCurrentWebTab() {
       return false;
     }
   };
+  const currentWindowTabs = await env.tabs.query({ lastFocusedWindow: true });
+  const currentWindowWebTab =
+    currentWindowTabs.find((tab) => tab.active && isWebTab(tab)) ??
+    currentWindowTabs.find(isWebTab);
+  if (currentWindowWebTab) {
+    return currentWindowWebTab;
+  }
+  const allTabs = await env.tabs.query({});
   return (
-    tabs.find(isWebTab) ??
-    (await env.tabs.query({ lastFocusedWindow: true })).find(isWebTab)
+    allTabs.find((tab) => tab.active && isWebTab(tab)) ?? allTabs.find(isWebTab)
   );
 }
 
@@ -369,7 +476,11 @@ async function copyDiagnostics() {
     throw new Error("Clipboard access is unavailable.");
   }
   const [settings, { vapLastContentScriptError = null }] = await Promise.all([
-    env.storage.sync.get(DEFAULT_OPTIONS),
+    VAP_GET_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+    ),
     env.storage.local.get("vapLastContentScriptError"),
   ]);
   const diagnostics = {
@@ -381,22 +492,16 @@ async function copyDiagnostics() {
   await navigator.clipboard.writeText(JSON.stringify(diagnostics, null, 2));
 }
 
-function validateSettingsPayload(payload) {
-  if (
-    !payload ||
-    payload.schemaVersion !== SETTINGS_SCHEMA_VERSION ||
-    !payload.settings ||
-    typeof payload.settings !== "object" ||
-    Array.isArray(payload.settings)
-  ) {
-    throw new Error("Unsupported or invalid settings file.");
+function validateSettingsObject(settings) {
+  if (!settings || typeof settings !== "object" || Array.isArray(settings)) {
+    throw new Error("Settings must be an object.");
   }
   const imported = {};
   for (const [option, defaultValue] of Object.entries(DEFAULT_OPTIONS)) {
-    if (!Object.prototype.hasOwnProperty.call(payload.settings, option)) {
+    if (!Object.prototype.hasOwnProperty.call(settings, option)) {
       continue;
     }
-    const value = payload.settings[option];
+    const value = settings[option];
     if (option === "siteRules") {
       if (!Array.isArray(value)) {
         throw new Error("Site rules must be an array.");
@@ -422,11 +527,44 @@ function validateSettingsPayload(payload) {
           const optionDefault = DEFAULT_OPTIONS[name];
           if (
             !siteOverrideOptions.some(([option]) => option === name) ||
-            typeof optionDefault !== typeof override
+            (name !== "contentShortcutKeys" &&
+              typeof optionDefault !== typeof override)
           ) {
             throw new Error(
               `Site rule ${domain} has an invalid ${name} value.`,
             );
+          }
+          if (name === "contentShortcutKeys") {
+            if (
+              !override ||
+              typeof override !== "object" ||
+              Array.isArray(override)
+            ) {
+              throw new Error(`Site rule ${domain} has invalid shortcut keys.`);
+            }
+            const shortcutKeys = { ...DEFAULT_OPTIONS.contentShortcutKeys };
+            for (const [action, key] of Object.entries(override)) {
+              if (
+                !Object.prototype.hasOwnProperty.call(shortcutKeys, action) ||
+                typeof key !== "string" ||
+                key.length > 20
+              ) {
+                throw new Error(
+                  `Site rule ${domain} has invalid shortcut keys.`,
+                );
+              }
+              shortcutKeys[action] = key.trim();
+            }
+            const assignedKeys = Object.values(shortcutKeys)
+              .filter(Boolean)
+              .map((key) => key.toLowerCase());
+            if (new Set(assignedKeys).size !== assignedKeys.length) {
+              throw new Error(
+                `Site rule ${domain} has duplicate shortcut keys.`,
+              );
+            }
+            overrides[name] = shortcutKeys;
+            continue;
           }
           if (typeof optionDefault === "number") {
             if (!Number.isFinite(override) || override < 0) {
@@ -448,6 +586,15 @@ function validateSettingsPayload(payload) {
                 ? Math.round(bounded * 4) / 4
                 : Math.floor(bounded);
           } else {
+            if (
+              ["quietHoursStart", "quietHoursEnd"].includes(name) &&
+              override !== "" &&
+              !/^([01]\d|2[0-3]):[0-5]\d$/.test(override)
+            ) {
+              throw new Error(
+                `Site rule ${domain} has an invalid ${name} value.`,
+              );
+            }
             overrides[name] = override;
           }
         }
@@ -518,17 +665,128 @@ function validateSettingsPayload(payload) {
   if (Object.keys(imported).length === 0) {
     throw new Error("The settings file does not contain supported settings.");
   }
+  if (typeof settings.audioFading === "boolean") {
+    imported.fadeDuration = settings.audioFading
+      ? imported.fadeDuration || 200
+      : 0;
+  }
+  if (
+    typeof settings.handleAudio === "boolean" &&
+    !Object.prototype.hasOwnProperty.call(settings, "allowAudio")
+  ) {
+    imported.allowAudio = !settings.handleAudio;
+  }
+  if (settings.handleAudio && typeof settings.audioAllowList === "string") {
+    const siteRules = Array.isArray(imported.siteRules)
+      ? imported.siteRules
+      : [];
+    for (const domain of settings.audioAllowList
+      .split(/[,\s]+/)
+      .map(VAP_NORMALIZE_DOMAIN)
+      .filter(Boolean)) {
+      const existing = siteRules.find(
+        (rule) => VAP_NORMALIZE_DOMAIN(rule.domain) === domain,
+      );
+      if (existing) {
+        existing.overrides.allowAudio = true;
+      } else {
+        siteRules.push({
+          domain,
+          enabled: true,
+          overrides: { allowAudio: true },
+        });
+      }
+    }
+    imported.siteRules = siteRules;
+  }
   return imported;
+}
+
+function validateSettingsPayload(payload) {
+  if (
+    !payload ||
+    payload.schemaVersion !== SETTINGS_SCHEMA_VERSION ||
+    !payload.settings
+  ) {
+    throw new Error("Unsupported or invalid settings file.");
+  }
+  const settings = validateSettingsObject(payload.settings);
+  if (payload.profiles === undefined) {
+    return { settings };
+  }
+  if (!Array.isArray(payload.profiles)) {
+    throw new Error("Profiles must be an array.");
+  }
+  const profileNames = new Set();
+  const profiles = payload.profiles.map((profile, index) => {
+    if (
+      !profile ||
+      typeof profile.name !== "string" ||
+      profile.name.trim().length === 0 ||
+      profile.name.trim().length > 40
+    ) {
+      throw new Error("A profile has an invalid name.");
+    }
+    const name = profile.name.trim();
+    if (profileNames.has(name.toLowerCase())) {
+      throw new Error("Profile names must be unique.");
+    }
+    profileNames.add(name.toLowerCase());
+    const id =
+      name.toLowerCase() === "default"
+        ? "default"
+        : typeof profile.id === "string" && profile.id
+          ? profile.id
+          : `profile-${index + 1}`;
+    if (!/^[a-z\d_-]{1,80}$/i.test(id)) {
+      throw new Error("A profile has an invalid identifier.");
+    }
+    return {
+      id,
+      name: id === "default" ? "Default" : name,
+      settings: {
+        ...DEFAULT_OPTIONS,
+        ...validateSettingsObject(profile.settings),
+      },
+    };
+  });
+  if (new Set(profiles.map((profile) => profile.id)).size !== profiles.length) {
+    throw new Error("Profile identifiers must be unique.");
+  }
+  if (!profiles.some((profile) => profile.id === "default")) {
+    profiles.unshift({
+      id: "default",
+      name: "Default",
+      settings: { ...DEFAULT_OPTIONS, ...settings },
+    });
+  }
+  const activeProfileId =
+    typeof payload.activeProfileId === "string" &&
+    profiles.some((profile) => profile.id === payload.activeProfileId)
+      ? payload.activeProfileId
+      : "default";
+  return { settings, profiles, activeProfileId };
 }
 
 async function exportSettings() {
   const status = document.getElementById("settingsImportStatus");
   try {
-    const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+    const profileData = await VAP_ENSURE_PROFILES(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+    );
+    const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+    );
     const payload = {
       schemaVersion: SETTINGS_SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
-      settings: { ...DEFAULT_OPTIONS, ...settings },
+      settings,
+      profiles: profileData.profiles,
+      activeProfileId: profileData.activeProfileId,
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: "application/json",
@@ -549,9 +807,21 @@ async function exportSettings() {
 async function importSettingsFile(file) {
   const status = document.getElementById("settingsImportStatus");
   try {
+    await optionsReady;
     const payload = JSON.parse(await file.text());
-    const settings = validateSettingsPayload(payload);
-    await env.storage.sync.set(settings);
+    const imported = validateSettingsPayload(payload);
+    if (imported.profiles) {
+      await VAP_STORE_PROFILES(
+        env.storage.sync,
+        env.storage.local,
+        imported.profiles,
+        imported.activeProfileId,
+      );
+      await restoreProfiles();
+      await restore_options();
+    } else {
+      await updateActiveProfileSettings(imported.settings);
+    }
     status.textContent = env.i18n.getMessage("settingsImported");
   } catch (error) {
     status.textContent = env.i18n.getMessage("settingsImportFailed");
@@ -560,17 +830,19 @@ async function importSettingsFile(file) {
 }
 
 async function restoreProfiles() {
+  const { profiles, activeProfileId } = await VAP_ENSURE_PROFILES(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
+  const activeSelect = document.getElementById("activeProfileSelect");
+  const activeControl = document.getElementById("activeProfileControl");
   const select = document.getElementById("profileSelect");
-  const stored = await env.storage.local.get("vapProfiles");
-  const profiles = Array.isArray(stored.vapProfiles)
-    ? stored.vapProfiles.filter(
-        (profile) =>
-          profile &&
-          typeof profile.name === "string" &&
-          profile.settings &&
-          typeof profile.settings === "object",
-      )
-    : [];
+  const profileLabel = (profile) =>
+    profile.id === "default"
+      ? env.i18n.getMessage("profileDefault") || "Default"
+      : profile.name;
+  activeSelect.replaceChildren();
   select.replaceChildren();
   const placeholder = document.createElement("option");
   placeholder.value = "";
@@ -578,16 +850,19 @@ async function restoreProfiles() {
   select.setAttribute("aria-label", placeholder.textContent);
   select.appendChild(placeholder);
   for (const profile of profiles) {
-    const option = document.createElement("option");
-    option.value = profile.name;
-    option.textContent = profile.name;
-    option.dataset.domains = Array.isArray(profile.domains)
-      ? profile.domains.join(", ")
-      : "";
-    select.appendChild(option);
+    for (const destination of [activeSelect, select]) {
+      const option = document.createElement("option");
+      option.value = profile.id;
+      option.textContent = profileLabel(profile);
+      destination.appendChild(option);
+    }
   }
+  activeSelect.value = activeProfileId;
+  activeControl.hidden = profiles.length < 2;
+  select.value = activeProfileId;
   document.getElementById("applyProfile").disabled = true;
-  document.getElementById("deleteProfile").disabled = true;
+  document.getElementById("deleteProfile").disabled =
+    activeProfileId === "default";
 }
 
 async function saveProfile() {
@@ -595,58 +870,79 @@ async function saveProfile() {
   if (!name || name.length > 40) {
     throw new Error("Profile names must contain 1 to 40 characters.");
   }
-  const domains = document
-    .getElementById("profileDomains")
-    .value.split(/[,\s]+/)
-    .map(VAP_NORMALIZE_DOMAIN)
-    .filter(Boolean);
-  if (domains.some((domain) => !/^[a-z\d.-]+$/i.test(domain))) {
-    throw new Error("A profile domain is invalid.");
-  }
-  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
-  const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
-  const updated = (Array.isArray(vapProfiles) ? vapProfiles : []).filter(
-    (profile) =>
-      typeof profile?.name !== "string" ||
-      profile.name.toLowerCase() !== name.toLowerCase(),
+  const { profiles } = await VAP_ENSURE_PROFILES(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
   );
-  updated.push({
-    name,
-    domains: [...new Set(domains)],
-    settings: { ...DEFAULT_OPTIONS, ...settings },
-  });
-  await env.storage.local.set({ vapProfiles: updated });
+  if (
+    name.toLowerCase() === "default" ||
+    profiles.some(
+      (profile) => profile.name.toLowerCase() === name.toLowerCase(),
+    )
+  ) {
+    throw new Error("A profile with that name already exists.");
+  }
+  const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
+  const id = crypto.randomUUID();
+  const updated = [
+    ...profiles,
+    {
+      id,
+      name,
+      settings: { ...DEFAULT_OPTIONS, ...settings },
+    },
+  ];
+  await VAP_STORE_PROFILES(env.storage.sync, env.storage.local, updated, id);
   await restoreProfiles();
-  document.getElementById("profileSelect").value = name;
-  document.getElementById("applyProfile").disabled = false;
+  document.getElementById("activeProfileSelect").value = id;
+  document.getElementById("profileSelect").value = id;
+  document.getElementById("applyProfile").disabled = true;
   document.getElementById("deleteProfile").disabled = false;
 }
 
-async function applySelectedProfile() {
-  const name = document.getElementById("profileSelect").value;
-  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
-  const profile = (Array.isArray(vapProfiles) ? vapProfiles : []).find(
-    (entry) => entry?.name === name,
-  );
-  if (!profile) {
+async function applySelectedProfile(profileId = "") {
+  const id = profileId || document.getElementById("profileSelect").value;
+  if (!id) {
     throw new Error("Select a saved profile first.");
   }
-  await env.storage.sync.set(
-    validateSettingsPayload({
-      schemaVersion: SETTINGS_SCHEMA_VERSION,
-      settings: profile.settings,
-    }),
+  await VAP_ACTIVATE_PROFILE(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+    id,
   );
+  await restoreProfiles();
+  await restore_options();
 }
 
 async function deleteSelectedProfile() {
-  const name = document.getElementById("profileSelect").value;
-  const { vapProfiles = [] } = await env.storage.local.get("vapProfiles");
-  const updated = (Array.isArray(vapProfiles) ? vapProfiles : []).filter(
-    (profile) => profile?.name !== name,
+  const id = document.getElementById("profileSelect").value;
+  const { profiles, activeProfileId } = await VAP_ENSURE_PROFILES(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
   );
-  await env.storage.local.set({ vapProfiles: updated });
+  if (id === "default" || !profiles.some((profile) => profile.id === id)) {
+    throw new Error("The Default profile cannot be deleted.");
+  }
+  const updated = profiles.filter((profile) => profile.id !== id);
+  const nextActiveProfileId =
+    activeProfileId === id ? "default" : activeProfileId;
+  await VAP_STORE_PROFILES(
+    env.storage.sync,
+    env.storage.local,
+    updated,
+    nextActiveProfileId,
+  );
   await restoreProfiles();
+  if (activeProfileId === id) {
+    await restore_options();
+  }
 }
 
 function readOption(option, element) {
@@ -680,13 +976,11 @@ function readOption(option, element) {
   if (["quietHoursStart", "quietHoursEnd"].includes(option)) {
     return element.value;
   }
-  if (option === "audioAllowList") {
-    return element.value;
-  }
   return element.checked;
 }
 
 async function save_option(option) {
+  await optionsReady;
   if (option === "disabledTabs") {
     const tab = await getCurrentWebTab();
     if (!tab) {
@@ -700,7 +994,9 @@ async function save_option(option) {
   } else {
     const element = document.getElementById(option);
     if (element) {
-      await env.storage.sync.set({ [option]: readOption(option, element) });
+      await updateActiveProfileSettings({
+        [option]: readOption(option, element),
+      });
     }
   }
 }
@@ -715,6 +1011,8 @@ function restoreContentShortcutKeys(keys = {}) {
 
 function setContentShortcutInputsDisabled() {
   const enabled = document.getElementById("contentShortcutsEnabled").checked;
+  document.getElementById("contentShortcutsDescription").hidden = !enabled;
+  document.getElementById("contentShortcutSettings").hidden = !enabled;
   document
     .getElementById("contentShortcutSettings")
     .querySelectorAll("input")
@@ -724,6 +1022,7 @@ function setContentShortcutInputsDisabled() {
 }
 
 async function saveContentShortcutKeys() {
+  await optionsReady;
   const keys = {};
   for (const [action, id] of contentShortcutActions) {
     keys[action] = document.getElementById(id).value.trim();
@@ -736,17 +1035,9 @@ async function saveContentShortcutKeys() {
       env.i18n.getMessage("contentShortcutsConflict");
     return;
   }
-  await env.storage.sync.set({ contentShortcutKeys: keys });
+  await updateActiveProfileSettings({ contentShortcutKeys: keys });
   document.getElementById("contentShortcutsStatus").textContent =
     env.i18n.getMessage("contentShortcutsSaved");
-}
-
-function updateAudioFadingVisibility() {
-  const settings = document.getElementById("audioFadingSettings");
-  const enabled = document.getElementById("audioFading")?.checked;
-  if (settings) {
-    settings.hidden = !enabled;
-  }
 }
 
 function getWeeklyStats(stats) {
@@ -797,6 +1088,7 @@ async function restoreSleepTimer() {
   const active =
     Number.isFinite(vapSleepTimerExpiresAt) &&
     vapSleepTimerExpiresAt > Date.now();
+  document.getElementById("sleepTimerDurationControl").hidden = active;
   document.getElementById("startSleepTimer").hidden = active;
   document.getElementById("cancelSleepTimer").hidden = !active;
   document.getElementById("sleepTimerStatus").textContent = active
@@ -809,10 +1101,15 @@ async function restoreSleepTimer() {
 async function updateSleepTimer(action) {
   const status = document.getElementById("sleepTimerStatus");
   try {
-    const response = await env.runtime.sendMessage({
+    const request = {
       sleepTimerAction: action,
-      minutes: 30,
-    });
+    };
+    if (action === "start") {
+      request.minutes = Number(
+        document.getElementById("sleepTimerMinutes").value,
+      );
+    }
+    const response = await env.runtime.sendMessage(request);
     if (response?.error) {
       throw new Error(response.error);
     }
@@ -824,8 +1121,11 @@ async function updateSleepTimer(action) {
 }
 
 async function restore_options(changedKeys = Object.keys(options)) {
-  await migrateSiteRules();
-  const items = await env.storage.sync.get(options);
+  const items = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
   for (const opt of changedKeys) {
     if (!(opt in options)) {
       continue;
@@ -845,17 +1145,13 @@ async function restore_options(changedKeys = Object.keys(options)) {
       ].includes(opt)
     ) {
       element.value = Math.max(0, Number(items[opt]) || 0);
-    } else if (
-      ["quietHoursStart", "quietHoursEnd", "audioAllowList"].includes(opt)
-    ) {
+    } else if (["quietHoursStart", "quietHoursEnd"].includes(opt)) {
       element.value = items[opt] || "";
     } else {
       element.checked = Boolean(items[opt]);
     }
   }
   restoreContentShortcutKeys(items.contentShortcutKeys);
-
-  updateAudioFadingVisibility();
 
   if (changedKeys.includes("disabled")) {
     for (const option of Object.keys(options)) {
@@ -889,15 +1185,20 @@ async function restoreCurrentTabPin() {
   button.disabled = !tab;
   if (!tab) {
     button.setAttribute("aria-pressed", "false");
-    button.textContent = env.i18n.getMessage("pinCurrentTab");
+    button.classList.remove("is-pinned");
+    button.setAttribute("aria-label", env.i18n.getMessage("pinCurrentTab"));
+    button.title = env.i18n.getMessage("pinCurrentTab");
     return;
   }
   const pinned = (await tabStorage.get("pinnedTabs")).pinnedTabs ?? [];
   const isPinned = pinned.includes(tab.id);
   button.setAttribute("aria-pressed", String(isPinned));
-  button.textContent = env.i18n.getMessage(
+  button.classList.toggle("is-pinned", isPinned);
+  const label = env.i18n.getMessage(
     isPinned ? "unpinCurrentTab" : "pinCurrentTab",
   );
+  button.setAttribute("aria-label", label);
+  button.title = label;
 }
 
 // Show shortcuts in the options window
@@ -927,22 +1228,75 @@ version.textContent = "v" + env.runtime.getManifest().version;
 localizeUI();
 
 // Restore options on load and when they change in the store
-document.addEventListener("DOMContentLoaded", () => {
-  void restore_options().catch((error) => {
+optionsReady = (async () => {
+  try {
+    await restore_options();
+    await restoreProfiles();
+    env.storage.onChanged.addListener(handleStorageChanged);
+  } catch (error) {
     console.error("Video Auto Pause could not restore settings:", error);
-  });
-});
+    throw error;
+  } finally {
+    if (settingsView) {
+      settingsView.inert = false;
+      settingsView.removeAttribute("aria-busy");
+    }
+    document.body.classList.remove("options-loading");
+    document.body.dataset.settingsReady = "true";
+  }
+})();
+void optionsReady.catch(() => {});
 
-env.storage.onChanged.addListener((changes, namespace) => {
+function handleStorageChanged(changes, namespace) {
   if (namespace === "sync") {
-    void restore_options(Object.keys(changes)).catch((error) => {
+    void (async () => {
+      const activeProfileId =
+        (await env.storage.local.get("vapActiveProfileId"))
+          .vapActiveProfileId ?? "default";
+      const activeProfileKey = `vapProfile:${activeProfileId}`;
+      const changedProfile = changes[activeProfileKey];
+      const changedOptionKeys = Object.keys(changes).filter(
+        (key) => key in options,
+      );
+
+      if ("vapProfileIds" in changes || changedProfile) {
+        await restoreProfiles();
+      }
+
+      if ("vapProfileIds" in changes) {
+        await queueOptionsRestore(Object.keys(options));
+      } else if (changedProfile) {
+        const oldSettings = changedProfile.oldValue?.settings ?? {};
+        const newSettings = changedProfile.newValue?.settings ?? {};
+        const changedSettings = [
+          ...new Set([
+            ...Object.keys(oldSettings),
+            ...Object.keys(newSettings),
+          ]),
+        ].filter(
+          (key) =>
+            key in options &&
+            JSON.stringify(oldSettings[key]) !==
+              JSON.stringify(newSettings[key]),
+        );
+        if (changedSettings.length) {
+          await queueOptionsRestore(changedSettings);
+        }
+      } else if (changedOptionKeys.length) {
+        await queueOptionsRestore(changedOptionKeys);
+      }
+    })().catch((error) => {
+      console.error("Video Auto Pause could not restore changed settings:", error);
+    });
+  } else if (namespace === "local" && "vapActiveProfileId" in changes) {
+    void Promise.all([restoreProfiles(), queueOptionsRestore(Object.keys(options))]).catch((error) => {
       console.error(
         "Video Auto Pause could not restore changed settings:",
         error,
       );
     });
   } else if (namespace === "session" || namespace === "local") {
-    void restore_options([]).catch((error) => {
+    void queueOptionsRestore([]).catch((error) => {
       console.error(
         "Video Auto Pause could not restore changed settings:",
         error,
@@ -954,13 +1308,8 @@ env.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === "local" && "vapSleepTimerExpiresAt" in changes) {
       void restoreSleepTimer();
     }
-    if (namespace === "local" && "vapProfiles" in changes) {
-      void restoreProfiles().catch((error) => {
-        console.error("Video Auto Pause could not restore profiles:", error);
-      });
-    }
   }
-});
+}
 
 document
   .getElementById("pinCurrentTab")
@@ -990,7 +1339,8 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
     const preset = globalThis.VAP_PRESETS[button.dataset.preset];
     const status = document.getElementById("presetStatus");
     try {
-      await env.storage.sync.set(preset);
+      await optionsReady;
+      await updateActiveProfileSettings(preset);
       status.textContent = env.i18n.getMessage("presetApplied");
     } catch (error) {
       status.textContent = env.i18n.getMessage("presetFailed");
@@ -1009,9 +1359,6 @@ if (env.runtime.getManifest().browser_specific_settings?.gecko) {
 
 void restoreStats();
 void restoreSleepTimer();
-void restoreProfiles().catch((error) => {
-  console.error("Video Auto Pause could not restore profiles:", error);
-});
 
 document.getElementById("startSleepTimer")?.addEventListener("click", () => {
   void updateSleepTimer("start");
@@ -1038,6 +1385,7 @@ document
 document.getElementById("saveProfile")?.addEventListener("click", async () => {
   const status = document.getElementById("profileStatus");
   try {
+    await optionsReady;
     await saveProfile();
     status.textContent = env.i18n.getMessage("profileSaved");
   } catch (error) {
@@ -1048,6 +1396,7 @@ document.getElementById("saveProfile")?.addEventListener("click", async () => {
 document.getElementById("applyProfile")?.addEventListener("click", async () => {
   const status = document.getElementById("profileStatus");
   try {
+    await optionsReady;
     await applySelectedProfile();
     status.textContent = env.i18n.getMessage("profileApplied");
   } catch (error) {
@@ -1060,6 +1409,7 @@ document
   ?.addEventListener("click", async () => {
     const status = document.getElementById("profileStatus");
     try {
+      await optionsReady;
       await deleteSelectedProfile();
       status.textContent = env.i18n.getMessage("profileDeleted");
     } catch (error) {
@@ -1082,13 +1432,27 @@ document
   .getElementById("profileSelect")
   ?.addEventListener("change", (event) => {
     const selected = Boolean(event.currentTarget.value);
-    document.getElementById("applyProfile").disabled = !selected;
-    document.getElementById("deleteProfile").disabled = !selected;
-    document.getElementById("profileName").value = selected
-      ? event.currentTarget.value
-      : "";
-    document.getElementById("profileDomains").value =
-      event.currentTarget.selectedOptions[0]?.dataset.domains ?? "";
+    const profileId = event.currentTarget.value;
+    document.getElementById("applyProfile").disabled =
+      !selected ||
+      profileId === document.getElementById("activeProfileSelect").value;
+    document.getElementById("deleteProfile").disabled =
+      !selected || profileId === "default";
+  });
+
+document
+  .getElementById("activeProfileSelect")
+  ?.addEventListener("change", async (event) => {
+    const status = document.getElementById("profileStatus");
+    const profileId = event.currentTarget.value;
+    try {
+      await optionsReady;
+      await applySelectedProfile(profileId);
+      status.textContent = env.i18n.getMessage("profileApplied");
+    } catch (error) {
+      status.textContent = env.i18n.getMessage("profileFailed");
+      console.error("Video Auto Pause could not switch profiles:", error);
+    }
   });
 
 // Listen to changes of options
@@ -1096,13 +1460,17 @@ for (const option in options) {
   const el = document.getElementById(option);
   if (el) {
     el.addEventListener("change", async () => {
-      if (option === "audioFading") {
-        updateAudioFadingVisibility();
+      try {
+        if (option === "contentShortcutsEnabled") {
+          setContentShortcutInputsDisabled();
+        }
+        await save_option(option);
+        document.getElementById("settingsSaveStatus").textContent = "";
+      } catch (error) {
+        document.getElementById("settingsSaveStatus").textContent =
+          env.i18n.getMessage("settingsSaveFailed");
+        console.error(`Video Auto Pause could not save ${option}:`, error);
       }
-      if (option === "contentShortcutsEnabled") {
-        setContentShortcutInputsDisabled();
-      }
-      await save_option(option);
     });
   }
 }
@@ -1126,7 +1494,7 @@ void updateSiteReportLink().catch((error) => {
   );
 });
 document.getElementById("addSiteRule").addEventListener("click", () => {
-  void addCurrentSiteRule().catch((error) => {
+  void optionsReady.then(addCurrentSiteRule).catch((error) => {
     document.getElementById("siteRuleStatus").textContent =
       env.i18n.getMessage("siteRuleFailed");
     console.error("Video Auto Pause could not add a site rule:", error);
@@ -1141,18 +1509,20 @@ document.getElementById("backToGlobal").addEventListener("click", () => {
   closeSiteSettings();
 });
 document.getElementById("saveSiteSettings").addEventListener("click", () => {
-  void saveSiteSettings().catch((error) => {
+  void optionsReady.then(saveSiteSettings).catch((error) => {
     document.getElementById("siteSettingsStatus").textContent =
       env.i18n.getMessage("siteRuleFailed");
     console.error("Video Auto Pause could not save site settings:", error);
   });
 });
 document.getElementById("deleteSiteSettings").addEventListener("click", () => {
-  void deleteSiteRule(editingSiteDomain).catch((error) => {
-    document.getElementById("siteSettingsStatus").textContent =
-      env.i18n.getMessage("siteRuleFailed");
-    console.error("Video Auto Pause could not delete site settings:", error);
-  });
+  void optionsReady
+    .then(() => deleteSiteRule(editingSiteDomain))
+    .catch((error) => {
+      document.getElementById("siteSettingsStatus").textContent =
+        env.i18n.getMessage("siteRuleFailed");
+      console.error("Video Auto Pause could not delete site settings:", error);
+    });
 });
 
 document
@@ -1161,26 +1531,12 @@ document
     await save_option("disabledTabs");
   });
 
-const coll = document.getElementsByClassName("collapsible_button");
-let i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    const content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  });
-}
-
-document.querySelectorAll(".collapsible_content details").forEach((details) => {
-  details.addEventListener("toggle", () => {
-    const content = details.closest(".collapsible_content");
-    if (content?.style.maxHeight) {
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    }
+document.querySelectorAll(".collapsible_button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const content = button.nextElementSibling;
+    const expanded = button.getAttribute("aria-expanded") !== "true";
+    button.setAttribute("aria-expanded", String(expanded));
+    button.classList.toggle("active", expanded);
+    content.classList.toggle("expanded", expanded);
   });
 });

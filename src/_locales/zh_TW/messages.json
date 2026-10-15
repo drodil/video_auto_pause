@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30 分鐘後暫停所有內容",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "啟動睡眠計時器",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "時長（分鐘）",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "取消睡眠計時器",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "無法複製診斷資訊。"
+  },
+  "allowAudio": {
+    "message": "允許僅播放音訊"
+  },
+  "profileDefault": {
+    "message": "預設"
+  },
+  "settingsSaveFailed": {
+    "message": "無法儲存設定。請檢查瀏覽器同步儲存空間是否可用。"
   }
 }

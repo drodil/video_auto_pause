@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Pausar tudo em 30 minutos",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Iniciar temporizador de suspensão",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Duração (minutos)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Cancelar temporizador",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Não foi possível copiar o diagnóstico."
+  },
+  "allowAudio": {
+    "message": "Permitir reprodução somente de áudio"
+  },
+  "profileDefault": {
+    "message": "Padrão"
+  },
+  "settingsSaveFailed": {
+    "message": "Não foi possível salvar as configurações. Verifique se o armazenamento de sincronização do navegador está disponível."
   }
 }

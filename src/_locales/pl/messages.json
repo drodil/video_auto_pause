@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Wstrzymaj wszystko za 30 minut",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Uruchom timer uśpienia",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Czas trwania (minuty)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Anuluj wyłącznik czasowy",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Nie udało się skopiować danych diagnostycznych."
+  },
+  "allowAudio": {
+    "message": "Zezwalaj na odtwarzanie samego dźwięku"
+  },
+  "profileDefault": {
+    "message": "Domyślny"
+  },
+  "settingsSaveFailed": {
+    "message": "Nie można zapisać ustawień. Sprawdź, czy pamięć synchronizacji przeglądarki jest dostępna."
   }
 }

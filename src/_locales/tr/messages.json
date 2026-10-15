@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30 dakika sonra her şeyi duraklat",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Uyku zamanlayıcısını başlat",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Süre (dakika)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Uyku zamanlayıcısını iptal et",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Tanılama bilgileri kopyalanamadı."
+  },
+  "allowAudio": {
+    "message": "Yalnızca ses oynatmaya izin ver"
+  },
+  "profileDefault": {
+    "message": "Varsayılan"
+  },
+  "settingsSaveFailed": {
+    "message": "Ayarlar kaydedilemedi. Tarayıcı senkronizasyon depolamasının kullanılabilir olduğunu kontrol edin."
   }
 }

@@ -4,36 +4,31 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.14.1](https://github.com/drodil/video_auto_pause/compare/v1.14.0...v1.14.1) (2026-10-16)
 
-
 ### Bug Fixes
 
-* resume autoplay when activating background tabs ([f72541a](https://github.com/drodil/video_auto_pause/commit/f72541af759054c37830b441943aa1333d872f47))
+- resume autoplay when activating background tabs ([f72541a](https://github.com/drodil/video_auto_pause/commit/f72541af759054c37830b441943aa1333d872f47))
 
 ## [1.14.0](https://github.com/drodil/video_auto_pause/compare/v1.13.0...v1.14.0) (2026-10-15)
 
-
 ### Features
 
-* prioritize active media and expand browser coverage ([3fb5c29](https://github.com/drodil/video_auto_pause/commit/3fb5c29955d98f64aeeecfde129843b701223311)), closes [#4](https://github.com/drodil/video_auto_pause/issues/4) [#5](https://github.com/drodil/video_auto_pause/issues/5) [#8](https://github.com/drodil/video_auto_pause/issues/8) [#15](https://github.com/drodil/video_auto_pause/issues/15) [#16](https://github.com/drodil/video_auto_pause/issues/16) [#19](https://github.com/drodil/video_auto_pause/issues/19) [#20](https://github.com/drodil/video_auto_pause/issues/20)
-
+- prioritize active media and expand browser coverage ([3fb5c29](https://github.com/drodil/video_auto_pause/commit/3fb5c29955d98f64aeeecfde129843b701223311)), closes [#4](https://github.com/drodil/video_auto_pause/issues/4) [#5](https://github.com/drodil/video_auto_pause/issues/5) [#8](https://github.com/drodil/video_auto_pause/issues/8) [#15](https://github.com/drodil/video_auto_pause/issues/15) [#16](https://github.com/drodil/video_auto_pause/issues/16) [#19](https://github.com/drodil/video_auto_pause/issues/19) [#20](https://github.com/drodil/video_auto_pause/issues/20)
 
 ### Bug Fixes
 
-* update Firefox add-on link ([984cc7b](https://github.com/drodil/video_auto_pause/commit/984cc7b1cb68cd5dc5358903672d75ab1d9c415a))
+- update Firefox add-on link ([984cc7b](https://github.com/drodil/video_auto_pause/commit/984cc7b1cb68cd5dc5358903672d75ab1d9c415a))
 
 ## [1.13.0](https://github.com/drodil/video_auto_pause/compare/v1.12.0...v1.13.0) (2026-01-27)
 
-
 ### Features
 
-* mute instead pause + bug fixes ([8e8dc53](https://github.com/drodil/video_auto_pause/commit/8e8dc5398a539484f80b217f765268feea88f153))
-
+- mute instead pause + bug fixes ([8e8dc53](https://github.com/drodil/video_auto_pause/commit/8e8dc5398a539484f80b217f765268feea88f153))
 
 ### Bug Fixes
 
-* **ci:** use xvfb-run for playwright tests ([995e6c8](https://github.com/drodil/video_auto_pause/commit/995e6c88447aa4efa939786b127b17e43a086938))
-* icon handling + perf improvements ([f28ceef](https://github.com/drodil/video_auto_pause/commit/f28ceefb1af34a1c87bb6fec253fcb82a0801321))
-* update upload-artifact ([f7d77a7](https://github.com/drodil/video_auto_pause/commit/f7d77a7cb71b465d993cf01ac16b3cb1c6693fbb))
+- **ci:** use xvfb-run for playwright tests ([995e6c8](https://github.com/drodil/video_auto_pause/commit/995e6c88447aa4efa939786b127b17e43a086938))
+- icon handling + perf improvements ([f28ceef](https://github.com/drodil/video_auto_pause/commit/f28ceefb1af34a1c87bb6fec253fcb82a0801321))
+- update upload-artifact ([f7d77a7](https://github.com/drodil/video_auto_pause/commit/f7d77a7cb71b465d993cf01ac16b3cb1c6693fbb))
 
 ## [1.12.0](https://github.com/drodil/video_auto_pause/compare/v1.11.4...v1.12.0) (2026-01-27)
 

@@ -1,6 +1,7 @@
 const env = chrome.runtime ? chrome : browser;
 
 function localizePage() {
+  document.documentElement.dir = env.i18n.getMessage("@@bidi_dir") || "ltr";
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const message = env.i18n.getMessage(element.dataset.i18n);
     if (message) {
@@ -38,7 +39,12 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
   button.addEventListener("click", async () => {
     const status = document.getElementById("presetStatus");
     try {
-      await env.storage.sync.set(globalThis.VAP_PRESETS[button.dataset.preset]);
+      await globalThis.VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
+        env.storage.sync,
+        env.storage.local,
+        globalThis.VAP_DEFAULT_OPTIONS,
+        globalThis.VAP_PRESETS[button.dataset.preset],
+      );
       status.textContent = env.i18n.getMessage("presetApplied");
     } catch (error) {
       status.textContent = env.i18n.getMessage("presetFailed");

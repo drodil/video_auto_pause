@@ -56,8 +56,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Pause everything in 30 minutes",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Start sleep timer",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Duration (minutes)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Cancel sleep timer",
@@ -304,7 +308,7 @@
     "description": "Welcome page heading"
   },
   "onboardingIntro": {
-    "message": "Videos pause when you switch tabs, scroll away, or lock your device—and resume when you return.",
+    "message": "Videos pause when you switch tabs, scroll away, or lock your device and resume when you return.",
     "description": "Welcome page introduction"
   },
   "onboardingPin": {
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Could not copy diagnostics."
+  },
+  "allowAudio": {
+    "message": "Allow audio-only playback"
+  },
+  "profileDefault": {
+    "message": "Default"
+  },
+  "settingsSaveFailed": {
+    "message": "Could not save settings. Check that browser sync storage is available."
   }
 }

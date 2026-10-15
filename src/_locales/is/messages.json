@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Gerðu hlé á öllu eftir 30 mínútur",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Ræsa svefntíma",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Tímalengd (mínútur)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Hætta við svefntímamæli",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Ekki tókst að afrita greiningargögn."
+  },
+  "allowAudio": {
+    "message": "Leyfa spilun eingöngu hljóðs"
+  },
+  "profileDefault": {
+    "message": "Sjálfgefið"
+  },
+  "settingsSaveFailed": {
+    "message": "Ekki tókst að vista stillingar. Athugaðu hvort samstillingargeymsla vafrans sé tiltæk."
   }
 }

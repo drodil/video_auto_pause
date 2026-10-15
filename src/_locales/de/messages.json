@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Alles in 30 Minuten pausieren",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Sleep-Timer starten",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Dauer (Minuten)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Sleep-Timer abbrechen",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Diagnosedaten konnten nicht kopiert werden."
+  },
+  "allowAudio": {
+    "message": "Nur-Audio-Wiedergabe zulassen"
+  },
+  "profileDefault": {
+    "message": "Standard"
+  },
+  "settingsSaveFailed": {
+    "message": "Einstellungen konnten nicht gespeichert werden. Prüfe, ob der Synchronisierungsspeicher verfügbar ist."
   }
 }

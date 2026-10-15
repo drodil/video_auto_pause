@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Призупинити все через 30 хвилин",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Запустити таймер сну",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Тривалість (хвилини)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Скасувати таймер сну",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Не вдалося скопіювати діагностику."
+  },
+  "allowAudio": {
+    "message": "Дозволити відтворення лише аудіо"
+  },
+  "profileDefault": {
+    "message": "За замовчуванням"
+  },
+  "settingsSaveFailed": {
+    "message": "Не вдалося зберегти налаштування. Перевірте, чи доступне сховище синхронізації браузера."
   }
 }

@@ -16,7 +16,6 @@ let tabVideos = {}; // { tabId: { frameId: boolean } }
 let tabVisibility = {};
 let tabMedia = {};
 let tabVideoHover = {};
-let profiles = [];
 let priorityTabId = -1;
 let priorityHistory = [];
 let priorityOperation = Promise.resolve();
@@ -27,7 +26,7 @@ let safeModeTabs = [];
 // Computer state
 let state = "active";
 let previousIdleState = "active";
-let quietHoursActive = null;
+const quietHoursTabs = new Map();
 let options = { ...DEFAULT_OPTIONS };
 const QUIET_HOURS_ALARM = "vap-quiet-hours";
 const SLEEP_TIMER_ALARM = "vap-sleep-timer";
@@ -81,12 +80,15 @@ function isWithinQuietHours(start, end, date = new Date()) {
     : currentMinute >= startMinute || currentMinute < endMinute;
 }
 
+function hasQuietHours(settings) {
+  const start = parseClockTime(settings.quietHoursStart);
+  const end = parseClockTime(settings.quietHoursEnd);
+  return start !== null && end !== null && start !== end;
+}
+
 function getIdleDetectionInterval() {
   const configuredTimeouts = [
     Number(options.idlePauseMinutes),
-    ...(Array.isArray(profiles)
-      ? profiles.map((profile) => Number(profile?.settings?.idlePauseMinutes))
-      : []),
     ...(Array.isArray(options.siteRules)
       ? options.siteRules.map((rule) =>
           Number(rule?.overrides?.idlePauseMinutes),
@@ -98,27 +100,23 @@ function getIdleDetectionInterval() {
     : 60;
 }
 
-async function applyQuietHours(date = new Date(), force = false) {
-  const active = isWithinQuietHours(
-    options.quietHoursStart,
-    options.quietHoursEnd,
-    date,
-  );
-  const wasActive = quietHoursActive === true;
-  if (quietHoursActive === null && !active) {
-    quietHoursActive = false;
-    return;
-  }
-  if (!force && active === quietHoursActive) {
-    return;
-  }
-  quietHoursActive = active;
-  const tabs = await env.tabs.query({});
+async function applyQuietHours(date = new Date(), force = false, targetTab) {
+  const tabs = targetTab ? [targetTab] : await env.tabs.query({});
   for (const tab of tabs) {
     if (!isEnabledForTab(tab)) {
       continue;
     }
     const settings = tabOptions(tab);
+    const active = isWithinQuietHours(
+      settings.quietHoursStart,
+      settings.quietHoursEnd,
+      date,
+    );
+    const wasActive = quietHoursTabs.get(tab.id) ?? false;
+    if (!force && active === wasActive) {
+      continue;
+    }
+    quietHoursTabs.set(tab.id, active);
     if (active && settings.autopause) {
       stop(tab);
     } else if (!active && wasActive && settings.autoresume) {
@@ -129,9 +127,14 @@ async function applyQuietHours(date = new Date(), force = false) {
 
 async function configureContextRules(forceQuietHours = false) {
   await env.idle.setDetectionInterval(getIdleDetectionInterval());
-  const start = parseClockTime(options.quietHoursStart);
-  const end = parseClockTime(options.quietHoursEnd);
-  if (start !== null && end !== null && start !== end) {
+  const hasConfiguredSiteQuietHours = (
+    Array.isArray(options.siteRules) ? options.siteRules : []
+  ).some(
+    (rule) =>
+      rule?.enabled !== false &&
+      hasQuietHours(VAP_OPTIONS_FOR_SITE(rule?.domain, options)),
+  );
+  if (hasQuietHours(options) || hasConfiguredSiteQuietHours) {
     await env.alarms.create(QUIET_HOURS_ALARM, { periodInMinutes: 1 });
   } else {
     await env.alarms.clear(QUIET_HOURS_ALARM);
@@ -140,8 +143,10 @@ async function configureContextRules(forceQuietHours = false) {
 }
 
 async function setSleepTimer(minutes) {
-  if (![15, 30, 60].includes(minutes)) {
-    throw new Error("Sleep timer duration must be 15, 30, or 60 minutes.");
+  if (![5, 10, 15, 30, 60].includes(minutes)) {
+    throw new Error(
+      "Sleep timer duration must be 5, 10, 15, 30, or 60 minutes.",
+    );
   }
   const expiresAt = Date.now() + minutes * 60 * 1000;
   await env.storage.local.set({ vapSleepTimerExpiresAt: expiresAt });
@@ -213,12 +218,11 @@ async function registerContentScriptIfNeeded() {
 }
 
 async function refresh_settings() {
-  const result = await env.storage.sync.get(DEFAULT_OPTIONS);
-  options = { ...DEFAULT_OPTIONS, ...result };
-  const storedProfiles = await env.storage.local.get("vapProfiles");
-  profiles = Array.isArray(storedProfiles.vapProfiles)
-    ? storedProfiles.vapProfiles
-    : [];
+  options = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
+    env.storage.sync,
+    env.storage.local,
+    DEFAULT_OPTIONS,
+  );
   debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
   disabledTabs = (await sessionStorage.get("disabledTabs")).disabledTabs ?? [];
   pinnedTabs = (await sessionStorage.get("pinnedTabs")).pinnedTabs ?? [];
@@ -327,8 +331,7 @@ function isEnabledForTab(tab) {
     return false;
   }
 
-  const settings = VAP_SETTINGS_FOR_PROFILE(options, profiles, hostname);
-  return VAP_SITE_ENABLED(hostname, settings);
+  return VAP_SITE_ENABLED(hostname, options);
 }
 
 function tabOptions(tab) {
@@ -336,8 +339,7 @@ function tabOptions(tab) {
     return options;
   }
   const hostname = new URL(tab.url).hostname.toLowerCase();
-  const settings = VAP_SETTINGS_FOR_PROFILE(options, profiles, hostname);
-  return VAP_OPTIONS_FOR_SITE(hostname, settings);
+  return VAP_OPTIONS_FOR_SITE(hostname, options);
 }
 
 // Functionality to send messages to tabs
@@ -363,13 +365,17 @@ function sendMessage(tab, message) {
 
 // Media control functions
 
-function stop(tab) {
+function stop(tab, pausePendingPlay = false) {
   if (pinnedTabs.includes(tab.id)) {
     return;
   }
   const settings = tabOptions(tab);
   const action = settings.muteVideo ? "mute" : "stop";
-  sendMessage(tab, { action, delay: settings.pauseDelay });
+  sendMessage(tab, {
+    action,
+    delay: settings.pauseDelay,
+    pausePendingPlay,
+  });
 }
 
 function resume(tab) {
@@ -556,20 +562,23 @@ async function refreshIcon(tabId) {
 env.storage.onChanged.addListener(async function (changes, areaName) {
   const relevantSyncChange =
     areaName === "sync" &&
-    Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
+    Object.keys(changes).some(
+      (key) => key === "vapProfileIds" || key.startsWith("vapProfile:"),
+    );
+  const relevantActiveProfileChange =
+    areaName === "local" && "vapActiveProfileId" in changes;
   const relevantTabChange =
     (areaName === "session" || areaName === "local") &&
-    ("disabledTabs" in changes ||
-      "pinnedTabs" in changes ||
-      (areaName === "local" && "vapProfiles" in changes));
-  if (!relevantSyncChange && !relevantTabChange) {
+    ("disabledTabs" in changes || "pinnedTabs" in changes);
+  if (
+    !relevantSyncChange &&
+    !relevantActiveProfileChange &&
+    !relevantTabChange
+  ) {
     return;
   }
   await settingsReady;
-  const wasDisabled =
-    areaName === "sync" && "disabled" in changes
-      ? (changes.disabled.oldValue ?? false)
-      : options.disabled;
+  const wasDisabled = options.disabled;
   settingsReady = refresh_settings();
   await settingsReady;
 
@@ -634,7 +643,7 @@ env.tabs.onActivated.addListener(async function (info) {
           previousTab.windowId === tab.windowId &&
           tabOptions(previousTab).autopause
         ) {
-          stop(previousTab);
+          stop(previousTab, true);
         }
       } catch (error) {
         debugLog(`Could not get previous tab ${previousTabId}: ${error}`);
@@ -667,12 +676,8 @@ env.tabs.onCreated.addListener(async function (tab) {
 env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   await settingsReady;
   sendMessage(tab, { action: "check" });
-  if (
-    changeInfo.status === "complete" &&
-    isWithinQuietHours(options.quietHoursStart, options.quietHoursEnd) &&
-    tabOptions(tab).autopause
-  ) {
-    stop(tab);
+  if (changeInfo.status === "complete") {
+    await applyQuietHours(new Date(), true, tab);
   }
 
   if (changeInfo.status === "loading") {
@@ -697,6 +702,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 
 env.tabs.onRemoved.addListener(async function (tabId) {
   await settingsReady;
+  quietHoursTabs.delete(tabId);
   delete tabVideos[tabId];
   delete tabVisibility[tabId];
   delete tabMedia[tabId];
@@ -787,7 +793,12 @@ env.windows.onRemoved.addListener(function (windowId) {
 async function handlePageMessage(request, sender) {
   await settingsReady;
   if (request.sleepTimerAction) {
-    if (sender.url !== env.runtime.getURL("options.html")) {
+    const senderUrl = new URL(sender.url);
+    const optionsUrl = new URL(env.runtime.getURL("options.html"));
+    if (
+      senderUrl.origin !== optionsUrl.origin ||
+      senderUrl.pathname !== optionsUrl.pathname
+    ) {
       throw new Error("Sleep timer actions are only available in settings.");
     }
     if (request.sleepTimerAction === "start") {
@@ -989,7 +1000,12 @@ async function handleCommand(command) {
   if (command === "toggle-extension") {
     const disabled = !options.disabled;
     debugLog(`Toggle extension command received, extension state ${disabled}`);
-    await env.storage.sync.set({ disabled });
+    await VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
+      env.storage.sync,
+      env.storage.local,
+      DEFAULT_OPTIONS,
+      { disabled },
+    );
     settingsReady = refresh_settings();
     await settingsReady;
   } else if (command === "toggle-tab") {

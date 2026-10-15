@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "30 分钟后暂停所有内容",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "启动睡眠定时器",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "时长（分钟）",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "取消睡眠定时器",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "无法复制诊断信息。"
+  },
+  "allowAudio": {
+    "message": "允许仅播放音频"
+  },
+  "profileDefault": {
+    "message": "默认"
+  },
+  "settingsSaveFailed": {
+    "message": "无法保存设置。请检查浏览器同步存储是否可用。"
   }
 }

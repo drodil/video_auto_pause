@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Pauzeer alles over 30 minuten",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Slaaptimer starten",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Duur (minuten)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Slaaptimer annuleren",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Diagnostische gegevens konden niet worden gekopieerd."
+  },
+  "allowAudio": {
+    "message": "Alleen audio afspelen toestaan"
+  },
+  "profileDefault": {
+    "message": "Standaard"
+  },
+  "settingsSaveFailed": {
+    "message": "Instellingen kunnen niet worden opgeslagen. Controleer of browser-synchronisatieopslag beschikbaar is."
   }
 }

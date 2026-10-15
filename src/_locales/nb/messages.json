@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Sett alt på pause om 30 minutter",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Start sovetimer",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Varighet (minutter)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Avbryt sovetimer",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Kunne ikke kopiere diagnosedata."
+  },
+  "allowAudio": {
+    "message": "Tillat avspilling av bare lyd"
+  },
+  "profileDefault": {
+    "message": "Standard"
+  },
+  "settingsSaveFailed": {
+    "message": "Kunne ikke lagre innstillingene. Kontroller at nettleserens synkroniseringslager er tilgjengelig."
   }
 }

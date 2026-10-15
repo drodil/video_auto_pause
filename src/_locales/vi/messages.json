@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Tạm dừng tất cả sau 30 phút",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Bắt đầu hẹn giờ ngủ",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Thời lượng (phút)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Hủy hẹn giờ ngủ",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Không thể sao chép thông tin chẩn đoán."
+  },
+  "allowAudio": {
+    "message": "Cho phép phát chỉ âm thanh"
+  },
+  "profileDefault": {
+    "message": "Mặc định"
+  },
+  "settingsSaveFailed": {
+    "message": "Không thể lưu cài đặt. Hãy kiểm tra bộ nhớ đồng bộ của trình duyệt."
   }
 }

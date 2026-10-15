@@ -52,8 +52,12 @@
     "description": "Prevent playlist or autoplay-next playback."
   },
   "sleepTimerStart": {
-    "message": "Jeda semua setelah 30 menit",
-    "description": "Start a 30-minute timer to pause media."
+    "message": "Mulai timer tidur",
+    "description": "Start a timer to pause media."
+  },
+  "sleepTimerDuration": {
+    "message": "Durasi (menit)",
+    "description": "Select how many minutes until media is paused."
   },
   "sleepTimerCancel": {
     "message": "Batalkan timer tidur",
@@ -670,5 +674,14 @@
   },
   "diagnosticsFailed": {
     "message": "Diagnostik tidak dapat disalin."
+  },
+  "allowAudio": {
+    "message": "Izinkan pemutaran audio saja"
+  },
+  "profileDefault": {
+    "message": "Default"
+  },
+  "settingsSaveFailed": {
+    "message": "Pengaturan tidak dapat disimpan. Periksa apakah penyimpanan sinkronisasi browser tersedia."
   }
 }
