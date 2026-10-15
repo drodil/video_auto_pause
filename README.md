@@ -33,6 +33,10 @@ Ad handling watches active player markers across sites, including YouTube's
 active ad UI, generic `data-ad-playing` signals, and common player-ad overlays.
 An empty YouTube ad-module placeholder alone is not treated as an active ad.
 
+Advanced context rules can pause playback after a configurable idle timeout or
+during daily quiet hours in local time. The one-source mode prioritizes media in
+the active tab and returns to the previous source when the current one stops.
+
 ## Installing
 
 #### Chrome Web Store

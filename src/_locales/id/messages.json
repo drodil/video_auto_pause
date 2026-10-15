@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Lanjutkan media sebelumnya saat media saat ini berhenti",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Putar hanya satu sumber sekaligus",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Jeda saat tidak aktif (menit; 0 untuk menonaktifkan)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Jam tenang (waktu lokal)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Mulai",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Selesai",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Lanjutkan video saat kembali ke tab",

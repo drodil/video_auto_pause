@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Jätka eelmist meediat, kui praegune meedia peatub",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Esita korraga ainult üht allikat",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Peata passiivsuse korral (minutites; 0 keelab)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Vaikne aeg (kohalik aeg)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Algus",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Lõpp",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Jätka videot vahekaardile naastes",

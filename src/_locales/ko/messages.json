@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "현재 미디어가 중지되면 이전 미디어 다시 재생",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "한 번에 하나의 미디어만 재생",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "비활성 상태에서 일시정지 (분, 0은 사용 안 함)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "조용한 시간 (현지 시간)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "시작",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "종료",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "탭으로 돌아올 때 동영상 다시 시작",

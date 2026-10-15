@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Wznów poprzednie multimedia po zatrzymaniu bieżących",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Odtwarzaj tylko jedno źródło naraz",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Wstrzymaj przy braku aktywności (minuty; 0 wyłącza)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Ciche godziny (czas lokalny)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Początek",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Koniec",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Wznów wideo po powrocie do karty",

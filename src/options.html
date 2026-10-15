@@ -743,9 +743,95 @@
                 <label>
                   <input type="checkbox" id="prioritizeActiveTabMedia" />
                   <span class="label-text" data-i18n="prioritizeActiveTabMedia"
-                    >Resume previous media when current media stops</span
+                    >Play only one source at a time</span
                   >
                 </label>
+                <div style="margin-top: 12px">
+                  <label
+                    for="idlePauseMinutes"
+                    style="
+                      font-size: 11px;
+                      color: #6b7280;
+                      display: block;
+                      margin-bottom: 2px;
+                    "
+                    data-i18n="idlePauseMinutes"
+                    >Pause when inactive (minutes; 0 to disable)</label
+                  >
+                  <input
+                    type="number"
+                    id="idlePauseMinutes"
+                    min="0"
+                    max="240"
+                    step="1"
+                    style="
+                      width: 100%;
+                      padding: 6px;
+                      border: 1px solid #d1d5db;
+                      border-radius: 4px;
+                    "
+                  />
+                </div>
+                <div style="margin-top: 12px">
+                  <span
+                    style="
+                      font-size: 11px;
+                      color: #6b7280;
+                      display: block;
+                      margin-bottom: 4px;
+                    "
+                    data-i18n="quietHours"
+                    >Quiet hours (local time)</span
+                  >
+                  <div style="display: flex; gap: 12px">
+                    <div style="flex: 1">
+                      <label
+                        for="quietHoursStart"
+                        style="
+                          font-size: 11px;
+                          color: #6b7280;
+                          display: block;
+                          margin-bottom: 2px;
+                        "
+                        data-i18n="quietHoursStart"
+                        >Start</label
+                      >
+                      <input
+                        type="time"
+                        id="quietHoursStart"
+                        style="
+                          width: 100%;
+                          padding: 6px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 4px;
+                        "
+                      />
+                    </div>
+                    <div style="flex: 1">
+                      <label
+                        for="quietHoursEnd"
+                        style="
+                          font-size: 11px;
+                          color: #6b7280;
+                          display: block;
+                          margin-bottom: 2px;
+                        "
+                        data-i18n="quietHoursEnd"
+                        >End</label
+                      >
+                      <input
+                        type="time"
+                        id="quietHoursEnd"
+                        style="
+                          width: 100%;
+                          padding: 6px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 4px;
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
                 <label>
                   <input type="checkbox" id="debugMode" />
                   <span class="label-text" data-i18n="debugMode"

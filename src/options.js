@@ -110,8 +110,12 @@ function buildSiteSettingsFields() {
             : option === "playbackSpeed"
               ? "0.25"
               : "1";
-        if (["rewindSeconds", "playbackSpeed"].includes(option)) {
-          valueInput.max = option === "rewindSeconds" ? "60" : "4";
+        if (option === "rewindSeconds") {
+          valueInput.max = "60";
+        } else if (option === "playbackSpeed") {
+          valueInput.max = "4";
+        } else if (option === "idlePauseMinutes") {
+          valueInput.max = "240";
         }
         valueInput.value = String(defaultValue);
         row.append(settingName, customizeLabel, valueInput);
@@ -333,6 +337,7 @@ function readOption(option, element) {
       "fadeDuration",
       "rewindSeconds",
       "playbackSpeed",
+      "idlePauseMinutes",
     ].includes(option)
   ) {
     const value = Number(element.value);
@@ -341,7 +346,9 @@ function readOption(option, element) {
         ? 60
         : option === "playbackSpeed"
           ? 4
-          : Number.POSITIVE_INFINITY;
+          : option === "idlePauseMinutes"
+            ? 240
+            : Number.POSITIVE_INFINITY;
     if (!Number.isFinite(value)) {
       return 0;
     }
@@ -349,6 +356,9 @@ function readOption(option, element) {
     return option === "playbackSpeed"
       ? Math.round(bounded * 4) / 4
       : Math.floor(bounded);
+  }
+  if (["quietHoursStart", "quietHoursEnd"].includes(option)) {
+    return element.value;
   }
   return element.checked;
 }
@@ -439,9 +449,12 @@ async function restore_options(changedKeys = Object.keys(options)) {
         "fadeDuration",
         "rewindSeconds",
         "playbackSpeed",
+        "idlePauseMinutes",
       ].includes(opt)
     ) {
       element.value = Math.max(0, Number(items[opt]) || 0);
+    } else if (["quietHoursStart", "quietHoursEnd"].includes(opt)) {
+      element.value = items[opt] || "";
     } else {
       element.checked = Boolean(items[opt]);
     }

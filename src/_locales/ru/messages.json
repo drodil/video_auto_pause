@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Возобновлять предыдущее воспроизведение после остановки текущего",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Воспроизводить только один источник одновременно",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Ставить на паузу при бездействии (минуты; 0 — отключить)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Тихие часы (местное время)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Начало",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Конец",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Возобновлять видео при возврате на вкладку",

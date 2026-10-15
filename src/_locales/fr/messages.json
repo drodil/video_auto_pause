@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Reprendre le média précédent lorsque le média actuel s'arrête",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Lire une seule source à la fois",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Mettre en pause en cas d’inactivité (minutes ; 0 pour désactiver)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Heures calmes (heure locale)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Début",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Fin",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Reprendre la vidéo lors du retour à l'onglet",

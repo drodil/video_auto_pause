@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Tiếp tục phát nội dung trước đó khi nội dung hiện tại dừng",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Chỉ phát một nguồn cùng lúc",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Tạm dừng khi không hoạt động (phút; 0 để tắt)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Giờ yên lặng (giờ địa phương)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Bắt đầu",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Kết thúc",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Tiếp tục video khi quay lại tab",

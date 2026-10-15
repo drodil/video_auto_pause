@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Відновлювати попереднє відтворення після зупинки поточного",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Відтворювати лише одне джерело одночасно",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Призупиняти за бездіяльності (хвилини; 0 — вимкнути)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Тихі години (місцевий час)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Початок",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Кінець",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Відновлювати відео при поверненні на вкладку",

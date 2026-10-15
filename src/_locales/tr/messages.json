@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Geçerli medya durduğunda önceki medyayı sürdür",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Aynı anda yalnızca bir kaynak oynat",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Etkin değilken duraklat (dakika; devre dışı bırakmak için 0)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Sessiz saatler (yerel saat)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Başlangıç",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Bitiş",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Sekmeye dönüldüğünde videoyu devam ettir",

@@ -32,8 +32,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Resume previous media when current media stops",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Play only one source at a time",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Pause when inactive (minutes; 0 to disable)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Quiet hours (local time)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Start",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "End",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Resume video when returning to tab",

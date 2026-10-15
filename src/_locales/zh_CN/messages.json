@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "当前媒体停止后恢复之前的媒体",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "一次只播放一个来源",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "无操作时暂停（分钟；0 表示停用）",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "安静时段（本地时间）",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "开始",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "结束",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "返回标签页时继续播放视频",

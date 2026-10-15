@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "استئناف الوسائط السابقة عند توقف الوسائط الحالية",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "شغّل مصدرًا واحدًا فقط في كل مرة",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "أوقف التشغيل عند عدم النشاط (بالدقائق؛ 0 للتعطيل)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "ساعات الهدوء (التوقيت المحلي)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "البداية",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "النهاية",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "استئناف الفيديو عند العودة إلى علامة التبويب",

@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "現在のメディアが停止したら前のメディアを再開",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "一度に再生するソースを1つにする",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "非アクティブ時に一時停止（分、0で無効）",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "静かな時間帯（現地時間）",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "開始",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "終了",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "タブに戻ったときに動画を再開",

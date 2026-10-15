@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "वर्तमान मीडिया रुकने पर पिछला मीडिया फिर से शुरू करें",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "एक बार में केवल एक स्रोत चलाएँ",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "निष्क्रिय होने पर रोकें (मिनट; बंद करने के लिए 0)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "शांत समय (स्थानीय समय)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "शुरू",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "समाप्त",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "टैब पर लौटने पर वीडियो जारी रखें",

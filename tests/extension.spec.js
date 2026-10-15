@@ -530,13 +530,18 @@ test.describe("Video Auto Pause Extension", () => {
       });
   });
 
-  test("includes preset descriptions in every locale", () => {
+  test("includes all added settings messages in every locale", () => {
     const localeDirectory = path.join(__dirname, "../src/_locales");
     const keys = [
       "presetStudyDescription",
       "presetMusicDescription",
       "presetBingeDescription",
       "presetSaverDescription",
+      "prioritizeActiveTabMedia",
+      "idlePauseMinutes",
+      "quietHours",
+      "quietHoursStart",
+      "quietHoursEnd",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1824,6 +1829,62 @@ test.describe("Video Auto Pause Extension", () => {
       .toBe(true);
     await secondTab.close();
     await expect(firstVideo).toHaveJSProperty("paused", false);
+  });
+
+  test("pauses on idle timeout and during configured quiet hours", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      idlePauseMinutes: 1,
+      quietHoursStart: "22:00",
+      quietHoursEnd: "06:00",
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() => worker.evaluate(() => options.idlePauseMinutes))
+      .toBe(1);
+    await worker.evaluate(() => handleIdleStateChanged("idle"));
+    await expect(video).toHaveJSProperty("paused", true);
+    await worker.evaluate(() => handleIdleStateChanged("active"));
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await worker.evaluate(() =>
+      applyQuietHours(new Date(2024, 5, 1, 23, 0), true),
+    );
+    await expect(video).toHaveJSProperty("paused", true);
+    await worker.evaluate(() =>
+      applyQuietHours(new Date(2024, 5, 2, 7, 0), true),
+    );
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect
+      .poll(() =>
+        worker.evaluate(() => ({
+          overnight: isWithinQuietHours(
+            "22:00",
+            "06:00",
+            new Date(2024, 5, 1, 23, 0),
+          ),
+          daytime: isWithinQuietHours(
+            "22:00",
+            "06:00",
+            new Date(2024, 5, 1, 12, 0),
+          ),
+        })),
+      )
+      .toEqual({ overnight: true, daytime: false });
   });
 
   test("should prioritize audio-only media across tabs", async ({

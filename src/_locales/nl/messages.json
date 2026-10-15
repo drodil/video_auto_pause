@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Eerdere media hervatten wanneer de huidige media stopt",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Speel slechts één bron tegelijk af",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Pauzeren bij inactiviteit (minuten; 0 om uit te schakelen)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Stille uren (lokale tijd)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Begin",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Einde",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Video hervatten bij terugkeren naar tabblad",

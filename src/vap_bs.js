@@ -24,7 +24,9 @@ let pinnedTabs = [];
 // Computer state
 let state = "active";
 let previousIdleState = "active";
+let quietHoursActive = null;
 let options = { ...DEFAULT_OPTIONS };
+const QUIET_HOURS_ALARM = "vap-quiet-hours";
 
 function debugLog(message) {
   if (options.debugMode) {
@@ -54,9 +56,89 @@ async function initialize() {
   }
   await refresh_settings();
   await registerContentScriptIfNeeded();
-  previousIdleState = await env.idle.queryState(60);
+  previousIdleState = await env.idle.queryState(getIdleDetectionInterval());
   state = previousIdleState;
 }
+
+function parseClockTime(value) {
+  const match = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(value ?? "");
+  return match ? Number(match[1]) * 60 + Number(match[2]) : null;
+}
+
+function isWithinQuietHours(start, end, date = new Date()) {
+  const startMinute = parseClockTime(start);
+  const endMinute = parseClockTime(end);
+  if (startMinute === null || endMinute === null || startMinute === endMinute) {
+    return false;
+  }
+  const currentMinute = date.getHours() * 60 + date.getMinutes();
+  return startMinute < endMinute
+    ? currentMinute >= startMinute && currentMinute < endMinute
+    : currentMinute >= startMinute || currentMinute < endMinute;
+}
+
+function getIdleDetectionInterval() {
+  const configuredTimeouts = [
+    Number(options.idlePauseMinutes),
+    ...(Array.isArray(options.siteRules)
+      ? options.siteRules.map((rule) =>
+          Number(rule?.overrides?.idlePauseMinutes),
+        )
+      : []),
+  ].filter((timeout) => Number.isFinite(timeout) && timeout > 0);
+  return configuredTimeouts.length
+    ? Math.min(240, Math.max(1, Math.min(...configuredTimeouts))) * 60
+    : 60;
+}
+
+async function applyQuietHours(date = new Date(), force = false) {
+  const active = isWithinQuietHours(
+    options.quietHoursStart,
+    options.quietHoursEnd,
+    date,
+  );
+  const wasActive = quietHoursActive === true;
+  if (quietHoursActive === null && !active) {
+    quietHoursActive = false;
+    return;
+  }
+  if (!force && active === quietHoursActive) {
+    return;
+  }
+  quietHoursActive = active;
+  const tabs = await env.tabs.query({});
+  for (const tab of tabs) {
+    if (!isEnabledForTab(tab)) {
+      continue;
+    }
+    const settings = tabOptions(tab);
+    if (active && settings.autopause) {
+      stop(tab);
+    } else if (!active && wasActive && settings.autoresume) {
+      resume(tab);
+    }
+  }
+}
+
+async function configureContextRules(forceQuietHours = false) {
+  await env.idle.setDetectionInterval(getIdleDetectionInterval());
+  const start = parseClockTime(options.quietHoursStart);
+  const end = parseClockTime(options.quietHoursEnd);
+  if (start !== null && end !== null && start !== end) {
+    await env.alarms.create(QUIET_HOURS_ALARM, { periodInMinutes: 1 });
+  } else {
+    await env.alarms.clear(QUIET_HOURS_ALARM);
+  }
+  await applyQuietHours(new Date(), forceQuietHours);
+}
+
+env.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === QUIET_HOURS_ALARM) {
+    void applyQuietHours().catch((error) => {
+      console.error("Video Auto Pause could not apply quiet hours:", error);
+    });
+  }
+});
 
 env.runtime.onStartup.addListener(async () => {
   if (!env.storage.session) {
@@ -126,6 +208,7 @@ async function refresh_settings() {
     previous_window,
     previous_tabs: previousTabs,
   });
+  await configureContextRules(true);
 }
 
 async function save_settings() {
@@ -469,6 +552,12 @@ env.tabs.onActivated.addListener(async function (info) {
   }
 
   sendMessage(tab, { action: "check" });
+  if (
+    isWithinQuietHours(options.quietHoursStart, options.quietHoursEnd) &&
+    tabOptions(tab).autopause
+  ) {
+    stop(tab);
+  }
 
   const previousTabId =
     previousTabs[info.windowId] ??
@@ -527,6 +616,13 @@ env.tabs.onCreated.addListener(async function (tab) {
 env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   await settingsReady;
   sendMessage(tab, { action: "check" });
+  if (
+    changeInfo.status === "complete" &&
+    isWithinQuietHours(options.quietHoursStart, options.quietHoursEnd) &&
+    tabOptions(tab).autopause
+  ) {
+    stop(tab);
+  }
 
   if (changeInfo.status === "loading") {
     delete tabVideos[tabId];
@@ -827,9 +923,13 @@ env.commands.onCommand.addListener(handleCommand);
 async function handleIdleStateChanged(s) {
   await settingsReady;
   const wasLocked = previousIdleState === "locked";
+  const wasIdle = previousIdleState === "idle";
   previousIdleState = s;
   state = s;
-  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
+  const tabs =
+    s === "idle" || (s === "active" && wasIdle)
+      ? await env.tabs.query({})
+      : await env.tabs.query({ active: true, lastFocusedWindow: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (!isEnabledForTab(tabs[i])) {
@@ -840,6 +940,17 @@ async function handleIdleStateChanged(s) {
     if (state === "locked" && settings.lockpause) {
       debugLog(`Computer locked, stopping all videos`);
       stop(tabs[i]);
+    } else if (state === "idle" && settings.idlePauseMinutes > 0) {
+      debugLog(`User idle, stopping videos`);
+      stop(tabs[i]);
+    } else if (
+      state === "active" &&
+      wasIdle &&
+      settings.idlePauseMinutes > 0 &&
+      settings.autoresume
+    ) {
+      debugLog(`User active, resuming videos`);
+      resume(tabs[i]);
     } else if (state === "active" && wasLocked && settings.lockresume) {
       debugLog(`Computer unlocked, resuming videos`);
       resume(tabs[i]);

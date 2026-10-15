@@ -28,8 +28,24 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Jatka aiempaa mediaa, kun nykyinen media pysähtyy",
-    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+    "message": "Toista vain yhtä lähdettä kerrallaan",
+    "description": "Pause other tabs' media and resume the previous source when the current source stops."
+  },
+  "idlePauseMinutes": {
+    "message": "Keskeytä toimettomana (minuutteina; 0 poistaa käytöstä)",
+    "description": "Idle timeout in minutes; 0 disables automatic idle pause."
+  },
+  "quietHours": {
+    "message": "Hiljaiset tunnit (paikallinen aika)",
+    "description": "Schedule a daily pause interval using local clock time."
+  },
+  "quietHoursStart": {
+    "message": "Alku",
+    "description": "Local time at which quiet hours begin."
+  },
+  "quietHoursEnd": {
+    "message": "Loppu",
+    "description": "Local time at which quiet hours end."
   },
   "autoresume": {
     "message": "Jatka videota palatessa välilehdelle",
