@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Syötä sisällytettävät verkkotunnukset (yksi per rivi):",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "Lisää nykyinen verkkotunnus tähän luetteloon",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

@@ -15,6 +15,14 @@ function localizeUI() {
     }
   });
 
+  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    const message = env.i18n.getMessage(element.dataset.i18nTitle);
+    if (message) {
+      element.title = message;
+      element.setAttribute("aria-label", message);
+    }
+  });
+
   document.title = env.i18n.getMessage("extName") ?? "Video Auto Pause";
 }
 
@@ -64,6 +72,35 @@ async function save_option(option) {
   }
 }
 
+async function addCurrentDomainToList(option) {
+  const tab = await getCurrentWebTab();
+  const input = document.getElementById(option);
+  if (!tab || !input) {
+    return;
+  }
+
+  const domain = new URL(tab.url).hostname;
+  if (!domain) {
+    return;
+  }
+
+  const domains = readOption(option, input);
+  if (domains.includes(domain)) {
+    return;
+  }
+
+  input.value = [...domains, domain].join("\n");
+  await save_option(option);
+}
+
+function updateAudioFadingVisibility() {
+  const settings = document.getElementById("audioFadingSettings");
+  const enabled = document.getElementById("audioFading")?.checked;
+  if (settings) {
+    settings.hidden = !enabled;
+  }
+}
+
 async function restore_options(changedKeys = Object.keys(options)) {
   const items = await env.storage.sync.get(options);
   for (const opt of changedKeys) {
@@ -82,6 +119,8 @@ async function restore_options(changedKeys = Object.keys(options)) {
       element.checked = Boolean(items[opt]);
     }
   }
+
+  updateAudioFadingVisibility();
 
   if (changedKeys.includes("disabled")) {
     for (const option of Object.keys(options)) {
@@ -150,10 +189,19 @@ for (const option in options) {
   const el = document.getElementById(option);
   if (el) {
     el.addEventListener("change", async () => {
+      if (option === "audioFading") {
+        updateAudioFadingVisibility();
+      }
       await save_option(option);
     });
   }
 }
+
+document.querySelectorAll("[data-add-domain]").forEach((button) => {
+  button.addEventListener("click", () => {
+    void addCurrentDomainToList(button.dataset.addDomain);
+  });
+});
 
 document
   .getElementById("disabledTabs")

@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "輸入要包含的網域（每行一個）：",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "將目前網域新增至此清單",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

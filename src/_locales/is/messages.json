@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Sláðu inn lén til að taka með (eitt í hverri línu):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Bæta núverandi léni við þennan lista",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

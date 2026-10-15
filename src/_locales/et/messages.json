@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Sisestage kaasatavad domeenid (üks rea kohta):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Lisa praegune domeen sellesse loendisse",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

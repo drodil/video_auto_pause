@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Введите домены для включения (по одному в строке):",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "Добавить текущий домен в этот список",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

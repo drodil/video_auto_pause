@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "含めるドメインを入力してください（1行に1つ）:",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "現在のドメインをこのリストに追加",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

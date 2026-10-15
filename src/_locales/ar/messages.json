@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "أدخل المجالات لتضمينها (واحد في كل سطر):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "أضف النطاق الحالي إلى هذه القائمة",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

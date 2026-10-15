@@ -163,6 +163,10 @@
     "message": "Enter domains to include (one per line):",
     "description": "Description for domain inclusions textarea"
   },
+  "addCurrentDomainToList": {
+    "message": "Add current domain to this list",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
   "audioFading": {
     "message": "Audio Fading",
     "description": "Label for audio fading checkbox"

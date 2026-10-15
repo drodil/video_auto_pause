@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Dahil edilecek alan adlarını girin (satır başına bir tane):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Geçerli alan adını bu listeye ekle",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

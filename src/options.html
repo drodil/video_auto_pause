@@ -277,6 +277,46 @@
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         text-decoration: none;
       }
+
+      .domain-list-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+
+      .domain-list-heading p {
+        margin: 0;
+      }
+
+      .domain-add-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+        padding: 0;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        background: white;
+        color: #4b5563;
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .domain-add-button:hover {
+        border-color: #667eea;
+        background: #f3f4f6;
+        color: #667eea;
+      }
+
+      .domain-add-button:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
+      }
     </style>
   </head>
 
@@ -500,7 +540,7 @@
                     >Audio Fading</span
                   >
                 </label>
-                <div style="margin-left: 4px">
+                <div id="audioFadingSettings" hidden style="margin-left: 4px">
                   <label
                     for="fadeDuration"
                     style="
@@ -541,12 +581,19 @@
             <div style="margin-bottom: 8px"></div>
 
             <div id="excludedDomainsContainer">
-              <p
-                data-i18n="domainExclusionsDescription"
-                style="margin-bottom: 6px"
-              >
-                Enter domains to exclude (one per line):
-              </p>
+              <div class="domain-list-heading">
+                <p data-i18n="domainExclusionsDescription">
+                  Enter domains to exclude (one per line):
+                </p>
+                <button
+                  type="button"
+                  class="domain-add-button"
+                  data-add-domain="excludedDomains"
+                  data-i18n-title="addCurrentDomainToList"
+                >
+                  <span aria-hidden="true">+</span>
+                </button>
+              </div>
               <textarea
                 id="excludedDomains"
                 rows="5"
@@ -564,12 +611,19 @@
             </div>
 
             <div id="includedDomainsContainer">
-              <p
-                data-i18n="domainInclusionsDescription"
-                style="margin-bottom: 6px"
-              >
-                Enter domains to include (one per line):
-              </p>
+              <div class="domain-list-heading">
+                <p data-i18n="domainInclusionsDescription">
+                  Enter domains to include (one per line):
+                </p>
+                <button
+                  type="button"
+                  class="domain-add-button"
+                  data-add-domain="includedDomains"
+                  data-i18n-title="addCurrentDomainToList"
+                >
+                  <span aria-hidden="true">+</span>
+                </button>
+              </div>
               <textarea
                 id="includedDomains"
                 rows="5"

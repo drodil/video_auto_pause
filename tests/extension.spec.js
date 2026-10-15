@@ -690,6 +690,112 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(pauseDelay).toHaveValue("350");
   });
 
+  test("should add the current domain to include and exclude lists", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const extensionId = new URL(worker.url()).host;
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(`chrome-extension://${extensionId}/options.html`);
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Domain Settings" })
+      .click();
+    await optionsPage.evaluate(() => {
+      getCurrentWebTab = async () => ({
+        url: "https://www.example.com/watch",
+      });
+    });
+
+    const excludedDomains = optionsPage.locator("#excludedDomains");
+    await excludedDomains.evaluate((element) => {
+      element.value = "other.example.com";
+    });
+    const addExcludedDomain = optionsPage.locator(
+      '[data-add-domain="excludedDomains"]',
+    );
+    await expect(addExcludedDomain).toHaveAttribute("title", /.+/);
+    await expect(addExcludedDomain).toHaveAttribute(
+      "aria-label",
+      await addExcludedDomain.getAttribute("title"),
+    );
+    await addExcludedDomain.click();
+    await expect(excludedDomains).toHaveValue(
+      "other.example.com\nwww.example.com",
+    );
+    await addExcludedDomain.click();
+    await expect(excludedDomains).toHaveValue(
+      "other.example.com\nwww.example.com",
+    );
+
+    const includedDomains = optionsPage.locator("#includedDomains");
+    await optionsPage.locator('[data-add-domain="includedDomains"]').click();
+    await expect(includedDomains).toHaveValue("www.example.com");
+
+    await expect
+      .poll(() =>
+        worker.evaluate(
+          () =>
+            new Promise((resolve) =>
+              chrome.storage.sync.get(
+                ["excludedDomains", "includedDomains"],
+                resolve,
+              ),
+            ),
+        ),
+      )
+      .toMatchObject({
+        excludedDomains: ["other.example.com", "www.example.com"],
+        includedDomains: ["www.example.com"],
+      });
+  });
+
+  test("should show fade duration only when audio fading is enabled", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const extensionId = new URL(worker.url()).host;
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(`chrome-extension://${extensionId}/options.html`);
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+
+    const audioFading = optionsPage.locator("#audioFading");
+    const audioFadingSettings = optionsPage.locator("#audioFadingSettings");
+    const fadeDuration = optionsPage.locator("#fadeDuration");
+    await expect(audioFading).not.toBeChecked();
+    await expect(audioFadingSettings).toBeHidden();
+
+    await audioFading.check();
+    await expect(audioFadingSettings).toBeVisible();
+    await fadeDuration.fill("350");
+    await fadeDuration.dispatchEvent("change");
+    await expect
+      .poll(() =>
+        worker.evaluate(
+          () =>
+            new Promise((resolve) =>
+              chrome.storage.sync.get(["audioFading", "fadeDuration"], resolve),
+            ),
+        ),
+      )
+      .toMatchObject({ audioFading: true, fadeDuration: 350 });
+
+    await optionsPage.reload();
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await expect(audioFading).toBeChecked();
+    await expect(audioFadingSettings).toBeVisible();
+    await expect(fadeDuration).toHaveValue("350");
+
+    await audioFading.uncheck();
+    await expect(audioFadingSettings).toBeHidden();
+  });
+
   test("should apply playback commands to the active tab", async ({
     page,
     context,

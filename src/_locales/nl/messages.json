@@ -140,7 +140,7 @@
     "description": "Description for domain exclusions textarea"
   },
   "audioFading": {
-    "message": "Audio Fading",
+    "message": "Geluid geleidelijk in- en uitfaden",
     "description": "Label for audio fading checkbox"
   },
   "fadeDuration": {
@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Voer domeinen in om op te nemen (één per regel):",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "Huidig domein aan deze lijst toevoegen",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

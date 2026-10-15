@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Entrez les domaines à inclure (un par ligne):",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "Ajouter le domaine actuel à cette liste",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

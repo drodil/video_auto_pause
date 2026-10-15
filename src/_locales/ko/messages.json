@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "포함할 도메인 입력 (줄당 하나):",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "현재 도메인을 이 목록에 추가",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

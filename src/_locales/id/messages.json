@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Masukkan domain yang akan disertakan (satu per baris):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Tambahkan domain saat ini ke daftar ini",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Indtast domæner, der skal medtages (et pr. linje):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Føj det aktuelle domæne til denne liste",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

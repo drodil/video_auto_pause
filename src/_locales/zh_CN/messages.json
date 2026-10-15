@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "输入要包含的域名（每行一个）：",
     "description": "Auto-translated"
+  },
+  "addCurrentDomainToList": {
+    "message": "将当前域名添加到此列表",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

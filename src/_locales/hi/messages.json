@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "शामिल करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "वर्तमान डोमेन को इस सूची में जोड़ें",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Введіть домени для включення (один у рядку):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Додати поточний домен до цього списку",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }

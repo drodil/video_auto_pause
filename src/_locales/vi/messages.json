@@ -178,5 +178,9 @@
   "domainInclusionsDescription": {
     "message": "Nhập các tên miền cần bao gồm (mỗi dòng một):",
     "description": "Description for domain inclusions textarea"
+  },
+  "addCurrentDomainToList": {
+    "message": "Thêm miền hiện tại vào danh sách này",
+    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   }
 }
