@@ -47,6 +47,26 @@
     "message": "结束",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "停止自动播放下一个视频",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "30 分钟后暂停所有内容",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "取消睡眠定时器",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "已设置定时器：$1 分钟后暂停视频",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "无法设置睡眠定时器",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "返回标签页时继续播放视频",
     "description": "Enable auto resume when returning to tab"

@@ -47,6 +47,26 @@
     "message": "Slut",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Förhindra automatisk uppspelning av nästa video",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Pausa allt om 30 minuter",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Avbryt sovtimer",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Sovtimer inställd: videor pausas om $1 minuter",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Det gick inte att ställa in sovtimern",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Återuppta video när du återvänder till fliken",
     "description": "Enable auto resume when returning to tab"

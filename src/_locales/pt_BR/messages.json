@@ -47,6 +47,26 @@
     "message": "Fim",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Impedir a reprodução automática do próximo vídeo",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Pausar tudo em 30 minutos",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Cancelar temporizador",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Temporizador definido: vídeos serão pausados em $1 minutos",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Não foi possível definir o temporizador",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Retomar vídeo ao voltar para aba",
     "description": "Enable auto resume when returning to tab"

@@ -47,6 +47,26 @@
     "message": "समाप्त",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "अगला वीडियो अपने-आप चलने से रोकें",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "30 मिनट में सब कुछ रोकें",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "स्लीप टाइमर रद्द करें",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "स्लीप टाइमर सेट: $1 मिनट में वीडियो रुकेंगे",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "स्लीप टाइमर सेट नहीं हो सका",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "टैब पर लौटने पर वीडियो जारी रखें",
     "description": "Enable auto resume when returning to tab"

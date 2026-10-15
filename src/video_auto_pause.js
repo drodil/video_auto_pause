@@ -59,6 +59,7 @@ if (window.autoPauseInjected !== true) {
           focusresume: false,
           cursorTracking: false,
           blockAutoplay: false,
+          disableAutoplayNext: false,
           liveStreamMute: false,
           muteDuringAds: false,
           prioritizeActiveTabMedia: false,
@@ -81,6 +82,7 @@ if (window.autoPauseInjected !== true) {
             focuspause: false,
             focusresume: false,
             blockAutoplay: false,
+            disableAutoplayNext: false,
             liveStreamMute: false,
             muteDuringAds: false,
             prioritizeActiveTabMedia: false,
@@ -89,6 +91,7 @@ if (window.autoPauseInjected !== true) {
     toggleCursorTracking(options.cursorTracking);
     togglePipButtons();
     toggleVideoOverlays();
+    applyAutoplaySettings();
   }
 
   let settingsReady = refresh_settings();
@@ -884,10 +887,15 @@ if (window.autoPauseInjected !== true) {
     }
     videoElement.dataset.autoPauseListenerAttached = "true";
     applySiteSpeed(videoElement);
+    if (options.disableAutoplayNext) {
+      videoElement.autoplay = false;
+      videoElement.removeAttribute("autoplay");
+    }
 
     if (options.showPipButton) {
       injectPipButton(videoElement);
     }
+
     if (options.showVideoOverlay) {
       injectVideoOverlay(videoElement);
     }
@@ -974,6 +982,20 @@ if (window.autoPauseInjected !== true) {
           );
         });
     });
+  }
+
+  function applyAutoplaySettings() {
+    if (!options.disableAutoplayNext) {
+      return;
+    }
+    for (const video of allVideos()) {
+      video.autoplay = false;
+      video.removeAttribute("autoplay");
+    }
+    const autoplayToggle = document.querySelector(
+      ".ytp-autonav-toggle-button[aria-checked='true'], #autonav-toggle-button[aria-checked='true']",
+    );
+    autoplayToggle?.click();
   }
 
   function attachAudioListeners(audioElement) {
@@ -1624,6 +1646,9 @@ if (window.autoPauseInjected !== true) {
       }
     }
 
+    if (options.disableAutoplayNext) {
+      applyAutoplaySettings();
+    }
     if (changed) {
       sendMessage({ hasVideos: hasVideos() });
       reportMediaState();

@@ -374,9 +374,15 @@
         border: 0;
       }
 
-      #pinCurrentTab {
-        width: 100%;
+      .sleep-timer-controls {
+        display: flex;
+        gap: 8px;
         margin-bottom: 8px;
+      }
+
+      #pinCurrentTab,
+      .sleep-timer-controls button {
+        width: 100%;
         border: 1px solid #667eea;
         border-radius: 6px;
         padding: 9px;
@@ -547,6 +553,24 @@
               Keep playing in this tab
             </button>
             <p id="pinStatus" role="status" aria-live="polite"></p>
+            <div class="sleep-timer-controls">
+              <button
+                id="startSleepTimer"
+                type="button"
+                data-i18n="sleepTimerStart"
+              >
+                Pause everything in 30 minutes
+              </button>
+              <button
+                id="cancelSleepTimer"
+                type="button"
+                data-i18n="sleepTimerCancel"
+                hidden
+              >
+                Cancel sleep timer
+              </button>
+            </div>
+            <p id="sleepTimerStatus" role="status" aria-live="polite"></p>
             <h4 data-i18n="presetTitle">Choose a mode</h4>
             <div class="preset-grid">
               <button
@@ -726,6 +750,12 @@
                   <input type="checkbox" id="blockAutoplay" />
                   <span class="label-text" data-i18n="blockAutoplay"
                     >Block video autoplay before interaction</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="disableAutoplayNext" />
+                  <span class="label-text" data-i18n="disableAutoplayNext"
+                    >Stop videos from autoplaying the next video</span
                   >
                 </label>
                 <label>

@@ -47,6 +47,26 @@
     "message": "Bitiş",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Sonraki videonun otomatik oynatılmasını durdur",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "30 dakika sonra her şeyi duraklat",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Uyku zamanlayıcısını iptal et",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Uyku zamanlayıcısı ayarlandı: videolar $1 dakika içinde duraklatılacak",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Uyku zamanlayıcısı ayarlanamadı",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Sekmeye dönüldüğünde videoyu devam ettir",
     "description": "Enable auto resume when returning to tab"

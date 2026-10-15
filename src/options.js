@@ -431,6 +431,39 @@ async function restoreStats() {
   document.getElementById("rateExtension").hidden = stats.lifetimePauses < 50;
 }
 
+async function restoreSleepTimer() {
+  const { vapSleepTimerExpiresAt } = await env.storage.local.get(
+    "vapSleepTimerExpiresAt",
+  );
+  const active =
+    Number.isFinite(vapSleepTimerExpiresAt) &&
+    vapSleepTimerExpiresAt > Date.now();
+  document.getElementById("startSleepTimer").hidden = active;
+  document.getElementById("cancelSleepTimer").hidden = !active;
+  document.getElementById("sleepTimerStatus").textContent = active
+    ? env.i18n.getMessage("sleepTimerSet", [
+        String(Math.ceil((vapSleepTimerExpiresAt - Date.now()) / 60000)),
+      ])
+    : "";
+}
+
+async function updateSleepTimer(action) {
+  const status = document.getElementById("sleepTimerStatus");
+  try {
+    const response = await env.runtime.sendMessage({
+      sleepTimerAction: action,
+      minutes: 30,
+    });
+    if (response?.error) {
+      throw new Error(response.error);
+    }
+    await restoreSleepTimer();
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("sleepTimerFailed");
+    console.error("Video Auto Pause could not update the sleep timer:", error);
+  }
+}
+
 async function restore_options(changedKeys = Object.keys(options)) {
   await migrateSiteRules();
   const items = await env.storage.sync.get(options);
@@ -556,6 +589,9 @@ env.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === "local" && "vapStats" in changes) {
       void restoreStats();
     }
+    if (namespace === "local" && "vapSleepTimerExpiresAt" in changes) {
+      void restoreSleepTimer();
+    }
   }
 });
 
@@ -605,6 +641,14 @@ if (env.runtime.getManifest().browser_specific_settings?.gecko) {
 }
 
 void restoreStats();
+void restoreSleepTimer();
+
+document.getElementById("startSleepTimer")?.addEventListener("click", () => {
+  void updateSleepTimer("start");
+});
+document.getElementById("cancelSleepTimer")?.addEventListener("click", () => {
+  void updateSleepTimer("cancel");
+});
 
 // Listen to changes of options
 for (const option in options) {

@@ -47,6 +47,26 @@
     "message": "Конец",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Запретить автоматическое воспроизведение следующего видео",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Приостановить всё через 30 минут",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Отменить таймер сна",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Таймер установлен: видео будут приостановлены через $1 мин.",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Не удалось установить таймер сна",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Возобновлять видео при возврате на вкладку",
     "description": "Enable auto resume when returning to tab"

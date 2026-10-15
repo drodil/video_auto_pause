@@ -47,6 +47,26 @@
     "message": "Koniec",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Zatrzymaj automatyczne odtwarzanie następnego filmu",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Wstrzymaj wszystko za 30 minut",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Anuluj wyłącznik czasowy",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Wyłącznik ustawiony: filmy zostaną wstrzymane za $1 minut",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Nie udało się ustawić wyłącznika",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Wznów wideo po powrocie do karty",
     "description": "Enable auto resume when returning to tab"

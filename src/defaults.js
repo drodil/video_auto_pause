@@ -21,6 +21,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   showPipButton: false,
   showVideoOverlay: false,
   blockAutoplay: false,
+  disableAutoplayNext: false,
   idlePauseMinutes: 0,
   quietHoursStart: "",
   quietHoursEnd: "",

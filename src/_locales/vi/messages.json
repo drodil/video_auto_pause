@@ -47,6 +47,26 @@
     "message": "Kết thúc",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Ngăn video tự động phát video tiếp theo",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Tạm dừng tất cả sau 30 phút",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Hủy hẹn giờ ngủ",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Đã đặt hẹn giờ: video sẽ tạm dừng sau $1 phút",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Không thể đặt hẹn giờ ngủ",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Tiếp tục video khi quay lại tab",
     "description": "Enable auto resume when returning to tab"

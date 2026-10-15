@@ -51,6 +51,26 @@
     "message": "End",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Stop videos from autoplaying the next video",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Pause everything in 30 minutes",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Cancel sleep timer",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Sleep timer set: pausing videos in $1 minutes",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Could not set the sleep timer",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Resume video when returning to tab",
     "description": "Enable auto resume when returning to tab"

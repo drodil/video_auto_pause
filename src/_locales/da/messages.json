@@ -47,6 +47,26 @@
     "message": "Slut",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Stop videoer i automatisk at afspille den næste video",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Sæt alt på pause om 30 minutter",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Annuller sleep-timer",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Sleep-timer indstillet: videoer sættes på pause om $1 minutter",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Sleep-timeren kunne ikke indstilles",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Genoptag video, når du vender tilbage til fanen",
     "description": "Enable auto resume when returning to tab"

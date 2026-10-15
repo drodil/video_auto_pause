@@ -47,6 +47,26 @@
     "message": "Selesai",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Cegah video memutar video berikutnya secara otomatis",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Jeda semua setelah 30 menit",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Batalkan timer tidur",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Timer tidur aktif: video dijeda dalam $1 menit",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Timer tidur tidak dapat diatur",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Lanjutkan video saat kembali ke tab",
     "description": "Enable auto resume when returning to tab"

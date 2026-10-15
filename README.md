@@ -36,6 +36,8 @@ An empty YouTube ad-module placeholder alone is not treated as an active ad.
 Advanced context rules can pause playback after a configurable idle timeout or
 during daily quiet hours in local time. The one-source mode prioritizes media in
 the active tab and returns to the previous source when the current one stops.
+You can also disable autoplay-next on supported players and set a 30-minute
+sleep timer to pause active videos across tabs.
 
 ## Installing
 

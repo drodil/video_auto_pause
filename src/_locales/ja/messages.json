@@ -47,6 +47,26 @@
     "message": "終了",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "次の動画の自動再生を停止",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "30分後にすべて一時停止",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "スリープタイマーをキャンセル",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "スリープタイマー設定済み：$1分後に動画を一時停止",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "スリープタイマーを設定できませんでした",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "タブに戻ったときに動画を再開",
     "description": "Enable auto resume when returning to tab"

@@ -47,6 +47,26 @@
     "message": "النهاية",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "أوقف تشغيل الفيديو التالي تلقائيًا",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "إيقاف كل شيء بعد 30 دقيقة",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "إلغاء مؤقت النوم",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "تم ضبط المؤقت: إيقاف الفيديوهات بعد $1 دقيقة",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "تعذّر ضبط مؤقت النوم",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "استئناف الفيديو عند العودة إلى علامة التبويب",
     "description": "Enable auto resume when returning to tab"

@@ -47,6 +47,26 @@
     "message": "Einde",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Voorkom automatisch afspelen van de volgende video",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Pauzeer alles over 30 minuten",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Slaaptimer annuleren",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Slaaptimer ingesteld: video's worden over $1 minuten gepauzeerd",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Slaaptimer kon niet worden ingesteld",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Video hervatten bij terugkeren naar tabblad",
     "description": "Enable auto resume when returning to tab"

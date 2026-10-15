@@ -27,6 +27,7 @@ let previousIdleState = "active";
 let quietHoursActive = null;
 let options = { ...DEFAULT_OPTIONS };
 const QUIET_HOURS_ALARM = "vap-quiet-hours";
+const SLEEP_TIMER_ALARM = "vap-sleep-timer";
 
 function debugLog(message) {
   if (options.debugMode) {
@@ -132,10 +133,39 @@ async function configureContextRules(forceQuietHours = false) {
   await applyQuietHours(new Date(), forceQuietHours);
 }
 
+async function setSleepTimer(minutes) {
+  if (![15, 30, 60].includes(minutes)) {
+    throw new Error("Sleep timer duration must be 15, 30, or 60 minutes.");
+  }
+  const expiresAt = Date.now() + minutes * 60 * 1000;
+  await env.storage.local.set({ vapSleepTimerExpiresAt: expiresAt });
+  await env.alarms.create(SLEEP_TIMER_ALARM, { when: expiresAt });
+  return expiresAt;
+}
+
+async function cancelSleepTimer() {
+  await env.alarms.clear(SLEEP_TIMER_ALARM);
+  await env.storage.local.remove("vapSleepTimerExpiresAt");
+}
+
+async function pauseEverythingForSleepTimer() {
+  await cancelSleepTimer();
+  const tabs = await env.tabs.query({});
+  for (const tab of tabs) {
+    if (isEnabledForTab(tab)) {
+      stop(tab);
+    }
+  }
+}
+
 env.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === QUIET_HOURS_ALARM) {
     void applyQuietHours().catch((error) => {
       console.error("Video Auto Pause could not apply quiet hours:", error);
+    });
+  } else if (alarm.name === SLEEP_TIMER_ALARM) {
+    void pauseEverythingForSleepTimer().catch((error) => {
+      console.error("Video Auto Pause could not apply the sleep timer:", error);
     });
   }
 });
@@ -723,6 +753,21 @@ env.windows.onRemoved.addListener(function (windowId) {
 
 async function handlePageMessage(request, sender) {
   await settingsReady;
+  if (request.sleepTimerAction) {
+    if (sender.url !== env.runtime.getURL("options.html")) {
+      throw new Error("Sleep timer actions are only available in settings.");
+    }
+    if (request.sleepTimerAction === "start") {
+      return {
+        expiresAt: await setSleepTimer(Number(request.minutes)),
+      };
+    }
+    if (request.sleepTimerAction === "cancel") {
+      await cancelSleepTimer();
+      return { cancelled: true };
+    }
+    throw new Error("Unknown sleep timer action.");
+  }
   const tab = sender.tab;
   if (!tab) {
     return;

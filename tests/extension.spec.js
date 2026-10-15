@@ -542,6 +542,11 @@ test.describe("Video Auto Pause Extension", () => {
       "quietHours",
       "quietHoursStart",
       "quietHoursEnd",
+      "disableAutoplayNext",
+      "sleepTimerStart",
+      "sleepTimerCancel",
+      "sleepTimerSet",
+      "sleepTimerFailed",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1885,6 +1890,66 @@ test.describe("Video Auto Pause Extension", () => {
         })),
       )
       .toEqual({ overnight: true, daytime: false });
+  });
+
+  test("stops autoplay-next and applies the sleep timer", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      disableAutoplayNext: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await expect(video).toHaveJSProperty("autoplay", false);
+    await page.evaluate(() => {
+      const toggle = document.createElement("button");
+      toggle.className = "ytp-autonav-toggle-button";
+      toggle.setAttribute("aria-checked", "true");
+      toggle.addEventListener("click", () => {
+        toggle.setAttribute("aria-checked", "false");
+      });
+      document.body.append(toggle);
+    });
+    await expect(page.locator(".ytp-autonav-toggle-button")).toHaveAttribute(
+      "aria-checked",
+      "false",
+    );
+
+    const worker = context.serviceWorkers()[0];
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+    await optionsPage.locator("#startSleepTimer").click();
+    await expect(optionsPage.locator("#cancelSleepTimer")).toBeVisible();
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const alarm = await chrome.alarms.get("vap-sleep-timer");
+          const stored = await chrome.storage.local.get(
+            "vapSleepTimerExpiresAt",
+          );
+          return Boolean(
+            alarm &&
+            stored.vapSleepTimerExpiresAt > Date.now() &&
+            stored.vapSleepTimerExpiresAt - Date.now() <= 30 * 60 * 1000,
+          );
+        }),
+      )
+      .toBe(true);
+    await worker.evaluate(() => pauseEverythingForSleepTimer());
+    await expect(video).toHaveJSProperty("paused", true);
   });
 
   test("should prioritize audio-only media across tabs", async ({

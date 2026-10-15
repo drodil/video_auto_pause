@@ -47,6 +47,26 @@
     "message": "Loppu",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Estä seuraavan videon automaattinen toisto",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Keskeytä kaikki 30 minuutin kuluttua",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Peruuta uniajastin",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Uniajastin asetettu: videot keskeytetään $1 minuutin kuluttua",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Uniajastimen asettaminen epäonnistui",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Jatka videota palatessa välilehdelle",
     "description": "Enable auto resume when returning to tab"

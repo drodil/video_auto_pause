@@ -47,6 +47,26 @@
     "message": "Lõpp",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "Peata järgmise video automaatne esitamine",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "Peata kõik 30 minuti pärast",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "Tühista unetaimer",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "Unetaimer käivitatud: videod peatuvad $1 minuti pärast",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "Unetaimeri seadistamine ebaõnnestus",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "Jätka videot vahekaardile naastes",
     "description": "Enable auto resume when returning to tab"

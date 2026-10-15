@@ -47,6 +47,26 @@
     "message": "結束",
     "description": "Local time at which quiet hours end."
   },
+  "disableAutoplayNext": {
+    "message": "停止自動播放下一部影片",
+    "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerStart": {
+    "message": "30 分鐘後暫停所有內容",
+    "description": "Start a 30-minute timer to pause media."
+  },
+  "sleepTimerCancel": {
+    "message": "取消睡眠計時器",
+    "description": "Cancel the active sleep timer."
+  },
+  "sleepTimerSet": {
+    "message": "已設定計時器：$1 分鐘後暫停影片",
+    "description": "Status shown while the timer is active."
+  },
+  "sleepTimerFailed": {
+    "message": "無法設定睡眠計時器",
+    "description": "Error shown when the timer cannot be changed."
+  },
   "autoresume": {
     "message": "返回分頁時繼續播放影片",
     "description": "Enable auto resume when returning to tab"
