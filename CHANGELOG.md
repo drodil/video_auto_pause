@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://github.com/drodil/video_auto_pause/compare/v1.14.0...v1.14.1) (2026-10-16)
+
+
+### Bug Fixes
+
+* resume autoplay when activating background tabs ([f72541a](https://github.com/drodil/video_auto_pause/commit/f72541af759054c37830b441943aa1333d872f47))
+
 ## [1.14.0](https://github.com/drodil/video_auto_pause/compare/v1.13.0...v1.14.0) (2026-10-15)
 
 

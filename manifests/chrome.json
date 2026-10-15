@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extName__",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "description": "__MSG_extDescription__",
   "permissions": [
     "tabs",
