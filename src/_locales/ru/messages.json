@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Сайт выключен",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Продолжать воспроизведение в этой вкладке",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Снять закрепление воспроизведения",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Не удалось изменить закрепление вкладки.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Включить или выключить закрепление воспроизведения активной вкладки",
+    "description": "Temporary tab pin text"
   }
 }

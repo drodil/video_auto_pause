@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "사이트 꺼짐",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "이 탭에서 계속 재생",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "계속 재생 고정 해제",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "탭 고정을 업데이트할 수 없습니다.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "현재 탭의 계속 재생 고정 전환",
+    "description": "Temporary tab pin text"
   }
 }

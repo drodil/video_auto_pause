@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Sito disattivato",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Continua la riproduzione in questa scheda",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Rimuovi il blocco di riproduzione",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Impossibile aggiornare il blocco della scheda.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Attiva o disattiva il blocco di riproduzione della scheda attiva",
+    "description": "Temporary tab pin text"
   }
 }

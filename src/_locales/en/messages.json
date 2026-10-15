@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Site off",
     "description": "Site is disabled in the overlay"
+  },
+  "pinCurrentTab": {
+    "message": "Keep playing in this tab",
+    "description": "Action to pin playback in the current tab"
+  },
+  "unpinCurrentTab": {
+    "message": "Remove keep-playing pin",
+    "description": "Action to remove the current tab pin"
+  },
+  "pinFailure": {
+    "message": "Could not update the tab pin.",
+    "description": "Failure status for tab pin changes"
+  },
+  "commandTogglePin": {
+    "message": "Toggle keep-playing pin for the active tab",
+    "description": "Keyboard command for the temporary tab pin"
   }
 }

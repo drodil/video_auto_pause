@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Sitio desactivado",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Seguir reproduciendo en esta pestaña",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Quitar la fijación de reproducción",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "No se pudo actualizar la fijación de la pestaña.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Alternar fijación de reproducción en la pestaña activa",
+    "description": "Temporary tab pin text"
   }
 }

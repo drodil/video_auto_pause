@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Site uit",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Blijf afspelen in dit tabblad",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Pin voor blijven afspelen verwijderen",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "De tabbladpin kon niet worden bijgewerkt.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Pin voor blijven afspelen van het actieve tabblad aan-/uitzetten",
+    "description": "Temporary tab pin text"
   }
 }

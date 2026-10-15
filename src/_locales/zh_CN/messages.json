@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "网站已停用",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "在此标签页中继续播放",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "取消固定继续播放",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "无法更新标签页固定状态。",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "切换当前标签页的继续播放固定状态",
+    "description": "Temporary tab pin text"
   }
 }

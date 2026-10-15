@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Vefsvæði óvirkt",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Halda spilun áfram í þessum flipa",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Fjarlægja spilunarfestingu",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Ekki tókst að uppfæra flipafestinguna.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Kveikja eða slökkva á spilunarfestingu virka flipans",
+    "description": "Temporary tab pin text"
   }
 }

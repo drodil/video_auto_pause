@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Site kapalı",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Bu sekmede oynatmaya devam et",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Oynatma sabitlemesini kaldır",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Sekme sabitlemesi güncellenemedi.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Etkin sekme için oynatma sabitlemesini aç/kapat",
+    "description": "Temporary tab pin text"
   }
 }

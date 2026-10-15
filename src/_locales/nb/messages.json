@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Nettsted av",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Fortsett avspillingen i denne fanen",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Fjern festing for fortsatt avspilling",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Kunne ikke oppdatere festingen av fanen.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Slå festing for fortsatt avspilling av/på for den aktive fanen",
+    "description": "Temporary tab pin text"
   }
 }

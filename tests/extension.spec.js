@@ -226,6 +226,57 @@ test.describe("Video Auto Pause Extension", () => {
       .toBe(true);
   });
 
+  test("keeps a pinned tab playing and shows its badge until unpinned", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      showVideoOverlay: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+    const pinButton = page.locator(
+      ".vap-video-overlay [data-action='pin-toggle']",
+    );
+    await expect(pinButton).toHaveAttribute("aria-pressed", "false");
+    await pinButton.click();
+    await expect(pinButton).toHaveAttribute("aria-pressed", "true");
+
+    const worker = context.serviceWorkers()[0];
+    const tabId = await worker.evaluate(
+      (url) =>
+        new Promise((resolve) =>
+          chrome.tabs.query({ url }, (tabs) => resolve(tabs[0]?.id)),
+        ),
+      `http://localhost:${port}/video.html`,
+    );
+    await expect
+      .poll(() =>
+        worker.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId),
+      )
+      .toBe("PIN");
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await page.bringToFront();
+    await pinButton.click();
+    await expect(pinButton).toHaveAttribute("aria-pressed", "false");
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", true);
+  });
+
   test("applies a preset from onboarding and the settings popup", async ({
     context,
   }) => {

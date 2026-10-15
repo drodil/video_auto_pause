@@ -204,6 +204,25 @@ async function restore_options(changedKeys = Object.keys(options)) {
       disabledTabsInput.checked = false;
     }
   }
+
+  await restoreCurrentTabPin();
+}
+
+async function restoreCurrentTabPin() {
+  const button = document.getElementById("pinCurrentTab");
+  const tab = await getCurrentWebTab();
+  button.disabled = !tab;
+  if (!tab) {
+    button.setAttribute("aria-pressed", "false");
+    button.textContent = env.i18n.getMessage("pinCurrentTab");
+    return;
+  }
+  const pinned = (await tabStorage.get("pinnedTabs")).pinnedTabs ?? [];
+  const isPinned = pinned.includes(tab.id);
+  button.setAttribute("aria-pressed", String(isPinned));
+  button.textContent = env.i18n.getMessage(
+    isPinned ? "unpinCurrentTab" : "pinCurrentTab",
+  );
 }
 
 // Show shortcuts in the options window
@@ -250,6 +269,27 @@ env.storage.onChanged.addListener((changes, namespace) => {
 
 document.getElementById("shareStats")?.addEventListener("click", () => {
   void copyWeeklyStats();
+});
+
+document.getElementById("pinCurrentTab")?.addEventListener("click", async () => {
+  const status = document.getElementById("pinStatus");
+  try {
+    const tab = await getCurrentWebTab();
+    if (!tab) {
+      throw new Error("No supported tab is active.");
+    }
+    const pinned = (await tabStorage.get("pinnedTabs")).pinnedTabs ?? [];
+    await tabStorage.set({
+      pinnedTabs: pinned.includes(tab.id)
+        ? pinned.filter((tabId) => tabId !== tab.id)
+        : [...pinned, tab.id],
+    });
+    status.textContent = "";
+    await restoreCurrentTabPin();
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("pinFailure");
+    console.error("Video Auto Pause could not update the tab pin:", error);
+  }
 });
 
 document.querySelectorAll("[data-preset]").forEach((button) => {

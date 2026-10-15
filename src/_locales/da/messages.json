@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Websted fra",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Fortsæt afspilning i denne fane",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Fjern fastgørelse af fortsat afspilning",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Fanens fastgørelse kunne ikke opdateres.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Slå fastgørelse af fortsat afspilning til/fra for den aktive fane",
+    "description": "Temporary tab pin text"
   }
 }

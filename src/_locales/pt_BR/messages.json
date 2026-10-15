@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Site desativado",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Continuar reproduzindo nesta aba",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Remover fixação de reprodução",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Não foi possível atualizar a fixação da aba.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Alternar fixação de reprodução na aba ativa",
+    "description": "Temporary tab pin text"
   }
 }

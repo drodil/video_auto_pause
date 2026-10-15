@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Website aus",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "In diesem Tab weiter abspielen",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Anheften für Wiedergabe aufheben",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Tab-Anheftung konnte nicht geändert werden.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Anheften für Wiedergabe im aktiven Tab umschalten",
+    "description": "Temporary tab pin text"
   }
 }

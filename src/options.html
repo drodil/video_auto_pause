@@ -371,6 +371,19 @@
         outline: 2px solid #667eea;
         outline-offset: 2px;
       }
+
+      #pinCurrentTab {
+        width: 100%;
+        margin-bottom: 8px;
+        border: 1px solid #667eea;
+        border-radius: 6px;
+        padding: 9px;
+        background: #eef2ff;
+        color: #4338ca;
+        font: inherit;
+        font-weight: 500;
+        cursor: pointer;
+      }
     </style>
   </head>
 
@@ -384,6 +397,10 @@
       </div>
 
       <div class="container section">
+        <button id="pinCurrentTab" type="button" aria-pressed="false">
+          Keep playing in this tab
+        </button>
+        <p id="pinStatus" role="status" aria-live="polite"></p>
         <h4 data-i18n="presetTitle">Choose a mode</h4>
         <div class="preset-grid">
           <button type="button" data-preset="study" data-i18n="presetStudy">

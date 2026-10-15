@@ -19,6 +19,7 @@ let priorityTabId = -1;
 let priorityHistory = [];
 let priorityOperation = Promise.resolve();
 let statisticsOperation = Promise.resolve();
+let pinnedTabs = [];
 
 // Computer state
 let state = "active";
@@ -63,6 +64,7 @@ env.runtime.onStartup.addListener(async () => {
       "previous_tab",
       "previous_window",
       "previous_tabs",
+      "pinnedTabs",
     ]);
   }
 });
@@ -95,6 +97,7 @@ async function refresh_settings() {
   options = { ...DEFAULT_OPTIONS, ...result };
   debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
   disabledTabs = (await sessionStorage.get("disabledTabs")).disabledTabs ?? [];
+  pinnedTabs = (await sessionStorage.get("pinnedTabs")).pinnedTabs ?? [];
   debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
 
   const navigationState = await sessionStorage.get([
@@ -125,7 +128,21 @@ async function refresh_settings() {
 }
 
 async function save_settings() {
-  await sessionStorage.set({ disabledTabs });
+  await sessionStorage.set({ disabledTabs, pinnedTabs });
+}
+
+async function toggleTabPin(tab) {
+  if (!tab?.id) {
+    return false;
+  }
+  if (pinnedTabs.includes(tab.id)) {
+    pinnedTabs = pinnedTabs.filter((tabId) => tabId !== tab.id);
+  } else {
+    pinnedTabs = [...pinnedTabs, tab.id];
+  }
+  await save_settings();
+  await refreshIcon(tab.id);
+  return pinnedTabs.includes(tab.id);
 }
 
 function recordStatistic(event, preventedSeconds = 0) {
@@ -233,6 +250,9 @@ function sendMessage(tab, message) {
 // Media control functions
 
 function stop(tab) {
+  if (pinnedTabs.includes(tab.id)) {
+    return;
+  }
   const action = options.muteVideo ? "mute" : "stop";
   sendMessage(tab, { action, delay: options.pauseDelay });
 }
@@ -398,6 +418,18 @@ async function refreshIcon(tabId) {
     `Refreshing icon for tab ${tab.id}: enabled=${enabled}, hasVideos=${hasVideosInTab}`,
   );
   await changeIcon(!(enabled && hasVideosInTab), tab.id);
+  if (env.action.setBadgeText) {
+    await env.action.setBadgeText({
+      text: pinnedTabs.includes(tab.id) ? "PIN" : "",
+      tabId: tab.id,
+    });
+    if (pinnedTabs.includes(tab.id) && env.action.setBadgeBackgroundColor) {
+      await env.action.setBadgeBackgroundColor({
+        color: "#5b5bd6",
+        tabId: tab.id,
+      });
+    }
+  }
 }
 
 // Listen options changes
@@ -407,7 +439,7 @@ env.storage.onChanged.addListener(async function (changes, areaName) {
     Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
   const relevantTabChange =
     (areaName === "session" || areaName === "local") &&
-    "disabledTabs" in changes;
+    ("disabledTabs" in changes || "pinnedTabs" in changes);
   if (!relevantSyncChange && !relevantTabChange) {
     return;
   }
@@ -529,6 +561,10 @@ env.tabs.onRemoved.addListener(async function (tabId) {
   delete tabVisibility[tabId];
   delete tabMedia[tabId];
   priorityHistory = priorityHistory.filter((id) => id !== tabId);
+  if (pinnedTabs.includes(tabId)) {
+    pinnedTabs = pinnedTabs.filter((id) => id !== tabId);
+    await save_settings();
+  }
   if (options.prioritizeActiveTabMedia && priorityTabId === tabId) {
     await resumePriorMediaTab();
   }
@@ -602,6 +638,13 @@ async function handlePageMessage(request, sender) {
   const tab = sender.tab;
   if (!tab) {
     return;
+  }
+
+  if (request.pinAction === "get") {
+    return { pinned: pinnedTabs.includes(tab.id) };
+  }
+  if (request.pinAction === "toggle") {
+    return { pinned: await toggleTabPin(tab) };
   }
 
   if ("statsEvent" in request) {
@@ -716,7 +759,7 @@ async function handlePageMessage(request, sender) {
 
 env.runtime.onMessage.addListener((request, sender, sendResponse) => {
   handlePageMessage(request, sender).then(
-    () => sendResponse({}),
+    (response) => sendResponse(response ?? {}),
     (error) => {
       console.error("Video Autopause message handler failed:", error);
       sendResponse({ error: String(error) });

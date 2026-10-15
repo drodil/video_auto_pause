@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Witryna wyłączona",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Odtwarzaj dalej na tej karcie",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Usuń przypięcie odtwarzania",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Nie udało się zmienić przypięcia karty.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Przełącz przypięcie odtwarzania aktywnej karty",
+    "description": "Temporary tab pin text"
   }
 }

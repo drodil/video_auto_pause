@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "साइट बंद",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "इस टैब में वीडियो चलता रहने दें",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "चलते रहने का पिन हटाएँ",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "टैब पिन अपडेट नहीं हो सका।",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "सक्रिय टैब के चलते रहने वाले पिन को टॉगल करें",
+    "description": "Temporary tab pin text"
   }
 }

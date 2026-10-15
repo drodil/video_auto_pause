@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Site désactivé",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Continuer la lecture dans cet onglet",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Retirer l’épingle de lecture",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Impossible de modifier l’épingle de l’onglet.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Activer ou désactiver l’épingle de lecture de l’onglet actif",
+    "description": "Temporary tab pin text"
   }
 }

@@ -16,6 +16,7 @@ if (window.autoPauseInjected !== true) {
   const observedMedia = new WeakSet();
   const shadowHosts = new Set();
   const visibleVideos = new Set();
+  const overlayPinRefreshers = new Set();
   let videoObserver;
   let lastVisibility = null;
   let userInteracted = false;
@@ -137,6 +138,14 @@ if (window.autoPauseInjected !== true) {
   }
 
   env.storage.onChanged.addListener((changes, namespace) => {
+    if (
+      (namespace === "session" || namespace === "local") &&
+      "pinnedTabs" in changes
+    ) {
+      for (const refreshPinState of overlayPinRefreshers) {
+        refreshPinState();
+      }
+    }
     if (
       namespace !== "sync" ||
       !Object.keys(changes).some((key) => key in DEFAULT_OPTIONS)
@@ -1132,6 +1141,8 @@ if (window.autoPauseInjected !== true) {
     speedLabel.className = "vap-speed-label";
     overlay.appendChild(speedLabel);
     const siteButton = addButton("site-toggle", "");
+    const pinButton = addButton("pin-toggle", "");
+    let pinned = false;
 
     const refreshOverlay = () => {
       playButton.textContent = video.paused ? "▶" : "Ⅱ";
@@ -1144,9 +1155,32 @@ if (window.autoPauseInjected !== true) {
       siteButton.textContent = enabled
         ? env.i18n.getMessage("overlaySiteOn")
         : env.i18n.getMessage("overlaySiteOff");
+      siteButton.title = siteButton.textContent;
       siteButton.setAttribute("aria-pressed", String(enabled));
+      pinButton.textContent = pinned ? "PIN" : "PIN+";
+      pinButton.title = env.i18n.getMessage(
+        pinned ? "unpinCurrentTab" : "pinCurrentTab",
+      );
+      pinButton.setAttribute("aria-label", pinButton.title);
+      pinButton.setAttribute("aria-pressed", String(pinned));
     };
     refreshOverlay();
+
+    const refreshPinState = () => {
+      env.runtime.sendMessage({ pinAction: "get" }, (response) => {
+        if (env.runtime.lastError) {
+          console.error(
+            "Video Auto Pause overlay could not read the tab pin:",
+            env.runtime.lastError.message,
+          );
+          return;
+        }
+        pinned = response?.pinned === true;
+        refreshOverlay();
+      });
+    };
+    refreshPinState();
+    overlayPinRefreshers.add(refreshPinState);
 
     playButton.addEventListener("click", () => {
       void handleVideoAction(video, { action: "toggle" }).catch((error) => {
@@ -1170,6 +1204,19 @@ if (window.autoPauseInjected !== true) {
       } catch (error) {
         console.error("Video Auto Pause overlay could not update this site:", error);
       }
+    });
+    pinButton.addEventListener("click", () => {
+      env.runtime.sendMessage({ pinAction: "toggle" }, (response) => {
+        if (env.runtime.lastError) {
+          console.error(
+            "Video Auto Pause overlay could not update the tab pin:",
+            env.runtime.lastError.message,
+          );
+          return;
+        }
+        pinned = response?.pinned === true;
+        refreshOverlay();
+      });
     });
     video.addEventListener("play", refreshOverlay);
     video.addEventListener("pause", refreshOverlay);
@@ -1233,6 +1280,7 @@ if (window.autoPauseInjected !== true) {
       container.removeEventListener("mouseenter", show);
       container.removeEventListener("mousemove", show);
       container.removeEventListener("mouseleave", hideAfterLeave);
+      overlayPinRefreshers.delete(refreshPinState);
       overlay.remove();
       delete video.dataset.vapOverlayId;
     });

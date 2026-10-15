@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Tắt trang web",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Tiếp tục phát trong tab này",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Bỏ ghim tiếp tục phát",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Không thể cập nhật ghim tab.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Bật/tắt ghim tiếp tục phát cho tab hiện tại",
+    "description": "Temporary tab pin text"
   }
 }

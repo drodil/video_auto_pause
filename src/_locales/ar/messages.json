@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "الموقع متوقف",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "استمر في التشغيل في علامة التبويب هذه",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "إزالة تثبيت الاستمرار في التشغيل",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "تعذر تحديث تثبيت علامة التبويب.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "تبديل تثبيت الاستمرار في التشغيل لعلامة التبويب النشطة",
+    "description": "Temporary tab pin text"
   }
 }

@@ -47,6 +47,9 @@
       },
       "description": "__MSG_commandToggleTab__"
     },
+    "toggle-pin": {
+      "description": "__MSG_commandTogglePin__"
+    },
     "toggle-play": {
       "suggested_key": {
         "default": "Ctrl+Shift+Space",

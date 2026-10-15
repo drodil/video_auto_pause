@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Sivusto pois käytöstä",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Jatka toistoa tällä välilehdellä",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Poista toiston kiinnitys",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Välilehden kiinnitystä ei voitu päivittää.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Vaihda aktiivisen välilehden toiston kiinnityksen tilaa",
+    "description": "Temporary tab pin text"
   }
 }

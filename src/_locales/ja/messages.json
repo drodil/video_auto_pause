@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "サイト無効",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "このタブで再生を続ける",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "再生固定を解除",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "タブの固定を更新できませんでした。",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "アクティブなタブの再生固定を切り替える",
+    "description": "Temporary tab pin text"
   }
 }

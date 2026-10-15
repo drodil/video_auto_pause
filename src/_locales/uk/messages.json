@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Сайт вимкнено",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Продовжувати відтворення на цій вкладці",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Зняти закріплення відтворення",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Не вдалося оновити закріплення вкладки.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Перемкнути закріплення відтворення активної вкладки",
+    "description": "Temporary tab pin text"
   }
 }

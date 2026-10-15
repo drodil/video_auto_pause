@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Webbplats av",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Fortsätt spela upp på den här fliken",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Ta bort fästningen för fortsatt uppspelning",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Det gick inte att uppdatera flikens fästning.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Växla fästning för fortsatt uppspelning på den aktiva fliken",
+    "description": "Temporary tab pin text"
   }
 }

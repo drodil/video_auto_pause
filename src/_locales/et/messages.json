@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Veebisait väljas",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Jätka esitamist sellel vahelehel",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Eemalda esitamispin",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Vahelehe kinnitust ei saanud muuta.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Lülita aktiivse vahelehe esitamise kinnitus sisse või välja",
+    "description": "Temporary tab pin text"
   }
 }

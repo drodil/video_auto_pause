@@ -20,6 +20,9 @@ background music, binge watching, and battery-saving sessions.
 An optional on-video control lets you toggle playback, adjust speed, and disable
 automatic handling for the current site without opening the popup.
 
+Use the tab pin in the popup or on-video controls to keep one tab playing while
+you work elsewhere; the pin clears automatically when its tab is closed.
+
 ## Installing
 
 #### Chrome Web Store

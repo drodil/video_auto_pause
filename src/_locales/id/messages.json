@@ -286,5 +286,21 @@
   "overlaySiteOff": {
     "message": "Situs nonaktif",
     "description": "On-video controls text"
+  },
+  "pinCurrentTab": {
+    "message": "Tetap putar di tab ini",
+    "description": "Temporary tab pin text"
+  },
+  "unpinCurrentTab": {
+    "message": "Lepas pin tetap memutar",
+    "description": "Temporary tab pin text"
+  },
+  "pinFailure": {
+    "message": "Pin tab tidak dapat diperbarui.",
+    "description": "Temporary tab pin text"
+  },
+  "commandTogglePin": {
+    "message": "Alihkan pin tetap memutar untuk tab aktif",
+    "description": "Temporary tab pin text"
   }
 }
