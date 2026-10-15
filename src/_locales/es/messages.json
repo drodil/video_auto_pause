@@ -23,6 +23,14 @@
     "message": "Pausar video al cambiar de pestaña",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Bloquear la reproducción automática de videos antes de interactuar",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Reanudar el contenido multimedia anterior cuando se detenga el actual",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Reanudar video al volver a la pestaña",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Pausar video al desplazarse fuera de la vista",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Reproducir solo el video más visible",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Pausar cuando el cursor sale de la ventana del navegador",

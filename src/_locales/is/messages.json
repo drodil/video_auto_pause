@@ -23,6 +23,14 @@
     "message": "Gera hlé á myndbandi þegar skipt er um flipa",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Hindra sjálfvirka spilun myndbanda áður en notandi hefur samskipti",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Halda áfram með fyrri miðlun þegar núverandi miðlun stöðvast",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Halda myndbandi áfram þegar komið er aftur í flipa",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Gera hlé þegar skrunað er úr augsýn",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Spila aðeins myndbandið sem sést best",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Gera hlé þegar bendill fer út úr vafraglugga",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Lénsstillingar",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Sláðu inn lén til að taka með (eitt í hverri línu):",
+    "description": "Description for domain inclusions textarea"
   }
 }

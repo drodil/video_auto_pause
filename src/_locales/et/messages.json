@@ -23,6 +23,14 @@
     "message": "Peata video vahekaardi vahetamisel",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Blokeeri video automaatesitus enne kasutaja tegevust",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Jätka eelmist meediat, kui praegune meedia peatub",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Jätka videot vahekaardile naastes",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Peata video vaateväljast väljakerimisel",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Esita ainult kõige nähtavamat videot",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Peata, kui kursor lahkub brauseri aknast",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Domeeni seaded",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Sisestage kaasatavad domeenid (üks rea kohta):",
+    "description": "Description for domain inclusions textarea"
   }
 }

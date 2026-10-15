@@ -23,6 +23,14 @@
     "message": "Призупиняти відео при перемиканні вкладок",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Блокувати автовідтворення відео до взаємодії",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Відновлювати попереднє відтворення після зупинки поточного",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Відновлювати відео при поверненні на вкладку",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Призупиняти відео при прокручуванні за межі видимості",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Відтворювати лише найбільш видиме відео",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Призупиняти, коли курсор залишає вікно браузера",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Скинути швидкість відтворення",
     "description": "Auto-translated"
+  },
+  "domainSettings": {
+    "message": "Налаштування доменів",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Введіть домени для включення (один у рядку):",
+    "description": "Description for domain inclusions textarea"
   }
 }

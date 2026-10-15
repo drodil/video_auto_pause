@@ -23,6 +23,14 @@
     "message": "Video beim Wechseln des Tabs pausieren",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Video-Autoplay vor Interaktion blockieren",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Vorherige Medien fortsetzen, wenn aktuelle Medien stoppen",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Video beim Zurückkehren zum Tab fortsetzen",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Video pausieren, wenn aus Sicht gescrollt",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Nur das am sichtbarsten Video abspielen",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Pausieren, wenn Cursor Browserfenster verlässt",

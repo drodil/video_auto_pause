@@ -23,6 +23,14 @@
     "message": "タブを切り替えたときに動画を一時停止",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "操作前の動画自動再生をブロック",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "現在のメディアが停止したら前のメディアを再開",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "タブに戻ったときに動画を再開",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "スクロールして見えなくなったときに動画を一時停止",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "最も多く表示されている動画だけを再生",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "カーソルがブラウザウィンドウから離れたときに一時停止",

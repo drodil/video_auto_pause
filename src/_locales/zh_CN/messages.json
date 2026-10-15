@@ -23,6 +23,14 @@
     "message": "切换标签页时暂停视频",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "在交互前阻止视频自动播放",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "当前媒体停止后恢复之前的媒体",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "返回标签页时继续播放视频",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "滚动出视野时暂停视频",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "仅播放可见面积最大的视频",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "光标离开浏览器窗口时暂停",

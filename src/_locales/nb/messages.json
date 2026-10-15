@@ -23,6 +23,14 @@
     "message": "Pause video ved bytte av fane",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Blokker automatisk videoavspilling før samhandling",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Fortsett tidligere medier når gjeldende medier stopper",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Fortsett video når du returnerer til fanen",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Pause video når den rulles ut av syne",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Spill bare av den mest synlige videoen",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Pause når markøren forlater nettleservinduet",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Domeneinnstillinger",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Skriv inn domener som skal inkluderes (ett per linje):",
+    "description": "Description for domain inclusions textarea"
   }
 }

@@ -2,13 +2,7 @@
   "name": "__MSG_extName__",
   "version": "1.13.0",
   "description": "__MSG_extDescription__",
-  "permissions": [
-    "tabs",
-    "storage",
-    "activeTab",
-    "scripting",
-    "idle"
-  ],
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
@@ -16,9 +10,7 @@
       "strict_min_version": "127.0"
     }
   },
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
@@ -40,16 +32,10 @@
     }
   },
   "background": {
-    "scripts": [
-      "vap_bs.js"
-    ]
+    "scripts": ["defaults.js", "vap_bs.js"]
   },
   "commands": {
     "toggle-extension": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+K",
-        "mac": "Command+Shift+K"
-      },
       "description": "__MSG_commandToggleExtension__"
     },
     "toggle-tab": {
@@ -67,10 +53,6 @@
       "description": "__MSG_commandTogglePlay__"
     },
     "toggle_mute": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+O",
-        "mac": "Command+Shift+O"
-      },
       "description": "__MSG_commandToggleMute__"
     },
     "speed-up": {

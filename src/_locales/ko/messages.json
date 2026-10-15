@@ -23,6 +23,14 @@
     "message": "탭 전환 시 동영상 일시중지",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "사용자 상호작용 전 동영상 자동 재생 차단",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "현재 미디어가 중지되면 이전 미디어 다시 재생",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "탭으로 돌아올 때 동영상 다시 시작",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "화면 밖으로 스크롤 시 동영상 일시중지",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "가장 많이 보이는 동영상만 재생",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "커서가 브라우저 창을 벗어나면 일시중지",

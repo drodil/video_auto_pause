@@ -8,3 +8,4 @@ src/manifest.json
 playwright-report/
 test-results/
 test-dist/
+.playwright-mcp/

@@ -366,6 +366,12 @@
               >
             </label>
             <label>
+              <input type="checkbox" id="singleVideoPlayback" />
+              <span class="label-text" data-i18n="singleVideoPlayback"
+                >Play only the most visible video</span
+              >
+            </label>
+            <label>
               <input type="checkbox" id="cursorTracking" />
               <span class="label-text" data-i18n="cursorTracking"
                 >Pause when cursor leaves browser window</span
@@ -388,6 +394,18 @@
               <input type="checkbox" id="muteVideo" />
               <span class="label-text" data-i18n="muteVideo"
                 >Mute video instead of pausing</span
+              >
+            </label>
+            <label>
+              <input type="checkbox" id="blockAutoplay" />
+              <span class="label-text" data-i18n="blockAutoplay"
+                >Block video autoplay before interaction</span
+              >
+            </label>
+            <label>
+              <input type="checkbox" id="prioritizeActiveTabMedia" />
+              <span class="label-text" data-i18n="prioritizeActiveTabMedia"
+                >Resume previous media when current media stops</span
               >
             </label>
             <label>
@@ -621,6 +639,7 @@
         <p id="version"></p>
       </div>
     </div>
+    <script src="defaults.js"></script>
     <script src="options.js"></script>
   </body>
 </html>

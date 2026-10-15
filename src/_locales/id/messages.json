@@ -23,6 +23,14 @@
     "message": "Jeda video saat berpindah tab",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Blokir pemutaran otomatis video sebelum interaksi",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Lanjutkan media sebelumnya saat media saat ini berhenti",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Lanjutkan video saat kembali ke tab",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Jeda video saat digulir keluar tampilan",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Putar hanya video yang paling terlihat",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Jeda saat kursor meninggalkan jendela browser",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Pengaturan Domain",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Masukkan domain yang akan disertakan (satu per baris):",
+    "description": "Description for domain inclusions textarea"
   }
 }

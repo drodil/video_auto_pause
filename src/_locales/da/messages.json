@@ -23,6 +23,14 @@
     "message": "Pause video ved skift af fane",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Bloker videoautoplay før interaktion",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Genoptag tidligere medier, når de aktuelle medier stopper",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Genoptag video, når du vender tilbage til fanen",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Pause video, når den rulles ud af syne",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Afspil kun den mest synlige video",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Pause, når markøren forlader browservinduet",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Domæneindstillinger",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Indtast domæner, der skal medtages (et pr. linje):",
+    "description": "Description for domain inclusions textarea"
   }
 }

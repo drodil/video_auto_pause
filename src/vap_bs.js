@@ -1,34 +1,28 @@
+if (!globalThis.VAP_DEFAULT_OPTIONS) {
+  importScripts("defaults.js");
+}
+
 // Browser
 const env = chrome.runtime ? chrome : browser;
+const sessionStorage = env.storage.session ?? env.storage.local;
+const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
 
 // Previous tab and window numbers
 let previous_tab = -1;
 let previous_window = env.windows.WINDOW_ID_NONE;
+let previousTabs = {};
 let disabledTabs = [];
 let tabVideos = {}; // { tabId: { frameId: boolean } }
+let tabVisibility = {};
+let tabMedia = {};
+let priorityTabId = -1;
+let priorityHistory = [];
+let priorityOperation = Promise.resolve();
 
 // Computer state
 let state = "active";
-// Default options
-let options = {
-  autopause: true,
-  autoresume: true,
-
-  muteVideo: false,
-  scrollpause: false,
-  lockpause: true,
-  lockresume: true,
-  focuspause: false,
-  focusresume: false,
-  disabled: false,
-  cursorTracking: false,
-  debugMode: false,
-  disableOnFullscreen: true,
-  pauseDelay: 0,
-  resumeDelay: 0,
-  excludedDomains: [],
-  includedDomains: [],
-};
+let previousIdleState = "active";
+let options = { ...DEFAULT_OPTIONS };
 
 function debugLog(message) {
   if (options.debugMode) {
@@ -37,61 +31,100 @@ function debugLog(message) {
 }
 
 // Initialize settings from storage
-refresh_settings();
-env.scripting.registerContentScripts([
-  {
-    id: "video_auto_pause",
-    matches: ["<all_urls>"],
-    js: ["video_auto_pause.js"],
-    runAt: "document_start",
-    allFrames: true,
-  },
-]);
+let settingsReady = initialize();
+void settingsReady.catch((error) => {
+  console.error("Video Autopause initialization failed:", error);
+});
+
+async function initialize() {
+  if (env.storage.session) {
+    const currentTabState = await sessionStorage.get("disabledTabs");
+    if (
+      !Object.prototype.hasOwnProperty.call(currentTabState, "disabledTabs")
+    ) {
+      const legacyTabState = await env.storage.local.get("disabledTabs");
+      if (legacyTabState.disabledTabs) {
+        await sessionStorage.set({ disabledTabs: legacyTabState.disabledTabs });
+      }
+    }
+    await env.storage.local.remove("disabledTabs");
+  }
+  await refresh_settings();
+  await registerContentScriptIfNeeded();
+  previousIdleState = await env.idle.queryState(60);
+  state = previousIdleState;
+}
+
+env.runtime.onStartup.addListener(async () => {
+  if (!env.storage.session) {
+    await env.storage.local.remove([
+      "disabledTabs",
+      "previous_tab",
+      "previous_window",
+      "previous_tabs",
+    ]);
+  }
+});
+
+async function registerContentScriptIfNeeded() {
+  const registeredScripts = await env.scripting.getRegisteredContentScripts({
+    ids: ["video_auto_pause"],
+  });
+  const currentScript = registeredScripts[0];
+  if (currentScript && currentScript.matchOriginAsFallback) {
+    return;
+  }
+  if (currentScript) {
+    await env.scripting.unregisterContentScripts({ ids: ["video_auto_pause"] });
+  }
+  await env.scripting.registerContentScripts([
+    {
+      id: "video_auto_pause",
+      matches: ["<all_urls>"],
+      js: ["defaults.js", "video_auto_pause.js"],
+      runAt: "document_start",
+      allFrames: true,
+      matchOriginAsFallback: true,
+    },
+  ]);
+}
 
 async function refresh_settings() {
-  const result = await env.storage.sync.get(Object.keys(options));
-  options = Object.assign(options, result);
+  const result = await env.storage.sync.get(DEFAULT_OPTIONS);
+  options = { ...DEFAULT_OPTIONS, ...result };
   debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
-  if (options.disabled === true) {
-    options.autopause = false;
-    options.autoresume = false;
-    options.scrollpause = false;
-    options.lockpause = false;
-    options.lockresume = false;
-    options.focuspause = false;
-    options.focusresume = false;
-    options.cursorTracking = false;
-    options.debugMode = false;
-    options.disableOnFullscreen = true;
-    options.pauseDelay = 0;
-    options.resumeDelay = 0;
-    options.excludedDomains = [];
-    options.includedDomains = [];
-  }
-
-  disabledTabs =
-    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
+  disabledTabs = (await sessionStorage.get("disabledTabs")).disabledTabs ?? [];
   debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
 
-  // Initialize previous tab & window
-  const windows = await env.windows.getAll({
-    populate: false,
-    windowTypes: ["normal"],
+  const navigationState = await sessionStorage.get([
+    "previous_tab",
+    "previous_window",
+    "previous_tabs",
+  ]);
+  previousTabs = navigationState.previous_tabs ?? {};
+  previous_tab = navigationState.previous_tab ?? -1;
+  previous_window =
+    navigationState.previous_window ?? env.windows.WINDOW_ID_NONE;
+  if (previous_window === env.windows.WINDOW_ID_NONE) {
+    const activeTabs = await env.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    if (activeTabs.length > 0) {
+      previous_window = activeTabs[0].windowId;
+      previous_tab = activeTabs[0].id;
+      previousTabs[previous_window] = previous_tab;
+    }
+  }
+  await sessionStorage.set({
+    previous_tab,
+    previous_window,
+    previous_tabs: previousTabs,
   });
-  if (windows.length > 0) {
-    const currentWindow = await env.windows.getLastFocused();
-    previous_window = currentWindow.id;
-  }
-
-  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
-  if (tabs.length > 0) {
-    previous_tab = tabs[0].id;
-  }
 }
 
 async function save_settings() {
-  await env.storage.sync.set(options);
-  await env.storage.local.set({ disabledTabs });
+  await sessionStorage.set({ disabledTabs });
 }
 
 function isEnabledForTab(tab) {
@@ -99,26 +132,41 @@ function isEnabledForTab(tab) {
     return false;
   }
 
-  if (!disabledTabs.includes(tab.id)) {
-    if (tab.url) {
-      const url = new URL(tab.url);
-
-      if (
-        options.excludedDomains.some((domain) => url.hostname.includes(domain))
-      ) {
-        return false;
-      }
-
-      if (options.includedDomains.length > 0) {
-        return options.includedDomains.some((domain) =>
-          url.hostname.includes(domain),
-        );
-      }
-
-      return true;
-    }
+  if (disabledTabs.includes(tab.id) || !tab.url) {
+    return false;
   }
-  return false;
+
+  let hostname;
+  try {
+    hostname = new URL(tab.url).hostname.toLowerCase();
+  } catch (error) {
+    debugLog(`Unable to parse tab URL ${tab.url}: ${error}`);
+    return false;
+  }
+
+  const matchesDomain = (entries) =>
+    entries.some((entry) => {
+      const normalized = entry
+        .trim()
+        .toLowerCase()
+        .replace(/^[a-z][a-z\d+.-]*:\/\//, "")
+        .split(/[/?#]/, 1)[0]
+        .replace(/^\*\./, "")
+        .replace(/:\d+$/, "")
+        .replace(/\.$/, "");
+      return (
+        normalized &&
+        (hostname === normalized || hostname.endsWith(`.${normalized}`))
+      );
+    });
+
+  if (matchesDomain(options.excludedDomains)) {
+    return false;
+  }
+  return (
+    options.includedDomains.length === 0 ||
+    matchesDomain(options.includedDomains)
+  );
 }
 
 // Functionality to send messages to tabs
@@ -127,62 +175,119 @@ function sendMessage(tab, message) {
     return;
   }
 
-  if (env.runtime.lastError) {
-    console.error(`Video Autopause error: ${env.runtime.lastError.toString()}`);
-    return;
-  }
-
   debugLog(`Sending message ${JSON.stringify(message)} to tab ${tab.id}`);
 
-  env.tabs.sendMessage(tab.id, message, {}, function () {
-    void env.runtime.lastError;
-  });
+  try {
+    env.tabs.sendMessage(tab.id, message, {}, function () {
+      if (env.runtime.lastError) {
+        console.warn(
+          `Video Autopause could not message tab ${tab.id}: ${env.runtime.lastError.message}`,
+        );
+      }
+    });
+  } catch (error) {
+    console.error(`Video Autopause could not message tab ${tab.id}:`, error);
+  }
 }
 
-// Media conrol functions
-let pauseTimeouts = {};
-let resumeTimeouts = {};
+// Media control functions
 
 function stop(tab) {
-  if (resumeTimeouts[tab.id]) {
-    clearTimeout(resumeTimeouts[tab.id]);
-    delete resumeTimeouts[tab.id];
-  }
-
-  if (options.pauseDelay > 0) {
-    if (pauseTimeouts[tab.id]) {
-      return;
-    }
-    pauseTimeouts[tab.id] = setTimeout(() => {
-      const action = options.muteVideo ? "mute" : "stop";
-      sendMessage(tab, { action: action });
-      delete pauseTimeouts[tab.id];
-    }, options.pauseDelay);
-  } else {
-    const action = options.muteVideo ? "mute" : "stop";
-    sendMessage(tab, { action: action });
-  }
+  const action = options.muteVideo ? "mute" : "stop";
+  sendMessage(tab, { action, delay: options.pauseDelay });
 }
 
 function resume(tab) {
-  if (pauseTimeouts[tab.id]) {
-    clearTimeout(pauseTimeouts[tab.id]);
-    delete pauseTimeouts[tab.id];
-  }
+  const action = options.muteVideo ? "unmute" : "resume";
+  sendMessage(tab, { action, delay: options.resumeDelay });
+}
 
-  if (options.resumeDelay > 0) {
-    if (resumeTimeouts[tab.id]) {
+function hasMedia(tabId) {
+  return Object.values(tabMedia[tabId] ?? {}).some((state) => state.hasMedia);
+}
+
+function isMediaPlaying(tabId) {
+  return Object.values(tabMedia[tabId] ?? {}).some((state) => state.playing);
+}
+
+function queuePriorityOperation(operation) {
+  const nextOperation = priorityOperation.then(operation, operation);
+  priorityOperation = nextOperation.catch((error) => {
+    console.error("Video Autopause priority update failed:", error);
+  });
+  return nextOperation;
+}
+
+function prioritizeMediaTab(tabId) {
+  return queuePriorityOperation(async () => {
+    if (priorityTabId === tabId) {
       return;
     }
-    resumeTimeouts[tab.id] = setTimeout(() => {
-      const action = options.muteVideo ? "unmute" : "resume";
-      sendMessage(tab, { action: action });
-      delete resumeTimeouts[tab.id];
-    }, options.resumeDelay);
-  } else {
-    const action = options.muteVideo ? "unmute" : "resume";
-    sendMessage(tab, { action: action });
-  }
+
+    const previousOwnerId = priorityTabId;
+    const tabs = await env.tabs.query({});
+    const playingTabIds = tabs
+      .filter(
+        (tab) =>
+          tab.id !== tabId &&
+          tab.id !== previousOwnerId &&
+          isMediaPlaying(tab.id) &&
+          isEnabledForTab(tab),
+      )
+      .map((tab) => tab.id);
+
+    for (const playingTabId of playingTabIds) {
+      priorityHistory = priorityHistory.filter((id) => id !== playingTabId);
+      priorityHistory.push(playingTabId);
+    }
+    if (previousOwnerId !== -1 && hasMedia(previousOwnerId)) {
+      priorityHistory = priorityHistory.filter((id) => id !== previousOwnerId);
+      priorityHistory.push(previousOwnerId);
+    }
+    priorityHistory = priorityHistory.filter((id) => id !== tabId);
+    priorityTabId = tabId;
+
+    for (const tab of tabs) {
+      if (tab.id !== tabId && hasMedia(tab.id) && isEnabledForTab(tab)) {
+        if (options.autopause) {
+          stop(tab);
+        }
+      }
+    }
+
+    try {
+      const tab = await env.tabs.get(tabId);
+      if (options.autoresume && isEnabledForTab(tab)) {
+        resume(tab);
+      }
+    } catch (error) {
+      debugLog(`Could not prioritize media tab ${tabId}: ${error}`);
+    }
+  });
+}
+
+function resumePriorMediaTab() {
+  return queuePriorityOperation(async () => {
+    priorityTabId = -1;
+    while (priorityHistory.length > 0) {
+      const tabId = priorityHistory.pop();
+      if (!hasMedia(tabId)) {
+        continue;
+      }
+      try {
+        const tab = await env.tabs.get(tabId);
+        if (isEnabledForTab(tab)) {
+          priorityTabId = tabId;
+          if (options.autoresume) {
+            resume(tab);
+          }
+          return;
+        }
+      } catch (error) {
+        debugLog(`Could not resume previous media tab ${tabId}: ${error}`);
+      }
+    }
+  });
 }
 
 function toggle(tab) {
@@ -205,38 +310,26 @@ function speed(tab, command) {
   sendMessage(tab, { action: "speed", command: command });
 }
 
-let iconTimeout;
-function changeIcon(disabled) {
-  if (iconTimeout) {
-    clearTimeout(iconTimeout);
-  }
-
-  iconTimeout = setTimeout(() => {
-    if (disabled) {
-      env.action.setIcon({
-        path: {
-          16: "/images/icon_disabled_16.png",
-          32: "/images/icon_disabled_32.png",
-          64: "/images/icon_disabled_64.png",
-          128: "/images/icon_disabled_128.png",
-        },
-      });
-    } else {
-      env.action.setIcon({
-        path: {
-          16: "/images/icon_16.png",
-          32: "/images/icon_32.png",
-          64: "/images/icon_64.png",
-          128: "/images/icon_128.png",
-        },
-      });
-    }
-  }, 200);
+async function changeIcon(disabled, tabId) {
+  const path = disabled
+    ? {
+        16: "/images/icon_disabled_16.png",
+        32: "/images/icon_disabled_32.png",
+        64: "/images/icon_disabled_64.png",
+        128: "/images/icon_disabled_128.png",
+      }
+    : {
+        16: "/images/icon_16.png",
+        32: "/images/icon_32.png",
+        64: "/images/icon_64.png",
+        128: "/images/icon_128.png",
+      };
+  await env.action.setIcon({ path, tabId });
 }
 
 async function refreshIcon(tabId) {
   let tab;
-  if (tabId) {
+  if (tabId !== undefined) {
     try {
       tab = await env.tabs.get(tabId);
     } catch (e) {
@@ -264,19 +357,37 @@ async function refreshIcon(tabId) {
   debugLog(
     `Refreshing icon for tab ${tab.id}: enabled=${enabled}, hasVideos=${hasVideosInTab}`,
   );
-  changeIcon(!(enabled && hasVideosInTab));
+  await changeIcon(!(enabled && hasVideosInTab), tab.id);
 }
 
 // Listen options changes
-env.storage.onChanged.addListener(async function () {
-  await refresh_settings();
+env.storage.onChanged.addListener(async function (changes, areaName) {
+  const relevantSyncChange =
+    areaName === "sync" &&
+    Object.keys(changes).some((key) => key in DEFAULT_OPTIONS);
+  const relevantTabChange =
+    (areaName === "session" || areaName === "local") &&
+    "disabledTabs" in changes;
+  if (!relevantSyncChange && !relevantTabChange) {
+    return;
+  }
+  await settingsReady;
+  const wasDisabled =
+    areaName === "sync" && "disabled" in changes
+      ? (changes.disabled.oldValue ?? false)
+      : options.disabled;
+  settingsReady = refresh_settings();
+  await settingsReady;
 
-  const tabs = await env.tabs.query({ active: true });
-
-  await refreshIcon();
-
+  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
   for (const element of tabs) {
-    if (isEnabledForTab(element) && element.active) {
+    await refreshIcon(element.id);
+    if (
+      wasDisabled &&
+      !options.disabled &&
+      options.autoresume &&
+      isEnabledForTab(element)
+    ) {
       resume(element);
     }
   }
@@ -284,6 +395,8 @@ env.storage.onChanged.addListener(async function () {
 
 // Tab change listener
 env.tabs.onActivated.addListener(async function (info) {
+  await settingsReady;
+
   let tab;
   try {
     tab = await env.tabs.get(info.tabId);
@@ -297,32 +410,50 @@ env.tabs.onActivated.addListener(async function (info) {
 
   sendMessage(tab, { action: "check" });
 
-  if (!isEnabledForTab(tab) || previous_tab === info.tabId) {
-    return;
-  }
+  const previousTabId =
+    previousTabs[info.windowId] ??
+    (previous_window === info.windowId ? previous_tab : -1);
 
-  if (options.autopause && previous_tab !== -1) {
-    try {
-      const prev = await env.tabs.get(previous_tab);
-      if (prev && prev.windowId === tab.windowId) {
-        debugLog(`Tab changed, stopping video from tab ${previous_tab}`);
-        stop(prev);
+  if (options.prioritizeActiveTabMedia) {
+    if (
+      priorityTabId === -1 &&
+      previousTabId !== -1 &&
+      hasMedia(previousTabId)
+    ) {
+      priorityTabId = previousTabId;
+    }
+    if (hasMedia(info.tabId) && priorityTabId !== info.tabId) {
+      await prioritizeMediaTab(info.tabId);
+    }
+  } else if (isEnabledForTab(tab) && previousTabId !== info.tabId) {
+    if (options.autopause && previousTabId !== -1) {
+      try {
+        const previousTab = await env.tabs.get(previousTabId);
+        if (previousTab && previousTab.windowId === tab.windowId) {
+          stop(previousTab);
+        }
+      } catch (error) {
+        debugLog(`Could not get previous tab ${previousTabId}: ${error}`);
       }
-    } catch (e) {
-      debugLog(`Could not get previous tab ${previous_tab}: ${e}`);
+    }
+    if (options.autoresume && tab.active) {
+      resume(tab);
     }
   }
 
-  if (options.autoresume && tab.active) {
-    debugLog(`Tab changed, resuming video from tab ${info.tabId}`);
-    resume(tab);
-  }
-
   previous_tab = info.tabId;
+  previous_window = info.windowId;
+  previousTabs[info.windowId] = info.tabId;
+  await sessionStorage.set({
+    previous_tab,
+    previous_window,
+    previous_tabs: previousTabs,
+  });
   await refreshIcon(info.tabId);
 });
 
 env.tabs.onCreated.addListener(async function (tab) {
+  await settingsReady;
   if (!tab.url) {
     await refreshIcon(tab.id);
   }
@@ -330,44 +461,64 @@ env.tabs.onCreated.addListener(async function (tab) {
 
 // Tab update listener
 env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+  await settingsReady;
   sendMessage(tab, { action: "check" });
 
   if (changeInfo.status === "loading") {
     delete tabVideos[tabId];
+    delete tabVisibility[tabId];
+  }
+
+  if (
+    !options.prioritizeActiveTabMedia &&
+    changeInfo.status === "complete" &&
+    !tab.active &&
+    options.autopause
+  ) {
+    stop(tab);
   }
 
   if (tab.active) {
     await refreshIcon(tabId);
   }
-
-  if (
-    "status" in changeInfo &&
-    changeInfo.status === "complete" &&
-    !tab.active
-  ) {
-    debugLog(
-      `Tab updated, stopping video in tab ${tabId} with status ${changeInfo.status}, active ${tab.active}`,
-    );
-    stop(tab);
-  }
 });
 
-env.tabs.onRemoved.addListener(function (tabId) {
+env.tabs.onRemoved.addListener(async function (tabId) {
+  await settingsReady;
   delete tabVideos[tabId];
+  delete tabVisibility[tabId];
+  delete tabMedia[tabId];
+  priorityHistory = priorityHistory.filter((id) => id !== tabId);
+  if (options.prioritizeActiveTabMedia && priorityTabId === tabId) {
+    await resumePriorMediaTab();
+  }
   if (disabledTabs.includes(tabId)) {
     disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
-    save_settings();
+    await save_settings();
+  }
+
+  for (const [windowId, previousTabId] of Object.entries(previousTabs)) {
+    if (previousTabId === tabId) {
+      delete previousTabs[windowId];
+    }
   }
 
   if (previous_tab === tabId) {
     previous_tab = -1;
   }
+  await sessionStorage.set({ previous_tab, previous_tabs: previousTabs });
 });
 
 // Window focus listener
 env.windows.onFocusChanged.addListener(async function (windowId) {
+  await settingsReady;
+
   if (windowId !== previous_window) {
-    if (options.focuspause && state !== "locked") {
+    if (
+      options.focuspause &&
+      state !== "locked" &&
+      previous_window !== env.windows.WINDOW_ID_NONE
+    ) {
       const tabsStop = await env.tabs.query({ windowId: previous_window });
       debugLog(`Window changed, stopping videos in window ${previous_window}`);
       for (let i = 0; i < tabsStop.length; i++) {
@@ -393,111 +544,160 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
     }
 
     previous_window = windowId;
+    await sessionStorage.set({ previous_window, previous_tabs: previousTabs });
     await refreshIcon();
   }
 });
 
 env.windows.onRemoved.addListener(function (windowId) {
+  delete previousTabs[windowId];
   if (previous_window === windowId) {
     previous_window = env.windows.WINDOW_ID_NONE;
   }
+  void sessionStorage.set({ previous_window, previous_tabs: previousTabs });
 });
 
-// Message listener for messages from tabs
-env.runtime.onMessage.addListener(
-  async function (request, sender, sendResponse) {
-    if ("hasVideos" in request && sender.tab.active) {
-      if (!tabVideos[sender.tab.id]) {
-        tabVideos[sender.tab.id] = {};
-      }
-      tabVideos[sender.tab.id][sender.frameId] = request.hasVideos;
+async function handlePageMessage(request, sender) {
+  await settingsReady;
+  const tab = sender.tab;
+  if (!tab) {
+    return;
+  }
 
-      const anyFrameHasVideos = Object.values(tabVideos[sender.tab.id]).some(
-        (v) => v,
+  if ("mediaState" in request) {
+    tabMedia[tab.id] ??= {};
+    tabMedia[tab.id][sender.frameId ?? 0] = request.mediaState;
+    if (!options.prioritizeActiveTabMedia || !isEnabledForTab(tab)) {
+      return;
+    }
+    const isActiveTab =
+      tab.active ||
+      previousTabs[tab.windowId] === tab.id ||
+      (previous_window === tab.windowId && previous_tab === tab.id);
+    if (
+      isActiveTab &&
+      request.mediaState.hasMedia &&
+      priorityTabId !== tab.id
+    ) {
+      await prioritizeMediaTab(tab.id);
+    } else if (priorityTabId === tab.id && !isMediaPlaying(tab.id)) {
+      await resumePriorMediaTab();
+    } else if (
+      !tab.active &&
+      tab.id !== priorityTabId &&
+      request.mediaState.playing &&
+      isMediaPlaying(priorityTabId)
+    ) {
+      if (options.autopause) {
+        stop(tab);
+      }
+    }
+    return;
+  }
+
+  if ("hasVideos" in request && tab.active) {
+    tabVideos[tab.id] ??= {};
+    tabVideos[tab.id][sender.frameId] = request.hasVideos;
+    await refreshIcon(tab.id);
+  }
+
+  if (!isEnabledForTab(tab)) {
+    return;
+  }
+
+  if ("minimized" in request) {
+    if (
+      !options.prioritizeActiveTabMedia &&
+      request.minimized &&
+      options.autopause
+    ) {
+      stop(tab);
+    } else if (
+      !options.prioritizeActiveTabMedia &&
+      !request.minimized &&
+      options.autoresume &&
+      tab.active
+    ) {
+      resume(tab);
+    }
+  }
+
+  if ("windowFocused" in request) {
+    if (!request.windowFocused && options.focuspause) {
+      stop(tab);
+    } else if (request.windowFocused && options.focusresume && tab.active) {
+      resume(tab);
+    }
+  }
+
+  if ("visible" in request && options.scrollpause && tab.active) {
+    tabVisibility[tab.id] ??= {};
+    tabVisibility[tab.id][sender.frameId] = request.visible;
+    const videoFrames = Object.entries(tabVideos[tab.id] ?? {})
+      .filter(([, hasVideos]) => hasVideos)
+      .map(([frameId]) => frameId);
+    const allVideoFramesReported =
+      videoFrames.length > 0 &&
+      videoFrames.every((frameId) =>
+        Object.prototype.hasOwnProperty.call(tabVisibility[tab.id], frameId),
       );
-      debugLog(
-        `Tab ${sender.tab.id} has videos: ${anyFrameHasVideos} (frame ${sender.frameId}: ${request.hasVideos})`,
-      );
-      await refreshIcon(sender.tab.id);
+    const anyVideoFrameVisible = videoFrames.some(
+      (frameId) => tabVisibility[tab.id][frameId],
+    );
+    if (allVideoFramesReported && !anyVideoFrameVisible && options.autopause) {
+      stop(tab);
+    } else if (anyVideoFrameVisible && options.autoresume) {
+      resume(tab);
     }
+  }
 
-    if ("windowFocused" in request) {
-      if (!request.windowFocused && options.focuspause) {
-        debugLog(`Window blurred, stopping videos in tab ${sender.tab.id}`);
-        stop(sender.tab);
-      } else if (
-        request.windowFocused &&
-        options.focusresume &&
-        sender.tab.active
-      ) {
-        debugLog(`Window focused, resuming videos in tab ${sender.tab.id}`);
-        resume(sender.tab);
-      }
+  if (options.cursorTracking && "cursorNearEdge" in request) {
+    if (request.cursorNearEdge && options.autopause) {
+      stop(tab);
+    } else if (!request.cursorNearEdge && options.autoresume && tab.active) {
+      resume(tab);
     }
+  }
+}
 
-    if (!isEnabledForTab(sender.tab) || env.runtime.lastError) {
-      return true;
-    }
-
-    if ("minimized" in request) {
-      if (request.minimized && options.autopause) {
-        debugLog(`Window minimized, stopping videos in tab ${sender.tab.id}`);
-        stop(sender.tab);
-      } else if (
-        !request.minimized &&
-        options.autoresume &&
-        sender.tab.active
-      ) {
-        debugLog(`Window returned, resuming videos in tab ${sender.tab.id}`);
-        resume(sender.tab);
-      }
-    }
-
-    if ("visible" in request && options.scrollpause) {
-      if (!request.visible) {
-        debugLog(
-          `Window is not visible, stopping videos in tab ${sender.tab.id}`,
-        );
-        stop(sender.tab);
-      } else if (request.visible && sender.tab.active) {
-        debugLog(`Window is visible, resuming videos in tab ${sender.tab.id}`);
-        resume(sender.tab);
-      }
-    }
-
-    if (options.cursorTracking && "cursorNearEdge" in request) {
-      if (request.cursorNearEdge && options.autopause) {
-        debugLog(
-          `Nearing window edge, stopping videos in tab ${sender.tab.id}`,
-        );
-        stop(sender.tab);
-      } else if (
-        !request.cursorNearEdge &&
-        options.autoresume &&
-        sender.tab.active
-      ) {
-        debugLog(`Returned to window, resuming videos in tab ${sender.tab.id}`);
-        resume(sender.tab);
-      }
-    }
-
-    sendResponse({});
-    return true;
-  },
-);
+env.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  handlePageMessage(request, sender).then(
+    () => sendResponse({}),
+    (error) => {
+      console.error("Video Autopause message handler failed:", error);
+      sendResponse({ error: String(error) });
+    },
+  );
+  return true;
+});
 
 // Listener for keyboard shortcuts
 env.commands.onCommand.addListener(async (command) => {
+  await settingsReady;
   if (command === "toggle-extension") {
-    options.disabled = !options.disabled;
-    debugLog(
-      `Toggle extension command received, extension state ${options.disabled}`,
-    );
-    env.storage.sync.set({ disabled: options.disabled });
-    await refresh_settings();
+    const disabled = !options.disabled;
+    debugLog(`Toggle extension command received, extension state ${disabled}`);
+    await env.storage.sync.set({ disabled });
+    settingsReady = refresh_settings();
+    await settingsReady;
   } else if (command === "toggle-tab") {
-    const tabs = await env.tabs.query({ active: true, currentWindow: true });
-    const tab = tabs[0];
+    const tabs = await env.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    const tab = tabs.find((candidate) => {
+      try {
+        return ["http:", "https:", "file:"].includes(
+          new URL(candidate.url).protocol,
+        );
+      } catch {
+        return false;
+      }
+    });
+    if (!tab) {
+      console.error("Video Autopause could not find a web tab to toggle.");
+      return;
+    }
     debugLog(`Toggle tab command received for tab ${tab.id}`);
     if (disabledTabs.includes(tab.id)) {
       disabledTabs = disabledTabs.filter((t) => t !== tab.id);
@@ -505,48 +705,39 @@ env.commands.onCommand.addListener(async (command) => {
       disabledTabs.push(tab.id);
     }
     await save_settings();
-  } else if (command === "toggle-play") {
-    debugLog(
-      `Toggle play command received, toggling play for all tabs in current window`,
-    );
-    const tabs = await env.tabs.query({ currentWindow: true });
-    for (let i = 0; i < tabs.length; i++) {
-      if (!isEnabledForTab(tabs[i])) {
-        continue;
-      }
-      toggle(tabs[i]);
-    }
-  } else if (command === "toggle_mute") {
-    debugLog(
-      `Toggle mute command received, toggling mute for all tabs in current window`,
-    );
-    const tabs = await env.tabs.query({ currentWindow: true });
-    for (let i = 0; i < tabs.length; i++) {
-      if (!isEnabledForTab(tabs[i])) {
-        continue;
-      }
-      toggle_mute(tabs[i]);
-    }
+    await refreshIcon(tab.id);
   } else if (
+    command === "toggle-play" ||
+    command === "toggle_mute" ||
     command === "speed-up" ||
     command === "speed-down" ||
     command === "speed-reset"
   ) {
-    debugLog(`Speed command received: ${command}`);
-    const tabs = await env.tabs.query({ currentWindow: true });
-    for (let i = 0; i < tabs.length; i++) {
-      if (!isEnabledForTab(tabs[i])) {
-        continue;
-      }
-      speed(tabs[i], command);
+    const tabs = await env.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    const tab = tabs[0];
+    if (!tab || !isEnabledForTab(tab)) {
+      return;
+    }
+    if (command === "toggle-play") {
+      toggle(tab);
+    } else if (command === "toggle_mute") {
+      toggle_mute(tab);
+    } else {
+      speed(tab, command);
     }
   }
 });
 
 // Listener for computer idle/locked/active
 env.idle.onStateChanged.addListener(async function (s) {
+  await settingsReady;
+  const wasLocked = previousIdleState === "locked";
+  previousIdleState = s;
   state = s;
-  const tabs = await env.tabs.query({ active: true });
+  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (!isEnabledForTab(tabs[i])) {
@@ -556,28 +747,30 @@ env.idle.onStateChanged.addListener(async function (s) {
     if (state === "locked" && options.lockpause) {
       debugLog(`Computer locked, stopping all videos`);
       stop(tabs[i]);
-    } else if (state !== "locked" && options.lockresume) {
-      if (!tabs[i].active && options.autopause) {
-        continue;
-      }
+    } else if (state === "active" && wasLocked && options.lockresume) {
       debugLog(`Computer unlocked, resuming videos`);
       resume(tabs[i]);
     }
   }
 });
 
-env.windows.onCreated.addListener(async function (window) {
-  const tabs = await env.tabs.query({ windowId: window.id });
-  debugLog(`Window created, stopping all non active videos`);
-  for (let i = 0; i < tabs.length; i++) {
-    if (!isEnabledForTab(tabs[i])) {
+env.runtime.onInstalled.addListener(async () => {
+  await settingsReady;
+  const tabs = await env.tabs.query({});
+  for (const tab of tabs) {
+    if (!tab.id || !tab.url?.startsWith("http")) {
       continue;
     }
-
-    if (tabs[i].active && options.autoresume) {
-      resume(tabs[i]);
-    } else if (options.autopause) {
-      stop(tabs[i]);
+    try {
+      await env.scripting.executeScript({
+        target: { tabId: tab.id, allFrames: true },
+        files: ["defaults.js", "video_auto_pause.js"],
+      });
+    } catch (error) {
+      console.warn(
+        `Video Autopause could not inject into tab ${tab.id}:`,
+        error,
+      );
     }
   }
 });

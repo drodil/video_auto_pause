@@ -1,30 +1,35 @@
 if (window.autoPauseInjected !== true) {
   const env = chrome.runtime ? chrome : browser;
+  const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
   window.autoPauseInjected = true;
   const manuallyPausedVideos = new WeakMap();
   const detectedVideos = new Set();
-  let automaticallyPaused = false;
+  const detectedAudio = new Set();
+  const extensionPausedVideos = new WeakSet();
+  const extensionInitiatedPlays = new WeakSet();
+  const automaticallyPausedVideos = new WeakSet();
+  const extensionMutedVideos = new WeakMap();
+  const scheduledActions = new WeakMap();
+  const observedRoots = new WeakSet();
+  const observedMedia = new WeakSet();
+  const shadowHosts = new Set();
+  const visibleVideos = new Set();
+  let videoObserver;
+  let lastVisibility = null;
+  let userInteracted = false;
+  let options = { ...DEFAULT_OPTIONS };
 
-  let options = {
-    autopause: true,
-    autoresume: true,
-    muteVideo: false,
-    scrollpause: false,
-    lockpause: true,
-    lockresume: true,
-    focuspause: false,
-    focusresume: false,
-    disabled: false,
-    cursorTracking: false,
-    manualPause: true,
-    debugMode: false,
-    disableOnFullscreen: true,
-    excludedDomains: [],
-    includedDomains: [],
-    audioFading: false,
-    fadeDuration: 200,
-    showPipButton: false,
-  };
+  function recordUserInteraction(event) {
+    if (!event.isTrusted) {
+      return;
+    }
+    userInteracted = true;
+    document.removeEventListener("pointerdown", recordUserInteraction, true);
+    document.removeEventListener("keydown", recordUserInteraction, true);
+  }
+
+  document.addEventListener("pointerdown", recordUserInteraction, true);
+  document.addEventListener("keydown", recordUserInteraction, true);
 
   function debugLog(message) {
     if (options.debugMode) {
@@ -32,33 +37,37 @@ if (window.autoPauseInjected !== true) {
     }
   }
 
-  // Initialize settings from storage
-  refresh_settings();
-
-  function refresh_settings() {
-    env.storage.sync.get(Object.keys(options), function (result) {
-      options = Object.assign(options, result);
-      if (options.disabled === true) {
-        options.autopause = false;
-        options.autoresume = false;
-        options.muteVideo = false;
-        options.scrollpause = false;
-        options.lockpause = false;
-        options.lockresume = false;
-        options.focuspause = false;
-        options.focusresume = false;
-        options.cursorTracking = false;
-        options.debugMode = false;
-        options.disableOnFullscreen = true;
-        options.excludedDomains = [];
-        options.includedDomains = [];
-        options.audioFading = false;
-        options.fadeDuration = 200;
-        options.showPipButton = false;
-      }
-      toggleCursorTracking(options.cursorTracking);
-    });
+  async function refresh_settings() {
+    const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
+    const savedOptions = { ...DEFAULT_OPTIONS, ...stored };
+    options = savedOptions.disabled
+      ? {
+          ...savedOptions,
+          autopause: false,
+          autoresume: false,
+          muteVideo: false,
+          scrollpause: false,
+          lockpause: false,
+          lockresume: false,
+          focuspause: false,
+          focusresume: false,
+          cursorTracking: false,
+          blockAutoplay: false,
+          prioritizeActiveTabMedia: false,
+          singleVideoPlayback: false,
+          debugMode: false,
+          audioFading: false,
+          showPipButton: false,
+        }
+      : savedOptions;
+    toggleCursorTracking(options.cursorTracking);
+    togglePipButtons();
   }
+
+  let settingsReady = refresh_settings();
+  void settingsReady.catch((error) => {
+    console.error("Video Auto Pause could not load settings:", error);
+  });
 
   function onMouseMove(event) {
     if (isCursorNearEdge(event)) {
@@ -121,29 +130,36 @@ if (window.autoPauseInjected !== true) {
     }
   }
 
-  env.storage.onChanged.addListener(async function (changes, namespace) {
-    for (const key in changes) {
-      debugLog(
-        `Settings changed for key ${key} from ${changes[key].oldValue} to ${changes[key].newValue}`,
-      );
-      options[key] = changes[key].newValue;
+  env.storage.onChanged.addListener((changes, namespace) => {
+    if (
+      namespace !== "sync" ||
+      !Object.keys(changes).some((key) => key in DEFAULT_OPTIONS)
+    ) {
+      return;
     }
-
-    if (!options.manualPause) {
-      const videoElements = document.getElementsByTagName("video");
-      for (const element of videoElements) {
-        manuallyPausedVideos.delete(element);
-      }
-      automaticallyPaused = true;
-    }
-
-    if ("showPipButton" in changes) {
-      togglePipButtons();
-    }
-
-    if ("disabled" in changes || "cursorTracking" in changes) {
-      refresh_settings();
-    }
+    settingsReady = refresh_settings();
+    settingsReady
+      .then(() => {
+        if (options.disabled) {
+          for (const media of allMedia()) {
+            const pending = scheduledActions.get(media);
+            if (pending) {
+              clearTimeout(pending);
+              scheduledActions.delete(media);
+            }
+            videoActionTokens.set(media, {});
+            activeFades.get(media)?.cancel();
+            if (originalVolumes.has(media)) {
+              setVideoVolume(media, originalVolumes.get(media));
+              originalVolumes.delete(media);
+            }
+          }
+        }
+        scheduleVideoArbitration();
+      })
+      .catch((error) => {
+        console.error("Video Auto Pause could not refresh settings:", error);
+      });
   });
 
   // Function to check if the cursor is near the edge of the window
@@ -166,18 +182,19 @@ if (window.autoPauseInjected !== true) {
       return;
     }
 
-    if (env.runtime.lastError) {
-      console.error(
-        `Video Autopause error: ${env.runtime.lastError.toString()}`,
-      );
-      return;
-    }
-
     debugLog(`Sending message ${JSON.stringify(message)}`);
 
-    env.runtime.sendMessage(message, function () {
-      void env.runtime.lastError;
-    });
+    try {
+      env.runtime.sendMessage(message, function () {
+        if (env.runtime.lastError) {
+          console.warn(
+            `Video Autopause message failed: ${env.runtime.lastError.message}`,
+          );
+        }
+      });
+    } catch (error) {
+      console.error("Video Autopause extension context is unavailable:", error);
+    }
   }
 
   // Listen to visibilitychange event of the page
@@ -192,63 +209,123 @@ if (window.autoPauseInjected !== true) {
     false,
   );
 
-  window.addEventListener("blur", function () {
-    debugLog("Window blur");
-    sendMessage({ windowFocused: false });
-  });
-
-  window.addEventListener("focus", function () {
-    debugLog("Window focus");
-    sendMessage({ windowFocused: true });
-  });
+  if (window.top === window) {
+    window.addEventListener("blur", () =>
+      sendMessage({ windowFocused: false }),
+    );
+    window.addEventListener("focus", () =>
+      sendMessage({ windowFocused: true }),
+    );
+  }
 
   const hasVideos = () => {
-    return detectedVideos.size > 0;
+    return allVideos().length > 0;
   };
 
+  function collectVideos(root = document) {
+    const videos = new Set(root.querySelectorAll?.("video") ?? []);
+    for (const element of root.querySelectorAll?.("*") ?? []) {
+      if (element.shadowRoot) {
+        for (const video of collectVideos(element.shadowRoot)) {
+          videos.add(video);
+        }
+      }
+    }
+    return [...videos];
+  }
+
+  function collectAudio(root = document) {
+    const audioElements = new Set(root.querySelectorAll?.("audio") ?? []);
+    for (const element of root.querySelectorAll?.("*") ?? []) {
+      if (element.shadowRoot) {
+        for (const audio of collectAudio(element.shadowRoot)) {
+          audioElements.add(audio);
+        }
+      }
+    }
+    return [...audioElements];
+  }
+
+  function collectMedia(root = document) {
+    return [...new Set([...collectVideos(root), ...collectAudio(root)])];
+  }
+
+  function allVideos() {
+    return [...new Set([...collectVideos(), ...detectedVideos])].filter(
+      (video) => video.isConnected,
+    );
+  }
+
+  function allMedia() {
+    return [
+      ...new Set([...allVideos(), ...collectAudio(), ...detectedAudio]),
+    ].filter((media) => media.isConnected);
+  }
+
+  function reportMediaState() {
+    const media = allMedia();
+    sendMessage({
+      mediaState: {
+        hasMedia: media.length > 0,
+        playing: media.some((element) => !element.paused && !element.ended),
+      },
+    });
+  }
+
+  function attachMediaStateListeners(media) {
+    if (observedMedia.has(media)) {
+      return;
+    }
+    observedMedia.add(media);
+    media.addEventListener("play", reportMediaState);
+    media.addEventListener("pause", reportMediaState);
+    media.addEventListener("ended", reportMediaState);
+  }
+
+  const videoActionTokens = new WeakMap();
   const activeFades = new WeakMap();
   const originalVolumes = new WeakMap();
+  const setVideoVolume = (video, volume) => {
+    try {
+      video.volume = volume;
+    } catch (error) {
+      console.warn("Video Auto Pause could not change video volume:", error);
+    }
+  };
 
   const fadeAudio = (video, targetVolume, duration) => {
-    if (!options.audioFading) return Promise.resolve();
-
-    debugLog(`Fading audio for ${video} to ${targetVolume} over ${duration}ms`);
-    if (activeFades.has(video)) {
-      const activeFade = activeFades.get(video);
-      activeFade.cancelled = true;
-      activeFades.delete(video);
+    if (!options.audioFading || duration <= 0) {
+      setVideoVolume(video, targetVolume);
+      return Promise.resolve();
     }
 
-    const fadeState = {
-      cancelled: false,
-      startTime: performance.now(),
-      targetVolume: targetVolume,
-    };
-    activeFades.set(video, fadeState);
-
+    activeFades.get(video)?.cancel();
     return new Promise((resolve) => {
       const startVolume = video.volume;
-      const volumeChange = targetVolume - startVolume;
-      const startTime = fadeState.startTime;
+      const startTime = performance.now();
+      const fadeState = {
+        cancel: () => {
+          activeFades.delete(video);
+          resolve();
+        },
+      };
+      activeFades.set(video, fadeState);
 
       const animate = () => {
-        if (fadeState.cancelled) {
+        if (activeFades.get(video) !== fadeState) {
           return;
         }
-
-        const currentTime = performance.now();
-        const elapsed = currentTime - startTime;
-
+        const elapsed = performance.now() - startTime;
         if (elapsed >= duration) {
-          video.volume = targetVolume;
+          setVideoVolume(video, targetVolume);
           activeFades.delete(video);
           resolve();
           return;
         }
-
-        const newVolume = startVolume + volumeChange * (elapsed / duration);
-        video.volume = Math.max(0, Math.min(1, newVolume));
-
+        setVideoVolume(
+          video,
+          startVolume + (targetVolume - startVolume) * (elapsed / duration),
+        );
         if (document.hidden) {
           setTimeout(animate, 16);
         } else {
@@ -264,118 +341,105 @@ if (window.autoPauseInjected !== true) {
     });
   };
 
-  const propagateToIframes = (action) => {
-    const iframeElements = document.getElementsByTagName("iframe");
-    for (const element of iframeElements) {
-      try {
-        if (action === "stop") {
-          element.contentWindow.postMessage(
-            JSON.stringify({ event: "command", func: "pauseVideo" }),
-            "*",
-          );
-        } else if (action === "resume") {
-          element.contentWindow.postMessage(
-            JSON.stringify({ event: "command", func: "playVideo" }),
-            "*",
-          );
-        }
-      } catch (e) {
-        debugLog(e);
-      }
-    }
-  };
-
-  const pauseVideo = async (video) => {
+  const pauseVideo = async (video, actionToken, immediate = false) => {
     if (document.pictureInPictureElement === video) {
       debugLog(`Ignoring stop command for ${video} because it is in PiP`);
       return;
     }
 
-    automaticallyPaused = true;
-    if (options.audioFading && !video.paused) {
-      if (!originalVolumes.has(video)) {
-        originalVolumes.set(video, video.volume);
+    if (video.paused) {
+      return;
+    }
+    extensionPausedVideos.add(video);
+    if (immediate) {
+      activeFades.get(video)?.cancel();
+      if (originalVolumes.has(video)) {
+        setVideoVolume(video, originalVolumes.get(video));
+        originalVolumes.delete(video);
       }
-
+    } else if (options.audioFading && !document.hidden) {
+      const volume = video.volume;
+      originalVolumes.set(video, volume);
       await fadeAudio(video, 0, options.fadeDuration);
-      video.pause();
-
-      if (options.fadeDuration > 1000) {
-        video.currentTime = Math.max(
-          0,
-          video.currentTime - options.fadeDuration / 1000,
-        );
+      if (videoActionTokens.get(video) !== actionToken) {
+        return;
       }
-
-      if (originalVolumes.has(video)) {
-        video.volume = originalVolumes.get(video);
-        originalVolumes.delete(video);
-      }
-    } else {
+      setVideoVolume(video, volume);
+    }
+    if (videoActionTokens.get(video) === actionToken && !video.paused) {
+      automaticallyPausedVideos.add(video);
       video.pause();
     }
   };
 
-  const resumeVideo = async (video) => {
+  const resumeVideo = async (video, actionToken) => {
     debugLog(`Attempting to resume video: paused=${video.paused}`);
-    automaticallyPaused = false;
-
-    let targetVolume = video.volume;
-    if (originalVolumes.has(video)) {
-      targetVolume = originalVolumes.get(video);
-      originalVolumes.delete(video);
-    } else if (video.volume === 0 && !activeFades.has(video)) {
-      targetVolume = 1.0;
+    if (!extensionPausedVideos.has(video) || video.ended) {
+      return;
     }
 
-    if (!video.ended) {
-      if (options.audioFading) {
-        if (video.paused) {
-          video.volume = 0;
-        }
-
-        await video.play();
+    const targetVolume = originalVolumes.get(video);
+    activeFades.get(video)?.cancel();
+    if (options.audioFading && targetVolume !== undefined && video.paused) {
+      setVideoVolume(video, 0);
+    }
+    try {
+      extensionInitiatedPlays.add(video);
+      await video.play();
+      if (videoActionTokens.get(video) !== actionToken) {
+        return;
+      }
+      extensionPausedVideos.delete(video);
+      automaticallyPausedVideos.delete(video);
+      originalVolumes.delete(video);
+      if (options.audioFading && targetVolume !== undefined) {
         await fadeAudio(video, targetVolume, options.fadeDuration);
-      } else {
-        await video.play();
+      }
+    } catch (error) {
+      console.error("Video Auto Pause could not resume a video:", error);
+      if (targetVolume !== undefined) {
+        setVideoVolume(video, targetVolume);
       }
     }
   };
 
-  const handleMuteAction = async (video, action) => {
+  const handleMuteAction = async (video, action, actionToken) => {
     if (action === "toggle_mute") {
+      activeFades.get(video)?.cancel();
       video.muted = !video.muted;
-    } else if (action === "mute" && !video.muted) {
-      automaticallyPaused = true;
-      if (options.audioFading) {
-        if (!originalVolumes.has(video)) {
-          originalVolumes.set(video, video.volume);
-        }
+      extensionMutedVideos.delete(video);
+    } else if (
+      action === "mute" &&
+      !video.muted &&
+      !extensionMutedVideos.has(video)
+    ) {
+      extensionMutedVideos.set(video, {
+        muted: video.muted,
+        volume: video.volume,
+      });
+      if (options.audioFading && !document.hidden) {
         await fadeAudio(video, 0, options.fadeDuration);
-        video.muted = true;
-        if (originalVolumes.has(video)) {
-          video.volume = originalVolumes.get(video);
-          originalVolumes.delete(video);
+        if (videoActionTokens.get(video) !== actionToken) {
+          return;
         }
-      } else {
+        setVideoVolume(video, extensionMutedVideos.get(video).volume);
+      }
+      if (!video.muted) {
         video.muted = true;
       }
-    } else if (action === "unmute" && video.muted) {
-      automaticallyPaused = false;
-      let targetVolume = video.volume;
-      if (originalVolumes.has(video)) {
-        targetVolume = originalVolumes.get(video);
-        originalVolumes.delete(video);
-      } else if (video.volume === 0 && !activeFades.has(video)) {
-        targetVolume = 1.0;
-      }
-
-      if (options.audioFading) {
-        video.volume = 0;
-        video.muted = false;
-        await fadeAudio(video, targetVolume, options.fadeDuration);
-      } else {
-        video.muted = false;
+    } else if (action === "unmute" && extensionMutedVideos.has(video)) {
+      const original = extensionMutedVideos.get(video);
+      extensionMutedVideos.delete(video);
+      if (video.muted === true) {
+        if (options.audioFading && !document.hidden) {
+          setVideoVolume(video, 0);
+        }
+        video.muted = original.muted;
+        if (options.audioFading && !document.hidden) {
+          await fadeAudio(video, original.volume, options.fadeDuration);
+        } else {
+          setVideoVolume(video, original.volume);
+        }
       }
     }
   };
@@ -390,21 +454,29 @@ if (window.autoPauseInjected !== true) {
       newRate = 1.0;
     }
     video.playbackRate = newRate;
-    showToast(`Speed: ${newRate}x`);
+    if (window.top === window) {
+      showToast(`Speed: ${newRate}x`);
+    }
   };
 
   const handleVideoAction = async (video, request) => {
-    const isManuallyPaused = manuallyPausedVideos.get(video);
+    const actionToken = {};
+    videoActionTokens.set(video, actionToken);
+    const isManuallyPaused =
+      options.manualPause && manuallyPausedVideos.get(video);
 
     switch (request.action) {
       case "stop":
-        if (!isManuallyPaused) {
-          await pauseVideo(video);
+        if (
+          !isManuallyPaused &&
+          (!extensionPausedVideos.has(video) || !video.paused)
+        ) {
+          await pauseVideo(video, actionToken, request.immediate === true);
         }
         break;
       case "resume":
-        if ((video.paused || activeFades.has(video)) && !isManuallyPaused) {
-          await resumeVideo(video);
+        if (extensionPausedVideos.has(video) && !isManuallyPaused) {
+          await resumeVideo(video, actionToken);
         } else {
           debugLog(
             `Resume blocked: paused=${video.paused}, manuallyPaused=${isManuallyPaused}`,
@@ -414,17 +486,26 @@ if (window.autoPauseInjected !== true) {
       case "mute":
       case "unmute":
       case "toggle_mute":
-        await handleMuteAction(video, request.action);
+        await handleMuteAction(video, request.action, actionToken);
         break;
       case "toggle":
-        if (video.paused && !isManuallyPaused) {
+        if (video.paused) {
+          manuallyPausedVideos.delete(video);
+          extensionPausedVideos.delete(video);
           if (!video.ended) {
-            await video.play();
+            try {
+              extensionInitiatedPlays.add(video);
+              await video.play();
+            } catch (error) {
+              console.error("Video Auto Pause could not play a video:", error);
+            }
           }
-          automaticallyPaused = false;
-        } else if (!isManuallyPaused) {
+        } else {
+          extensionPausedVideos.delete(video);
+          if (options.manualPause) {
+            manuallyPausedVideos.set(video, true);
+          }
           video.pause();
-          automaticallyPaused = true;
         }
         break;
       case "speed":
@@ -438,41 +519,184 @@ if (window.autoPauseInjected !== true) {
     }
   };
 
-  env.runtime.onMessage.addListener(
-    async function (request, sender, sendResponse) {
-      if (!("action" in request)) {
-        return false;
+  env.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (!("action" in request)) {
+      return false;
+    }
+    debugLog(`Received message: ${JSON.stringify(request)}`);
+
+    settingsReady
+      .then(async () => {
+        if (request.action === "check") {
+          sendMessage({ hasVideos: allVideos().length > 0 });
+          return;
+        }
+
+        const automaticActions = ["stop", "resume", "mute", "unmute"];
+        if (
+          automaticActions.includes(request.action) &&
+          document.fullscreenElement &&
+          options.disableOnFullscreen
+        ) {
+          debugLog("Document is in fullscreen mode, ignoring automatic action");
+          return;
+        }
+
+        const videos = allMedia();
+        const delay = Math.max(0, Number(request.delay) || 0);
+        const tasks = videos.map((video) => {
+          const pending = scheduledActions.get(video);
+          if (pending) {
+            clearTimeout(pending);
+            scheduledActions.delete(video);
+          }
+          if (delay > 0 && automaticActions.includes(request.action)) {
+            const timeout = setTimeout(() => {
+              if (scheduledActions.get(video) !== timeout) {
+                return;
+              }
+              scheduledActions.delete(video);
+              handleVideoAction(video, request).catch((error) => {
+                console.error("Video Auto Pause action failed:", error);
+              });
+            }, delay);
+            scheduledActions.set(video, timeout);
+            return Promise.resolve();
+          }
+          return handleVideoAction(video, request);
+        });
+        const results = await Promise.allSettled(tasks);
+        for (const result of results) {
+          if (result.status === "rejected") {
+            console.error("Video Auto Pause action failed:", result.reason);
+          }
+        }
+      })
+      .then(() => sendResponse({}))
+      .catch((error) => {
+        console.error("Video Auto Pause message handler failed:", error);
+        sendResponse({ error: String(error) });
+      });
+    return true;
+  });
+
+  let videoArbitrationScheduled = false;
+  function visibleVideoArea(video) {
+    if (!video.isConnected || video.hidden) {
+      return 0;
+    }
+    if (document.pictureInPictureElement === video) {
+      return Number.POSITIVE_INFINITY;
+    }
+
+    const style = window.getComputedStyle(video);
+    if (
+      style.display === "none" ||
+      style.visibility === "hidden" ||
+      Number(style.opacity) === 0
+    ) {
+      return 0;
+    }
+    const rect = video.getBoundingClientRect();
+    const width = Math.max(
+      0,
+      Math.min(rect.right, document.documentElement.clientWidth) -
+        Math.max(rect.left, 0),
+    );
+    const height = Math.max(
+      0,
+      Math.min(rect.bottom, document.documentElement.clientHeight) -
+        Math.max(rect.top, 0),
+    );
+    return width * height;
+  }
+
+  function scheduleVideoArbitration() {
+    if (videoArbitrationScheduled) {
+      return;
+    }
+    videoArbitrationScheduled = true;
+    requestAnimationFrame(() => {
+      videoArbitrationScheduled = false;
+      if (
+        !options.singleVideoPlayback ||
+        options.disabled ||
+        document.hidden ||
+        (document.fullscreenElement && options.disableOnFullscreen)
+      ) {
+        return;
       }
-      debugLog(`Received message: ${JSON.stringify(request)}`);
 
-      if (request.action === "check") {
-        sendMessage({ hasVideos: hasVideos() });
-        sendResponse({});
-        return true;
+      const candidates = allVideos().filter(
+        (video) =>
+          (!video.paused && !video.ended) || extensionPausedVideos.has(video),
+      );
+      if (candidates.length < 2) {
+        return;
       }
 
-      if (document.fullscreenElement && options.disableOnFullscreen) {
-        debugLog(`Document is in fullscreen mode, ignoring all commands`);
-        return true;
-      }
-
-      propagateToIframes(request.action);
-
-      const videoElements = document.getElementsByTagName("video");
-      for (const video of videoElements) {
-        try {
-          await handleVideoAction(video, request);
-        } catch (e) {
-          debugLog(e);
+      let winner;
+      let greatestArea = -1;
+      for (const video of candidates) {
+        if (video.paused && manuallyPausedVideos.get(video)) {
+          continue;
+        }
+        const area = visibleVideoArea(video);
+        if (
+          area > greatestArea ||
+          (area === greatestArea && !video.paused && winner?.paused)
+        ) {
+          winner = video;
+          greatestArea = area;
         }
       }
-      sendResponse({});
-      return true;
-    },
-  );
+      if (!winner) {
+        return;
+      }
+
+      const actions = candidates.map((video) => {
+        if (video === winner) {
+          if (video.paused && extensionPausedVideos.has(video)) {
+            return handleVideoAction(video, { action: "resume" });
+          }
+          return Promise.resolve();
+        }
+        if (!video.paused) {
+          return handleVideoAction(video, {
+            action: "stop",
+            immediate: true,
+          });
+        }
+        return Promise.resolve();
+      });
+      void Promise.allSettled(actions).then((results) => {
+        for (const result of results) {
+          if (result.status === "rejected") {
+            console.error(
+              "Video Auto Pause could not enforce single-video playback:",
+              result.reason,
+            );
+          }
+        }
+      });
+    });
+  }
+
+  const videoResizeObserver =
+    typeof ResizeObserver === "undefined"
+      ? null
+      : new ResizeObserver(scheduleVideoArbitration);
+
+  document.addEventListener("scroll", scheduleVideoArbitration, {
+    capture: true,
+    passive: true,
+  });
+  document.addEventListener("fullscreenchange", scheduleVideoArbitration);
+  window.addEventListener("resize", scheduleVideoArbitration);
 
   function attachVideoListeners(videoElement, intersection_observer) {
     detectedVideos.add(videoElement);
+    attachMediaStateListeners(videoElement);
 
     if (videoElement.dataset.autoPauseListenerAttached) {
       return;
@@ -484,10 +708,11 @@ if (window.autoPauseInjected !== true) {
     }
 
     intersection_observer.observe(videoElement);
+    videoResizeObserver?.observe(videoElement);
 
-    videoElement.addEventListener("pause", async (_e) => {
+    videoElement.addEventListener("pause", () => {
       debugLog(
-        `Pause event: automaticallyPaused=${automaticallyPaused}, manualPause=${options.manualPause}`,
+        `Pause event: automaticallyPaused=${automaticallyPausedVideos.has(videoElement)}, manualPause=${options.manualPause}`,
       );
 
       if (videoElement.dataset.returningFromPiP === "true") {
@@ -497,31 +722,63 @@ if (window.autoPauseInjected !== true) {
             .play()
             .catch((e) => debugLog(`Failed to auto-resume from PiP: ${e}`));
         }
+        scheduleVideoArbitration();
         return;
       }
 
-      if (!automaticallyPaused && options.manualPause) {
-        debugLog(`Manually paused video`);
-        manuallyPausedVideos.set(videoElement, true);
-        automaticallyPaused = false;
+      if (automaticallyPausedVideos.has(videoElement)) {
+        automaticallyPausedVideos.delete(videoElement);
+      } else if (!videoElement.ended) {
+        videoActionTokens.set(videoElement, {});
+        activeFades.get(videoElement)?.cancel();
+        if (originalVolumes.has(videoElement)) {
+          setVideoVolume(videoElement, originalVolumes.get(videoElement));
+          originalVolumes.delete(videoElement);
+        }
+        extensionPausedVideos.delete(videoElement);
+        if (options.manualPause) {
+          debugLog(`Manually paused video`);
+          manuallyPausedVideos.set(videoElement, true);
+        }
       }
+      scheduleVideoArbitration();
     });
 
     videoElement.addEventListener("play", (_e) => {
-      if (options.manualPause) {
-        debugLog(`Manually resumed video`);
-        manuallyPausedVideos.delete(videoElement);
+      debugLog(`Video resumed`);
+      if (
+        options.blockAutoplay &&
+        !userInteracted &&
+        !extensionInitiatedPlays.has(videoElement)
+      ) {
+        debugLog("Blocking autoplay before user interaction");
+        automaticallyPausedVideos.add(videoElement);
+        videoElement.pause();
+        scheduleVideoArbitration();
+        return;
       }
+      activeFades.get(videoElement)?.cancel();
+      if (!extensionInitiatedPlays.has(videoElement)) {
+        videoActionTokens.set(videoElement, {});
+        if (originalVolumes.has(videoElement)) {
+          setVideoVolume(videoElement, originalVolumes.get(videoElement));
+          originalVolumes.delete(videoElement);
+        }
+      } else {
+        extensionInitiatedPlays.delete(videoElement);
+      }
+      manuallyPausedVideos.delete(videoElement);
+      extensionPausedVideos.delete(videoElement);
+      scheduleVideoArbitration();
     });
   }
 
-  function injectPipButton(video) {
-    if (
-      video.parentElement &&
-      video.parentElement.querySelector(".vap-pip-btn")
-    )
-      return;
+  function attachAudioListeners(audioElement) {
+    detectedAudio.add(audioElement);
+    attachMediaStateListeners(audioElement);
+  }
 
+  function injectPipButton(video) {
     if (!document.pictureInPictureEnabled || video.disablePictureInPicture)
       return;
 
@@ -575,6 +832,7 @@ if (window.autoPauseInjected !== true) {
     }
 
     if (!container) return;
+    if (container.querySelector(".vap-pip-btn")) return;
 
     container.addEventListener("mouseenter", showBtn);
     container.addEventListener("mouseleave", hideBtn);
@@ -621,43 +879,114 @@ if (window.autoPauseInjected !== true) {
   }
 
   function togglePipButtons() {
-    const videos = document.getElementsByTagName("video");
+    const videos = allVideos();
     if (options.showPipButton) {
       for (const video of videos) {
         injectPipButton(video);
       }
     } else {
-      const btns = document.querySelectorAll(".vap-pip-btn");
-      btns.forEach((btn) => btn.remove());
+      document.querySelectorAll(".vap-pip-btn").forEach((btn) => btn.remove());
+      for (const video of videos) {
+        const root = video.getRootNode();
+        root.querySelectorAll?.(".vap-pip-btn").forEach((btn) => btn.remove());
+      }
     }
   }
 
-  // Intersection observer for the video elements in page
-  // can be used to determine when video goes out of viewport
+  function reportVisibility() {
+    if (
+      !options.scrollpause ||
+      !options.autopause ||
+      document.visibilityState === "hidden"
+    ) {
+      return;
+    }
+    const visible = visibleVideos.size > 0;
+    if (visible !== lastVisibility) {
+      lastVisibility = visible;
+      sendMessage({ visible });
+    }
+  }
+
   const intersection_observer = new IntersectionObserver(
     function (entries) {
-      if (!options.scrollpause) {
-        return;
-      }
       for (const entry of entries) {
-        if (entry.isIntersecting === true) {
-          debugLog(`Video in viewport`);
-          sendMessage({ visible: true });
+        if (entry.isIntersecting) {
+          visibleVideos.add(entry.target);
         } else {
-          debugLog(`Video scrolled out of viewport`);
-          sendMessage({ visible: false });
+          visibleVideos.delete(entry.target);
         }
       }
+      reportVisibility();
+      scheduleVideoArbitration();
     },
     { threshold: [0] },
   );
 
-  // Function to observe all current video elements
-  function observeExistingVideos(retries = 5) {
-    let videoElements = document.getElementsByTagName("video");
-    const found = videoElements.length > 0;
+  function observeRoot(root) {
+    if (observedRoots.has(root)) {
+      return;
+    }
+    observedRoots.add(root);
+    videoObserver.observe(root, { childList: true, subtree: true });
+    for (const media of collectMedia(root)) {
+      if (media instanceof HTMLVideoElement) {
+        attachVideoListeners(media, intersection_observer);
+      } else {
+        attachAudioListeners(media);
+      }
+    }
+    for (const element of root.querySelectorAll?.("*") ?? []) {
+      if (element.shadowRoot) {
+        observeRoot(element.shadowRoot);
+      }
+    }
+  }
 
-    if (found) {
+  function discoverShadowHosts(root) {
+    const elements = [];
+    if (root.nodeType === Node.ELEMENT_NODE) {
+      elements.push(root);
+    }
+    elements.push(...(root.querySelectorAll?.("*") ?? []));
+    for (const element of elements) {
+      if (element.shadowRoot) {
+        observeRoot(element.shadowRoot);
+      } else {
+        shadowHosts.add(element);
+      }
+    }
+  }
+
+  function forgetShadowHosts(root) {
+    const elements = [];
+    if (root.nodeType === Node.ELEMENT_NODE) {
+      elements.push(root);
+    }
+    elements.push(...(root.querySelectorAll?.("*") ?? []));
+    for (const element of elements) {
+      shadowHosts.delete(element);
+    }
+  }
+
+  setInterval(() => {
+    for (const host of shadowHosts) {
+      if (!host.isConnected) {
+        shadowHosts.delete(host);
+      } else if (host.shadowRoot) {
+        shadowHosts.delete(host);
+        const previousVideoCount = detectedVideos.size;
+        observeRoot(host.shadowRoot);
+        if (detectedVideos.size !== previousVideoCount) {
+          sendMessage({ hasVideos: hasVideos() });
+        }
+      }
+    }
+  }, 1000);
+
+  function observeExistingVideos(retries = 5) {
+    const videoElements = collectVideos();
+    if (videoElements.length > 0) {
       sendMessage({ hasVideos: true });
       for (const element of videoElements) {
         attachVideoListeners(element, intersection_observer);
@@ -668,6 +997,11 @@ if (window.autoPauseInjected !== true) {
         setTimeout(() => observeExistingVideos(retries - 1), 1000);
       }
     }
+    for (const audio of collectAudio()) {
+      attachAudioListeners(audio);
+    }
+    reportMediaState();
+    reportVisibility();
   }
 
   // Initial observation when DOM is loaded
@@ -682,6 +1016,13 @@ if (window.autoPauseInjected !== true) {
   function showToast(message) {
     let container = document.getElementById("vap-toast-container");
     if (!container) {
+      const host = document.body ?? document.documentElement;
+      if (!host) {
+        console.warn(
+          "Video Auto Pause cannot display a toast without a document root.",
+        );
+        return;
+      }
       container = document.createElement("div");
       container.id = "vap-toast-container";
       Object.assign(container.style, {
@@ -691,7 +1032,7 @@ if (window.autoPauseInjected !== true) {
         zIndex: "999999",
         pointerEvents: "none",
       });
-      document.body.appendChild(container);
+      host.appendChild(container);
     }
 
     const toast = document.createElement("div");
@@ -726,58 +1067,76 @@ if (window.autoPauseInjected !== true) {
     }, 1000);
   }
 
-  // Watch for dynamically added video elements
-  const videoObserver = new MutationObserver(function (mutations) {
+  videoObserver = new MutationObserver(function (mutations) {
     let changed = false;
     for (const mutation of mutations) {
       for (const node of mutation.removedNodes) {
-        if (node.tagName === "VIDEO") {
-          detectedVideos.delete(node);
-          changed = true;
-        } else if (node.getElementsByTagName) {
-          const videos = node.getElementsByTagName("video");
-          for (const video of videos) {
-            detectedVideos.delete(video);
-          }
-          if (videos.length > 0) changed = true;
+        forgetShadowHosts(node);
+        const mediaElements = new Set(collectMedia(node));
+        if (node.tagName === "VIDEO" || node.tagName === "AUDIO") {
+          mediaElements.add(node);
         }
+        for (const media of mediaElements) {
+          if (media instanceof HTMLVideoElement) {
+            detectedVideos.delete(media);
+            visibleVideos.delete(media);
+            intersection_observer.unobserve(media);
+            videoResizeObserver?.unobserve(media);
+          } else {
+            detectedAudio.delete(media);
+          }
+        }
+        changed ||= mediaElements.size > 0;
       }
 
       for (const node of mutation.addedNodes) {
-        if (node.tagName === "VIDEO") {
-          debugLog(`New video element detected`);
-          attachVideoListeners(node, intersection_observer);
-          changed = true;
-        } else if (node.getElementsByTagName) {
-          const videos = node.getElementsByTagName("video");
-          if (videos.length > 0) {
-            debugLog(`New video elements detected in added node`);
-            for (const element of videos) {
-              attachVideoListeners(element, intersection_observer);
-            }
-            changed = true;
+        const mediaElements = new Set(collectMedia(node));
+        discoverShadowHosts(node);
+        if (node.tagName === "VIDEO" || node.tagName === "AUDIO") {
+          mediaElements.add(node);
+        }
+        for (const media of mediaElements) {
+          if (media instanceof HTMLVideoElement) {
+            attachVideoListeners(media, intersection_observer);
+          } else {
+            attachAudioListeners(media);
+          }
+          const root = media.getRootNode();
+          if (root instanceof ShadowRoot) {
+            observeRoot(root);
           }
         }
-        if (node.shadowRoot) {
-          const videos = node.shadowRoot.querySelectorAll("video");
-          if (videos.length > 0) {
-            for (const video of videos) {
-              attachVideoListeners(video, intersection_observer);
-            }
-            changed = true;
-          }
-        }
+        changed ||= mediaElements.size > 0;
       }
     }
 
     if (changed) {
       sendMessage({ hasVideos: hasVideos() });
+      reportMediaState();
+      scheduleVideoArbitration();
     }
   });
 
-  // Start observing the document for video element additions
-  videoObserver.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
+  observeRoot(document);
+  discoverShadowHosts(document);
+  void settingsReady.then(scheduleVideoArbitration).catch((error) => {
+    console.error(
+      "Video Auto Pause could not arbitrate initial playback:",
+      error,
+    );
   });
+  try {
+    const attachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function (init) {
+      const root = attachShadow.call(this, init);
+      shadowHosts.delete(this);
+      observeRoot(root);
+      return root;
+    };
+  } catch (error) {
+    console.warn(
+      "Video Auto Pause could not observe future shadow roots:",
+      error,
+    );
+  }
 }

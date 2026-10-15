@@ -23,6 +23,14 @@
     "message": "Tạm dừng video khi chuyển tab",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Chặn video tự động phát trước khi tương tác",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Tiếp tục phát nội dung trước đó khi nội dung hiện tại dừng",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Tiếp tục video khi quay lại tab",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Tạm dừng video khi cuộn ra ngoài tầm nhìn",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Chỉ phát video hiển thị nhiều nhất",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Tạm dừng khi con trỏ rời khỏi cửa sổ trình duyệt",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Cài đặt tên miền",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Nhập các tên miền cần bao gồm (mỗi dòng một):",
+    "description": "Description for domain inclusions textarea"
   }
 }

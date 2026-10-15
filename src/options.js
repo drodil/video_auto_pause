@@ -1,5 +1,7 @@
 // Browser
 const env = chrome.runtime ? chrome : browser;
+const tabStorage = env.storage.session ?? env.storage.local;
+const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
 
 function localizeUI() {
   if (!env?.i18n) {
@@ -16,97 +18,91 @@ function localizeUI() {
   document.title = env.i18n.getMessage("extName") ?? "Video Auto Pause";
 }
 
-const options = {
-  autopause: true,
-  autoresume: true,
-  muteVideo: false,
-  scrollpause: false,
-  lockpause: true,
-  lockresume: true,
-  focuspause: false,
-  focusresume: false,
-  disabled: false,
-  cursorTracking: false,
-  manualPause: true,
-  debugMode: false,
-  disableOnFullscreen: false,
-  pauseDelay: 0,
-  resumeDelay: 0,
-  excludedDomains: [],
-  includedDomains: [],
-  audioFading: false,
-  fadeDuration: 200,
-  audioFading: false,
-  fadeDuration: 200,
-  showPipButton: false,
-};
+const options = DEFAULT_OPTIONS;
 
-// Saves options to chrome storage
-async function save_options() {
-  const storage = {};
-
-  for (const option in options) {
-    if (option === "excludedDomains" || option === "includedDomains") {
-      const domains = document.getElementById(option).value.split("\n");
-      storage[option] = domains
-        .map((domain) => domain.trim())
-        .filter((domain) => domain.length > 0);
-    } else if (
-      option === "pauseDelay" ||
-      option === "resumeDelay" ||
-      option === "fadeDuration"
-    ) {
-      storage[option] = parseInt(document.getElementById(option).value) || 0;
-    } else {
-      storage[option] = document.getElementById(option).checked;
+async function getCurrentWebTab() {
+  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
+  return tabs.find((tab) => {
+    try {
+      return ["http:", "https:", "file:"].includes(new URL(tab.url).protocol);
+    } catch {
+      return false;
     }
-  }
-  await env.storage.sync.set(storage);
+  });
+}
 
-  const disabledForActive = document.getElementById("disabledTabs").checked;
-  const tabs = await env.tabs.query({ active: true, currentWindow: true });
-  const disabled =
-    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
-  if (disabledForActive) {
-    await env.storage.local.set({
-      disabledTabs: [...new Set([...disabled, tabs[0].id])],
-    });
+function readOption(option, element) {
+  if (option === "excludedDomains" || option === "includedDomains") {
+    return element.value
+      .split("\n")
+      .map((domain) => domain.trim())
+      .filter((domain) => domain.length > 0);
+  }
+  if (["pauseDelay", "resumeDelay", "fadeDuration"].includes(option)) {
+    const value = Number(element.value);
+    return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+  }
+  return element.checked;
+}
+
+async function save_option(option) {
+  if (option === "disabledTabs") {
+    const tab = await getCurrentWebTab();
+    if (!tab) {
+      return;
+    }
+    const disabled = (await tabStorage.get("disabledTabs")).disabledTabs ?? [];
+    const updated = document.getElementById("disabledTabs").checked
+      ? [...new Set([...disabled, tab.id])]
+      : disabled.filter((id) => id !== tab.id);
+    await tabStorage.set({ disabledTabs: updated });
   } else {
-    await env.storage.local.set({
-      disabledTabs: disabled.filter((tab) => tab !== tabs[0].id),
-    });
+    const element = document.getElementById(option);
+    if (element) {
+      await env.storage.sync.set({ [option]: readOption(option, element) });
+    }
   }
 }
 
-// Restores options from chrome storage
-async function restore_options() {
+async function restore_options(changedKeys = Object.keys(options)) {
   const items = await env.storage.sync.get(options);
-  for (const opt in items) {
+  for (const opt of changedKeys) {
+    if (!(opt in options)) {
+      continue;
+    }
+    const element = document.getElementById(opt);
+    if (!element) {
+      continue;
+    }
     if (opt === "excludedDomains" || opt === "includedDomains") {
-      document.getElementById(opt).value = items[opt].join("\n");
-    } else if (
-      opt === "pauseDelay" ||
-      opt === "resumeDelay" ||
-      opt === "fadeDuration"
-    ) {
-      document.getElementById(opt).value = items[opt];
+      element.value = items[opt].join("\n");
+    } else if (["pauseDelay", "resumeDelay", "fadeDuration"].includes(opt)) {
+      element.value = Math.max(0, Number(items[opt]) || 0);
     } else {
-      document.getElementById(opt).checked = items[opt];
+      element.checked = Boolean(items[opt]);
     }
   }
 
-  for (const option in options) {
-    document.getElementById(option).disabled = items.disabled;
-    if (items.disabled) {
-      document.getElementById("disabled").disabled = false;
+  if (changedKeys.includes("disabled")) {
+    for (const option of Object.keys(options)) {
+      const element = document.getElementById(option);
+      if (element) {
+        element.disabled = items.disabled && option !== "disabled";
+      }
     }
   }
 
-  const disabled =
-    (await env.storage.local.get("disabledTabs")).disabledTabs ?? [];
-  const tabs = await env.tabs.query({ active: true, currentWindow: true });
-  if (disabled.includes(tabs[0].id)) {
-    document.getElementById("disabledTabs").checked = true;
+  const disabledTabsInput = document.getElementById("disabledTabs");
+  if (disabledTabsInput) {
+    const tab = await getCurrentWebTab();
+    disabledTabsInput.disabled = !tab;
+    if (tab) {
+      const disabled =
+        (await tabStorage.get("disabledTabs")).disabledTabs ?? [];
+      disabledTabsInput.checked = disabled.includes(tab.id);
+    } else {
+      disabledTabsInput.checked = false;
+    }
   }
 }
 
@@ -137,12 +133,16 @@ version.textContent = "v" + env.runtime.getManifest().version;
 localizeUI();
 
 // Restore options on load and when they change in the store
-document.addEventListener("DOMContentLoaded", async () => {
-  await restore_options();
+document.addEventListener("DOMContentLoaded", () => {
+  void restore_options();
 });
 
-env.storage.onChanged.addListener(async (_changes, _namespace) => {
-  await restore_options();
+env.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === "sync") {
+    void restore_options(Object.keys(changes));
+  } else if (namespace === "session" || namespace === "local") {
+    void restore_options([]);
+  }
 });
 
 // Listen to changes of options
@@ -150,14 +150,16 @@ for (const option in options) {
   const el = document.getElementById(option);
   if (el) {
     el.addEventListener("change", async () => {
-      await save_options();
+      await save_option(option);
     });
   }
 }
 
 document
   .getElementById("disabledTabs")
-  .addEventListener("change", async () => await save_options());
+  ?.addEventListener("change", async () => {
+    await save_option("disabledTabs");
+  });
 
 const coll = document.getElementsByClassName("collapsible_button");
 let i;

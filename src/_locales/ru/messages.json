@@ -23,6 +23,14 @@
     "message": "Приостанавливать видео при переключении вкладок",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Блокировать автовоспроизведение видео до взаимодействия",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Возобновлять предыдущее воспроизведение после остановки текущего",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Возобновлять видео при возврате на вкладку",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Приостанавливать видео при прокрутке за пределы видимости",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Воспроизводить только наиболее видимое видео",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Приостанавливать при выходе курсора из окна браузера",

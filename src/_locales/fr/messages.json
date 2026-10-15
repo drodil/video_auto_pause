@@ -23,6 +23,14 @@
     "message": "Mettre en pause lors du changement d'onglet",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Bloquer la lecture automatique des vidéos avant toute interaction",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Reprendre le média précédent lorsque le média actuel s'arrête",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Reprendre la vidéo lors du retour à l'onglet",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Mettre en pause lors du défilement hors de vue",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Lire uniquement la vidéo la plus visible",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Mettre en pause lorsque le curseur quitte la fenêtre",

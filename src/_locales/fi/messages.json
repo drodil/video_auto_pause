@@ -23,6 +23,14 @@
     "message": "Keskeytä video välilehteä vaihdettaessa",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Estä videon automaattinen toisto ennen vuorovaikutusta",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Jatka aiempaa mediaa, kun nykyinen media pysähtyy",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Jatka videota palatessa välilehdelle",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Keskeytä video kun vieritetään pois näkyvistä",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Toista vain näkyvin video",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Keskeytä kun kursori poistuu selainikkunasta",

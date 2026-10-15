@@ -23,6 +23,14 @@
     "message": "Wstrzymaj wideo podczas przełączania kart",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Blokuj automatyczne odtwarzanie filmów przed interakcją",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Wznów poprzednie multimedia po zatrzymaniu bieżących",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Wznów wideo po powrocie do karty",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Wstrzymaj wideo po przewinięciu poza widok",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Odtwarzaj tylko najbardziej widoczne wideo",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Wstrzymaj, gdy kursor opuści okno przeglądarki",

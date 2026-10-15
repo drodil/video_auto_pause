@@ -23,6 +23,14 @@
     "message": "切換分頁時暫停影片",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "在互動前封鎖影片自動播放",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "目前媒體停止後繼續播放先前的媒體",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "返回分頁時繼續播放影片",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "捲動出視野時暫停影片",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "只播放可見面積最大的影片",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "游標離開瀏覽器視窗時暫停",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "網域設定",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "輸入要包含的網域（每行一個）：",
+    "description": "Description for domain inclusions textarea"
   }
 }

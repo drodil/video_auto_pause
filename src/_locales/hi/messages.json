@@ -23,6 +23,14 @@
     "message": "टैब बदलते समय वीडियो रोकें",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "बातचीत से पहले वीडियो ऑटोप्ले रोकें",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "वर्तमान मीडिया रुकने पर पिछला मीडिया फिर से शुरू करें",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "टैब पर लौटने पर वीडियो जारी रखें",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "स्क्रॉल से बाहर होने पर वीडियो रोकें",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "केवल सबसे अधिक दिखाई देने वाला वीडियो चलाएं",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "कर्सर ब्राउज़र विंडो छोड़ने पर रोकें",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "डोमेन सेटिंग",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "शामिल करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
+    "description": "Description for domain inclusions textarea"
   }
 }

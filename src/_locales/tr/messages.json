@@ -23,6 +23,14 @@
     "message": "Sekme değiştirildiğinde videoyu duraklat",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "Etkileşimden önce videoların otomatik oynatılmasını engelle",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Geçerli medya durduğunda önceki medyayı sürdür",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Sekmeye dönüldüğünde videoyu devam ettir",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "Görünüm dışına kaydırıldığında videoyu duraklat",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Yalnızca en görünür videoyu oynat",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "İmleç tarayıcı penceresinden çıktığında duraklat",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "Alan Adı Ayarları",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Dahil edilecek alan adlarını girin (satır başına bir tane):",
+    "description": "Description for domain inclusions textarea"
   }
 }

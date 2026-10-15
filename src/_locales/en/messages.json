@@ -27,6 +27,14 @@
     "message": "Mute video instead of pausing",
     "description": "Enable muting video instead of pausing"
   },
+  "blockAutoplay": {
+    "message": "Block video autoplay before interaction",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "Resume previous media when current media stops",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "Resume video when returning to tab",
     "description": "Enable auto resume when returning to tab"
@@ -62,6 +70,10 @@
   "scrollpause": {
     "message": "Pause video when scrolled out of view",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "Play only the most visible video",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "Pause when cursor leaves browser window",
@@ -142,6 +154,14 @@
   "domainExclusionsDescription": {
     "message": "Enter domains to exclude (one per line):",
     "description": "Description for domain exclusions textarea"
+  },
+  "domainSettings": {
+    "message": "Domain Settings",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "Enter domains to include (one per line):",
+    "description": "Description for domain inclusions textarea"
   },
   "audioFading": {
     "message": "Audio Fading",

@@ -2,9 +2,12 @@
 
 This is a Chrome & Firefox extension that pauses videos when losing the tab/window focus by
 sending events to the player. Resumes the playback once the tab/window is back in focus.
+It controls HTML video elements; audio-only playback is not affected.
 
 Also listens for computer lock events and when the video goes out of viewport
 (for example, when reading comments below the video).
+When multiple videos are visible on a page, it keeps the one with the largest
+visible area playing and pauses other videos.
 
 Features some useful keyboard shortcuts to control videos in the window.
 
@@ -18,7 +21,7 @@ https://chrome.google.com/webstore/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/
 
 https://addons.mozilla.org/en-US/firefox/addon/video-auto-pause/
 
-**From releases**
+#### From releases
 
 There are pre-packaged releases available for both Chrome and Firefox. Download the latest release
 from the [releases page](https://github.com/drodil/video_auto_pause/releases) and
@@ -32,6 +35,7 @@ install it manually to your browser.
 4. Enable developer mode
 5. Click on "Load unpacked"
 6. Select the `chrome` directory in the repository
+7. Enable **Allow access to file URLs** for the extension to control videos opened from your computer
 
 **Manually (Firefox)**
 

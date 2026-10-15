@@ -23,6 +23,14 @@
     "message": "إيقاف الفيديو مؤقتًا عند تبديل علامات التبويب",
     "description": "Enable auto pause when switching tabs"
   },
+  "blockAutoplay": {
+    "message": "منع التشغيل التلقائي للفيديو قبل التفاعل",
+    "description": "Prevent videos from starting before the user interacts with the page"
+  },
+  "prioritizeActiveTabMedia": {
+    "message": "استئناف الوسائط السابقة عند توقف الوسائط الحالية",
+    "description": "Pause other tabs' media and resume the previous media when the current media stops or closes"
+  },
   "autoresume": {
     "message": "استئناف الفيديو عند العودة إلى علامة التبويب",
     "description": "Enable auto resume when returning to tab"
@@ -58,6 +66,10 @@
   "scrollpause": {
     "message": "إيقاف الفيديو مؤقتًا عند التمرير خارج العرض",
     "description": "Enable auto pause when video is scrolled out of viewport"
+  },
+  "singleVideoPlayback": {
+    "message": "تشغيل الفيديو الأكثر ظهورًا فقط",
+    "description": "Keep only the video with the largest visible area playing on a page"
   },
   "cursorTracking": {
     "message": "إيقاف مؤقت عند مغادرة المؤشر لنافذة المتصفح",
@@ -158,5 +170,13 @@
   "commandSpeedReset": {
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
+  },
+  "domainSettings": {
+    "message": "إعدادات المجال",
+    "description": "Domain settings section header"
+  },
+  "domainInclusionsDescription": {
+    "message": "أدخل المجالات لتضمينها (واحد في كل سطر):",
+    "description": "Description for domain inclusions textarea"
   }
 }
