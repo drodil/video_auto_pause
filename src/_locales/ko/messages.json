@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "현재 탭의 계속 재생 고정 전환",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "전역 설정을 변경하지 않고 사이트별 설정을 구성합니다.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "동작",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "전역 동작 사용",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "일시 정지",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "음소거",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "사이트 무시",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "재생 속도(0 = 마지막 속도 기억)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "일시 정지 지연(ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "다시 재생 지연(ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "사이트 규칙 저장",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "삭제",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "사이트 규칙을 저장했습니다",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "사이트 규칙을 저장할 수 없습니다.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "활성 사이트 규칙이 있는 사이트만 사용",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "사이트 도메인",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "example.com과 같은 호스트 이름을 입력하세요. 하위 도메인도 포함됩니다.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "이 사이트에서 확장 프로그램 사용",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "사용",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "사용 안 함",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "재정의",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "재정의할 설정",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "전역 기본값과 다르게 적용할 설정만 선택하세요.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "사이트 규칙 필터",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "편집",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "개 설정",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "재생 속도 (0 = 사이트 속도 사용)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 설정",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "뒤로",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "이 설정은 이 사이트에만 적용됩니다. 사용자 지정하지 않은 설정은 전역 값을 사용합니다.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "현재 사이트 추가",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "이 사이트에 맞게 사용자 지정",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "사용",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "사이트 설정 삭제",
+    "description": "Delete the current site rule"
   }
 }

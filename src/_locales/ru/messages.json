@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Включить или выключить закрепление воспроизведения активной вкладки",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Настройте сайт, не меняя общие параметры.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Поведение",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Использовать общие настройки",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Пауза",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Без звука",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Игнорировать сайт",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Скорость воспроизведения (0 — запомнить последнюю)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Задержка паузы (мс)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Задержка возобновления (мс)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Сохранить правило сайта",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Удалить",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Правило сайта сохранено",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Не удалось сохранить правило сайта.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Включать только сайты с активным правилом",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Домен сайта",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Введите имя хоста, например example.com; поддомены включены.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Включить расширение на этом сайте",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Включено",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Отключено",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Переопределить",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Переопределяемые настройки",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Выберите только настройки, отличающиеся от общих значений.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Фильтр правил сайтов",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Изменить",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "настроек",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Скорость воспроизведения (0 = использовать скорость сайта)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Настройки для $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Назад",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Эти настройки применяются только к этому сайту. Для не настроенных отдельно параметров используются общие значения.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Добавить текущий сайт",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Настроить для этого сайта",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Включено",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Удалить настройки сайта",
+    "description": "Delete the current site rule"
   }
 }

@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Slå fastgørelse af fortsat afspilning til/fra for den aktive fane",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Konfigurer et individuelt websted uden at ændre globale indstillinger.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Adfærd",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Brug global adfærd",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Pause",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Slå lyden fra",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Ignorér websted",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Afspilningshastighed (0 = husk seneste hastighed)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Pausetid (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Genoptagelsesforsinkelse (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Gem webstedsregel",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Fjern",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Webstedsregel gemt",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Webstedsreglen kunne ikke gemmes.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Aktivér kun websteder med en aktiveret regel",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Webstedsdomæne",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Indtast et værtsnavn som example.com; underdomæner er inkluderet.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Aktivér udvidelsen på dette websted",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Aktiveret",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Deaktiveret",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Tilsidesæt",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Indstillinger, der skal tilsidesættes",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Vælg kun indstillinger, der skal afvige fra standardindstillingerne.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Filtrer webstedsregler",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Rediger",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "indstillinger",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Afspilningshastighed (0 = brug webstedets hastighed)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Indstillinger for $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Tilbage",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Disse indstillinger gælder kun for dette websted. Brug de globale værdier, medmindre du tilpasser en indstilling.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Tilføj aktuelt websted",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Tilpas for dette websted",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Aktiveret",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Slet webstedsindstillinger",
+    "description": "Delete the current site rule"
   }
 }

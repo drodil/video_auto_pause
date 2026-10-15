@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Перемкнути закріплення відтворення активної вкладки",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Налаштуйте сайт, не змінюючи загальні параметри.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Поведінка",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Використовувати загальну поведінку",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Призупиняти",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Вимикати звук",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Ігнорувати сайт",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Швидкість відтворення (0 = запам’ятати останню)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Затримка призупинення (мс)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Затримка відновлення (мс)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Зберегти правило сайту",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Видалити",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Правило сайту збережено",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Не вдалося зберегти правило сайту.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Вмикати лише сайти з активним правилом",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Домен сайту",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Введіть ім’я хоста, наприклад example.com; піддомени включено.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Увімкнути розширення на цьому сайті",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Увімкнено",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Вимкнено",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Перевизначити",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Налаштування для перевизначення",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Виберіть лише налаштування, що відрізняються від загальних значень.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Фільтр правил сайтів",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Змінити",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "налаштувань",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Швидкість відтворення (0 = використовувати швидкість сайту)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Налаштування для $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Назад",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Ці налаштування діють лише для цього сайту. Для не налаштованих окремо параметрів використовуються загальні значення.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Додати поточний сайт",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Налаштувати для цього сайту",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Увімкнено",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Видалити налаштування сайту",
+    "description": "Delete the current site rule"
   }
 }

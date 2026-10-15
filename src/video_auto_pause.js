@@ -43,9 +43,12 @@ if (window.autoPauseInjected !== true) {
   async function refresh_settings() {
     const stored = await env.storage.sync.get(DEFAULT_OPTIONS);
     const savedOptions = { ...DEFAULT_OPTIONS, ...stored };
+    const hostname = location.hostname.toLowerCase();
+    const effectiveOptions = VAP_OPTIONS_FOR_SITE(hostname, savedOptions);
+    const siteEnabled = VAP_SITE_ENABLED(hostname, savedOptions);
     options = savedOptions.disabled
       ? {
-          ...savedOptions,
+          ...effectiveOptions,
           autopause: false,
           autoresume: false,
           muteVideo: false,
@@ -65,7 +68,24 @@ if (window.autoPauseInjected !== true) {
           showPipButton: false,
           showVideoOverlay: false,
         }
-      : savedOptions;
+      : siteEnabled
+        ? effectiveOptions
+        : {
+            ...effectiveOptions,
+            autopause: false,
+            autoresume: false,
+            muteVideo: false,
+            scrollpause: false,
+            lockpause: false,
+            lockresume: false,
+            focuspause: false,
+            focusresume: false,
+            blockAutoplay: false,
+            liveStreamMute: false,
+            muteDuringAds: false,
+            prioritizeActiveTabMedia: false,
+            singleVideoPlayback: false,
+          };
     toggleCursorTracking(options.cursorTracking);
     togglePipButtons();
     toggleVideoOverlays();
@@ -171,6 +191,9 @@ if (window.autoPauseInjected !== true) {
           }
         }
         scheduleVideoArbitration();
+        for (const video of allVideos()) {
+          applySiteSpeed(video);
+        }
       })
       .catch((error) => {
         console.error("Video Auto Pause could not refresh settings:", error);
@@ -411,7 +434,10 @@ if (window.autoPauseInjected !== true) {
       Number.isFinite(video.duration) &&
       video.duration > 0
     ) {
-      const awaySeconds = Math.max(0, (Date.now() - pausePosition.pausedAt) / 1000);
+      const awaySeconds = Math.max(
+        0,
+        (Date.now() - pausePosition.pausedAt) / 1000,
+      );
       const rewindSeconds = Math.min(
         options.rewindSeconds * 2,
         options.rewindSeconds * (1 + awaySeconds / 60),
@@ -554,11 +580,7 @@ if (window.autoPauseInjected !== true) {
           await handleMuteAction(video, "mute", actionToken);
           break;
         }
-        if (
-          !isManuallyPaused &&
-          options.muteDuringAds &&
-          isAdPlaying()
-        ) {
+        if (!isManuallyPaused && options.muteDuringAds && isAdPlaying()) {
           await handleMuteAction(video, "mute", actionToken);
           if (
             videoActionTokens.get(video) === actionToken &&
@@ -814,6 +836,7 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     videoElement.dataset.autoPauseListenerAttached = "true";
+    applySiteSpeed(videoElement);
 
     if (options.showPipButton) {
       injectPipButton(videoElement);
@@ -873,6 +896,7 @@ if (window.autoPauseInjected !== true) {
         scheduleVideoArbitration();
         return;
       }
+      applySiteSpeed(videoElement);
       activeFades.get(videoElement)?.cancel();
       if (!extensionInitiatedPlays.has(videoElement)) {
         videoActionTokens.set(videoElement, {});
@@ -886,6 +910,22 @@ if (window.autoPauseInjected !== true) {
       manuallyPausedVideos.delete(videoElement);
       extensionPausedVideos.delete(videoElement);
       scheduleVideoArbitration();
+    });
+    videoElement.addEventListener("ratechange", () => {
+      const rule = siteRuleFor(location.hostname.toLowerCase());
+      if (Number.isFinite(rule?.speed)) {
+        applySiteSpeed(videoElement);
+        return;
+      }
+      const key = `sitePlaybackRate:${location.hostname.toLowerCase()}`;
+      env.storage.local
+        .set({ [key]: videoElement.playbackRate })
+        .catch((error) => {
+          console.error(
+            "Video Auto Pause could not save this site's speed:",
+            error,
+          );
+        });
     });
   }
 
@@ -1012,54 +1052,67 @@ if (window.autoPauseInjected !== true) {
   let overlaySequence = 0;
   const videoOverlayCleanups = new WeakMap();
 
-  function siteIsEnabled(hostname, settings) {
-    const matches = (entries) =>
-      entries.some((entry) => {
-        const domain = entry
-          .trim()
-          .toLowerCase()
-          .replace(/^[a-z][a-z\d+.-]*:\/\//, "")
-          .split(/[/?#]/, 1)[0]
-          .replace(/^\*\./, "")
-          .replace(/:\d+$/, "")
-          .replace(/\.$/, "");
-        return domain && (hostname === domain || hostname.endsWith(`.${domain}`));
+  function applySiteSpeed(video) {
+    if (
+      options.disabled ||
+      !VAP_SITE_ENABLED(location.hostname.toLowerCase(), options)
+    ) {
+      return;
+    }
+    const hostname = location.hostname.toLowerCase();
+    const speed = VAP_OPTIONS_FOR_SITE(hostname, options).playbackSpeed;
+    if (Number.isFinite(speed) && speed >= 0.25 && speed <= 4) {
+      if (Math.abs(video.playbackRate - speed) > 0.001) {
+        video.playbackRate = speed;
+      }
+      return;
+    }
+    const key = `sitePlaybackRate:${hostname}`;
+    env.storage.local
+      .get(key)
+      .then((stored) => {
+        const speed = stored[key];
+        if (
+          video.isConnected &&
+          Number.isFinite(speed) &&
+          speed >= 0.25 &&
+          speed <= 4 &&
+          Math.abs(video.playbackRate - speed) > 0.001
+        ) {
+          video.playbackRate = speed;
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Video Auto Pause could not restore this site's speed:",
+          error,
+        );
       });
-    return !matches(settings.excludedDomains ?? []) &&
-      ((settings.includedDomains ?? []).length === 0 ||
-        matches(settings.includedDomains));
+  }
+
+  function siteIsEnabled(hostname, settings) {
+    return VAP_SITE_ENABLED(hostname, settings);
   }
 
   async function toggleCurrentSite() {
     const hostname = location.hostname.toLowerCase();
     const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
-    let excludedDomains = [...(settings.excludedDomains ?? [])];
-    const includedDomains = [...(settings.includedDomains ?? [])];
+    const siteRules = Array.isArray(settings.siteRules)
+      ? [...settings.siteRules]
+      : [];
     const enabled = siteIsEnabled(hostname, settings);
-    if (enabled) {
-      excludedDomains.push(hostname);
-    } else {
-      const matchesHostname = (entry) => {
-        const domain = entry
-          .trim()
-          .toLowerCase()
-          .replace(/^[a-z][a-z\d+.-]*:\/\//, "")
-          .split(/[/?#]/, 1)[0]
-          .replace(/^\*\./, "")
-          .replace(/:\d+$/, "")
-          .replace(/\.$/, "");
-        return domain && (hostname === domain || hostname.endsWith(`.${domain}`));
-      };
-      excludedDomains = excludedDomains.filter(
-        (entry) => !matchesHostname(entry),
-      );
-      if (includedDomains.length > 0 && !includedDomains.includes(hostname)) {
-        includedDomains.push(hostname);
-      }
-    }
+    const existingRule = VAP_SITE_RULE_FOR(hostname, settings);
+    const updatedRule = existingRule
+      ? { ...existingRule, enabled: !enabled }
+      : { domain: hostname, enabled: !enabled, overrides: {} };
+    const updatedRules = siteRules.filter(
+      (rule) =>
+        VAP_NORMALIZE_DOMAIN(rule.domain) !==
+        VAP_NORMALIZE_DOMAIN(updatedRule.domain),
+    );
+    updatedRules.push(updatedRule);
     await env.storage.sync.set({
-      excludedDomains,
-      includedDomains,
+      siteRules: updatedRules,
     });
   }
 
@@ -1184,7 +1237,10 @@ if (window.autoPauseInjected !== true) {
 
     playButton.addEventListener("click", () => {
       void handleVideoAction(video, { action: "toggle" }).catch((error) => {
-        console.error("Video Auto Pause overlay could not toggle playback:", error);
+        console.error(
+          "Video Auto Pause overlay could not toggle playback:",
+          error,
+        );
       });
     });
     slowerButton.addEventListener("click", () => {
@@ -1202,7 +1258,10 @@ if (window.autoPauseInjected !== true) {
         options = { ...options, ...stored };
         refreshOverlay();
       } catch (error) {
-        console.error("Video Auto Pause overlay could not update this site:", error);
+        console.error(
+          "Video Auto Pause overlay could not update this site:",
+          error,
+        );
       }
     });
     pinButton.addEventListener("click", () => {

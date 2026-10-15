@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Przełącz przypięcie odtwarzania aktywnej karty",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Skonfiguruj witrynę bez zmieniania ustawień globalnych.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Zachowanie",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Użyj zachowania globalnego",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Wstrzymaj",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Wycisz",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Ignoruj witrynę",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Szybkość odtwarzania (0 = zapamiętaj ostatnią)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Opóźnienie pauzy (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Opóźnienie wznowienia (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Zapisz regułę witryny",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Usuń",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Zapisano regułę witryny",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Nie udało się zapisać reguły witryny.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Włączaj tylko witryny z aktywną regułą",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Domena witryny",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Wpisz nazwę hosta, np. example.com; obejmuje też subdomeny.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Włącz rozszerzenie w tej witrynie",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Włączone",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Wyłączone",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Zastąp",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Ustawienia do zastąpienia",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Wybierz tylko ustawienia różniące się od wartości globalnych.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Filtruj reguły witryn",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Edytuj",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "ustawienia",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Szybkość odtwarzania (0 = użyj szybkości witryny)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Ustawienia dla $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Wstecz",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Te ustawienia dotyczą tylko tej witryny. Niezmienione ustawienia korzystają z wartości globalnych.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Dodaj bieżącą witrynę",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Dostosuj dla tej witryny",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Włączone",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Usuń ustawienia witryny",
+    "description": "Delete the current site rule"
   }
 }

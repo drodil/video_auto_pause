@@ -384,11 +384,153 @@
         font-weight: 500;
         cursor: pointer;
       }
+
+      #siteRuleList {
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+        max-height: 220px;
+        overflow-y: auto;
+      }
+
+      #siteRuleList li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 6px 0;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      #siteRuleList li span {
+        flex: 1;
+        overflow-wrap: anywhere;
+      }
+
+      #siteRuleList button[data-open-site-rule] {
+        border: 0;
+        background: transparent;
+        color: #4f46e5;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 500;
+        text-align: left;
+      }
+
+      #siteRuleList button {
+        flex: 0 0 auto;
+      }
+
+      #settingsViews {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .settings-view {
+        width: 100%;
+        transition: transform 0.25s ease;
+      }
+
+      #globalSettingsView {
+        position: relative;
+      }
+
+      #settingsViews.site-open #globalSettingsView {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+      }
+
+      #siteSettingsView {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(100%);
+      }
+
+      #settingsViews.site-open #siteSettingsView {
+        position: relative;
+        transform: translateX(0);
+      }
+
+      .site-settings-header {
+        padding: 12px 14px 4px;
+      }
+
+      #backToGlobal {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: #4f46e5;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      #siteSettingsTitle {
+        margin: 10px 0 4px;
+        color: #1f2937;
+        font-size: 16px;
+      }
+
+      .site-setting-row {
+        margin: 6px 0;
+        padding: 8px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+      }
+
+      .site-setting-row label {
+        padding: 0;
+      }
+
+      .site-setting-row > input[type="number"] {
+        width: 100%;
+        margin-top: 6px;
+        padding: 6px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+      }
+
+      .site-setting-customize {
+        color: #6b7280;
+        font-size: 11px;
+      }
+
+      .site-setting-value-label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .site-settings-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .site-settings-actions button,
+      #addSiteRule {
+        border: 1px solid #667eea;
+        border-radius: 5px;
+        padding: 7px 10px;
+        background: #eef2ff;
+        color: #4338ca;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      #deleteSiteSettings {
+        border-color: #d1d5db;
+        background: white;
+        color: #4b5563;
+      }
     </style>
   </head>
 
   <body>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
       <div class="header">
         <h2>
           <img src="images/icon_32.png" id="logo" alt="Video Auto Pause" />
@@ -396,456 +538,504 @@
         </h2>
       </div>
 
-      <div class="container section">
-        <button id="pinCurrentTab" type="button" aria-pressed="false">
-          Keep playing in this tab
-        </button>
-        <p id="pinStatus" role="status" aria-live="polite"></p>
-        <h4 data-i18n="presetTitle">Choose a mode</h4>
-        <div class="preset-grid">
-          <button type="button" data-preset="study" data-i18n="presetStudy">
-            Study / lectures
-          </button>
-          <button type="button" data-preset="music" data-i18n="presetMusic">
-            Background music
-          </button>
-          <button type="button" data-preset="binge" data-i18n="presetBinge">
-            Binge / TV
-          </button>
-          <button type="button" data-preset="saver" data-i18n="presetSaver">
-            Battery saver / meetings
-          </button>
-        </div>
-        <p id="presetStatus" role="status" aria-live="polite"></p>
-      </div>
-
-      <div class="container section">
-        <button class="collapsible_button active">
-          <span data-i18n="settings">Settings</span>
-        </button>
-        <div class="collapsible_content" style="max-height: 1000px">
-          <div style="margin-top: 8px">
-            <label>
-              <input type="checkbox" id="autopause" />
-              <span class="label-text" data-i18n="autopause"
-                >Pause video when switching tabs</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="autoresume" />
-              <span class="label-text" data-i18n="autoresume"
-                >Resume video when returning to tab</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="focuspause" />
-              <span class="label-text" data-i18n="focuspause"
-                >Pause video when browser loses focus</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="focusresume" />
-              <span class="label-text" data-i18n="focusresume"
-                >Resume video when browser gains focus</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="disabledTabs" />
-              <span class="label-text" data-i18n="disabledTabs"
-                >Disable extension for current tab</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="disableOnFullscreen" />
-              <span class="label-text" data-i18n="disableOnFullscreen"
-                >Disable when video is fullscreen</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="disabled" />
-              <span class="label-text" data-i18n="disabled"
-                >Disable extension completely</span
-              >
-            </label>
+      <div id="settingsViews">
+        <div id="globalSettingsView" class="settings-view">
+          <div class="container section">
+            <button id="pinCurrentTab" type="button" aria-pressed="false">
+              Keep playing in this tab
+            </button>
+            <p id="pinStatus" role="status" aria-live="polite"></p>
+            <h4 data-i18n="presetTitle">Choose a mode</h4>
+            <div class="preset-grid">
+              <button type="button" data-preset="study" data-i18n="presetStudy">
+                Study / lectures
+              </button>
+              <button type="button" data-preset="music" data-i18n="presetMusic">
+                Background music
+              </button>
+              <button type="button" data-preset="binge" data-i18n="presetBinge">
+                Binge / TV
+              </button>
+              <button type="button" data-preset="saver" data-i18n="presetSaver">
+                Battery saver / meetings
+              </button>
+            </div>
+            <p id="presetStatus" role="status" aria-live="polite"></p>
           </div>
-        </div>
-      </div>
 
-      <div class="container section">
-        <button class="collapsible_button">
-          <span data-i18n="advancedSettings">Advanced Settings</span>
-        </button>
-        <div class="collapsible_content">
-          <div style="margin-top: 8px">
-            <label>
-              <input type="checkbox" id="lockpause" />
-              <span class="label-text" data-i18n="lockpause"
-                >Pause video when computer is locked</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="lockresume" />
-              <span class="label-text" data-i18n="lockresume"
-                >Resume video when computer is unlocked</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="scrollpause" />
-              <span class="label-text" data-i18n="scrollpause"
-                >Pause video when scrolled out of view</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="singleVideoPlayback" />
-              <span class="label-text" data-i18n="singleVideoPlayback"
-                >Play only the most visible video</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="cursorTracking" />
-              <span class="label-text" data-i18n="cursorTracking"
-                >Pause when cursor leaves browser window</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="manualPause" />
-              <span class="label-text" data-i18n="manualPause"
-                >Prevent auto-resume after manual pause</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="showPipButton" />
-              <span class="label-text" data-i18n="showPipButton"
-                >Show Picture-in-Picture Button</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="showVideoOverlay" />
-              <span class="label-text" data-i18n="showVideoOverlay"
-                >Show draggable video controls</span
-              >
-            </label>
-
-            <label>
-              <input type="checkbox" id="muteVideo" />
-              <span class="label-text" data-i18n="muteVideo"
-                >Mute video instead of pausing</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="blockAutoplay" />
-              <span class="label-text" data-i18n="blockAutoplay"
-                >Block video autoplay before interaction</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="liveStreamMute" />
-              <span class="label-text" data-i18n="liveStreamMute"
-                >Mute live streams instead of pausing</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="muteDuringAds" />
-              <span class="label-text" data-i18n="muteDuringAds"
-                >Mute during ads, then pause when they end</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="prioritizeActiveTabMedia" />
-              <span class="label-text" data-i18n="prioritizeActiveTabMedia"
-                >Resume previous media when current media stops</span
-              >
-            </label>
-            <label>
-              <input type="checkbox" id="debugMode" />
-              <span class="label-text" data-i18n="debugMode"
-                >Show debug messages in console</span
-              >
-            </label>
-            <div
-              style="
-                margin-top: 12px;
-                border-top: 1px solid #e5e7eb;
-                padding-top: 12px;
-              "
-            >
-              <span
-                style="
-                  font-size: 13px;
-                  font-weight: 500;
-                  color: #374151;
-                  display: block;
-                  margin-bottom: 8px;
-                "
-                data-i18n="delays"
-                >Delays (ms)</span
-              >
-              <div style="display: flex; gap: 12px">
-                <div style="flex: 1">
-                  <label
-                    for="pauseDelay"
-                    style="
-                      font-size: 11px;
-                      color: #6b7280;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
-                    data-i18n="pauseDelay"
-                    >Pause Delay</label
-                  >
-                  <input
-                    type="number"
-                    id="pauseDelay"
-                    min="0"
-                    step="100"
-                    style="
-                      width: 100%;
-                      padding: 6px;
-                      border: 1px solid #d1d5db;
-                      border-radius: 4px;
-                    "
-                    placeholder="0"
-                  />
-                </div>
-                <div style="flex: 1">
-                  <label
-                    for="resumeDelay"
-                    style="
-                      font-size: 11px;
-                      color: #6b7280;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
-                    data-i18n="resumeDelay"
-                    >Resume Delay</label
-                  >
-                  <input
-                    type="number"
-                    id="resumeDelay"
-                    min="0"
-                    step="100"
-                    style="
-                      width: 100%;
-                      padding: 6px;
-                      border: 1px solid #d1d5db;
-                      border-radius: 4px;
-                    "
-                    placeholder="0"
-                  />
-                </div>
-              </div>
-              <div style="margin-top: 10px">
-                <label
-                  for="rewindSeconds"
-                  style="
-                    font-size: 11px;
-                    color: #6b7280;
-                    display: block;
-                    margin-bottom: 2px;
-                  "
-                  data-i18n="rewindSeconds"
-                  >Rewind on resume (seconds; 0 to disable)</label
-                >
-                <input
-                  type="number"
-                  id="rewindSeconds"
-                  min="0"
-                  max="60"
-                  step="1"
-                  style="
-                    width: 100%;
-                    padding: 6px;
-                    border: 1px solid #d1d5db;
-                    border-radius: 4px;
-                  "
-                  placeholder="3"
-                />
-              </div>
-              <div style="margin-top: 12px">
-                <label
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    margin-bottom: 4px;
-                  "
-                >
-                  <input type="checkbox" id="audioFading" />
-                  <span class="label-text" data-i18n="audioFading"
-                    >Audio Fading</span
+          <div class="container section">
+            <button class="collapsible_button active">
+              <span data-i18n="settings">Settings</span>
+            </button>
+            <div class="collapsible_content" style="max-height: 1000px">
+              <div style="margin-top: 8px">
+                <label>
+                  <input type="checkbox" id="autopause" />
+                  <span class="label-text" data-i18n="autopause"
+                    >Pause video when switching tabs</span
                   >
                 </label>
-                <div id="audioFadingSettings" hidden style="margin-left: 4px">
-                  <label
-                    for="fadeDuration"
+                <label>
+                  <input type="checkbox" id="autoresume" />
+                  <span class="label-text" data-i18n="autoresume"
+                    >Resume video when returning to tab</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="focuspause" />
+                  <span class="label-text" data-i18n="focuspause"
+                    >Pause video when browser loses focus</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="focusresume" />
+                  <span class="label-text" data-i18n="focusresume"
+                    >Resume video when browser gains focus</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="disabledTabs" />
+                  <span class="label-text" data-i18n="disabledTabs"
+                    >Disable extension for current tab</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="disableOnFullscreen" />
+                  <span class="label-text" data-i18n="disableOnFullscreen"
+                    >Disable when video is fullscreen</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="disabled" />
+                  <span class="label-text" data-i18n="disabled"
+                    >Disable extension completely</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="container section">
+            <button class="collapsible_button">
+              <span data-i18n="advancedSettings">Advanced Settings</span>
+            </button>
+            <div class="collapsible_content">
+              <div style="margin-top: 8px">
+                <label>
+                  <input type="checkbox" id="lockpause" />
+                  <span class="label-text" data-i18n="lockpause"
+                    >Pause video when computer is locked</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="lockresume" />
+                  <span class="label-text" data-i18n="lockresume"
+                    >Resume video when computer is unlocked</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="scrollpause" />
+                  <span class="label-text" data-i18n="scrollpause"
+                    >Pause video when scrolled out of view</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="singleVideoPlayback" />
+                  <span class="label-text" data-i18n="singleVideoPlayback"
+                    >Play only the most visible video</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="cursorTracking" />
+                  <span class="label-text" data-i18n="cursorTracking"
+                    >Pause when cursor leaves browser window</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="manualPause" />
+                  <span class="label-text" data-i18n="manualPause"
+                    >Prevent auto-resume after manual pause</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="showPipButton" />
+                  <span class="label-text" data-i18n="showPipButton"
+                    >Show Picture-in-Picture Button</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="showVideoOverlay" />
+                  <span class="label-text" data-i18n="showVideoOverlay"
+                    >Show draggable video controls</span
+                  >
+                </label>
+
+                <label>
+                  <input type="checkbox" id="muteVideo" />
+                  <span class="label-text" data-i18n="muteVideo"
+                    >Mute video instead of pausing</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="blockAutoplay" />
+                  <span class="label-text" data-i18n="blockAutoplay"
+                    >Block video autoplay before interaction</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="liveStreamMute" />
+                  <span class="label-text" data-i18n="liveStreamMute"
+                    >Mute live streams instead of pausing</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="muteDuringAds" />
+                  <span class="label-text" data-i18n="muteDuringAds"
+                    >Mute during ads, then pause when they end</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="prioritizeActiveTabMedia" />
+                  <span class="label-text" data-i18n="prioritizeActiveTabMedia"
+                    >Resume previous media when current media stops</span
+                  >
+                </label>
+                <label>
+                  <input type="checkbox" id="debugMode" />
+                  <span class="label-text" data-i18n="debugMode"
+                    >Show debug messages in console</span
+                  >
+                </label>
+                <div
+                  style="
+                    margin-top: 12px;
+                    border-top: 1px solid #e5e7eb;
+                    padding-top: 12px;
+                  "
+                >
+                  <span
                     style="
-                      font-size: 11px;
-                      color: #6b7280;
+                      font-size: 13px;
+                      font-weight: 500;
+                      color: #374151;
                       display: block;
-                      margin-bottom: 2px;
+                      margin-bottom: 8px;
                     "
-                    data-i18n="fadeDuration"
-                    >Fade Duration (ms)</label
+                    data-i18n="delays"
+                    >Delays (ms)</span
+                  >
+                  <div style="display: flex; gap: 12px">
+                    <div style="flex: 1">
+                      <label
+                        for="pauseDelay"
+                        style="
+                          font-size: 11px;
+                          color: #6b7280;
+                          display: block;
+                          margin-bottom: 2px;
+                        "
+                        data-i18n="pauseDelay"
+                        >Pause Delay</label
+                      >
+                      <input
+                        type="number"
+                        id="pauseDelay"
+                        min="0"
+                        step="100"
+                        style="
+                          width: 100%;
+                          padding: 6px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 4px;
+                        "
+                        placeholder="0"
+                      />
+                    </div>
+                    <div style="flex: 1">
+                      <label
+                        for="resumeDelay"
+                        style="
+                          font-size: 11px;
+                          color: #6b7280;
+                          display: block;
+                          margin-bottom: 2px;
+                        "
+                        data-i18n="resumeDelay"
+                        >Resume Delay</label
+                      >
+                      <input
+                        type="number"
+                        id="resumeDelay"
+                        min="0"
+                        step="100"
+                        style="
+                          width: 100%;
+                          padding: 6px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 4px;
+                        "
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <label
+                      for="rewindSeconds"
+                      style="
+                        font-size: 11px;
+                        color: #6b7280;
+                        display: block;
+                        margin-bottom: 2px;
+                      "
+                      data-i18n="rewindSeconds"
+                      >Rewind on resume (seconds; 0 to disable)</label
+                    >
+                    <input
+                      type="number"
+                      id="rewindSeconds"
+                      min="0"
+                      max="60"
+                      step="1"
+                      style="
+                        width: 100%;
+                        padding: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 4px;
+                      "
+                      placeholder="3"
+                    />
+                  </div>
+                  <div style="margin-top: 10px">
+                    <label
+                      for="playbackSpeed"
+                      style="
+                        font-size: 11px;
+                        color: #6b7280;
+                        display: block;
+                        margin-bottom: 2px;
+                      "
+                      data-i18n="playbackSpeed"
+                      >Playback speed (0 = use the site's speed)</label
+                    >
+                    <input
+                      type="number"
+                      id="playbackSpeed"
+                      min="0"
+                      max="4"
+                      step="0.25"
+                      style="
+                        width: 100%;
+                        padding: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 4px;
+                      "
+                    />
+                  </div>
+                  <div style="margin-top: 12px">
+                    <label
+                      style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <input type="checkbox" id="audioFading" />
+                      <span class="label-text" data-i18n="audioFading"
+                        >Audio Fading</span
+                      >
+                    </label>
+                    <div
+                      id="audioFadingSettings"
+                      hidden
+                      style="margin-left: 4px"
+                    >
+                      <label
+                        for="fadeDuration"
+                        style="
+                          font-size: 11px;
+                          color: #6b7280;
+                          display: block;
+                          margin-bottom: 2px;
+                        "
+                        data-i18n="fadeDuration"
+                        >Fade Duration (ms)</label
+                      >
+                      <input
+                        type="number"
+                        id="fadeDuration"
+                        min="0"
+                        step="50"
+                        style="
+                          width: 100%;
+                          padding: 6px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 4px;
+                        "
+                        placeholder="200"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container section">
+            <button class="collapsible_button">
+              <span data-i18n="domainSettings">Domain Settings</span>
+            </button>
+            <div class="collapsible_content">
+              <div style="margin-top: 8px">
+                <label>
+                  <input type="checkbox" id="onlyConfiguredSites" />
+                  <span class="label-text" data-i18n="onlyConfiguredSites"
+                    >Only enable sites with an enabled site rule</span
+                  >
+                </label>
+
+                <div id="siteRulesEditor" style="margin-top: 14px">
+                  <p data-i18n="siteRuleIntro">
+                    Configure an individual site without changing global
+                    settings.
+                  </p>
+                  <button
+                    type="button"
+                    id="addSiteRule"
+                    data-i18n="siteRuleAdd"
+                  >
+                    Add current site
+                  </button>
+                  <p id="siteRuleStatus" role="status" aria-live="polite"></p>
+                  <label for="siteRuleFilter" data-i18n="siteRuleFilter"
+                    >Filter site rules</label
                   >
                   <input
-                    type="number"
-                    id="fadeDuration"
-                    min="0"
-                    step="50"
+                    type="search"
+                    id="siteRuleFilter"
+                    autocomplete="off"
                     style="
                       width: 100%;
                       padding: 6px;
                       border: 1px solid #d1d5db;
                       border-radius: 4px;
                     "
-                    placeholder="200"
                   />
+                  <ul id="siteRuleList"></ul>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="container section">
-        <button class="collapsible_button">
-          <span data-i18n="domainSettings">Domain Settings</span>
-        </button>
-        <div class="collapsible_content">
-          <div style="margin-top: 8px">
-            <div style="margin-bottom: 8px"></div>
-
-            <div id="excludedDomainsContainer">
-              <div class="domain-list-heading">
-                <p data-i18n="domainExclusionsDescription">
-                  Enter domains to exclude (one per line):
-                </p>
-                <button
-                  type="button"
-                  class="domain-add-button"
-                  data-add-domain="excludedDomains"
-                  data-i18n-title="addCurrentDomainToList"
-                >
-                  <span aria-hidden="true">+</span>
-                </button>
-              </div>
-              <textarea
-                id="excludedDomains"
-                rows="5"
-                style="
-                  width: 100%;
-                  padding: 8px;
-                  border: 1px solid #d1d5db;
-                  border-radius: 4px;
-                  font-family: monospace;
-                  font-size: 12px;
-                  resize: vertical;
-                "
-                placeholder="example.com&#10;youtube.com"
-              ></textarea>
-            </div>
-
-            <div id="includedDomainsContainer">
-              <div class="domain-list-heading">
-                <p data-i18n="domainInclusionsDescription">
-                  Enter domains to include (one per line):
-                </p>
-                <button
-                  type="button"
-                  class="domain-add-button"
-                  data-add-domain="includedDomains"
-                  data-i18n-title="addCurrentDomainToList"
-                >
-                  <span aria-hidden="true">+</span>
-                </button>
-              </div>
-              <textarea
-                id="includedDomains"
-                rows="5"
-                style="
-                  width: 100%;
-                  padding: 8px;
-                  border: 1px solid #d1d5db;
-                  border-radius: 4px;
-                  font-family: monospace;
-                  font-size: 12px;
-                  resize: vertical;
-                "
-                placeholder="example.com&#10;youtube.com"
-              ></textarea>
+          <div class="container section">
+            <button class="collapsible_button">
+              <span data-i18n="hotkeys">Hotkeys</span>
+            </button>
+            <div class="collapsible_content">
+              <div id="hotkeys" style="margin-top: 8px"></div>
+              <p data-i18n="hotkeysDescription">
+                You can configure hotkeys in the Extensions menu
+              </p>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="container section">
-        <button class="collapsible_button">
-          <span data-i18n="hotkeys">Hotkeys</span>
-        </button>
-        <div class="collapsible_content">
-          <div id="hotkeys" style="margin-top: 8px"></div>
-          <p data-i18n="hotkeysDescription">
-            You can configure hotkeys in the Extensions menu
-          </p>
-        </div>
-      </div>
+          <div class="container section">
+            <h4 data-i18n="statsHeading">Your impact this week</h4>
+            <p id="statsSummary" aria-live="polite"></p>
+            <div id="statsActions">
+              <button id="shareStats" type="button" data-i18n="statsShare">
+                Copy weekly summary
+              </button>
+              <a
+                id="rateExtension"
+                href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-i18n="statsRate"
+                hidden
+                >Rate Video Auto Pause</a
+              >
+            </div>
+            <p id="statsStatus" role="status" aria-live="polite"></p>
+          </div>
 
-      <div class="container section">
-        <h4 data-i18n="statsHeading">Your impact this week</h4>
-        <p id="statsSummary" aria-live="polite"></p>
-        <div id="statsActions">
-          <button id="shareStats" type="button" data-i18n="statsShare">
-            Copy weekly summary
-          </button>
-          <a
-            id="rateExtension"
-            href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="statsRate"
-            hidden
-            >Rate Video Auto Pause</a
-          >
-        </div>
-        <p id="statsStatus" role="status" aria-live="polite"></p>
-      </div>
+          <div class="container section">
+            <div class="support-links">
+              <a
+                href="https://github.com/sponsors/drodil"
+                target="_blank"
+                class="support-link"
+                data-i18n="githubSponsors"
+              >
+                GitHub Sponsors
+              </a>
+              <a
+                href="https://patreon.com/drodil"
+                target="_blank"
+                class="support-link"
+                data-i18n="supportOnPatreon"
+              >
+                Support on Patreon
+              </a>
+            </div>
+            <p style="text-align: center; margin-top: 12px">
+              <a
+                href="https://github.com/drodil/video_auto_pause"
+                target="_blank"
+                data-i18n="viewSourceOnGitHub"
+              >
+                View Source on GitHub
+              </a>
+            </p>
+          </div>
 
-      <div class="container section">
-        <div class="support-links">
-          <a
-            href="https://github.com/sponsors/drodil"
-            target="_blank"
-            class="support-link"
-            data-i18n="githubSponsors"
-          >
-            GitHub Sponsors
-          </a>
-          <a
-            href="https://patreon.com/drodil"
-            target="_blank"
-            class="support-link"
-            data-i18n="supportOnPatreon"
-          >
-            Support on Patreon
-          </a>
+          <div class="footer">
+            <p>
+              <span data-i18n="madeWithLove">Made with &hearts; by</span>
+              <a href="https://github.com/drodil" target="_blank">drodil</a>
+            </p>
+            <p id="version"></p>
+          </div>
         </div>
-        <p style="text-align: center; margin-top: 12px">
-          <a
-            href="https://github.com/drodil/video_auto_pause"
-            target="_blank"
-            data-i18n="viewSourceOnGitHub"
-          >
-            View Source on GitHub
-          </a>
-        </p>
-      </div>
-
-      <div class="footer">
-        <p>
-          <span data-i18n="madeWithLove">Made with &hearts; by</span>
-          <a href="https://github.com/drodil" target="_blank">drodil</a>
-        </p>
-        <p id="version"></p>
+        <section id="siteSettingsView" class="settings-view" aria-hidden="true">
+          <div class="site-settings-header">
+            <button id="backToGlobal" type="button">
+              <span aria-hidden="true">←</span>
+              <span data-i18n="siteSettingsBack">Back</span>
+            </button>
+            <h3 id="siteSettingsTitle"></h3>
+          </div>
+          <div class="container section">
+            <p data-i18n="siteSettingsIntro">
+              These settings apply only to this site. Leave a setting on its
+              global value unless you customize it.
+            </p>
+            <label>
+              <input type="checkbox" id="siteRuleEnabled" checked />
+              <span class="label-text" data-i18n="siteRuleEnabled">
+                Enable the extension on this site
+              </span>
+            </label>
+            <div id="siteSettingsFields"></div>
+            <div class="site-settings-actions">
+              <button
+                type="button"
+                id="saveSiteSettings"
+                data-i18n="siteRuleSave"
+              >
+                Save site settings
+              </button>
+              <button
+                type="button"
+                id="deleteSiteSettings"
+                data-i18n="siteRuleDelete"
+              >
+                Delete site settings
+              </button>
+            </div>
+            <p id="siteSettingsStatus" role="status" aria-live="polite"></p>
+          </div>
+        </section>
       </div>
     </div>
     <script src="defaults.js"></script>

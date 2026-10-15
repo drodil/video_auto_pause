@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Kveikja eða slökkva á spilunarfestingu virka flipans",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Stilltu vefsvæði án þess að breyta almennum stillingum.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Hegðun",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Nota almenna hegðun",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Gera hlé",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Þagga",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Hunsa vefsvæði",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Spilunarhraði (0 = muna síðasta hraða)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Hléseinkun (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Endurræsingarseinkun (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Vista vefsvæðisreglu",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Fjarlægja",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Vefsvæðisregla vistuð",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Ekki tókst að vista vefsvæðisregluna.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Virkja aðeins vefsvæði með virkri reglu",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Lén vefsvæðis",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Sláðu inn hýsilheiti eins og example.com; undirlén eru með.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Virkja viðbótina á þessu vefsvæði",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Virkt",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Óvirkt",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Yfirskrifa",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Stillingar til að yfirskrifa",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Veldu aðeins stillingar sem eiga að víkja frá almennum sjálfgefnum gildum.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Sía vefsvæðisreglur",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Breyta",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "stillingar",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Afspilunarhraði (0 = nota hraða vefsvæðisins)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Stillingar fyrir $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Til baka",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Þessar stillingar gilda aðeins fyrir þetta vefsvæði. Ósérsniðnar stillingar nota almennu gildin.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Bæta við núverandi vefsvæði",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Sérsníða fyrir þetta vefsvæði",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Virkt",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Eyða stillingum vefsvæðis",
+    "description": "Delete the current site rule"
   }
 }

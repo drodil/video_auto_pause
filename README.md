@@ -23,6 +23,12 @@ automatic handling for the current site without opening the popup.
 Use the tab pin in the popup or on-video controls to keep one tab playing while
 you work elsewhere; the pin clears automatically when its tab is closed.
 
+Per-site settings are managed from a searchable domain list. Select a domain to
+open its settings panel; each option inherits the global value until you
+customize it for that site. You can disable the extension for one domain, set a
+global playback speed (or override it per site), and preserve legacy include /
+exclude behavior through automatic migration to site rules.
+
 ## Installing
 
 #### Chrome Web Store

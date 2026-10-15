@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "アクティブなタブの再生固定を切り替える",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "全体の設定を変えずにサイトごとの設定を行います。",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "動作",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "全体設定を使用",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "一時停止",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "ミュート",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "サイトを無視",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "再生速度（0 = 前回の速度を記憶）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "一時停止の遅延（ミリ秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "再開の遅延（ミリ秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "サイトルールを保存",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "削除",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "サイトルールを保存しました",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "サイトルールを保存できませんでした。",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "有効なサイトルールがあるサイトのみ有効にする",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "サイトのドメイン",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "example.com のようなホスト名を入力します。サブドメインも含まれます。",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "このサイトで拡張機能を有効にする",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "有効",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "無効",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "上書き",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "上書きする設定",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "全体の既定値と異なる設定だけを選択してください。",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "サイトルールを絞り込む",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "編集",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "個の設定",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "再生速度（0 = サイトの速度を使用）",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 の設定",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "戻る",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "これらの設定はこのサイトのみに適用されます。カスタマイズしない設定には全体の値が使われます。",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "現在のサイトを追加",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "このサイト用にカスタマイズ",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "有効",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "サイト設定を削除",
+    "description": "Delete the current site rule"
   }
 }

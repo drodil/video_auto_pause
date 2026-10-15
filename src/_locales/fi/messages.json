@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Vaihda aktiivisen välilehden toiston kiinnityksen tilaa",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Määritä sivusto muuttamatta yleisiä asetuksia.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Toiminta",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Käytä yleistä toimintaa",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Keskeytä",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Mykistä",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Ohita sivusto",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Toistonopeus (0 = muista viimeisin nopeus)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Keskeytysviive (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Jatkamisviive (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Tallenna sivustosääntö",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Poista",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Sivustosääntö tallennettu",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Sivustosääntöä ei voitu tallentaa.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Ota käyttöön vain sivustot, joilla on käytössä oleva sääntö",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Sivuston verkkotunnus",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Anna isäntänimi, kuten example.com; aliverkkotunnukset sisältyvät.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Ota laajennus käyttöön tällä sivustolla",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Käytössä",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Ei käytössä",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Ohita oletus",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Ohitettavat asetukset",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Valitse vain asetukset, joiden tulee poiketa yleisistä oletuksista.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Suodata sivustosääntöjä",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Muokkaa",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "asetusta",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Toistonopeus (0 = käytä sivuston nopeutta)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Sivuston $1 asetukset",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Takaisin",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Nämä asetukset koskevat vain tätä sivustoa. Mukauttamattomat asetukset käyttävät yleisiä arvoja.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Lisää nykyinen sivusto",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Mukauta tälle sivustolle",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Käytössä",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Poista sivuston asetukset",
+    "description": "Delete the current site rule"
   }
 }

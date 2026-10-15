@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Bật/tắt ghim tiếp tục phát cho tab hiện tại",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Cấu hình riêng một trang mà không đổi cài đặt chung.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Hành vi",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Dùng hành vi chung",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Tạm dừng",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Tắt tiếng",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Bỏ qua trang web",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Tốc độ phát (0 = nhớ tốc độ gần nhất)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Độ trễ tạm dừng (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Độ trễ tiếp tục (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Lưu quy tắc trang web",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Xóa",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Đã lưu quy tắc trang web",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Không thể lưu quy tắc trang web.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Chỉ bật các trang có quy tắc trang được bật",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Tên miền trang",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Nhập tên máy chủ như example.com; bao gồm cả tên miền phụ.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Bật tiện ích trên trang này",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Bật",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Tắt",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Ghi đè",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Cài đặt cần ghi đè",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Chỉ chọn các cài đặt khác với giá trị mặc định chung.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Lọc quy tắc trang",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Chỉnh sửa",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "cài đặt",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Tốc độ phát (0 = dùng tốc độ của trang web)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Cài đặt cho $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Quay lại",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Các cài đặt này chỉ áp dụng cho trang web này. Cài đặt chưa tùy chỉnh sẽ dùng giá trị chung.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Thêm trang hiện tại",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Tùy chỉnh cho trang này",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Bật",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Xóa cài đặt trang",
+    "description": "Delete the current site rule"
   }
 }

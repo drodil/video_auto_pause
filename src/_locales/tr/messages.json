@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Etkin sekme için oynatma sabitlemesini aç/kapat",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Genel ayarları değiştirmeden bir siteyi yapılandırın.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Davranış",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Genel davranışı kullan",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Duraklat",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Sessize al",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Siteyi yoksay",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Oynatma hızı (0 = son hızı hatırla)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Duraklatma gecikmesi (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Devam gecikmesi (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Site kuralını kaydet",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Kaldır",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Site kuralı kaydedildi",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Site kuralı kaydedilemedi.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Yalnızca etkin site kuralı olan siteleri etkinleştir",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Site etki alanı",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "example.com gibi bir ana bilgisayar adı girin; alt etki alanları dahildir.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Bu sitede uzantıyı etkinleştir",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Etkin",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Devre dışı",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Geçersiz kıl",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Geçersiz kılınacak ayarlar",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Yalnızca genel varsayılanlardan farklı olacak ayarları seçin.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Site kurallarını filtrele",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Düzenle",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "ayar",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Oynatma hızı (0 = sitenin hızını kullan)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 için ayarlar",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Geri",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Bu ayarlar yalnızca bu site için geçerlidir. Özelleştirilmeyen ayarlar genel değerleri kullanır.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Geçerli siteyi ekle",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Bu site için özelleştir",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Etkin",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Site ayarlarını sil",
+    "description": "Delete the current site rule"
   }
 }

@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "تبديل تثبيت الاستمرار في التشغيل لعلامة التبويب النشطة",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "اضبط إعدادات هذا الموقع دون تغيير الإعدادات العامة.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "السلوك",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "استخدام السلوك العام",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "إيقاف مؤقت",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "كتم الصوت",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "تجاهل الموقع",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "سرعة التشغيل (0 = تذكر السرعة الأخيرة)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "تأخير الإيقاف المؤقت (مللي ثانية)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "تأخير الاستئناف (مللي ثانية)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "حفظ قاعدة الموقع",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "إزالة",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "تم حفظ قاعدة الموقع",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "تعذر حفظ قاعدة الموقع.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "فعّل المواقع التي لها قاعدة مفعّلة فقط",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "نطاق الموقع",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "أدخل اسم مضيف مثل example.com؛ تُضمّن النطاقات الفرعية.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "تفعيل الإضافة على هذا الموقع",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "مفعّل",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "معطّل",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "تجاوز",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "الإعدادات المطلوب تجاوزها",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "حدّد الإعدادات التي تختلف عن الإعدادات العامة فقط.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "تصفية قواعد المواقع",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "تعديل",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "إعدادات",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "سرعة التشغيل (0 = استخدام سرعة الموقع)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "الإعدادات لـ $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "رجوع",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "تنطبق هذه الإعدادات على هذا الموقع فقط. استخدم الإعدادات العامة ما لم تخصص إعدادًا.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "إضافة الموقع الحالي",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "تخصيص لهذا الموقع",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "مفعّل",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "حذف إعدادات الموقع",
+    "description": "Delete the current site rule"
   }
 }

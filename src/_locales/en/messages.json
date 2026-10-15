@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Toggle keep-playing pin for the active tab",
     "description": "Keyboard command for the temporary tab pin"
+  },
+  "siteRuleIntro": {
+    "message": "Configure an individual site without changing global settings.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Behavior",
+    "description": "Site rule behavior selector label"
+  },
+  "siteRuleDefault": {
+    "message": "Use global behavior",
+    "description": "Default site rule behavior"
+  },
+  "siteRulePause": {
+    "message": "Pause",
+    "description": "Pause behavior for a site rule"
+  },
+  "siteRuleMute": {
+    "message": "Mute",
+    "description": "Mute behavior for a site rule"
+  },
+  "siteRuleIgnore": {
+    "message": "Ignore site",
+    "description": "Disable automatic controls for a site rule"
+  },
+  "siteRuleSpeed": {
+    "message": "Playback speed (0 = remember last speed)",
+    "description": "Site rule playback speed"
+  },
+  "siteRulePauseDelay": {
+    "message": "Pause delay (ms)",
+    "description": "Site rule pause delay"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Resume delay (ms)",
+    "description": "Site rule resume delay"
+  },
+  "siteRuleSave": {
+    "message": "Save site rule",
+    "description": "Save the active site's behavior rule"
+  },
+  "siteRuleRemove": {
+    "message": "Remove",
+    "description": "Remove a site rule"
+  },
+  "siteRuleSaved": {
+    "message": "Site rule saved",
+    "description": "Successful site rule save status"
+  },
+  "siteRuleFailed": {
+    "message": "Could not save the site rule.",
+    "description": "Failed site rule save status"
+  },
+  "onlyConfiguredSites": {
+    "message": "Only enable sites with an enabled site rule",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Site domain",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Enter a hostname such as example.com; subdomains are included.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Enable the extension on this site",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Enabled",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Disabled",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Override",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Settings to override",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Select only settings that should differ from global defaults.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Filter site rules",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Edit",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "settings",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Playback speed (0 = use the site’s speed)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Settings for $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Back",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "These settings apply only to this site. Leave a setting on its global value unless you customize it.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Add current site",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Customize for this site",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Enabled",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Delete site settings",
+    "description": "Delete the current site rule"
   }
 }

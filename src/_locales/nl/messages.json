@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Pin voor blijven afspelen van het actieve tabblad aan-/uitzetten",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Configureer een site zonder globale instellingen te wijzigen.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Gedrag",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Globaal gedrag gebruiken",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Pauzeren",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Dempen",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Website negeren",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Afspeelsnelheid (0 = laatste snelheid onthouden)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Pauzevertraging (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Hervatvertraging (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Site-regel opslaan",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Verwijderen",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Site-regel opgeslagen",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "De site-regel kon niet worden opgeslagen.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Alleen sites met een ingeschakelde regel activeren",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Sitedomein",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Voer een hostnaam in zoals example.com; subdomeinen zijn inbegrepen.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Extensie inschakelen op deze site",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Ingeschakeld",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Uitgeschakeld",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Overschrijven",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Instellingen om te overschrijven",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Selecteer alleen instellingen die afwijken van de algemene standaardwaarden.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Siteregels filteren",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Bewerken",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "instellingen",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Afspeelsnelheid (0 = snelheid van de site gebruiken)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Instellingen voor $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Terug",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Deze instellingen gelden alleen voor deze site. Niet-aangepaste instellingen gebruiken de globale waarden.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Huidige site toevoegen",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Aanpassen voor deze site",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Ingeschakeld",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Site-instellingen verwijderen",
+    "description": "Delete the current site rule"
   }
 }

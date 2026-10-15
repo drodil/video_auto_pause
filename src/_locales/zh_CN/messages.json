@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "切换当前标签页的继续播放固定状态",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "配置单个网站而不更改全局设置。",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "行为",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "使用全局行为",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "暂停",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "静音",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "忽略网站",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "播放速度（0 = 记住上次速度）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "暂停延迟（毫秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "恢复延迟（毫秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "保存网站规则",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "移除",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "已保存网站规则",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "无法保存网站规则。",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "仅启用具有已启用站点规则的网站",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "站点域名",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "输入主机名，例如 example.com；包含子域名。",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "在此网站启用扩展",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "已启用",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "已停用",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "覆盖",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "要覆盖的设置",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "仅选择需要区别于全局默认值的设置。",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "筛选站点规则",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "编辑",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "项设置",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "播放速度（0 = 使用网站速度）",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 的设置",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "返回",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "这些设置仅应用于此网站。未自定义的设置将使用全局值。",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "添加当前网站",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "为此网站自定义",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "已启用",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "删除网站设置",
+    "description": "Delete the current site rule"
   }
 }

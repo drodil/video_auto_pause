@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Växla fästning för fortsatt uppspelning på den aktiva fliken",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Konfigurera en webbplats utan att ändra globala inställningar.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Beteende",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Använd globalt beteende",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Pausa",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Ljud av",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Ignorera webbplats",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Uppspelningshastighet (0 = kom ihåg senaste hastigheten)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Pausfördröjning (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Återupptagningsfördröjning (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Spara webbplatsregel",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Ta bort",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Webbplatsregeln har sparats",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Det gick inte att spara webbplatsregeln.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Aktivera endast webbplatser med en aktiverad regel",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Webbplatsdomän",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Ange ett värdnamn som example.com; underdomäner inkluderas.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Aktivera tillägget på den här webbplatsen",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Aktiverad",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Inaktiverad",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Åsidosätt",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Inställningar att åsidosätta",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Välj endast inställningar som ska skilja sig från de globala standardvärdena.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Filtrera webbplatsregler",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Redigera",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "inställningar",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Uppspelningshastighet (0 = använd webbplatsens hastighet)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Inställningar för $1",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Tillbaka",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Inställningarna gäller endast den här webbplatsen. Globala värden används om du inte anpassar en inställning.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Lägg till aktuell webbplats",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Anpassa för den här webbplatsen",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Aktiverad",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Ta bort webbplatsinställningar",
+    "description": "Delete the current site rule"
   }
 }

@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "सक्रिय टैब के चलते रहने वाले पिन को टॉगल करें",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "वैश्विक सेटिंग बदले बिना किसी साइट को कॉन्फ़िगर करें।",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "व्यवहार",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "वैश्विक व्यवहार इस्तेमाल करें",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "रोकें",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "म्यूट करें",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "साइट अनदेखा करें",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "प्लेबैक गति (0 = पिछली गति याद रखें)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "रोकने में देरी (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "फिर चलाने में देरी (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "साइट नियम सहेजें",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "हटाएँ",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "साइट नियम सहेजा गया",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "साइट नियम सहेजा नहीं जा सका।",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "केवल सक्रिय साइट नियम वाले साइट सक्षम करें",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "साइट डोमेन",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "example.com जैसा होस्टनाम दर्ज करें; सबडोमेन भी शामिल हैं।",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "इस साइट पर एक्सटेंशन सक्षम करें",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "सक्षम",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "अक्षम",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "ओवरराइड",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "ओवरराइड करने वाली सेटिंग",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "केवल वे सेटिंग चुनें जो वैश्विक डिफ़ॉल्ट से अलग हों।",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "साइट नियम फ़िल्टर करें",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "संपादित करें",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "सेटिंग",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "प्लेबैक गति (0 = साइट की गति इस्तेमाल करें)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 के लिए सेटिंग",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "वापस",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "ये सेटिंग केवल इस साइट पर लागू होती हैं। अनुकूलित न की गई सेटिंग वैश्विक मानों का उपयोग करती हैं।",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "वर्तमान साइट जोड़ें",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "इस साइट के लिए अनुकूलित करें",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "सक्षम",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "साइट सेटिंग हटाएँ",
+    "description": "Delete the current site rule"
   }
 }

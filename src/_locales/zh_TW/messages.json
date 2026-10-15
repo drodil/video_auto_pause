@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "切換目前分頁的繼續播放固定狀態",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "設定個別網站而不變更全域設定。",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "行為",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "使用全域行為",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "暫停",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "靜音",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "忽略網站",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "播放速度（0 = 記住上次速度）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "暫停延遲（毫秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "恢復延遲（毫秒）",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "儲存網站規則",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "移除",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "已儲存網站規則",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "無法儲存網站規則。",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "僅啟用具有已啟用網站規則的網站",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "網站網域",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "輸入主機名稱，例如 example.com；包含子網域。",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "在此網站啟用擴充功能",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "已啟用",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "已停用",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "覆寫",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "要覆寫的設定",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "僅選擇需要與全域預設值不同的設定。",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "篩選網站規則",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "編輯",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "項設定",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "播放速度（0 = 使用網站速度）",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "$1 的設定",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "返回",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "這些設定只套用於此網站。未自訂的設定會使用全域值。",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "新增目前網站",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "為此網站自訂",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "已啟用",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "刪除網站設定",
+    "description": "Delete the current site rule"
   }
 }

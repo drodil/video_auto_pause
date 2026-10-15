@@ -115,20 +115,19 @@ const test = base.extend({
           timeout: 10000,
         });
       }
-      await worker.evaluate(
-        (newSettings) =>
-          new Promise((resolve, reject) => {
-            chrome.storage.sync.set(newSettings, () => {
-              const error = chrome.runtime.lastError;
-              if (error) {
-                reject(new Error(error.message));
-              } else {
-                resolve();
-              }
-            });
+      await worker.evaluate(async (newSettings) => {
+        await settingsReady;
+        return new Promise((resolve, reject) =>
+          chrome.storage.sync.set(newSettings, () => {
+            const error = chrome.runtime.lastError;
+            if (error) {
+              reject(new Error(error.message));
+            } else {
+              resolve();
+            }
           }),
-        settings,
-      );
+        );
+      }, settings);
     };
 
     await use(context);
@@ -157,9 +156,9 @@ test.describe("Video Auto Pause Extension", () => {
   }) => {
     await expect
       .poll(() =>
-        context.pages().some((candidate) =>
-          candidate.url().endsWith("/onboarding.html"),
-        ),
+        context
+          .pages()
+          .some((candidate) => candidate.url().endsWith("/onboarding.html")),
       )
       .toBe(true);
 
@@ -219,8 +218,8 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(optionsPage.locator("#statsStatus")).toContainText("copied");
     await expect
       .poll(() =>
-        optionsPage.evaluate(() =>
-          window.copiedStats?.includes("50 pauses") ?? false,
+        optionsPage.evaluate(
+          () => window.copiedStats?.includes("50 pauses") ?? false,
         ),
       )
       .toBe(true);
@@ -262,7 +261,10 @@ test.describe("Video Auto Pause Extension", () => {
     );
     await expect
       .poll(() =>
-        worker.evaluate((id) => chrome.action.getBadgeText({ tabId: id }), tabId),
+        worker.evaluate(
+          (id) => chrome.action.getBadgeText({ tabId: id }),
+          tabId,
+        ),
       )
       .toBe("PIN");
 
@@ -275,6 +277,180 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(pinButton).toHaveAttribute("aria-pressed", "false");
     await otherTab.bringToFront();
     await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("saves and edits an override rule for any site", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Domain Settings" })
+      .click();
+    await optionsPage.locator("#siteRuleFilter").fill("localhost");
+    await optionsPage.locator("#addSiteRule").click();
+    await expect(optionsPage.locator("#siteSettingsTitle")).toContainText(
+      "localhost",
+    );
+    await optionsPage
+      .locator("#siteSettingsFields details")
+      .nth(1)
+      .locator("summary")
+      .click();
+    await optionsPage.locator('[data-site-override="muteVideo"]').check();
+    await optionsPage.locator('[data-site-value="muteVideo"]').check();
+    await optionsPage.locator('[data-site-override="pauseDelay"]').check();
+    await optionsPage.locator('[data-site-value="pauseDelay"]').fill("250");
+    await optionsPage.locator('[data-site-override="resumeDelay"]').check();
+    await optionsPage.locator('[data-site-value="resumeDelay"]').fill("500");
+    await optionsPage.locator('[data-site-override="playbackSpeed"]').check();
+    await optionsPage.locator('[data-site-value="playbackSpeed"]').fill("1.75");
+    await optionsPage.locator("#saveSiteSettings").click();
+    await expect(optionsPage.locator("#siteSettingsStatus")).toContainText(
+      "saved",
+    );
+    await expect(optionsPage.locator("#siteRuleList")).toContainText(
+      "localhost",
+    );
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => chrome.storage.sync.get("siteRules")),
+      )
+      .toMatchObject({
+        siteRules: [
+          {
+            domain: "localhost",
+            enabled: true,
+            overrides: {
+              muteVideo: true,
+              pauseDelay: 250,
+              resumeDelay: 500,
+              playbackSpeed: 1.75,
+            },
+          },
+        ],
+      });
+    await optionsPage.locator("#backToGlobal").click();
+    await optionsPage.locator('[data-open-site-rule="localhost"]').click();
+    await expect(
+      optionsPage.locator('[data-site-value="muteVideo"]'),
+    ).toBeChecked();
+    await optionsPage.locator("#backToGlobal").click();
+    await expect(optionsPage.locator("#siteSettingsView")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    await optionsPage.locator("#siteRuleFilter").fill("missing.example");
+    await expect(optionsPage.locator("#siteRuleList li")).toHaveCount(0);
+    await optionsPage.locator("#siteRuleFilter").clear();
+    await expect(optionsPage.locator("#siteRuleList li")).toHaveCount(1);
+    await optionsPage.locator('[data-remove-site-rule="localhost"]').click();
+    await expect(optionsPage.locator("#siteRuleList li")).toHaveCount(0);
+  });
+
+  test("applies per-site mute behavior, delay, and remembered playback speed", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      muteVideo: false,
+      singleVideoPlayback: false,
+      siteRules: [
+        {
+          domain: "*.localhost",
+          enabled: true,
+          overrides: {
+            muteVideo: true,
+            pauseDelay: 0,
+            resumeDelay: 0,
+            playbackSpeed: 1.5,
+          },
+        },
+      ],
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await expect
+      .poll(() => video.evaluate((element) => element.playbackRate))
+      .toBe(1.5);
+    await video.evaluate(async (element) => {
+      await element.play();
+      element.muted = false;
+    });
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect(video).toHaveJSProperty("muted", true);
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("muted", false);
+  });
+
+  test("configures and applies global playback speed", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/video.html`);
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await optionsPage.locator("#playbackSpeed").fill("1.25");
+    await optionsPage.locator("#playbackSpeed").press("Tab");
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => chrome.storage.sync.get("playbackSpeed")),
+      )
+      .toMatchObject({ playbackSpeed: 1.25 });
+    await expect
+      .poll(() => page.locator("#v").evaluate((video) => video.playbackRate))
+      .toBe(1.25);
+  });
+
+  test("a per-site autopause override inherits the rest of the defaults", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: false,
+      onlyConfiguredSites: true,
+      siteRules: [
+        {
+          domain: "localhost",
+          enabled: true,
+          overrides: { autopause: false },
+        },
+      ],
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await video.evaluate(async (element) => element.play());
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
   });
 
   test("applies a preset from onboarding and the settings popup", async ({
@@ -445,18 +621,20 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       `http://localhost:${port}/video.html`,
     );
-    await worker.evaluate((id) =>
-      chrome.scripting.executeScript({
-        target: { tabId: id },
-        world: "ISOLATED",
-        func: () => {
-          Object.defineProperty(document.querySelector("#v"), "duration", {
-            configurable: true,
-            get: () => Number.POSITIVE_INFINITY,
-          });
-        },
-      }),
-    tabId);
+    await worker.evaluate(
+      (id) =>
+        chrome.scripting.executeScript({
+          target: { tabId: id },
+          world: "ISOLATED",
+          func: () => {
+            Object.defineProperty(document.querySelector("#v"), "duration", {
+              configurable: true,
+              get: () => Number.POSITIVE_INFINITY,
+            });
+          },
+        }),
+      tabId,
+    );
 
     const otherTab = await context.newPage();
     await otherTab.goto(`http://localhost:${port}/`);
@@ -539,7 +717,9 @@ test.describe("Video Auto Pause Extension", () => {
     await page.mouse.move(before.x + 70, before.y + 35);
     await page.mouse.up();
     const after = await overlay.boundingBox();
-    expect(Math.abs(after.x - before.x) + Math.abs(after.y - before.y)).toBeGreaterThan(10);
+    expect(
+      Math.abs(after.x - before.x) + Math.abs(after.y - before.y),
+    ).toBeGreaterThan(10);
 
     const siteToggle = overlay.locator('[data-action="site-toggle"]');
     await siteToggle.click();
@@ -548,12 +728,11 @@ test.describe("Video Auto Pause Extension", () => {
     await expect
       .poll(() =>
         worker.evaluate(async () => {
-          const { excludedDomains = [] } =
-            await chrome.storage.sync.get("excludedDomains");
-          return excludedDomains.includes("localhost");
+          const { siteRules = [] } = await chrome.storage.sync.get("siteRules");
+          return siteRules.find((rule) => rule.domain === "localhost")?.enabled;
         }),
       )
-      .toBe(true);
+      .toBe(false);
     await siteToggle.click();
     await expect(siteToggle).toHaveAttribute("aria-pressed", "true");
   });
@@ -595,7 +774,9 @@ test.describe("Video Auto Pause Extension", () => {
       .poll(() =>
         worker.evaluate(async () => {
           const { vapStats = {} } = await chrome.storage.local.get("vapStats");
-          return Object.values(vapStats).find((day) => day.resumes)?.resumes ?? 0;
+          return (
+            Object.values(vapStats).find((day) => day.resumes)?.resumes ?? 0
+          );
         }),
       )
       .toBe(1);
@@ -1139,64 +1320,53 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(pauseDelay).toHaveValue("350");
   });
 
-  test("should add the current domain to include and exclude lists", async ({
+  test("migrates include and exclude lists into site rules", async ({
     context,
   }) => {
     const worker = context.serviceWorkers()[0];
-    const extensionId = new URL(worker.url()).host;
-    const optionsPage = await context.newPage();
-    await optionsPage.goto(`chrome-extension://${extensionId}/options.html`);
-    await optionsPage
-      .locator(".collapsible_button")
-      .filter({ hasText: "Domain Settings" })
-      .click();
-    await optionsPage.evaluate(() => {
-      getCurrentWebTab = async () => ({
-        url: "https://www.example.com/watch",
+    const migrated = await worker.evaluate(async () => {
+      await chrome.storage.sync.remove("onlyConfiguredSites");
+      await chrome.storage.sync.set({
+        vapSiteRulesVersion: 0,
+        siteRules: [
+          {
+            domain: "media.example.com",
+            speed: 1.5,
+            behavior: "mute",
+            pauseDelay: 400,
+          },
+        ],
+        includedDomains: ["allowed.example.com"],
+        excludedDomains: ["blocked.example.com"],
       });
+      await VAP_MIGRATE_DOMAIN_SETTINGS(chrome.storage.sync);
+      return chrome.storage.sync.get(null);
     });
-
-    const excludedDomains = optionsPage.locator("#excludedDomains");
-    await excludedDomains.evaluate((element) => {
-      element.value = "other.example.com";
-    });
-    const addExcludedDomain = optionsPage.locator(
-      '[data-add-domain="excludedDomains"]',
+    expect(migrated.onlyConfiguredSites).toBe(true);
+    expect(migrated.siteRules).toEqual(
+      expect.arrayContaining([
+        {
+          domain: "media.example.com",
+          overrides: {
+            muteVideo: true,
+            pauseDelay: 400,
+            playbackSpeed: 1.5,
+          },
+        },
+        {
+          domain: "allowed.example.com",
+          enabled: true,
+          overrides: {},
+        },
+        {
+          domain: "blocked.example.com",
+          enabled: false,
+          overrides: {},
+        },
+      ]),
     );
-    await expect(addExcludedDomain).toHaveAttribute("title", /.+/);
-    await expect(addExcludedDomain).toHaveAttribute(
-      "aria-label",
-      await addExcludedDomain.getAttribute("title"),
-    );
-    await addExcludedDomain.click();
-    await expect(excludedDomains).toHaveValue(
-      "other.example.com\nwww.example.com",
-    );
-    await addExcludedDomain.click();
-    await expect(excludedDomains).toHaveValue(
-      "other.example.com\nwww.example.com",
-    );
-
-    const includedDomains = optionsPage.locator("#includedDomains");
-    await optionsPage.locator('[data-add-domain="includedDomains"]').click();
-    await expect(includedDomains).toHaveValue("www.example.com");
-
-    await expect
-      .poll(() =>
-        worker.evaluate(
-          () =>
-            new Promise((resolve) =>
-              chrome.storage.sync.get(
-                ["excludedDomains", "includedDomains"],
-                resolve,
-              ),
-            ),
-        ),
-      )
-      .toMatchObject({
-        excludedDomains: ["other.example.com", "www.example.com"],
-        includedDomains: ["www.example.com"],
-      });
+    expect(migrated).not.toHaveProperty("includedDomains");
+    expect(migrated).not.toHaveProperty("excludedDomains");
   });
 
   test("should show fade duration only when audio fading is enabled", async ({
@@ -1827,12 +1997,18 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", false);
   });
 
-  test("should respect Simultaneous Domain Lists (Priority & Implicit Whitelist)", async ({
+  test("per-site enabled state replaces include and exclude lists", async ({
     page,
     context,
   }) => {
-    await context.updateSettings({ excludedDomains: [], includedDomains: [] });
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      onlyConfiguredSites: false,
+      siteRules: [],
+    });
     await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
     const video = page.locator("#v");
     await video.evaluate(async (v) => await v.play());
 
@@ -1842,7 +2018,10 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", true);
     await page.bringToFront();
 
-    await context.updateSettings({ includedDomains: ["localhost"] });
+    await context.updateSettings({
+      onlyConfiguredSites: true,
+      siteRules: [{ domain: "localhost", enabled: true, overrides: {} }],
+    });
     await page.waitForTimeout(1000);
 
     await page2.bringToFront();
@@ -1854,8 +2033,8 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", false);
 
     await context.updateSettings({
-      excludedDomains: ["localhost"],
-      includedDomains: ["localhost"],
+      onlyConfiguredSites: false,
+      siteRules: [{ domain: "localhost", enabled: false, overrides: {} }],
     });
     await page.waitForTimeout(1000);
 

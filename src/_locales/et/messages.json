@@ -302,5 +302,137 @@
   "commandTogglePin": {
     "message": "Lülita aktiivse vahelehe esitamise kinnitus sisse või välja",
     "description": "Temporary tab pin text"
+  },
+  "siteRuleIntro": {
+    "message": "Seadista saiti üldisi seadeid muutmata.",
+    "description": "Introduction to site-specific settings"
+  },
+  "siteRuleBehavior": {
+    "message": "Käitumine",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleDefault": {
+    "message": "Kasuta üldist käitumist",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePause": {
+    "message": "Peata",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleMute": {
+    "message": "Vaigista",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleIgnore": {
+    "message": "Eira saiti",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSpeed": {
+    "message": "Taasesituskiirus (0 = jäta viimane kiirus meelde)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRulePauseDelay": {
+    "message": "Peatamise viivitus (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleResumeDelay": {
+    "message": "Jätkamise viivitus (ms)",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSave": {
+    "message": "Salvesta saidireegel",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleRemove": {
+    "message": "Eemalda",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleSaved": {
+    "message": "Saidireegel salvestatud",
+    "description": "Per-site playback rule text"
+  },
+  "siteRuleFailed": {
+    "message": "Saidireeglit ei saanud salvestada.",
+    "description": "Per-site playback rule text"
+  },
+  "onlyConfiguredSites": {
+    "message": "Luba ainult saidid, mille reegel on lubatud",
+    "description": "Only run the extension on sites with an enabled rule"
+  },
+  "siteRuleDomain": {
+    "message": "Saidi domeen",
+    "description": "Label for the site rule hostname field"
+  },
+  "siteRuleDomainHint": {
+    "message": "Sisesta hostinimi, näiteks example.com; alamdomeenid kaasatakse.",
+    "description": "Hint for entering a site rule hostname"
+  },
+  "siteRuleEnabled": {
+    "message": "Luba laiendus sellel saidil",
+    "description": "Enable or disable the extension for a site"
+  },
+  "siteRuleEnabledOption": {
+    "message": "Lubatud",
+    "description": "Enabled site rule option"
+  },
+  "siteRuleDisabledOption": {
+    "message": "Keelatud",
+    "description": "Disabled site rule option"
+  },
+  "siteRuleOverride": {
+    "message": "Alista",
+    "description": "Prefix for a setting override control"
+  },
+  "siteRuleOverrides": {
+    "message": "Alistatavad seaded",
+    "description": "Heading for per-site setting overrides"
+  },
+  "siteRuleOverridesDescription": {
+    "message": "Vali ainult seaded, mis erinevad üldistest vaikeväärtustest.",
+    "description": "Help text for per-site setting overrides"
+  },
+  "siteRuleFilter": {
+    "message": "Filtreeri saidireegleid",
+    "description": "Filter field for the list of site rules"
+  },
+  "siteRuleEdit": {
+    "message": "Muuda",
+    "description": "Button to edit a saved site rule"
+  },
+  "siteRuleOverridesCount": {
+    "message": "seadet",
+    "description": "Count label for site-specific setting overrides"
+  },
+  "playbackSpeed": {
+    "message": "Taasesituse kiirus (0 = kasuta saidi kiirust)",
+    "description": "Global and per-site playback speed; zero leaves the current site speed unchanged"
+  },
+  "siteSettingsTitle": {
+    "message": "Saidi $1 seaded",
+    "description": "Title for the per-site settings view"
+  },
+  "siteSettingsBack": {
+    "message": "Tagasi",
+    "description": "Button that returns to global settings"
+  },
+  "siteSettingsIntro": {
+    "message": "Need seaded kehtivad ainult sellel saidil. Kohandamata seaded kasutavad üldisi väärtusi.",
+    "description": "Explanation of global setting inheritance"
+  },
+  "siteRuleAdd": {
+    "message": "Lisa praegune sait",
+    "description": "Create a per-site settings rule for the active site"
+  },
+  "siteRuleCustomize": {
+    "message": "Kohanda selle saidi jaoks",
+    "description": "Control to customize a setting for one site"
+  },
+  "siteRuleValueEnabled": {
+    "message": "Lubatud",
+    "description": "Label for the enabled value of a boolean setting"
+  },
+  "siteRuleDelete": {
+    "message": "Kustuta saidi seaded",
+    "description": "Delete the current site rule"
   }
 }
