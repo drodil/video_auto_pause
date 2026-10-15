@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "أفضل جهد: توقف المتصفحات المدعومة التشغيل عند اختفاء مخرج صوت كان متاحًا."
+  },
+  "diagnosticsExport": {
+    "message": "نسخ معلومات التشخيص"
+  },
+  "diagnosticsDescription": {
+    "message": "ينسخ تفاصيل المتصفح والإعدادات إلى الحافظة. لا يتم إرسال أي شيء تلقائيًا."
+  },
+  "diagnosticsCopied": {
+    "message": "نُسخت معلومات التشخيص."
+  },
+  "diagnosticsFailed": {
+    "message": "تعذر نسخ معلومات التشخيص."
   }
 }

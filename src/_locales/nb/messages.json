@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Best mulig støtte: støttede nettlesere setter videoen på pause når en tidligere tilgjengelig lydutgang forsvinner."
+  },
+  "diagnosticsExport": {
+    "message": "Kopier diagnosedata"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopierer nettleserdetaljer og innstillinger til utklippstavlen. Ingenting sendes automatisk."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnosedata kopiert."
+  },
+  "diagnosticsFailed": {
+    "message": "Kunne ikke kopiere diagnosedata."
   }
 }

@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Najlepsze możliwe działanie: obsługiwane przeglądarki wstrzymują film po zniknięciu wcześniej dostępnego wyjścia audio."
+  },
+  "diagnosticsExport": {
+    "message": "Kopiuj dane diagnostyczne"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopiuje szczegóły przeglądarki i ustawienia do schowka. Nic nie jest wysyłane automatycznie."
+  },
+  "diagnosticsCopied": {
+    "message": "Skopiowano dane diagnostyczne."
+  },
+  "diagnosticsFailed": {
+    "message": "Nie udało się skopiować danych diagnostycznych."
   }
 }

@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "En iyi çaba: desteklenen tarayıcılar daha önce kullanılabilen bir ses çıkışı kaybolduğunda videoyu duraklatır."
+  },
+  "diagnosticsExport": {
+    "message": "Tanılama bilgilerini kopyala"
+  },
+  "diagnosticsDescription": {
+    "message": "Tarayıcı ayrıntılarını ve ayarları panoya kopyalar. Hiçbir şey otomatik olarak gönderilmez."
+  },
+  "diagnosticsCopied": {
+    "message": "Tanılama bilgileri kopyalandı."
+  },
+  "diagnosticsFailed": {
+    "message": "Tanılama bilgileri kopyalanamadı."
   }
 }

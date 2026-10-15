@@ -1431,7 +1431,19 @@
               >
                 Report a site
               </a>
+              <button
+                type="button"
+                id="copyDiagnostics"
+                data-i18n="diagnosticsExport"
+              >
+                Copy diagnostics
+              </button>
             </div>
+            <p id="diagnosticsStatus" role="status" aria-live="polite"></p>
+            <p data-i18n="diagnosticsDescription">
+              Copies browser details and settings to your clipboard. Nothing is
+              sent automatically.
+            </p>
             <p style="text-align: center; margin-top: 12px">
               <a
                 href="https://github.com/drodil/video_auto_pause"

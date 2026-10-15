@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Parhaan mahdollisen tuen mukaan: tuetut selaimet keskeyttävät toiston, kun aiemmin käytettävissä ollut äänilaite katoaa."
+  },
+  "diagnosticsExport": {
+    "message": "Kopioi diagnostiikkatiedot"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopioi selaimen tiedot ja asetukset leikepöydälle. Mitään ei lähetetä automaattisesti."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostiikkatiedot kopioitu."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnostiikkatietoja ei voitu kopioida."
   }
 }

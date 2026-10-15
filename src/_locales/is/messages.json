@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Takmarkaður stuðningur: studdir vafrar gera hlé þegar áður tiltækt hljóðúttak hverfur."
+  },
+  "diagnosticsExport": {
+    "message": "Afrita greiningargögn"
+  },
+  "diagnosticsDescription": {
+    "message": "Afritar vafraupplýsingar og stillingar á klippiborðið. Ekkert er sent sjálfkrafa."
+  },
+  "diagnosticsCopied": {
+    "message": "Greiningargögn afrituð."
+  },
+  "diagnosticsFailed": {
+    "message": "Ekki tókst að afrita greiningargögn."
   }
 }

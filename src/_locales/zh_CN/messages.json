@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "尽力支持：受支持的浏览器会在先前可用的音频输出设备消失时暂停视频。"
+  },
+  "diagnosticsExport": {
+    "message": "复制诊断信息"
+  },
+  "diagnosticsDescription": {
+    "message": "将浏览器详情和设置复制到剪贴板，不会自动发送任何内容。"
+  },
+  "diagnosticsCopied": {
+    "message": "已复制诊断信息。"
+  },
+  "diagnosticsFailed": {
+    "message": "无法复制诊断信息。"
   }
 }

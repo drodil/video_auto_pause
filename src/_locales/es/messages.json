@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Mejor esfuerzo: los navegadores compatibles pausan cuando desaparece una salida de audio disponible anteriormente."
+  },
+  "diagnosticsExport": {
+    "message": "Copiar diagnóstico"
+  },
+  "diagnosticsDescription": {
+    "message": "Copia los detalles del navegador y la configuración al portapapeles. No se envía nada automáticamente."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnóstico copiado."
+  },
+  "diagnosticsFailed": {
+    "message": "No se pudo copiar el diagnóstico."
   }
 }

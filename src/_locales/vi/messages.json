@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Hỗ trợ tùy trình duyệt: trình duyệt được hỗ trợ sẽ tạm dừng khi thiết bị đầu ra từng khả dụng biến mất."
+  },
+  "diagnosticsExport": {
+    "message": "Sao chép thông tin chẩn đoán"
+  },
+  "diagnosticsDescription": {
+    "message": "Sao chép thông tin trình duyệt và cài đặt vào bộ nhớ tạm. Không có dữ liệu nào được gửi tự động."
+  },
+  "diagnosticsCopied": {
+    "message": "Đã sao chép thông tin chẩn đoán."
+  },
+  "diagnosticsFailed": {
+    "message": "Không thể sao chép thông tin chẩn đoán."
   }
 }

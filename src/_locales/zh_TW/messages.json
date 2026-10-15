@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "盡力支援：受支援的瀏覽器會在先前可用的音訊輸出裝置消失時暫停影片。"
+  },
+  "diagnosticsExport": {
+    "message": "複製診斷資訊"
+  },
+  "diagnosticsDescription": {
+    "message": "將瀏覽器詳細資料和設定複製到剪貼簿，不會自動傳送任何內容。"
+  },
+  "diagnosticsCopied": {
+    "message": "已複製診斷資訊。"
+  },
+  "diagnosticsFailed": {
+    "message": "無法複製診斷資訊。"
   }
 }

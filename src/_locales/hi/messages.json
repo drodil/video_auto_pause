@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "सीमित समर्थन: संगत ब्राउज़र पहले उपलब्ध ऑडियो आउटपुट हटने पर वीडियो रोकते हैं।"
+  },
+  "diagnosticsExport": {
+    "message": "निदान कॉपी करें"
+  },
+  "diagnosticsDescription": {
+    "message": "ब्राउज़र विवरण और सेटिंग क्लिपबोर्ड पर कॉपी करता है। कुछ भी अपने-आप नहीं भेजा जाता।"
+  },
+  "diagnosticsCopied": {
+    "message": "निदान कॉपी किया गया।"
+  },
+  "diagnosticsFailed": {
+    "message": "निदान कॉपी नहीं हो सका।"
   }
 }

@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Supporto best effort: i browser compatibili mettono in pausa quando scompare un'uscita audio precedentemente disponibile."
+  },
+  "diagnosticsExport": {
+    "message": "Copia diagnostica"
+  },
+  "diagnosticsDescription": {
+    "message": "Copia i dettagli del browser e le impostazioni negli appunti. Non viene inviato nulla automaticamente."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostica copiata."
+  },
+  "diagnosticsFailed": {
+    "message": "Impossibile copiare la diagnostica."
   }
 }

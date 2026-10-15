@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Bedste indsats: Understøttede browsere sætter videoen på pause, når en tidligere tilgængelig lydudgang forsvinder."
+  },
+  "diagnosticsExport": {
+    "message": "Kopiér diagnosticoplysninger"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopierer browseroplysninger og indstillinger til udklipsholderen. Intet sendes automatisk."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnosticoplysninger kopieret."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnosticoplysninger kunne ikke kopieres."
   }
 }

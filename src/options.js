@@ -363,6 +363,19 @@ async function updateSiteReportLink() {
   link.href = issueUrl.toString();
 }
 
+async function copyDiagnostics() {
+  if (!navigator.clipboard?.writeText) {
+    throw new Error("Clipboard access is unavailable.");
+  }
+  const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+  const diagnostics = {
+    extensionVersion: env.runtime.getManifest().version,
+    browser: navigator.userAgent,
+    settings,
+  };
+  await navigator.clipboard.writeText(JSON.stringify(diagnostics, null, 2));
+}
+
 function validateSettingsPayload(payload) {
   if (
     !payload ||
@@ -1049,6 +1062,17 @@ document
       console.error("Video Auto Pause could not delete a profile:", error);
     }
   });
+document.getElementById("copyDiagnostics").addEventListener("click", () => {
+  const status = document.getElementById("diagnosticsStatus");
+  void copyDiagnostics()
+    .then(() => {
+      status.textContent = env.i18n.getMessage("diagnosticsCopied");
+    })
+    .catch((error) => {
+      status.textContent = env.i18n.getMessage("diagnosticsFailed");
+      console.error("Video Auto Pause could not copy diagnostics:", error);
+    });
+});
 document
   .getElementById("profileSelect")
   ?.addEventListener("change", (event) => {

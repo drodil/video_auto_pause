@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "За можливості: підтримувані браузери призупиняють відео, коли раніше доступний аудіовихід зникає."
+  },
+  "diagnosticsExport": {
+    "message": "Копіювати діагностику"
+  },
+  "diagnosticsDescription": {
+    "message": "Копіює дані браузера та налаштування в буфер обміну. Нічого не надсилається автоматично."
+  },
+  "diagnosticsCopied": {
+    "message": "Діагностику скопійовано."
+  },
+  "diagnosticsFailed": {
+    "message": "Не вдалося скопіювати діагностику."
   }
 }

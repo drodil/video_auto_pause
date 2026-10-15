@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Best-Effort-Funktion: Unterstützte Browser pausieren, wenn ein zuvor verfügbarer Audioausgang verschwindet."
+  },
+  "diagnosticsExport": {
+    "message": "Diagnosedaten kopieren"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopiert Browserdetails und Einstellungen in die Zwischenablage. Es wird nichts automatisch gesendet."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnosedaten kopiert."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnosedaten konnten nicht kopiert werden."
   }
 }

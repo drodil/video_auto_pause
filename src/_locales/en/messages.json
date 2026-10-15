@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Best effort: supported browsers pause when a previously available audio output disappears."
+  },
+  "diagnosticsExport": {
+    "message": "Copy diagnostics"
+  },
+  "diagnosticsDescription": {
+    "message": "Copies browser details and settings to your clipboard. Nothing is sent automatically."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostics copied to clipboard."
+  },
+  "diagnosticsFailed": {
+    "message": "Could not copy diagnostics."
   }
 }

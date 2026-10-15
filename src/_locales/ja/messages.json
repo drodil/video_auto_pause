@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "ベストエフォート機能です。対応ブラウザーでは、利用可能だった音声出力が消えると動画を一時停止します。"
+  },
+  "diagnosticsExport": {
+    "message": "診断情報をコピー"
+  },
+  "diagnosticsDescription": {
+    "message": "ブラウザー情報と設定をクリップボードにコピーします。自動送信は行いません。"
+  },
+  "diagnosticsCopied": {
+    "message": "診断情報をコピーしました。"
+  },
+  "diagnosticsFailed": {
+    "message": "診断情報をコピーできませんでした。"
   }
 }

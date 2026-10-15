@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Meilleur effort : les navigateurs compatibles mettent en pause lorsqu’une sortie audio précédemment disponible disparaît."
+  },
+  "diagnosticsExport": {
+    "message": "Copier les diagnostics"
+  },
+  "diagnosticsDescription": {
+    "message": "Copie les détails du navigateur et les paramètres dans le presse-papiers. Rien n’est envoyé automatiquement."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostics copiés."
+  },
+  "diagnosticsFailed": {
+    "message": "Impossible de copier les diagnostics."
   }
 }

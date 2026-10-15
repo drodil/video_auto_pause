@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Best effort: ondersteunde browsers pauzeren wanneer een eerder beschikbare audio-uitgang verdwijnt."
+  },
+  "diagnosticsExport": {
+    "message": "Diagnostische gegevens kopiëren"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopieert browsergegevens en instellingen naar het klembord. Er wordt niets automatisch verzonden."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostische gegevens gekopieerd."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnostische gegevens konden niet worden gekopieerd."
   }
 }

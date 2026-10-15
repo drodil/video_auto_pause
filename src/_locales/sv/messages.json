@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Bästa möjliga stöd: webbläsare som stöds pausar när en tidigare tillgänglig ljudutgång försvinner."
+  },
+  "diagnosticsExport": {
+    "message": "Kopiera diagnostik"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopierar webbläsarinformation och inställningar till urklipp. Inget skickas automatiskt."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostik kopierad."
+  },
+  "diagnosticsFailed": {
+    "message": "Det gick inte att kopiera diagnostiken."
   }
 }

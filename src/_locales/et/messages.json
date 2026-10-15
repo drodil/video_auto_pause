@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Parim võimalik tugi: ühilduvad brauserid peatavad video, kui varem saadaolev heliväljund kaob."
+  },
+  "diagnosticsExport": {
+    "message": "Kopeeri diagnostika"
+  },
+  "diagnosticsDescription": {
+    "message": "Kopeerib brauseri andmed ja seaded lõikelauale. Midagi ei saadeta automaatselt."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostika kopeeriti."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnostikat ei saanud kopeerida."
   }
 }

@@ -700,6 +700,10 @@ test.describe("Video Auto Pause Extension", () => {
       "pauseOnLowBatteryDescription",
       "pauseOnAudioOutputDisconnect",
       "pauseOnAudioOutputDisconnectDescription",
+      "diagnosticsExport",
+      "diagnosticsDescription",
+      "diagnosticsCopied",
+      "diagnosticsFailed",
       "pauseAtEnd",
       "pauseAtEndNotice",
     ];
@@ -1876,6 +1880,39 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       )
       .toMatchObject({ pauseOnAudioOutputDisconnect: true });
+  });
+
+  test("copies local diagnostics without submitting them", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    await optionsPage.goto(optionsUrl);
+    await optionsPage.evaluate(() => {
+      window.__clipboardText = null;
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: {
+          writeText: async (text) => {
+            window.__clipboardText = text;
+          },
+        },
+      });
+    });
+    await optionsPage.locator("#copyDiagnostics").click();
+    await expect(optionsPage.locator("#diagnosticsStatus")).toContainText(
+      "copied",
+    );
+    const diagnosticText = await optionsPage.evaluate(
+      () => window.__clipboardText,
+    );
+    const diagnostics = JSON.parse(diagnosticText);
+    expect(diagnostics).toHaveProperty("extensionVersion");
+    expect(diagnostics).toHaveProperty("browser");
+    expect(diagnostics).toHaveProperty("settings");
   });
 
   test("prevents automatic next playback after a video ends", async ({

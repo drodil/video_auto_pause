@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "Upaya terbaik: browser yang didukung menjeda video saat output audio yang sebelumnya tersedia menghilang."
+  },
+  "diagnosticsExport": {
+    "message": "Salin diagnostik"
+  },
+  "diagnosticsDescription": {
+    "message": "Menyalin detail browser dan pengaturan ke papan klip. Tidak ada yang dikirim otomatis."
+  },
+  "diagnosticsCopied": {
+    "message": "Diagnostik disalin."
+  },
+  "diagnosticsFailed": {
+    "message": "Diagnostik tidak dapat disalin."
   }
 }

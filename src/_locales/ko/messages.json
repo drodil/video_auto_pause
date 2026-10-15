@@ -658,5 +658,17 @@
   },
   "pauseOnAudioOutputDisconnectDescription": {
     "message": "최선의 지원 방식입니다. 지원 브라우저는 이전에 사용 가능했던 오디오 출력 장치가 사라지면 동영상을 일시 중지합니다."
+  },
+  "diagnosticsExport": {
+    "message": "진단 정보 복사"
+  },
+  "diagnosticsDescription": {
+    "message": "브라우저 정보와 설정을 클립보드에 복사합니다. 자동으로 전송되지 않습니다."
+  },
+  "diagnosticsCopied": {
+    "message": "진단 정보를 복사했습니다."
+  },
+  "diagnosticsFailed": {
+    "message": "진단 정보를 복사할 수 없습니다."
   }
 }
