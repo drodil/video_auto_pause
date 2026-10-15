@@ -131,6 +131,14 @@
     "message": "在 GitHub 上查看原始碼",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "回報網站問題",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "開啟包含網站網址與瀏覽器資訊的回報草稿；除非你提交回報，否則不會傳送任何資料。",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

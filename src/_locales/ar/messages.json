@@ -131,6 +131,14 @@
     "message": "عرض المصدر على GitHub",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "الإبلاغ عن موقع",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "يفتح مسودة بلاغ تتضمن عنوان الموقع والمتصفح؛ لن تُرسل أي بيانات حتى ترسل البلاغ بنفسك.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

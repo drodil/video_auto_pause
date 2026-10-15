@@ -548,6 +548,8 @@ test.describe("Video Auto Pause Extension", () => {
       "sleepTimerCancel",
       "sleepTimerSet",
       "sleepTimerFailed",
+      "reportSite",
+      "reportSiteDescription",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1988,6 +1990,37 @@ test.describe("Video Auto Pause Extension", () => {
       .toBe(true);
     await worker.evaluate(() => pauseEverythingForSleepTimer());
     await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("prepares a site report with privacy-safe browser details", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(
+      `http://localhost:${port}/video.html?session-secret=do-not-share#private`,
+    );
+    const worker = context.serviceWorkers()[0];
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+    await expect
+      .poll(() => optionsPage.locator("#reportSite").getAttribute("href"))
+      .toContain("body=");
+    const issueUrl = new URL(
+      await optionsPage.locator("#reportSite").getAttribute("href"),
+    );
+    expect(issueUrl.origin).toBe("https://github.com");
+    expect(issueUrl.pathname).toBe("/drodil/video_auto_pause/issues/new");
+    expect(issueUrl.searchParams.get("title")).toBe(
+      "Site compatibility report",
+    );
+    const body = issueUrl.searchParams.get("body");
+    expect(body).toContain(`Site: http://localhost:${port}`);
+    expect(body).toContain("Browser: ");
+    expect(body).not.toContain("session-secret");
+    expect(body).not.toContain("private");
   });
 
   test("should prioritize audio-only media across tabs", async ({

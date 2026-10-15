@@ -131,6 +131,14 @@
     "message": "Skoða frumkóða á GitHub",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Tilkynna vefsvæði",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Opnar drög að tilkynningu með vefslóð og vafra; ekkert er sent fyrr en þú sendir hana.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Styrktaraðilar",
     "description": "Link text for GitHub Sponsors"

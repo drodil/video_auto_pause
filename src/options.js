@@ -329,6 +329,21 @@ async function getCurrentWebTab() {
   );
 }
 
+async function updateSiteReportLink() {
+  const link = document.getElementById("reportSite");
+  const issueUrl = new URL(
+    "https://github.com/drodil/video_auto_pause/issues/new",
+  );
+  issueUrl.searchParams.set("title", "Site compatibility report");
+  const tab = await getCurrentWebTab();
+  const site = tab?.url ? new URL(tab.url).origin : "Not available";
+  issueUrl.searchParams.set(
+    "body",
+    `Site: ${site}\nBrowser: ${navigator.userAgent}\n\nDescribe what did not work:`,
+  );
+  link.href = issueUrl.toString();
+}
+
 function readOption(option, element) {
   if (
     [
@@ -664,6 +679,12 @@ for (const option in options) {
 }
 
 buildSiteSettingsFields();
+void updateSiteReportLink().catch((error) => {
+  console.error(
+    "Video Auto Pause could not prepare the site report link:",
+    error,
+  );
+});
 document.getElementById("addSiteRule").addEventListener("click", () => {
   void addCurrentSiteRule().catch((error) => {
     document.getElementById("siteRuleStatus").textContent =

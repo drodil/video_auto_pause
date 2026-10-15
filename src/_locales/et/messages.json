@@ -131,6 +131,14 @@
     "message": "Vaata lähtekoodi GitHubis",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Teata saidist",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Avab raporti mustandi saidi aadressi ja brauseriga; midagi ei saadeta enne, kui raporti ise esitad.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

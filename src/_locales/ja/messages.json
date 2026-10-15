@@ -131,6 +131,14 @@
     "message": "GitHubでソースを表示",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "サイトを報告",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "サイトの URL とブラウザーを含む報告の下書きを開きます。送信するまでデータは送られません。",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

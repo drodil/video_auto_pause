@@ -131,6 +131,14 @@
     "message": "Переглянути вихідний код на GitHub",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Повідомити про сайт",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Відкриває чернетку звіту з адресою сайту та браузером; дані не надсилаються, доки ви не надішлете звіт.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

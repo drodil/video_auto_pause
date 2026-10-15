@@ -131,6 +131,14 @@
     "message": "Näytä lähdekoodi GitHubissa",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Ilmoita sivustosta",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Avaa ilmoitusluonnoksen, jossa ovat sivuston osoite ja selain; mitään ei lähetetä ennen lähettämistäsi.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

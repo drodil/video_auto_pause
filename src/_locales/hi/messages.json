@@ -131,6 +131,14 @@
     "message": "GitHub पर सोर्स देखें",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "साइट की रिपोर्ट करें",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "साइट और ब्राउज़र के विवरण वाला रिपोर्ट ड्राफ़्ट खोलता है; आपके भेजने तक कुछ भी नहीं भेजा जाता।",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

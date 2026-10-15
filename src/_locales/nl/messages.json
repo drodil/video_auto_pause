@@ -131,6 +131,14 @@
     "message": "Bekijk broncode op GitHub",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Een site melden",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Opent een melding met de site en browser; er wordt niets verzonden totdat je de melding indient.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

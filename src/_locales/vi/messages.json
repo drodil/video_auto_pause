@@ -131,6 +131,14 @@
     "message": "Xem Mã Nguồn trên GitHub",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Báo cáo trang web",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Mở bản nháp có địa chỉ trang web và trình duyệt; không gửi dữ liệu cho đến khi bạn gửi báo cáo.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

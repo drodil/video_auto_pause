@@ -41,6 +41,18 @@ sleep timer to pause active videos across tabs.
 Peek mode can keep a video playing when its window loses focus while the
 pointer remains over that video.
 
+## Player compatibility
+
+The extension controls standard HTML video elements across sites. YouTube also
+has player-specific active-ad detection and autoplay-next controls. Streaming
+services such as Netflix, Twitch, Prime Video, Disney+, Vimeo, Coursera, Udemy,
+Bilibili, X, TikTok, and Reddit are best-effort: DRM, cross-origin frames, or
+custom players can limit browser access to their controls.
+
+Use **Report a site** in the settings to open a GitHub issue draft containing
+the current site origin and browser. The draft is not submitted automatically,
+and query strings and fragments are intentionally excluded.
+
 ## Installing
 
 #### Chrome Web Store

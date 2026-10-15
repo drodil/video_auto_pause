@@ -131,6 +131,14 @@
     "message": "Quellcode auf GitHub ansehen",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "Website melden",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "Öffnet einen Berichtsentwurf mit Website-Adresse und Browser; es werden keine Daten gesendet, bevor du ihn absendest.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"

@@ -131,6 +131,14 @@
     "message": "GitHub에서 소스 보기",
     "description": "Link text for GitHub repository"
   },
+  "reportSite": {
+    "message": "사이트 문제 신고",
+    "description": "Report a site where playback control does not work."
+  },
+  "reportSiteDescription": {
+    "message": "사이트 주소와 브라우저가 포함된 신고 초안을 엽니다. 직접 제출하기 전에는 데이터가 전송되지 않습니다.",
+    "description": "Privacy note for the report link."
+  },
   "githubSponsors": {
     "message": "GitHub Sponsors",
     "description": "Link text for GitHub Sponsors"
