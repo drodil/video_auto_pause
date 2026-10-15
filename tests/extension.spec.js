@@ -687,6 +687,59 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("muted", false);
   });
 
+  test("recognizes generic and YouTube player ad markers", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      muteDuringAds: true,
+      liveStreamMute: false,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+
+    for (const marker of ["generic", "youtube"]) {
+      await page.bringToFront();
+      await video.evaluate(async (element, markerType) => {
+        await element.play();
+        element.muted = false;
+        const ad = document.createElement("div");
+        ad.id = "test-ad-marker";
+        if (markerType === "generic") {
+          ad.dataset.adPlaying = "true";
+        } else {
+          ad.className = "video-ads ytp-ad-module";
+          const activeOverlay = document.createElement("div");
+          activeOverlay.className = "ytp-ad-player-overlay";
+          activeOverlay.style.cssText =
+            "position:fixed;width:10px;height:10px;top:0;left:0";
+          ad.append(activeOverlay);
+        }
+        document.body.append(ad);
+      }, marker);
+
+      await otherTab.bringToFront();
+      await expect(video).toHaveJSProperty("paused", false);
+      await expect(video).toHaveJSProperty("muted", true);
+      await page.locator("#test-ad-marker").evaluate((ad) => ad.remove());
+      await expect(video).toHaveJSProperty("paused", true);
+      await page.bringToFront();
+      await expect(video).toHaveJSProperty("paused", false);
+      await expect(video).toHaveJSProperty("muted", false);
+    }
+  });
+
   test("shows draggable video controls for playback, speed, and site rules", async ({
     page,
     context,

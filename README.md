@@ -29,6 +29,10 @@ customize it for that site. You can disable the extension for one domain, set a
 global playback speed (or override it per site), and preserve legacy include /
 exclude behavior through automatic migration to site rules.
 
+Ad handling watches active player markers across sites, including YouTube's
+active ad UI, generic `data-ad-playing` signals, and common player-ad overlays.
+An empty YouTube ad-module placeholder alone is not treated as an active ad.
+
 ## Installing
 
 #### Chrome Web Store

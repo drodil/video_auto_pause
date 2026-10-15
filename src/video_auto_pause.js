@@ -477,7 +477,54 @@ if (window.autoPauseInjected !== true) {
     }
   };
 
-  const isAdPlaying = () => Boolean(document.querySelector(".ad-showing"));
+  const activeAdMarkers = [
+    ".ad-showing",
+    ".ad-playing",
+    ".vjs-ad-playing",
+    ".jw-flag-ads",
+    '[data-ad-playing="true"]',
+    '[data-ad-state="playing"]',
+    '[data-is-ad="true"]',
+    '[data-testid="ad-playing"]',
+    'video[data-ad="true"]',
+    ".atvwebplayersdk-adOverlay",
+    ".player-ad-overlay",
+    ".video-player__ad-overlay",
+  ];
+  const visibleAdMarkers = [
+    ".ytp-ad-player-overlay",
+    ".ytp-ad-preview-container",
+    ".ytp-ad-skip-button",
+    ".ima-ad-container",
+    ".vp-ad",
+  ];
+
+  function isVisibleAdMarker(element) {
+    const style = window.getComputedStyle(element);
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      style.opacity !== "0" &&
+      element.getClientRects().length > 0
+    );
+  }
+
+  function isAdPlaying() {
+    if (activeAdMarkers.some((selector) => document.querySelector(selector))) {
+      return true;
+    }
+    if (
+      visibleAdMarkers.some((selector) =>
+        [...document.querySelectorAll(selector)].some(isVisibleAdMarker),
+      )
+    ) {
+      return true;
+    }
+    const youtubeAdModule = document.querySelector(".video-ads.ytp-ad-module");
+    return Boolean(
+      youtubeAdModule && [...youtubeAdModule.children].some(isVisibleAdMarker),
+    );
+  }
 
   const waitForAdToFinish = (video, actionToken) => {
     if (videoActionTokens.get(video) !== actionToken || !video.isConnected) {
