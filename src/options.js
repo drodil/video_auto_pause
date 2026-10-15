@@ -662,6 +662,9 @@ function readOption(option, element) {
   if (["quietHoursStart", "quietHoursEnd"].includes(option)) {
     return element.value;
   }
+  if (option === "audioAllowList") {
+    return element.value;
+  }
   return element.checked;
 }
 
@@ -824,7 +827,9 @@ async function restore_options(changedKeys = Object.keys(options)) {
       ].includes(opt)
     ) {
       element.value = Math.max(0, Number(items[opt]) || 0);
-    } else if (["quietHoursStart", "quietHoursEnd"].includes(opt)) {
+    } else if (
+      ["quietHoursStart", "quietHoursEnd", "audioAllowList"].includes(opt)
+    ) {
       element.value = items[opt] || "";
     } else {
       element.checked = Boolean(items[opt]);

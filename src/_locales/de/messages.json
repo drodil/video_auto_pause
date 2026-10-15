@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Video beim Tabwechsel im Bild-in-Bild-Modus öffnen"
+  },
+  "audioOnlySupport": {
+    "message": "Auch reine Audioplayer steuern"
+  },
+  "audioOnlyDescription": {
+    "message": "Audio bleibt standardmäßig unbeeinflusst. Aktiviert wird die Wiedergabe auf den aufgeführten Domains fortgesetzt."
+  },
+  "audioAllowList": {
+    "message": "Audio auf diesen Domains immer zulassen"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

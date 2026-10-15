@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Åpne video i bilde-i-bilde når du bytter fane"
+  },
+  "audioOnlySupport": {
+    "message": "Styr også rene lydspillere"
+  },
+  "audioOnlyDescription": {
+    "message": "Lyd påvirkes ikke som standard. Når aktivert, fortsetter lyd på de oppførte domenene å spille."
+  },
+  "audioAllowList": {
+    "message": "Tillat alltid lyd på disse domenene"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

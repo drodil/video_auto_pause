@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "فتح الفيديو في نافذة صورة داخل صورة عند تبديل علامات التبويب"
+  },
+  "audioOnlySupport": {
+    "message": "التحكم في مشغلات الصوت فقط أيضًا"
+  },
+  "audioOnlyDescription": {
+    "message": "يظل الصوت دون تغيير افتراضيًا. عند التفعيل، يستمر تشغيل الصوت في النطاقات المدرجة."
+  },
+  "audioAllowList": {
+    "message": "السماح دائمًا بالصوت في هذه النطاقات"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

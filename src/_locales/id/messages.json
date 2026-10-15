@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Buka video dalam mode Gambar-dalam-Gambar saat berpindah tab"
+  },
+  "audioOnlySupport": {
+    "message": "Kontrol juga pemutar audio saja"
+  },
+  "audioOnlyDescription": {
+    "message": "Audio tidak diubah secara default. Jika diaktifkan, audio dari domain yang tercantum tetap dapat diputar."
+  },
+  "audioAllowList": {
+    "message": "Selalu izinkan audio di domain ini"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

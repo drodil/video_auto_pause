@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Öppna video i bild-i-bild när du byter flik"
+  },
+  "audioOnlySupport": {
+    "message": "Styr även ljudspelare utan video"
+  },
+  "audioOnlyDescription": {
+    "message": "Ljud påverkas inte som standard. När inställningen är aktiverad fortsätter ljud på listade domäner att spelas."
+  },
+  "audioAllowList": {
+    "message": "Tillåt alltid ljud på dessa domäner"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

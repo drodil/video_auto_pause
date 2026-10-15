@@ -692,6 +692,10 @@ test.describe("Video Auto Pause Extension", () => {
       "shortcutActionUnsupported",
       "shortcutActionFailed",
       "autoPipOnTabSwitch",
+      "audioOnlySupport",
+      "audioOnlyDescription",
+      "audioAllowList",
+      "audioAllowListPlaceholder",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1726,6 +1730,59 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       )
       .toMatchObject({ autoPipOnTabSwitch: true });
+  });
+
+  test("controls audio-only players only when enabled and not allow-listed", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ handleAudio: true, audioAllowList: "" });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await expect(page.locator("#v")).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    const worker = context.serviceWorkers()[0];
+    const createAudioAndPlay = async () =>
+      page.evaluate(async () => {
+        const audio = document.createElement("audio");
+        audio.id = "audio-only";
+        audio.src = "https://www.w3schools.com/html/horse.mp3";
+        audio.muted = true;
+        document.body.append(audio);
+        await new Promise((resolve, reject) => {
+          audio.addEventListener("canplay", resolve, { once: true });
+          audio.addEventListener("error", reject, { once: true });
+        });
+        await audio.play();
+      });
+    const sendStop = async () =>
+      worker.evaluate(async (url) => {
+        const [tab] = await chrome.tabs.query({ url });
+        await chrome.tabs.sendMessage(tab.id, {
+          action: "stop",
+          immediate: true,
+        });
+      }, page.url());
+
+    await createAudioAndPlay();
+    await sendStop();
+    await expect(page.locator("#audio-only")).toHaveJSProperty("paused", true);
+
+    await context.updateSettings({
+      handleAudio: true,
+      audioAllowList: "localhost",
+    });
+    await page.reload();
+    await expect(page.locator("#v")).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await createAudioAndPlay();
+    await sendStop();
+    await expect(page.locator("#audio-only")).toHaveJSProperty("paused", false);
   });
 
   test("should clamp negative delay values in the options page", async ({

@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Abrir el vídeo en imagen en imagen al cambiar de pestaña"
+  },
+  "audioOnlySupport": {
+    "message": "Controlar también los reproductores de solo audio"
+  },
+  "audioOnlyDescription": {
+    "message": "El audio no se modifica de forma predeterminada. Al activarlo, el audio de los dominios indicados puede seguir reproduciéndose."
+  },
+  "audioAllowList": {
+    "message": "Permitir siempre audio en estos dominios"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

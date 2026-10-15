@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "切换标签页时以画中画方式打开视频"
+  },
+  "audioOnlySupport": {
+    "message": "同时控制纯音频播放器"
+  },
+  "audioOnlyDescription": {
+    "message": "默认情况下不影响音频。启用后，列表域名中的音频仍可继续播放。"
+  },
+  "audioAllowList": {
+    "message": "始终允许这些域名播放音频"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

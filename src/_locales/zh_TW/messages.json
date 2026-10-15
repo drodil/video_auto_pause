@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "切換分頁時以子母畫面開啟影片"
+  },
+  "audioOnlySupport": {
+    "message": "同時控制純音訊播放器"
+  },
+  "audioOnlyDescription": {
+    "message": "預設不會影響音訊。啟用後，清單網域的音訊仍可繼續播放。"
+  },
+  "audioAllowList": {
+    "message": "一律允許這些網域播放音訊"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

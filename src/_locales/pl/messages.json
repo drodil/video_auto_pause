@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Otwórz wideo w trybie obraz w obrazie po przełączeniu karty"
+  },
+  "audioOnlySupport": {
+    "message": "Steruj także odtwarzaczami wyłącznie audio"
+  },
+  "audioOnlyDescription": {
+    "message": "Domyślnie dźwięk nie jest zmieniany. Po włączeniu dźwięk w wymienionych domenach może być odtwarzany dalej."
+  },
+  "audioAllowList": {
+    "message": "Zawsze zezwalaj na dźwięk w tych domenach"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

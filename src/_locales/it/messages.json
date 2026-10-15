@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Apri il video in Picture-in-Picture quando cambi scheda"
+  },
+  "audioOnlySupport": {
+    "message": "Controlla anche i lettori solo audio"
+  },
+  "audioOnlyDescription": {
+    "message": "L’audio non viene modificato per impostazione predefinita. Se attivato, l’audio dei domini elencati può continuare."
+  },
+  "audioAllowList": {
+    "message": "Consenti sempre l’audio su questi domini"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

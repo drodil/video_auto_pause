@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Video openen in picture-in-picture bij wisselen van tabblad"
+  },
+  "audioOnlySupport": {
+    "message": "Ook alleen-audiospelers bedienen"
+  },
+  "audioOnlyDescription": {
+    "message": "Audio wordt standaard niet beïnvloed. Indien ingeschakeld, kan audio op de vermelde domeinen blijven afspelen."
+  },
+  "audioAllowList": {
+    "message": "Audio op deze domeinen altijd toestaan"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

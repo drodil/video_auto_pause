@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Відкривати відео в режимі «картинка в картинці» під час перемикання вкладок"
+  },
+  "audioOnlySupport": {
+    "message": "Керувати також аудіопрогравачами"
+  },
+  "audioOnlyDescription": {
+    "message": "За замовчуванням аудіо не змінюється. Після ввімкнення звук на перелічених доменах продовжить відтворюватися."
+  },
+  "audioAllowList": {
+    "message": "Завжди дозволяти аудіо на цих доменах"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

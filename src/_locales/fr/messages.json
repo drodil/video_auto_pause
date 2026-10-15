@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Ouvrir la vidéo en incrustation lors du changement d’onglet"
+  },
+  "audioOnlySupport": {
+    "message": "Contrôler aussi les lecteurs audio uniquement"
+  },
+  "audioOnlyDescription": {
+    "message": "L’audio n’est pas affecté par défaut. Une fois activé, l’audio des domaines listés peut continuer."
+  },
+  "audioAllowList": {
+    "message": "Toujours autoriser l’audio sur ces domaines"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

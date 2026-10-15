@@ -673,9 +673,22 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener("keydown", handleContentShortcut, true);
 
   function allMedia() {
+    const allowedAudioDomains = String(options.audioAllowList ?? "")
+      .split(/[,\s]+/)
+      .map(VAP_NORMALIZE_DOMAIN)
+      .filter(Boolean);
     return [
       ...new Set([...allVideos(), ...collectAudio(), ...detectedAudio]),
-    ].filter((media) => media.isConnected);
+    ].filter(
+      (media) =>
+        media.isConnected &&
+        (media.tagName !== "AUDIO" ||
+          (options.handleAudio &&
+            !VAP_MATCHES_DOMAIN(
+              location.hostname.toLowerCase(),
+              allowedAudioDomains,
+            ))),
+    );
   }
 
   function reportMediaState() {
@@ -1009,7 +1022,12 @@ if (window.autoPauseInjected !== true) {
           await handleMuteAction(video, "mute", actionToken);
           break;
         }
-        if (!isManuallyPaused && options.muteDuringAds && isAdPlaying()) {
+        if (
+          !isManuallyPaused &&
+          video instanceof HTMLVideoElement &&
+          options.muteDuringAds &&
+          isAdPlaying()
+        ) {
           await handleMuteAction(video, "mute", actionToken);
           if (
             videoActionTokens.get(video) === actionToken &&
@@ -1027,7 +1045,11 @@ if (window.autoPauseInjected !== true) {
         }
         break;
       case "resume":
-        if (options.muteDuringAds && isAdPlaying()) {
+        if (
+          video instanceof HTMLVideoElement &&
+          options.muteDuringAds &&
+          isAdPlaying()
+        ) {
           if (!(await waitForAdToFinish(video, actionToken))) {
             break;
           }

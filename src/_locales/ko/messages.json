@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "탭을 전환할 때 동영상을 화면 속 화면으로 열기"
+  },
+  "audioOnlySupport": {
+    "message": "오디오 전용 플레이어도 제어"
+  },
+  "audioOnlyDescription": {
+    "message": "기본적으로 오디오는 영향을 받지 않습니다. 사용 설정하면 목록의 도메인에서 오디오 재생을 계속 허용합니다."
+  },
+  "audioAllowList": {
+    "message": "다음 도메인에서는 항상 오디오 허용"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

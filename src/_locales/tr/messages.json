@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Sekme değiştirirken videoyu Resim içinde Resim modunda aç"
+  },
+  "audioOnlySupport": {
+    "message": "Yalnızca ses oynatıcılarını da denetle"
+  },
+  "audioOnlyDescription": {
+    "message": "Ses varsayılan olarak etkilenmez. Etkinleştirildiğinde listelenen alan adlarındaki ses çalmaya devam eder."
+  },
+  "audioAllowList": {
+    "message": "Bu alan adlarında sese her zaman izin ver"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

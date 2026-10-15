@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Mở video ở chế độ Hình trong hình khi chuyển tab"
+  },
+  "audioOnlySupport": {
+    "message": "Điều khiển cả trình phát chỉ có âm thanh"
+  },
+  "audioOnlyDescription": {
+    "message": "Âm thanh không bị ảnh hưởng theo mặc định. Khi bật, âm thanh trên các tên miền được liệt kê vẫn tiếp tục phát."
+  },
+  "audioAllowList": {
+    "message": "Luôn cho phép âm thanh trên các tên miền này"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

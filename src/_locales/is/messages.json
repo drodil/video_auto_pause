@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Opna myndband í mynd-í-mynd þegar skipt er um flipa"
+  },
+  "audioOnlySupport": {
+    "message": "Stjórna einnig hreinum hljóðspilurum"
+  },
+  "audioOnlyDescription": {
+    "message": "Hljóð er óbreytt sjálfgefið. Þegar virkjað er heldur hljóð á skráðum lénum áfram að spilast."
+  },
+  "audioAllowList": {
+    "message": "Leyfa alltaf hljóð á þessum lénum"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

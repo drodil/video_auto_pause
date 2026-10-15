@@ -857,6 +857,26 @@
                   >
                 </label>
                 <label>
+                  <input type="checkbox" id="handleAudio" />
+                  <span class="label-text" data-i18n="audioOnlySupport"
+                    >Also control audio-only players</span
+                  >
+                </label>
+                <p data-i18n="audioOnlyDescription">
+                  Audio remains untouched by default. When enabled, audio on the
+                  listed domains is still allowed to continue playing.
+                </p>
+                <label for="audioAllowList" data-i18n="audioAllowList"
+                  >Always allow audio on these domains</label
+                >
+                <input
+                  type="text"
+                  id="audioAllowList"
+                  autocomplete="off"
+                  data-i18n-placeholder="audioAllowListPlaceholder"
+                  placeholder="open.spotify.com, music.youtube.com, soundcloud.com"
+                />
+                <label>
                   <input type="checkbox" id="blockAutoplay" />
                   <span class="label-text" data-i18n="blockAutoplay"
                     >Block video autoplay before interaction</span

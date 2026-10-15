@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Ava vahekaartide vahetamisel video pilt-pildis režiimis"
+  },
+  "audioOnlySupport": {
+    "message": "Juhi ka ainult helipleiereid"
+  },
+  "audioOnlyDescription": {
+    "message": "Vaikimisi heli ei mõjutata. Lubamisel saab loetletud domeenide heli edasi mängida."
+  },
+  "audioAllowList": {
+    "message": "Luba nendel domeenidel heli alati"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

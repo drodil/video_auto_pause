@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "タブ切り替え時に動画をピクチャー イン ピクチャーで開く"
+  },
+  "audioOnlySupport": {
+    "message": "音声のみのプレーヤーも制御する"
+  },
+  "audioOnlyDescription": {
+    "message": "デフォルトでは音声に影響しません。有効にすると、指定したドメインの音声再生は継続します。"
+  },
+  "audioAllowList": {
+    "message": "次のドメインでは常に音声を許可"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

@@ -2,6 +2,8 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   autopause: true,
   autoresume: true,
   muteVideo: false,
+  handleAudio: false,
+  audioAllowList: "open.spotify.com, music.youtube.com, soundcloud.com",
   scrollpause: false,
   lockpause: true,
   lockresume: true,

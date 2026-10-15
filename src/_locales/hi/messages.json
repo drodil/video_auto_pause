@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "टैब बदलते समय वीडियो को पिक्चर-इन-पिक्चर में खोलें"
+  },
+  "audioOnlySupport": {
+    "message": "केवल-ऑडियो प्लेयर भी नियंत्रित करें"
+  },
+  "audioOnlyDescription": {
+    "message": "डिफ़ॉल्ट रूप से ऑडियो पर असर नहीं पड़ता। चालू होने पर सूचीबद्ध डोमेन का ऑडियो चलता रहेगा।"
+  },
+  "audioAllowList": {
+    "message": "इन डोमेन पर ऑडियो हमेशा चलने दें"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

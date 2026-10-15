@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Avaa video kuva kuvassa -tilassa välilehteä vaihdettaessa"
+  },
+  "audioOnlySupport": {
+    "message": "Ohjaa myös pelkkiä äänisoittimia"
+  },
+  "audioOnlyDescription": {
+    "message": "Ääntä ei käsitellä oletusarvoisesti. Käyttöönoton jälkeen lueteltujen verkkotunnusten ääni saa jatkua."
+  },
+  "audioAllowList": {
+    "message": "Salli ääni aina näissä verkkotunnuksissa"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }

@@ -628,5 +628,17 @@
   },
   "autoPipOnTabSwitch": {
     "message": "Open video in Picture-in-Picture when switching tabs"
+  },
+  "audioOnlySupport": {
+    "message": "Also control audio-only players"
+  },
+  "audioOnlyDescription": {
+    "message": "Audio is untouched by default. When enabled, audio on listed domains is still allowed to continue playing."
+  },
+  "audioAllowList": {
+    "message": "Always allow audio on these domains"
+  },
+  "audioAllowListPlaceholder": {
+    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
   }
 }
