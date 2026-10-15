@@ -16,6 +16,7 @@ if (window.autoPauseInjected !== true) {
   const observedMedia = new WeakSet();
   const shadowHosts = new Set();
   const visibleVideos = new Set();
+  const hoveredVideos = new Set();
   const overlayPinRefreshers = new Set();
   let videoObserver;
   let lastVisibility = null;
@@ -878,6 +879,15 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener("fullscreenchange", scheduleVideoArbitration);
   window.addEventListener("resize", scheduleVideoArbitration);
 
+  function reportVideoHover(video, hovered) {
+    if (hovered) {
+      hoveredVideos.add(video);
+    } else {
+      hoveredVideos.delete(video);
+    }
+    sendMessage({ videoHovered: hoveredVideos.size > 0 });
+  }
+
   function attachVideoListeners(videoElement, intersection_observer) {
     detectedVideos.add(videoElement);
     attachMediaStateListeners(videoElement);
@@ -886,6 +896,12 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     videoElement.dataset.autoPauseListenerAttached = "true";
+    videoElement.addEventListener("pointerenter", () => {
+      reportVideoHover(videoElement, true);
+    });
+    videoElement.addEventListener("pointerleave", () => {
+      reportVideoHover(videoElement, false);
+    });
     applySiteSpeed(videoElement);
     if (options.disableAutoplayNext) {
       videoElement.autoplay = false;
@@ -1612,6 +1628,9 @@ if (window.autoPauseInjected !== true) {
         }
         for (const media of mediaElements) {
           if (media instanceof HTMLVideoElement) {
+            if (hoveredVideos.delete(media)) {
+              sendMessage({ videoHovered: hoveredVideos.size > 0 });
+            }
             videoOverlayCleanups.get(media)?.();
             videoOverlayCleanups.delete(media);
             detectedVideos.delete(media);

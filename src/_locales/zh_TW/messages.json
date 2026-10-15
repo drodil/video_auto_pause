@@ -111,6 +111,10 @@
     "message": "游標離開瀏覽器視窗時暫停",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "指標位於影片上方時繼續播放",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "防止手動暫停後自動繼續播放",
     "description": "Manual pause disables auto resume"

@@ -111,6 +111,10 @@
     "message": "커서가 브라우저 창을 벗어나면 일시중지",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "포인터가 동영상 위에 있으면 계속 재생",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "수동 일시중지 후 자동 다시 시작 방지",
     "description": "Manual pause disables auto resume"

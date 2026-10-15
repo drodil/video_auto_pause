@@ -111,6 +111,10 @@
     "message": "Peata, kui kursor lahkub brauseri aknast",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Jätka esitamist, kui kursor on video kohal",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Väldi automaatset jätkamist pärast käsitsi peatamist",
     "description": "Manual pause disables auto resume"

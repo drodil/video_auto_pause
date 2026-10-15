@@ -111,6 +111,10 @@
     "message": "Gera hlé þegar bendill fer út úr vafraglugga",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Halda spilun áfram þegar bendillinn er yfir myndbandinu",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Koma í veg fyrir sjálfvirka spilun eftir handvirkt hlé",
     "description": "Manual pause disables auto resume"

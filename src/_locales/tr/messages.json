@@ -111,6 +111,10 @@
     "message": "İmleç tarayıcı penceresinden çıktığında duraklat",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "İşaretçi videonun üzerindeyken oynatmayı sürdür",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Manuel duraklatmadan sonra otomatik devam etmeyi önle",
     "description": "Manual pause disables auto resume"

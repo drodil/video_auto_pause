@@ -15,6 +15,7 @@ let disabledTabs = [];
 let tabVideos = {}; // { tabId: { frameId: boolean } }
 let tabVisibility = {};
 let tabMedia = {};
+let tabVideoHover = {};
 let priorityTabId = -1;
 let priorityHistory = [];
 let priorityOperation = Promise.resolve();
@@ -657,6 +658,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (changeInfo.status === "loading") {
     delete tabVideos[tabId];
     delete tabVisibility[tabId];
+    delete tabVideoHover[tabId];
   }
 
   if (
@@ -678,6 +680,7 @@ env.tabs.onRemoved.addListener(async function (tabId) {
   delete tabVideos[tabId];
   delete tabVisibility[tabId];
   delete tabMedia[tabId];
+  delete tabVideoHover[tabId];
   priorityHistory = priorityHistory.filter((id) => id !== tabId);
   if (pinnedTabs.includes(tabId)) {
     pinnedTabs = pinnedTabs.filter((id) => id !== tabId);
@@ -715,6 +718,12 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
         if (
           !isEnabledForTab(tabsStop[i]) ||
           !tabOptions(tabsStop[i]).focuspause
+        ) {
+          continue;
+        }
+        if (
+          tabOptions(tabsStop[i]).peekMode &&
+          Object.values(tabVideoHover[tabsStop[i].id] ?? {}).some(Boolean)
         ) {
           continue;
         }
@@ -837,6 +846,19 @@ async function handlePageMessage(request, sender) {
   }
   const settings = tabOptions(tab);
 
+  if ("videoHovered" in request) {
+    tabVideoHover[tab.id] ??= {};
+    tabVideoHover[tab.id][sender.frameId ?? 0] = request.videoHovered;
+    if (
+      !request.videoHovered &&
+      settings.peekMode &&
+      settings.focuspause &&
+      tab.windowId !== previous_window
+    ) {
+      stop(tab);
+    }
+  }
+
   if ("minimized" in request) {
     if (
       !settings.prioritizeActiveTabMedia &&
@@ -855,7 +877,14 @@ async function handlePageMessage(request, sender) {
   }
 
   if ("windowFocused" in request) {
-    if (!request.windowFocused && settings.focuspause) {
+    if (
+      !request.windowFocused &&
+      settings.focuspause &&
+      !(
+        settings.peekMode &&
+        Object.values(tabVideoHover[tab.id] ?? {}).some(Boolean)
+      )
+    ) {
       stop(tab);
     } else if (request.windowFocused && settings.focusresume && tab.active) {
       resume(tab);

@@ -111,6 +111,10 @@
     "message": "カーソルがブラウザウィンドウから離れたときに一時停止",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "ポインターが動画上にある間は再生を続ける",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "手動一時停止後の自動再開を防止",
     "description": "Manual pause disables auto resume"

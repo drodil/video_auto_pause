@@ -111,6 +111,10 @@
     "message": "Keskeytä kun kursori poistuu selainikkunasta",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Jatka toistoa, kun osoitin on videon päällä",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Estä automaattinen jatko manuaalisen keskeytyksen jälkeen",
     "description": "Manual pause disables auto resume"

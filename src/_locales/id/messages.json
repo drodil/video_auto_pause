@@ -111,6 +111,10 @@
     "message": "Jeda saat kursor meninggalkan jendela browser",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Tetap putar saat penunjuk berada di atas video",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Cegah lanjut otomatis setelah jeda manual",
     "description": "Manual pause disables auto resume"

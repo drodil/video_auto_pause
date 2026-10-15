@@ -111,6 +111,10 @@
     "message": "Pausa quando il cursore lascia la finestra del browser",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Continua la riproduzione quando il puntatore è sul video",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Impedisci ripresa auto dopo pausa manuale",
     "description": "Manual pause disables auto resume"

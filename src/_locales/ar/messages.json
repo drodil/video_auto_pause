@@ -111,6 +111,10 @@
     "message": "إيقاف مؤقت عند مغادرة المؤشر لنافذة المتصفح",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "استمر في التشغيل عندما يكون المؤشر فوق الفيديو",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "منع الاستئناف التلقائي بعد الإيقاف المؤقت اليدوي",
     "description": "Manual pause disables auto resume"

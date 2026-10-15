@@ -111,6 +111,10 @@
     "message": "Призупиняти, коли курсор залишає вікно браузера",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Продовжувати відтворення, коли вказівник наведено на відео",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Запобігати авто-відновленню після ручної паузи",
     "description": "Manual pause disables auto resume"

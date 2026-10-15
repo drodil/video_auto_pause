@@ -111,6 +111,10 @@
     "message": "Pauzeren wanneer cursor browservenster verlaat",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "Blijf afspelen zolang de aanwijzer boven de video staat",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "Voorkom automatisch hervatten na handmatige pauze",
     "description": "Manual pause disables auto resume"

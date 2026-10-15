@@ -111,6 +111,10 @@
     "message": "कर्सर ब्राउज़र विंडो छोड़ने पर रोकें",
     "description": "Enable cursor tracking to pause when cursor leaves window"
   },
+  "peekMode": {
+    "message": "वीडियो पर पॉइंटर होने पर चलाते रहें",
+    "description": "Keep a hovered video playing when focus changes."
+  },
   "manualPause": {
     "message": "मैनुअल पॉज़ के बाद ऑटो-रिज्यूम रोकें",
     "description": "Manual pause disables auto resume"

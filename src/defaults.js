@@ -25,6 +25,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
   idlePauseMinutes: 0,
   quietHoursStart: "",
   quietHoursEnd: "",
+  peekMode: false,
   liveStreamMute: true,
   muteDuringAds: true,
   prioritizeActiveTabMedia: false,

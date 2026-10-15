@@ -542,6 +542,7 @@ test.describe("Video Auto Pause Extension", () => {
       "quietHours",
       "quietHoursStart",
       "quietHoursEnd",
+      "peekMode",
       "disableAutoplayNext",
       "sleepTimerStart",
       "sleepTimerCancel",
@@ -1890,6 +1891,43 @@ test.describe("Video Auto Pause Extension", () => {
         })),
       )
       .toEqual({ overnight: true, daytime: false });
+  });
+
+  test("keeps a video playing on focus loss while it is hovered", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      autopause: true,
+      autoresume: true,
+      focuspause: true,
+      peekMode: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+    await video.hover();
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const [tab] = await chrome.tabs.query({
+            active: true,
+            lastFocusedWindow: true,
+          });
+          return Object.values(tabVideoHover[tab.id] ?? {}).some(Boolean);
+        }),
+      )
+      .toBe(true);
+    await page.evaluate(() => window.dispatchEvent(new Event("blur")));
+    await expect(video).toHaveJSProperty("paused", false);
   });
 
   test("stops autoplay-next and applies the sleep timer", async ({
