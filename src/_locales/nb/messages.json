@@ -207,20 +207,8 @@
     "message": "$1 pauser · $2 gjenopptakelser · $3 blokkerte automatiske avspillinger · $4 min. avspilling forhindret",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Kopier ukesammendrag",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Vurder Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Ukesammendrag kopiert",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Kunne ikke kopiere ukesammendraget.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

@@ -207,20 +207,8 @@
     "message": "$1 pausas · $2 retomadas · $3 reproduções automáticas bloqueadas · $4 min de reprodução evitados",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Copiar resumo semanal",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Avaliar Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Resumo semanal copiado",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Não foi possível copiar o resumo semanal.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

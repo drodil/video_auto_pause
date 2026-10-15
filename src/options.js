@@ -421,19 +421,6 @@ async function restoreStats() {
   document.getElementById("rateExtension").hidden = stats.lifetimePauses < 50;
 }
 
-async function copyWeeklyStats() {
-  const status = document.getElementById("statsStatus");
-  try {
-    await navigator.clipboard.writeText(
-      document.getElementById("statsSummary").textContent,
-    );
-    status.textContent = env.i18n.getMessage("statsCopied");
-  } catch (error) {
-    status.textContent = env.i18n.getMessage("statsCopyFailed");
-    console.error("Video Auto Pause could not copy the weekly summary:", error);
-  }
-}
-
 async function restore_options(changedKeys = Object.keys(options)) {
   await migrateSiteRules();
   const items = await env.storage.sync.get(options);
@@ -557,10 +544,6 @@ env.storage.onChanged.addListener((changes, namespace) => {
       void restoreStats();
     }
   }
-});
-
-document.getElementById("shareStats")?.addEventListener("click", () => {
-  void copyWeeklyStats();
 });
 
 document

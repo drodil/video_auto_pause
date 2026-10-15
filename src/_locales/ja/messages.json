@@ -207,20 +207,8 @@
     "message": "$1 回の一時停止 · $2 回の再開 · $3 件の自動再生をブロック · 再生を $4 分防止",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "週間サマリーをコピー",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Video Auto Pause を評価",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "週間サマリーをコピーしました",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "週間サマリーをコピーできませんでした。",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

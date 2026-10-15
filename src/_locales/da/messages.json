@@ -207,20 +207,8 @@
     "message": "$1 pauser · $2 genoptagelser · $3 blokerede automatiske afspilninger · $4 min. afspilning forhindret",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Kopiér ugens oversigt",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Bedøm Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Ugens oversigt er kopieret",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Ugens oversigt kunne ikke kopieres.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

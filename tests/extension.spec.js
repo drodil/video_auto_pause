@@ -207,22 +207,7 @@ test.describe("Video Auto Pause Extension", () => {
       "12 resumes",
     );
     await expect(optionsPage.locator("#rateExtension")).toBeVisible();
-
-    await optionsPage.evaluate(() => {
-      Object.defineProperty(navigator, "clipboard", {
-        configurable: true,
-        value: { writeText: async (text) => (window.copiedStats = text) },
-      });
-    });
-    await optionsPage.locator("#shareStats").click();
-    await expect(optionsPage.locator("#statsStatus")).toContainText("copied");
-    await expect
-      .poll(() =>
-        optionsPage.evaluate(
-          () => window.copiedStats?.includes("50 pauses") ?? false,
-        ),
-      )
-      .toBe(true);
+    await expect(optionsPage.locator("#shareStats")).toHaveCount(0);
   });
 
   test("keeps a pinned tab playing and shows its badge until unpinned", async ({

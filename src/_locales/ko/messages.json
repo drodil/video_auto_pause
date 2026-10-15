@@ -207,20 +207,8 @@
     "message": "일시 정지 $1회 · 다시 재생 $2회 · 자동 재생 차단 $3회 · 재생 방지 $4분",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "주간 요약 복사",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Video Auto Pause 평가하기",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "주간 요약을 복사했습니다",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "주간 요약을 복사할 수 없습니다.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

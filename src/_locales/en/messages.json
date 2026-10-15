@@ -207,21 +207,9 @@
     "message": "$1 pauses · $2 resumes · $3 autoplay blocks · $4 min of playback prevented",
     "description": "Weekly local statistics summary"
   },
-  "statsShare": {
-    "message": "Copy weekly summary",
-    "description": "Copy statistics button"
-  },
   "statsRate": {
     "message": "Rate Video Auto Pause",
     "description": "Milestone review link"
-  },
-  "statsCopied": {
-    "message": "Weekly summary copied",
-    "description": "Successful statistics copy status"
-  },
-  "statsCopyFailed": {
-    "message": "Could not copy the weekly summary.",
-    "description": "Failed statistics copy status"
   },
   "presetTitle": {
     "message": "Choose a mode",

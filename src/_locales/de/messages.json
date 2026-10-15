@@ -207,20 +207,8 @@
     "message": "$1 Pausen · $2 Fortsetzungen · $3 blockierte Autostarts · $4 Min. Wiedergabe verhindert",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Wochenübersicht kopieren",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Video Auto Pause bewerten",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Wochenübersicht kopiert",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Wochenübersicht konnte nicht kopiert werden.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

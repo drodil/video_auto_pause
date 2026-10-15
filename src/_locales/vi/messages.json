@@ -207,20 +207,8 @@
     "message": "$1 lần tạm dừng · $2 lần tiếp tục · $3 lần chặn tự phát · ngăn phát trong $4 phút",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Sao chép tóm tắt tuần",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Đánh giá Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Đã sao chép tóm tắt tuần",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Không thể sao chép tóm tắt tuần.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

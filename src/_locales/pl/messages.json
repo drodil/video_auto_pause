@@ -207,20 +207,8 @@
     "message": "$1 pauz · $2 wznowień · $3 zablokowanych autoodtworzeń · $4 min odtwarzania zapobiegnięto",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Kopiuj podsumowanie tygodnia",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Oceń Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Skopiowano podsumowanie tygodnia",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Nie udało się skopiować podsumowania tygodnia.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

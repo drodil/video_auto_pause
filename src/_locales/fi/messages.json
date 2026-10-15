@@ -207,20 +207,8 @@
     "message": "$1 keskeytystä · $2 jatkamista · $3 estettyä automaattista toistoa · $4 min toistoa estetty",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Kopioi viikon yhteenveto",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Arvioi Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Viikon yhteenveto kopioitu",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Viikon yhteenvetoa ei voitu kopioida.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

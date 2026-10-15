@@ -207,20 +207,8 @@
     "message": "$1 duraklatma · $2 devam ettirme · $3 engellenen otomatik oynatma · $4 dk oynatma önlendi",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Haftalık özeti kopyala",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Video Auto Pause’u puanla",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Haftalık özet kopyalandı",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Haftalık özet kopyalanamadı.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

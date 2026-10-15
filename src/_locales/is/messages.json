@@ -207,20 +207,8 @@
     "message": "$1 hlé · $2 endurræsingar · $3 sjálfvirkar spilarnir stöðvaðar · $4 mín. af spilun komið í veg fyrir",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Afrita vikuyfirlit",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Gefðu Video Auto Pause einkunn",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Vikuyfirlit afritað",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Ekki tókst að afrita vikuyfirlitið.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {

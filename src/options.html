@@ -332,16 +332,6 @@
         flex-wrap: wrap;
       }
 
-      #statsActions button {
-        border: 0;
-        border-radius: 4px;
-        padding: 7px 10px;
-        background: #667eea;
-        color: white;
-        cursor: pointer;
-        font: inherit;
-      }
-
       .preset-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -999,9 +989,6 @@
             <h4 data-i18n="statsHeading">Your impact this week</h4>
             <p id="statsSummary" aria-live="polite"></p>
             <div id="statsActions">
-              <button id="shareStats" type="button" data-i18n="statsShare">
-                Copy weekly summary
-              </button>
               <a
                 id="rateExtension"
                 href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
@@ -1012,7 +999,6 @@
                 >Rate Video Auto Pause</a
               >
             </div>
-            <p id="statsStatus" role="status" aria-live="polite"></p>
           </div>
 
           <div class="container section">

@@ -207,20 +207,8 @@
     "message": "$1 pauzes · $2 hervattingen · $3 geblokkeerde autoplay-acties · $4 min. afspelen voorkomen",
     "description": "Local weekly statistics text"
   },
-  "statsShare": {
-    "message": "Weekoverzicht kopiëren",
-    "description": "Local weekly statistics text"
-  },
   "statsRate": {
     "message": "Beoordeel Video Auto Pause",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopied": {
-    "message": "Weekoverzicht gekopieerd",
-    "description": "Local weekly statistics text"
-  },
-  "statsCopyFailed": {
-    "message": "Het weekoverzicht kon niet worden gekopieerd.",
     "description": "Local weekly statistics text"
   },
   "presetTitle": {
