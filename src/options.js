@@ -367,11 +367,15 @@ async function copyDiagnostics() {
   if (!navigator.clipboard?.writeText) {
     throw new Error("Clipboard access is unavailable.");
   }
-  const settings = await env.storage.sync.get(DEFAULT_OPTIONS);
+  const [settings, { vapLastContentScriptError = null }] = await Promise.all([
+    env.storage.sync.get(DEFAULT_OPTIONS),
+    env.storage.local.get("vapLastContentScriptError"),
+  ]);
   const diagnostics = {
     extensionVersion: env.runtime.getManifest().version,
     browser: navigator.userAgent,
     settings,
+    lastContentScriptError: vapLastContentScriptError,
   };
   await navigator.clipboard.writeText(JSON.stringify(diagnostics, null, 2));
 }

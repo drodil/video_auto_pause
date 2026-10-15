@@ -1915,6 +1915,66 @@ test.describe("Video Auto Pause Extension", () => {
     expect(diagnostics).toHaveProperty("settings");
   });
 
+  test("disables the affected tab after a content-script error", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/video.html`);
+    await expect(page.locator("#v")).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    const worker = context.serviceWorkers()[0];
+    const result = await worker.evaluate(async (url) => {
+      const [tab] = await chrome.tabs.query({ url });
+      await handlePageMessage(
+        {
+          contentScriptError: {
+            message: "Test extension error",
+            source: "chrome-extension://test/video_auto_pause.js",
+          },
+        },
+        { tab, frameId: 0 },
+      );
+      return {
+        tabId: tab.id,
+        disabledTabs: (await chrome.storage.session.get("disabledTabs"))
+          .disabledTabs,
+        safeModeTabs: (await chrome.storage.session.get("safeModeTabs"))
+          .safeModeTabs,
+        badge: await chrome.action.getBadgeText({ tabId: tab.id }),
+        error: (await chrome.storage.local.get("vapLastContentScriptError"))
+          .vapLastContentScriptError,
+      };
+    }, page.url());
+    expect(result.disabledTabs).toContain(result.tabId);
+    expect(result.safeModeTabs).toContain(result.tabId);
+    expect(result.badge).toBe("ERR");
+    expect(result.error.message).toBe("Test extension error");
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage.evaluate(() => {
+      window.__clipboardText = null;
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: { writeText: async (text) => (window.__clipboardText = text) },
+      });
+    });
+    await optionsPage.locator("#copyDiagnostics").click();
+    await expect(optionsPage.locator("#diagnosticsStatus")).toContainText(
+      "copied",
+    );
+    const diagnostics = JSON.parse(
+      await optionsPage.evaluate(() => window.__clipboardText),
+    );
+    expect(diagnostics.lastContentScriptError.message).toBe(
+      "Test extension error",
+    );
+  });
+
   test("prevents automatic next playback after a video ends", async ({
     page,
     context,

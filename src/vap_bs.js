@@ -22,6 +22,7 @@ let priorityHistory = [];
 let priorityOperation = Promise.resolve();
 let statisticsOperation = Promise.resolve();
 let pinnedTabs = [];
+let safeModeTabs = [];
 
 // Computer state
 let state = "active";
@@ -183,6 +184,7 @@ env.runtime.onStartup.addListener(async () => {
       "previous_window",
       "previous_tabs",
       "pinnedTabs",
+      "safeModeTabs",
     ]);
   }
 });
@@ -220,6 +222,7 @@ async function refresh_settings() {
   debugLog(`Settings refreshed: ${JSON.stringify(options)}`);
   disabledTabs = (await sessionStorage.get("disabledTabs")).disabledTabs ?? [];
   pinnedTabs = (await sessionStorage.get("pinnedTabs")).pinnedTabs ?? [];
+  safeModeTabs = (await sessionStorage.get("safeModeTabs")).safeModeTabs ?? [];
   debugLog(`Disabled tabs: ${JSON.stringify(disabledTabs)}`);
 
   const navigationState = await sessionStorage.get([
@@ -533,12 +536,16 @@ async function refreshIcon(tabId) {
   await changeIcon(!(enabled && hasVideosInTab), tab.id);
   if (env.action.setBadgeText) {
     await env.action.setBadgeText({
-      text: pinnedTabs.includes(tab.id) ? "PIN" : "",
+      text: safeModeTabs.includes(tab.id)
+        ? "ERR"
+        : pinnedTabs.includes(tab.id)
+          ? "PIN"
+          : "",
       tabId: tab.id,
     });
-    if (pinnedTabs.includes(tab.id) && env.action.setBadgeBackgroundColor) {
+    if (env.action.setBadgeBackgroundColor) {
       await env.action.setBadgeBackgroundColor({
-        color: "#5b5bd6",
+        color: safeModeTabs.includes(tab.id) ? "#c53030" : "#5b5bd6",
         tabId: tab.id,
       });
     }
@@ -706,6 +713,10 @@ env.tabs.onRemoved.addListener(async function (tabId) {
     disabledTabs = disabledTabs.filter((tab) => tab !== tabId);
     await save_settings();
   }
+  if (safeModeTabs.includes(tabId)) {
+    safeModeTabs = safeModeTabs.filter((tab) => tab !== tabId);
+    await sessionStorage.set({ safeModeTabs });
+  }
 
   for (const [windowId, previousTabId] of Object.entries(previousTabs)) {
     if (previousTabId === tabId) {
@@ -792,6 +803,33 @@ async function handlePageMessage(request, sender) {
   }
   const tab = sender.tab;
   if (!tab) {
+    return;
+  }
+
+  if (request.contentScriptError) {
+    const error = request.contentScriptError;
+    safeModeTabs = [...new Set([...safeModeTabs, tab.id])];
+    disabledTabs = [...new Set([...disabledTabs, tab.id])];
+    await sessionStorage.set({ safeModeTabs, disabledTabs });
+    await env.storage.local.set({
+      vapLastContentScriptError: {
+        message:
+          typeof error.message === "string"
+            ? error.message.slice(0, 240)
+            : "Uncaught content script error",
+        source:
+          typeof error.source === "string" ? error.source.slice(-160) : "",
+        timestamp: Date.now(),
+      },
+    });
+    await changeIcon(true, tab.id);
+    if (env.action.setBadgeText) {
+      await env.action.setBadgeText({ text: "ERR", tabId: tab.id });
+      await env.action.setBadgeBackgroundColor({
+        color: "#c53030",
+        tabId: tab.id,
+      });
+    }
     return;
   }
 

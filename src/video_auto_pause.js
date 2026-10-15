@@ -26,6 +26,7 @@ if (window.autoPauseInjected !== true) {
   let userInteracted = false;
   let lastUserInteractionAt = 0;
   let lastVideoEndedAt = 0;
+  let safeModeTriggered = false;
   let options = { ...DEFAULT_OPTIONS };
   let profiles = [];
   let autoPipVideo = null;
@@ -555,6 +556,35 @@ if (window.autoPauseInjected !== true) {
       console.error("Video Autopause extension context is unavailable:", error);
     }
   }
+
+  function enterSafeMode(errorMessage, source) {
+    if (safeModeTriggered) {
+      return;
+    }
+    safeModeTriggered = true;
+    const disabledOptions = Object.fromEntries(
+      Object.entries(DEFAULT_OPTIONS)
+        .filter(([, value]) => typeof value === "boolean")
+        .map(([key]) => [key, false]),
+    );
+    options = { ...options, ...disabledOptions, disabled: true };
+    toggleCursorTracking(false);
+    togglePipButtons();
+    toggleVideoOverlays();
+    sendMessage({
+      contentScriptError: {
+        message: String(errorMessage).slice(0, 240),
+        source: String(source).split(/[?#]/, 1)[0].slice(-160),
+      },
+    });
+  }
+
+  window.addEventListener("error", (event) => {
+    const extensionUrl = env.runtime.getURL("");
+    if (event.filename?.startsWith(extensionUrl)) {
+      enterSafeMode(event.message || event.error?.message, event.filename);
+    }
+  });
 
   // Listen to visibilitychange event of the page
   document.addEventListener(
