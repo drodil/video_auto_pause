@@ -567,6 +567,15 @@ async function handlePageMessage(request, sender) {
   if ("mediaState" in request) {
     tabMedia[tab.id] ??= {};
     tabMedia[tab.id][sender.frameId ?? 0] = request.mediaState;
+    if (
+      state === "locked" &&
+      options.lockpause &&
+      request.mediaState.playing &&
+      isEnabledForTab(tab)
+    ) {
+      stop(tab);
+      return;
+    }
     if (!options.prioritizeActiveTabMedia || !isEnabledForTab(tab)) {
       return;
     }
@@ -672,7 +681,7 @@ env.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // Listener for keyboard shortcuts
-env.commands.onCommand.addListener(async (command) => {
+async function handleCommand(command) {
   await settingsReady;
   if (command === "toggle-extension") {
     const disabled = !options.disabled;
@@ -729,10 +738,11 @@ env.commands.onCommand.addListener(async (command) => {
       speed(tab, command);
     }
   }
-});
+}
+env.commands.onCommand.addListener(handleCommand);
 
 // Listener for computer idle/locked/active
-env.idle.onStateChanged.addListener(async function (s) {
+async function handleIdleStateChanged(s) {
   await settingsReady;
   const wasLocked = previousIdleState === "locked";
   previousIdleState = s;
@@ -752,7 +762,8 @@ env.idle.onStateChanged.addListener(async function (s) {
       resume(tabs[i]);
     }
   }
-});
+}
+env.idle.onStateChanged.addListener(handleIdleStateChanged);
 
 env.runtime.onInstalled.addListener(async () => {
   await settingsReady;

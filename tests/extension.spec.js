@@ -182,6 +182,24 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(video).toHaveJSProperty("paused", false);
   });
 
+  test("should leave video playing on tab switches when autopause is disabled", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ autopause: false });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await video.evaluate((element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    const nextPage = await context.newPage();
+    await nextPage.goto(`http://localhost:${port}/video.html`);
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+  });
+
   test("should resume browser-blocked autoplay when activating a background tab", async ({
     page,
     context,
@@ -212,6 +230,151 @@ test.describe("Video Auto Pause Extension", () => {
 
     await backgroundPage.bringToFront();
     await expect(video).toHaveJSProperty("paused", false);
+  });
+
+  test("should control SPA videos inserted and replaced after page load", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/`);
+    await page.evaluate(() => {
+      const video = document.createElement("video");
+      video.id = "spa-video";
+      video.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+      video.muted = true;
+      video.loop = true;
+      document.body.append(video);
+    });
+
+    const video = page.locator("#spa-video");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await expect(video).toHaveJSProperty("paused", true);
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await page.evaluate(() => {
+      const currentVideo = document.querySelector("#spa-video");
+      const replacement = currentVideo.cloneNode();
+      replacement.id = "spa-video-replacement";
+      currentVideo.replaceWith(replacement);
+    });
+    const replacement = page.locator("#spa-video-replacement");
+    await expect(replacement).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await replacement.evaluate((element) => element.play());
+    await otherTab.bringToFront();
+    await expect(replacement).toHaveJSProperty("paused", true);
+  });
+
+  test("should control video playback inside a cross-origin iframe", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/`);
+    await page.evaluate((frameUrl) => {
+      const frame = document.createElement("iframe");
+      frame.src = frameUrl;
+      document.body.append(frame);
+    }, `http://127.0.0.1:${port}/video.html`);
+
+    const video = page.frameLocator("iframe").locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("should pause media that starts while the computer remains locked", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ lockpause: true });
+    await page.goto(`http://localhost:${port}/`);
+
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() => worker.evaluate(() => options.lockpause))
+      .toBe(true);
+
+    await page.evaluate(() => {
+      const video = document.createElement("video");
+      video.id = "locked-restart";
+      video.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+      video.muted = true;
+      video.loop = true;
+      document.body.append(video);
+    });
+    const video = page.locator("#locked-restart");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await worker.evaluate(() => handleIdleStateChanged("locked"));
+    await video.evaluate((element) => element.play().catch(() => {}));
+    await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("should resume extension-paused media after unlock, not manual pauses", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      lockpause: true,
+      lockresume: true,
+      manualPause: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const playingVideo = page.locator("#v");
+    await playingVideo.evaluate((element) => element.play());
+    await expect(playingVideo).toHaveJSProperty("paused", false);
+
+    await page.evaluate(() => {
+      const video = document.createElement("video");
+      video.id = "manually-paused";
+      video.src = document.querySelector("#v").src;
+      video.muted = true;
+      document.body.append(video);
+    });
+    const manuallyPausedVideo = page.locator("#manually-paused");
+    await expect(manuallyPausedVideo).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await manuallyPausedVideo.evaluate(async (element) => {
+      await element.play();
+      element.pause();
+    });
+    await expect(manuallyPausedVideo).toHaveJSProperty("paused", true);
+
+    const worker = context.serviceWorkers()[0];
+    await worker.evaluate(() => handleIdleStateChanged("locked"));
+    await expect(playingVideo).toHaveJSProperty("paused", true);
+    await worker.evaluate(() => handleIdleStateChanged("active"));
+
+    await expect(playingVideo).toHaveJSProperty("paused", false);
+    await expect(manuallyPausedVideo).toHaveJSProperty("paused", true);
   });
 
   test("should block autoplay until the user interacts with the page", async ({
@@ -489,6 +652,83 @@ test.describe("Video Auto Pause Extension", () => {
         ),
       )
       .toBe(0);
+  });
+
+  test("should save and restore settings through the options page", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const extensionId = new URL(worker.url()).host;
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(`chrome-extension://${extensionId}/options.html`);
+
+    const autopause = optionsPage.locator("#autopause");
+    await expect(autopause).toBeChecked();
+    await autopause.uncheck();
+
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    const pauseDelay = optionsPage.locator("#pauseDelay");
+    await pauseDelay.fill("350");
+    await pauseDelay.dispatchEvent("change");
+
+    await expect
+      .poll(() =>
+        worker.evaluate(
+          () =>
+            new Promise((resolve) =>
+              chrome.storage.sync.get(["autopause", "pauseDelay"], resolve),
+            ),
+        ),
+      )
+      .toMatchObject({ autopause: false, pauseDelay: 350 });
+
+    await optionsPage.reload();
+    await expect(autopause).not.toBeChecked();
+    await expect(pauseDelay).toHaveValue("350");
+  });
+
+  test("should apply playback commands to the active tab", async ({
+    page,
+    context,
+  }) => {
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    await video.evaluate((element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    const worker = context.serviceWorkers()[0];
+    await worker.evaluate(() => handleCommand("toggle-play"));
+    await expect(video).toHaveJSProperty("paused", true);
+
+    await worker.evaluate(() => handleCommand("toggle-play"));
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await worker.evaluate(() => handleCommand("toggle_mute"));
+    await expect(video).toHaveJSProperty("muted", false);
+
+    await worker.evaluate(() => handleCommand("speed-up"));
+    await expect(video).toHaveJSProperty("playbackRate", 1.25);
+    await worker.evaluate(() => handleCommand("speed-down"));
+    await expect(video).toHaveJSProperty("playbackRate", 1);
+    await worker.evaluate(() => handleCommand("speed-down"));
+    await expect(video).toHaveJSProperty("playbackRate", 0.75);
+    await worker.evaluate(() => handleCommand("speed-reset"));
+    await expect(video).toHaveJSProperty("playbackRate", 1);
+
+    await worker.evaluate(() => handleCommand("toggle-tab"));
+    await expect.poll(() => worker.evaluate(() => disabledTabs.length)).toBe(1);
+    await worker.evaluate(() => handleCommand("toggle-tab"));
+    await expect.poll(() => worker.evaluate(() => disabledTabs.length)).toBe(0);
+
+    await worker.evaluate(() => handleCommand("toggle-extension"));
+    await expect.poll(() => worker.evaluate(() => options.disabled)).toBe(true);
+    await worker.evaluate(() => handleCommand("toggle-extension"));
+    await expect
+      .poll(() => worker.evaluate(() => options.disabled))
+      .toBe(false);
   });
 
   test("should honor pause and resume delays", async ({ page, context }) => {
