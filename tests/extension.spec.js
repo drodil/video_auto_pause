@@ -1199,6 +1199,49 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(siteToggle).toHaveAttribute("aria-pressed", "true");
   });
 
+  test("supports touch interaction with the video overlay", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({
+      showVideoOverlay: true,
+      singleVideoPlayback: false,
+    });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`http://localhost:${port}/video.html`);
+    const video = page.locator("#v");
+    const overlay = page.locator(".vap-video-overlay");
+    await expect(overlay).toBeAttached({ timeout: 10000 });
+    await overlay.evaluate((element) => (element.style.opacity = "1"));
+    const toggle = overlay.locator('[data-action="toggle"]');
+    const bounds = await toggle.boundingBox();
+    const cdp = await context.newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", {
+      enabled: true,
+      maxTouchPoints: 1,
+      configuration: "mobile",
+    });
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchStart",
+      touchPoints: [
+        {
+          id: 1,
+          x: bounds.x + bounds.width / 2,
+          y: bounds.y + bounds.height / 2,
+          radiusX: 1,
+          radiusY: 1,
+          force: 1,
+        },
+      ],
+    });
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchEnd",
+      touchPoints: [],
+    });
+    await expect(video).toHaveJSProperty("paused", true);
+    await cdp.detach();
+  });
+
   test("records automatic pauses and playback time prevented locally", async ({
     page,
     context,
