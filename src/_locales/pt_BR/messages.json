@@ -243,6 +243,22 @@
     "message": "Economia de bateria / reuniões",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Pausa e retoma ao trocar de aba ou janela e depois volta 5 segundos.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Silencia vídeos, suaviza o volume e mantém a reprodução ao mudar o foco ou bloquear o dispositivo.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pausa e retoma ao trocar de aba ou bloquear o dispositivo; ignora mudanças de foco e desativa a extensão em tela cheia.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pausa ao trocar de aba, perder o foco, bloquear o dispositivo ou rolar o vídeo para fora da tela; bloqueia a reprodução automática e não retoma automaticamente.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modo aplicado",
     "description": "Preset selector text"

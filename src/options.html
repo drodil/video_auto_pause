@@ -372,6 +372,18 @@
         outline-offset: 2px;
       }
 
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
       #pinCurrentTab {
         width: 100%;
         margin-bottom: 8px;
@@ -547,19 +559,63 @@
             <p id="pinStatus" role="status" aria-live="polite"></p>
             <h4 data-i18n="presetTitle">Choose a mode</h4>
             <div class="preset-grid">
-              <button type="button" data-preset="study" data-i18n="presetStudy">
+              <button
+                type="button"
+                data-preset="study"
+                data-i18n="presetStudy"
+                data-i18n-title="presetStudyDescription"
+                aria-describedby="presetStudyDescription"
+              >
                 Study / lectures
               </button>
-              <button type="button" data-preset="music" data-i18n="presetMusic">
+              <button
+                type="button"
+                data-preset="music"
+                data-i18n="presetMusic"
+                data-i18n-title="presetMusicDescription"
+                aria-describedby="presetMusicDescription"
+              >
                 Background music
               </button>
-              <button type="button" data-preset="binge" data-i18n="presetBinge">
+              <button
+                type="button"
+                data-preset="binge"
+                data-i18n="presetBinge"
+                data-i18n-title="presetBingeDescription"
+                aria-describedby="presetBingeDescription"
+              >
                 Binge / TV
               </button>
-              <button type="button" data-preset="saver" data-i18n="presetSaver">
+              <button
+                type="button"
+                data-preset="saver"
+                data-i18n="presetSaver"
+                data-i18n-title="presetSaverDescription"
+                aria-describedby="presetSaverDescription"
+              >
                 Battery saver / meetings
               </button>
             </div>
+            <span
+              class="sr-only"
+              id="presetStudyDescription"
+              data-i18n="presetStudyDescription"
+            ></span>
+            <span
+              class="sr-only"
+              id="presetMusicDescription"
+              data-i18n="presetMusicDescription"
+            ></span>
+            <span
+              class="sr-only"
+              id="presetBingeDescription"
+              data-i18n="presetBingeDescription"
+            ></span>
+            <span
+              class="sr-only"
+              id="presetSaverDescription"
+              data-i18n="presetSaverDescription"
+            ></span>
             <p id="presetStatus" role="status" aria-live="polite"></p>
           </div>
 

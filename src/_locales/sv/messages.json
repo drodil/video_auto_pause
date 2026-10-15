@@ -243,6 +243,22 @@
     "message": "Batterisparläge / möten",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Pausar och återupptar när du byter flik eller fönster och spolar sedan tillbaka 5 sekunder.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Stänger av ljudet på videor, tonar ljudet och låter uppspelningen fortsätta när du byter fokus eller låser enheten.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pausar och återupptar vid flikbyte och enhetslås; ignorerar fokusändringar och inaktiveras i helskärmsläge.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pausar vid flikbyte, fokusförlust, enhetslås eller när videon rullas utom synhåll; blockerar autoplay och återupptar inte automatiskt.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Läget har tillämpats",
     "description": "Preset selector text"

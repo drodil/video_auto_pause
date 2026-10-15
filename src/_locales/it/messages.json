@@ -243,6 +243,22 @@
     "message": "Risparmio batteria / riunioni",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Mette in pausa e riprende quando cambi scheda o finestra, quindi riavvolge di 5 secondi.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Disattiva l’audio dei video, sfuma il volume e mantiene la riproduzione quando cambi focus o blocchi il dispositivo.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Mette in pausa e riprende quando cambi scheda o blocchi il dispositivo; ignora i cambi di focus e si disattiva a schermo intero.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Mette in pausa quando cambi scheda, perdi il focus, blocchi il dispositivo o fai scorrere il video fuori vista; blocca la riproduzione automatica e non riprende automaticamente.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modalità applicata",
     "description": "Preset selector text"

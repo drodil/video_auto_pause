@@ -461,6 +461,36 @@ test.describe("Video Auto Pause Extension", () => {
       .pages()
       .find((candidate) => candidate.url().endsWith("/onboarding.html"));
     await expect(onboarding.locator("[data-preset=study]")).toBeVisible();
+    const descriptions = [
+      {
+        preset: "study",
+        id: "presetStudyDescription",
+        text: "Pauses and resumes when you switch tabs or windows, then rewinds 5 seconds.",
+      },
+      {
+        preset: "music",
+        id: "presetMusicDescription",
+        text: "Mutes videos, fades audio, and keeps playback going when you change focus or lock your device.",
+      },
+      {
+        preset: "binge",
+        id: "presetBingeDescription",
+        text: "Pauses and resumes on tab changes and device lock; ignores focus changes and disables itself in fullscreen.",
+      },
+      {
+        preset: "saver",
+        id: "presetSaverDescription",
+        text: "Pauses on tab changes, focus loss, device lock, or when video scrolls out of view; blocks autoplay and does not auto-resume.",
+      },
+    ];
+    for (const description of descriptions) {
+      const button = onboarding.locator(`[data-preset=${description.preset}]`);
+      await expect(button).toHaveAttribute("title", description.text);
+      await expect(button).toHaveAttribute("aria-describedby", description.id);
+      await expect(onboarding.locator(`#${description.id}`)).toHaveText(
+        description.text,
+      );
+    }
     await onboarding.locator("[data-preset=study]").click();
     await expect(onboarding.locator("#presetStatus")).toContainText("applied");
     await expect
@@ -487,6 +517,14 @@ test.describe("Video Auto Pause Extension", () => {
     );
     const optionsPage = await context.newPage();
     await optionsPage.goto(optionsUrl);
+    for (const description of descriptions) {
+      const button = optionsPage.locator(`[data-preset=${description.preset}]`);
+      await expect(button).toHaveAttribute("title", description.text);
+      await expect(button).toHaveAttribute("aria-describedby", description.id);
+      await expect(optionsPage.locator(`#${description.id}`)).toHaveText(
+        description.text,
+      );
+    }
     await optionsPage.locator("[data-preset=saver]").click();
     await expect
       .poll(() =>
@@ -505,6 +543,30 @@ test.describe("Video Auto Pause Extension", () => {
         scrollpause: true,
         blockAutoplay: true,
       });
+  });
+
+  test("includes preset descriptions in every locale", () => {
+    const localeDirectory = path.join(__dirname, "../src/_locales");
+    const keys = [
+      "presetStudyDescription",
+      "presetMusicDescription",
+      "presetBingeDescription",
+      "presetSaverDescription",
+    ];
+    for (const locale of fs.readdirSync(localeDirectory)) {
+      const messages = JSON.parse(
+        fs.readFileSync(
+          path.join(localeDirectory, locale, "messages.json"),
+          "utf8",
+        ),
+      );
+      for (const key of keys) {
+        expect(
+          messages[key]?.message,
+          `${locale} is missing ${key}`,
+        ).toBeTruthy();
+      }
+    }
   });
 
   test("rewinds automatically resumed finite videos by the configured amount", async ({

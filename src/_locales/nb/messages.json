@@ -243,6 +243,22 @@
     "message": "Batterisparing / møter",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Setter på pause og fortsetter når du bytter fane eller vindu, og spoler deretter 5 sekunder tilbake.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Slår av lyden på videoer, toner lyden og lar avspillingen fortsette når du bytter fokus eller låser enheten.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Setter på pause og fortsetter ved faneveksling og enhetslås; ignorerer fokusendringer og deaktiveres i fullskjerm.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Setter på pause ved faneveksling, fokustap, enhetslås eller når videoen rulles ut av syne; blokkerer autoplay og fortsetter ikke automatisk.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modus brukt",
     "description": "Preset selector text"

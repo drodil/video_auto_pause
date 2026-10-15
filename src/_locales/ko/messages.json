@@ -243,6 +243,22 @@
     "message": "배터리 절약 / 회의",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "탭이나 창을 전환할 때 일시정지하고 다시 재생한 뒤 5초 되감습니다.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "동영상을 음소거하고 오디오를 서서히 조절하며, 포커스를 바꾸거나 기기를 잠가도 재생을 계속합니다.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "탭 전환 및 기기 잠금 시 일시정지하고 다시 재생합니다. 포커스 변경은 무시하고 전체 화면에서는 비활성화됩니다.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "탭 전환, 포커스 상실, 기기 잠금 또는 동영상이 화면 밖으로 스크롤될 때 일시정지합니다. 자동 재생을 차단하고 자동으로 다시 재생하지 않습니다.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "모드를 적용했습니다",
     "description": "Preset selector text"

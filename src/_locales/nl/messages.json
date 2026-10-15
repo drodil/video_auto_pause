@@ -243,6 +243,22 @@
     "message": "Batterijbesparing / vergaderingen",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Pauzeert en hervat wanneer je van tabblad of venster wisselt en spoelt daarna 5 seconden terug.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Dempt video's, laat het volume geleidelijk veranderen en laat de weergave doorgaan wanneer je de focus wijzigt of je apparaat vergrendelt.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pauzeert en hervat bij tabbladwissels en apparaatvergrendeling; negeert focuswissels en wordt uitgeschakeld op volledig scherm.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pauzeert bij tabbladwissels, focusverlies, apparaatvergrendeling of wanneer de video uit beeld scrollt; blokkeert autoplay en hervat niet automatisch.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modus toegepast",
     "description": "Preset selector text"

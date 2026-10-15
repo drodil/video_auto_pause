@@ -36,7 +36,6 @@ function localizeUI() {
     const message = env.i18n.getMessage(element.dataset.i18nTitle);
     if (message) {
       element.title = message;
-      element.setAttribute("aria-label", message);
     }
   });
 

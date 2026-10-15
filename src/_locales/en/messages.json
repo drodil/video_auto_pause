@@ -243,6 +243,22 @@
     "message": "Battery saver / meetings",
     "description": "Battery saver preset button"
   },
+  "presetStudyDescription": {
+    "message": "Pauses and resumes when you switch tabs or windows, then rewinds 5 seconds.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Mutes videos, fades audio, and keeps playback going when you change focus or lock your device.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pauses and resumes on tab changes and device lock; ignores focus changes and disables itself in fullscreen.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pauses on tab changes, focus loss, device lock, or when video scrolls out of view; blocks autoplay and does not auto-resume.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Mode applied",
     "description": "Successful preset status"

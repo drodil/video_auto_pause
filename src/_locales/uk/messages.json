@@ -243,6 +243,22 @@
     "message": "Економія заряду / зустрічі",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Призупиняє та відновлює відео під час перемикання вкладок або вікон, а потім перемотує на 5 секунд назад.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Вимикає звук відео, плавно змінює гучність і продовжує відтворення під час зміни фокуса або блокування пристрою.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Призупиняє та відновлює відео під час перемикання вкладок і блокування пристрою; ігнорує зміну фокуса та вимикається в повноекранному режимі.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Призупиняє відео під час перемикання вкладок, втрати фокуса, блокування пристрою або прокручування за межі екрана; блокує автозапуск і не відновлює автоматично.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Режим застосовано",
     "description": "Preset selector text"

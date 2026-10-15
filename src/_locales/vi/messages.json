@@ -243,6 +243,22 @@
     "message": "Tiết kiệm pin / cuộc họp",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Tạm dừng và tiếp tục khi bạn chuyển tab hoặc cửa sổ, sau đó tua lùi 5 giây.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Tắt tiếng video, làm mờ âm thanh và tiếp tục phát khi bạn đổi tiêu điểm hoặc khóa thiết bị.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Tạm dừng và tiếp tục khi chuyển tab hoặc khóa thiết bị; bỏ qua thay đổi tiêu điểm và tự tắt ở chế độ toàn màn hình.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Tạm dừng khi chuyển tab, mất tiêu điểm, khóa thiết bị hoặc cuộn video khỏi màn hình; chặn tự động phát và không tự tiếp tục.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Đã áp dụng chế độ",
     "description": "Preset selector text"

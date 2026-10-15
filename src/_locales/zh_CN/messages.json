@@ -243,6 +243,22 @@
     "message": "省电 / 会议",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "切换标签页或窗口时暂停并恢复播放，然后倒退 5 秒。",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "将视频静音、淡化音量，并在切换焦点或锁定设备时继续播放。",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "切换标签页或锁定设备时暂停并恢复；忽略焦点变化，并在全屏时停用扩展。",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "切换标签页、失去焦点、锁定设备或视频滚出视野时暂停；阻止自动播放且不会自动恢复。",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "已应用模式",
     "description": "Preset selector text"

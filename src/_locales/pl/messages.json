@@ -243,6 +243,22 @@
     "message": "Oszczędzanie baterii / spotkania",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Wstrzymuje i wznawia odtwarzanie po przełączeniu karty lub okna, a następnie cofa o 5 sekund.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Wycisza filmy, stopniowo zmienia głośność i pozwala odtwarzaniu trwać po zmianie fokusu lub zablokowaniu urządzenia.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Wstrzymuje i wznawia po zmianie karty lub zablokowaniu urządzenia; ignoruje zmiany fokusu i wyłącza się w trybie pełnoekranowym.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Wstrzymuje po zmianie karty, utracie fokusu, zablokowaniu urządzenia lub przewinięciu filmu poza widok; blokuje autoodtwarzanie i nie wznawia automatycznie.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Tryb zastosowany",
     "description": "Preset selector text"

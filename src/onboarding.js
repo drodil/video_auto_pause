@@ -7,8 +7,13 @@ function localizePage() {
       element.textContent = message;
     }
   });
-  document.title =
-    env.i18n.getMessage("onboardingTitle") || "Video Auto Pause";
+  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    const message = env.i18n.getMessage(element.dataset.i18nTitle);
+    if (message) {
+      element.title = message;
+    }
+  });
+  document.title = env.i18n.getMessage("onboardingTitle") || "Video Auto Pause";
 }
 
 function showHotkeys() {
@@ -33,13 +38,14 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
   button.addEventListener("click", async () => {
     const status = document.getElementById("presetStatus");
     try {
-      await env.storage.sync.set(
-        globalThis.VAP_PRESETS[button.dataset.preset],
-      );
+      await env.storage.sync.set(globalThis.VAP_PRESETS[button.dataset.preset]);
       status.textContent = env.i18n.getMessage("presetApplied");
     } catch (error) {
       status.textContent = env.i18n.getMessage("presetFailed");
-      console.error("Video Auto Pause could not apply the selected preset:", error);
+      console.error(
+        "Video Auto Pause could not apply the selected preset:",
+        error,
+      );
     }
   });
 });

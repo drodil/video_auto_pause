@@ -243,6 +243,22 @@
     "message": "省電 / 會議",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "切換分頁或視窗時暫停並恢復播放，接著倒轉 5 秒。",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "將影片靜音、淡化音量，並在切換焦點或鎖定裝置時繼續播放。",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "切換分頁或鎖定裝置時暫停並恢復；忽略焦點變更，並在全螢幕時停用擴充功能。",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "切換分頁、失去焦點、鎖定裝置或影片捲出畫面時暫停；封鎖自動播放且不會自動恢復。",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "已套用模式",
     "description": "Preset selector text"

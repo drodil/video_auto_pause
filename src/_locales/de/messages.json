@@ -243,6 +243,22 @@
     "message": "Energiesparen / Besprechungen",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Pausiert und setzt beim Wechseln zwischen Tabs oder Fenstern fort und springt dann 5 Sekunden zurück.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Schaltet Videos stumm, blendet den Ton ein und aus und lässt die Wiedergabe bei Fokuswechsel oder Gerätesperre weiterlaufen.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pausiert und setzt bei Tabwechsel und Gerätesperre fort; ignoriert Fokuswechsel und deaktiviert sich im Vollbild.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pausiert bei Tabwechsel, Fokusverlust, Gerätesperre oder wenn das Video aus dem Sichtbereich scrollt; blockiert Autoplay und setzt nicht automatisch fort.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modus angewendet",
     "description": "Preset selector text"

@@ -243,6 +243,22 @@
     "message": "Ahorro de batería / reuniones",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Pausa y reanuda al cambiar de pestaña o ventana y retrocede 5 segundos.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Silencia los vídeos, desvanece el audio y mantiene la reproducción al cambiar el foco o bloquear el dispositivo.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Pausa y reanuda al cambiar de pestaña y al bloquear el dispositivo; ignora los cambios de foco y se desactiva en pantalla completa.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Pausa al cambiar de pestaña, perder el foco, bloquear el dispositivo o desplazar el vídeo fuera de la vista; bloquea la reproducción automática y no reanuda automáticamente.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Modo aplicado",
     "description": "Preset selector text"

@@ -243,6 +243,22 @@
     "message": "Batterisparer / møder",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Sætter på pause og genoptager, når du skifter fane eller vindue, og spoler derefter 5 sekunder tilbage.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Slår videoer fra, toner lyden og lader afspilningen fortsætte, når du skifter fokus eller låser enheden.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Sætter på pause og genoptager ved faneskift og enhedslås; ignorerer fokusskift og deaktiveres i fuldskærm.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Sætter på pause ved faneskift, fokustab, lås eller når videoen rulles ud af syne; blokerer autoplay og genoptager ikke automatisk.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Tilstand anvendt",
     "description": "Preset selector text"

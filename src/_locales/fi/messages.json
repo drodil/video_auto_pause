@@ -243,6 +243,22 @@
     "message": "Virransäästö / kokoukset",
     "description": "Preset selector text"
   },
+  "presetStudyDescription": {
+    "message": "Keskeyttää ja jatkaa toistoa välilehteä tai ikkunaa vaihdettaessa ja kelaa sitten 5 sekuntia taaksepäin.",
+    "description": "Explanation shown for the study preset"
+  },
+  "presetMusicDescription": {
+    "message": "Mykistää videot, häivyttää ääntä ja jatkaa toistoa, kun vaihdat kohdetta tai lukitset laitteen.",
+    "description": "Explanation shown for the music preset"
+  },
+  "presetBingeDescription": {
+    "message": "Keskeyttää ja jatkaa välilehden vaihdon ja laitteen lukituksen yhteydessä; ohittaa kohteen vaihdot ja poistuu käytöstä koko näytössä.",
+    "description": "Explanation shown for the binge preset"
+  },
+  "presetSaverDescription": {
+    "message": "Keskeyttää välilehden vaihdon, kohteen menetyksen, laitteen lukituksen tai videon vierittyä pois näkyvistä; estää automaattisen toiston eikä jatka automaattisesti.",
+    "description": "Explanation shown for the battery saver preset"
+  },
   "presetApplied": {
     "message": "Tila otettu käyttöön",
     "description": "Preset selector text"
