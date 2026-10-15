@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "فتح الإعدادات",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "أثرك هذا الأسبوع",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 إيقاف مؤقت · $2 استئناف · $3 حظر للتشغيل التلقائي · $4 دقائق من التشغيل تم منعها",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "نسخ ملخص الأسبوع",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "قيّم Video Auto Pause",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "تم نسخ ملخص الأسبوع",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "تعذر نسخ ملخص الأسبوع.",
+    "description": "Local weekly statistics text"
   }
 }

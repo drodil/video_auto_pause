@@ -172,6 +172,103 @@ test.describe("Video Auto Pause Extension", () => {
     await expect(onboarding.locator("#hotkeys")).toBeVisible();
   });
 
+  test("shows local weekly statistics and a milestone rating link", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    await worker.evaluate(() => {
+      const date = new Date().toISOString().slice(0, 10);
+      return new Promise((resolve) =>
+        chrome.storage.local.set(
+          {
+            vapStats: {
+              totalPauses: 50,
+              [date]: {
+                pauses: 50,
+                resumes: 12,
+                autoplayBlocked: 3,
+                preventedSeconds: 7200,
+              },
+            },
+          },
+          resolve,
+        ),
+      );
+    });
+    const optionsUrl = await worker.evaluate(() =>
+      chrome.runtime.getURL("options.html"),
+    );
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(optionsUrl);
+
+    await expect(optionsPage.locator("#statsSummary")).toContainText(
+      "50 pauses",
+    );
+    await expect(optionsPage.locator("#statsSummary")).toContainText(
+      "12 resumes",
+    );
+    await expect(optionsPage.locator("#rateExtension")).toBeVisible();
+
+    await optionsPage.evaluate(() => {
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: { writeText: async (text) => (window.copiedStats = text) },
+      });
+    });
+    await optionsPage.locator("#shareStats").click();
+    await expect(optionsPage.locator("#statsStatus")).toContainText("copied");
+    await expect
+      .poll(() =>
+        optionsPage.evaluate(() =>
+          window.copiedStats?.includes("50 pauses") ?? false,
+        ),
+      )
+      .toBe(true);
+  });
+
+  test("records automatic pauses and playback time prevented locally", async ({
+    page,
+    context,
+  }) => {
+    await context.updateSettings({ autopause: true, autoresume: true });
+    await page.goto(`http://localhost:${port}/video.html`);
+    await page.bringToFront();
+    const video = page.locator("#v");
+    await expect(video).toHaveAttribute(
+      "data-auto-pause-listener-attached",
+      "true",
+      { timeout: 10000 },
+    );
+    await video.evaluate((element) => element.play());
+
+    const otherTab = await context.newPage();
+    await otherTab.goto(`http://localhost:${port}/`);
+    await otherTab.bringToFront();
+    await page.waitForTimeout(1000);
+    await expect(video).toHaveJSProperty("paused", true);
+
+    const worker = context.serviceWorkers()[0];
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const { vapStats = {} } = await chrome.storage.local.get("vapStats");
+          return Object.values(vapStats).find((day) => day.pauses)?.pauses ?? 0;
+        }),
+      )
+      .toBe(1);
+
+    await page.bringToFront();
+    await expect(video).toHaveJSProperty("paused", false);
+    await expect
+      .poll(() =>
+        worker.evaluate(async () => {
+          const { vapStats = {} } = await chrome.storage.local.get("vapStats");
+          return Object.values(vapStats).find((day) => day.resumes)?.resumes ?? 0;
+        }),
+      )
+      .toBe(1);
+  });
+
   test("should pause video when switching tabs", async ({ page, context }) => {
     await page.goto(`http://localhost:${port}/video.html`);
 

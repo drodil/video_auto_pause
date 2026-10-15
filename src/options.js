@@ -101,6 +101,60 @@ function updateAudioFadingVisibility() {
   }
 }
 
+function getWeeklyStats(stats) {
+  const cutoff = new Date();
+  cutoff.setUTCHours(0, 0, 0, 0);
+  cutoff.setUTCDate(cutoff.getUTCDate() - 6);
+  const summary = {
+    pauses: 0,
+    resumes: 0,
+    autoplayBlocked: 0,
+    preventedSeconds: 0,
+    lifetimePauses: stats.totalPauses ?? 0,
+  };
+  for (const [day, values] of Object.entries(stats)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      continue;
+    }
+    if (Date.parse(`${day}T00:00:00Z`) >= cutoff.getTime()) {
+      summary.pauses += values.pauses ?? 0;
+      summary.resumes += values.resumes ?? 0;
+      summary.autoplayBlocked += values.autoplayBlocked ?? 0;
+      summary.preventedSeconds += values.preventedSeconds ?? 0;
+    }
+  }
+  return summary;
+}
+
+async function restoreStats() {
+  const { vapStats = {} } = await env.storage.local.get("vapStats");
+  const stats = getWeeklyStats(vapStats);
+  const values = [
+    stats.pauses.toString(),
+    stats.resumes.toString(),
+    stats.autoplayBlocked.toString(),
+    Math.floor(stats.preventedSeconds / 60).toString(),
+  ];
+  const summary = env.i18n.getMessage("statsSummary", values);
+  document.getElementById("statsSummary").textContent =
+    summary ||
+    `${values[0]} pauses · ${values[1]} resumes · ${values[2]} autoplay blocks · ${values[3]} min saved`;
+  document.getElementById("rateExtension").hidden = stats.lifetimePauses < 50;
+}
+
+async function copyWeeklyStats() {
+  const status = document.getElementById("statsStatus");
+  try {
+    await navigator.clipboard.writeText(
+      document.getElementById("statsSummary").textContent,
+    );
+    status.textContent = env.i18n.getMessage("statsCopied");
+  } catch (error) {
+    status.textContent = env.i18n.getMessage("statsCopyFailed");
+    console.error("Video Auto Pause could not copy the weekly summary:", error);
+  }
+}
+
 async function restore_options(changedKeys = Object.keys(options)) {
   const items = await env.storage.sync.get(options);
   for (const opt of changedKeys) {
@@ -181,8 +235,22 @@ env.storage.onChanged.addListener((changes, namespace) => {
     void restore_options(Object.keys(changes));
   } else if (namespace === "session" || namespace === "local") {
     void restore_options([]);
+    if (namespace === "local" && "vapStats" in changes) {
+      void restoreStats();
+    }
   }
 });
+
+document.getElementById("shareStats")?.addEventListener("click", () => {
+  void copyWeeklyStats();
+});
+
+if (env.runtime.getManifest().browser_specific_settings?.gecko) {
+  document.getElementById("rateExtension").href =
+    "https://addons.mozilla.org/firefox/addon/video-auto-pause/";
+}
+
+void restoreStats();
 
 // Listen to changes of options
 for (const option in options) {

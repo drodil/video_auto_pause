@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "Ava seaded",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "Sinu mõju sel nädalal",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 peatamist · $2 jätkamist · $3 blokeeritud automaatesitust · $4 min taasesitust ära hoitud",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "Kopeeri nädala kokkuvõte",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Hinda Video Auto Pause’i",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "Nädala kokkuvõte kopeeritud",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "Nädala kokkuvõtet ei saanud kopeerida.",
+    "description": "Local weekly statistics text"
   }
 }

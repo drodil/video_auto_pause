@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "Ouvrir les paramètres",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "Votre impact cette semaine",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 pauses · $2 reprises · $3 lectures automatiques bloquées · $4 min de lecture évitées",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "Copier le résumé hebdomadaire",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Évaluer Video Auto Pause",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "Résumé hebdomadaire copié",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "Impossible de copier le résumé hebdomadaire.",
+    "description": "Local weekly statistics text"
   }
 }

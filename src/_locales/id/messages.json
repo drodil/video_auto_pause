@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "Buka setelan",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "Dampak Anda minggu ini",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 jeda · $2 dilanjutkan · $3 putar otomatis diblokir · $4 menit pemutaran dicegah",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "Salin ringkasan mingguan",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Beri rating Video Auto Pause",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "Ringkasan mingguan disalin",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "Ringkasan mingguan tidak dapat disalin.",
+    "description": "Local weekly statistics text"
   }
 }

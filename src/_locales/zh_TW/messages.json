@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "開啟設定",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "本週使用成效",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "暫停 $1 次 · 恢復 $2 次 · 阻止自動播放 $3 次 · 避免播放 $4 分鐘",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "複製每週摘要",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "為 Video Auto Pause 評分",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "已複製每週摘要",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "無法複製每週摘要。",
+    "description": "Local weekly statistics text"
   }
 }

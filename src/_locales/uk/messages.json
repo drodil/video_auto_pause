@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "Відкрити налаштування",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "Ваш результат цього тижня",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 призупинень · $2 відновлень · $3 блокувань автозапуску · $4 хв відтворення попереджено",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "Копіювати підсумок за тиждень",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Оцініть Video Auto Pause",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "Підсумок за тиждень скопійовано",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "Не вдалося скопіювати підсумок за тиждень.",
+    "description": "Local weekly statistics text"
   }
 }

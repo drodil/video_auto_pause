@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "Открыть настройки",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "Ваш результат за эту неделю",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 пауз · $2 возобновлений · $3 блокировок автозапуска · $4 мин. воспроизведения предотвращено",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "Скопировать сводку за неделю",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Оценить Video Auto Pause",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "Сводка за неделю скопирована",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "Не удалось скопировать сводку за неделю.",
+    "description": "Local weekly statistics text"
   }
 }

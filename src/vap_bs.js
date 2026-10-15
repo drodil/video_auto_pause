@@ -18,6 +18,7 @@ let tabMedia = {};
 let priorityTabId = -1;
 let priorityHistory = [];
 let priorityOperation = Promise.resolve();
+let statisticsOperation = Promise.resolve();
 
 // Computer state
 let state = "active";
@@ -125,6 +126,45 @@ async function refresh_settings() {
 
 async function save_settings() {
   await sessionStorage.set({ disabledTabs });
+}
+
+function recordStatistic(event, preventedSeconds = 0) {
+  const operation = statisticsOperation.then(async () => {
+    const stored = await env.storage.local.get("vapStats");
+    const stats = stored.vapStats ?? {};
+    const date = new Date().toISOString().slice(0, 10);
+    stats.totalPauses ??= 0;
+    stats[date] ??= {
+      pauses: 0,
+      resumes: 0,
+      autoplayBlocked: 0,
+      preventedSeconds: 0,
+    };
+    if (event === "pause") {
+      stats[date].pauses += 1;
+      stats.totalPauses += 1;
+    } else if (event === "resume") {
+      stats[date].resumes += 1;
+      stats[date].preventedSeconds += Number.isFinite(preventedSeconds)
+        ? Math.max(0, preventedSeconds)
+        : 0;
+    } else if (event === "autoplayBlocked") {
+      stats[date].autoplayBlocked += 1;
+    } else {
+      throw new Error(`Unknown statistics event: ${event}`);
+    }
+    const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+    for (const day of Object.keys(stats)) {
+      if (Date.parse(`${day}T00:00:00Z`) < cutoff) {
+        delete stats[day];
+      }
+    }
+    await env.storage.local.set({ vapStats: stats });
+  });
+  statisticsOperation = operation.catch((error) => {
+    console.error("Video Autopause could not record local statistics:", error);
+  });
+  return operation;
 }
 
 function isEnabledForTab(tab) {
@@ -561,6 +601,11 @@ async function handlePageMessage(request, sender) {
   await settingsReady;
   const tab = sender.tab;
   if (!tab) {
+    return;
+  }
+
+  if ("statsEvent" in request) {
+    await recordStatistic(request.statsEvent, request.preventedSeconds);
     return;
   }
 

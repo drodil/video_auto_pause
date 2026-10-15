@@ -9,6 +9,7 @@ if (window.autoPauseInjected !== true) {
   const extensionInitiatedPlays = new WeakSet();
   const automaticallyPausedVideos = new WeakSet();
   const extensionMutedVideos = new WeakMap();
+  const automaticPauseStartedAt = new WeakMap();
   const scheduledActions = new WeakMap();
   const observedRoots = new WeakSet();
   const observedMedia = new WeakSet();
@@ -368,7 +369,9 @@ if (window.autoPauseInjected !== true) {
     }
     if (videoActionTokens.get(video) === actionToken && !video.paused) {
       automaticallyPausedVideos.add(video);
+      automaticPauseStartedAt.set(video, Date.now());
       video.pause();
+      sendMessage({ statsEvent: "pause" });
     }
   };
 
@@ -392,6 +395,14 @@ if (window.autoPauseInjected !== true) {
       extensionPausedVideos.delete(video);
       automaticallyPausedVideos.delete(video);
       originalVolumes.delete(video);
+      const pauseStartedAt = automaticPauseStartedAt.get(video);
+      if (pauseStartedAt !== undefined) {
+        automaticPauseStartedAt.delete(video);
+        sendMessage({
+          statsEvent: "resume",
+          preventedSeconds: Math.max(0, (Date.now() - pauseStartedAt) / 1000),
+        });
+      }
       if (options.audioFading && targetVolume !== undefined) {
         await fadeAudio(video, targetVolume, options.fadeDuration);
       }
@@ -757,6 +768,7 @@ if (window.autoPauseInjected !== true) {
         debugLog("Blocking autoplay before user interaction");
         automaticallyPausedVideos.add(videoElement);
         videoElement.pause();
+        sendMessage({ statsEvent: "autoplayBlocked" });
         scheduleVideoArbitration();
         return;
       }

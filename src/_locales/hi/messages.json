@@ -198,5 +198,29 @@
   "onboardingOptions": {
     "message": "सेटिंग खोलें",
     "description": "Welcome page text"
+  },
+  "statsHeading": {
+    "message": "इस सप्ताह आपका प्रभाव",
+    "description": "Local weekly statistics text"
+  },
+  "statsSummary": {
+    "message": "$1 बार रुका · $2 बार फिर चला · $3 ऑटोप्ले रोके · $4 मिनट का वीडियो चलने से बचा",
+    "description": "Local weekly statistics text"
+  },
+  "statsShare": {
+    "message": "साप्ताहिक सारांश कॉपी करें",
+    "description": "Local weekly statistics text"
+  },
+  "statsRate": {
+    "message": "Video Auto Pause को रेट करें",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopied": {
+    "message": "साप्ताहिक सारांश कॉपी हो गया",
+    "description": "Local weekly statistics text"
+  },
+  "statsCopyFailed": {
+    "message": "साप्ताहिक सारांश कॉपी नहीं हो सका।",
+    "description": "Local weekly statistics text"
   }
 }

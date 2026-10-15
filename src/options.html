@@ -317,6 +317,30 @@
         outline: 2px solid #667eea;
         outline-offset: 2px;
       }
+
+      #statsSummary {
+        padding: 8px;
+        border-radius: 4px;
+        background: #f3f4f6;
+        line-height: 1.5;
+      }
+
+      #statsActions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      #statsActions button {
+        border: 0;
+        border-radius: 4px;
+        padding: 7px 10px;
+        background: #667eea;
+        color: white;
+        cursor: pointer;
+        font: inherit;
+      }
     </style>
   </head>
 
@@ -653,6 +677,26 @@
             You can configure hotkeys in the Extensions menu
           </p>
         </div>
+      </div>
+
+      <div class="container section">
+        <h4 data-i18n="statsHeading">Your impact this week</h4>
+        <p id="statsSummary" aria-live="polite"></p>
+        <div id="statsActions">
+          <button id="shareStats" type="button" data-i18n="statsShare">
+            Copy weekly summary
+          </button>
+          <a
+            id="rateExtension"
+            href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="statsRate"
+            hidden
+            >Rate Video Auto Pause</a
+          >
+        </div>
+        <p id="statsStatus" role="status" aria-live="polite"></p>
       </div>
 
       <div class="container section">
