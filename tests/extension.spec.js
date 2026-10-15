@@ -691,6 +691,7 @@ test.describe("Video Auto Pause Extension", () => {
       "shortcutLoopCleared",
       "shortcutActionUnsupported",
       "shortcutActionFailed",
+      "autoPipOnTabSwitch",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1703,6 +1704,28 @@ test.describe("Video Auto Pause Extension", () => {
 
     await btn.evaluate((b) => (b.style.display = "block"));
     await expect(btn).toBeVisible({ timeout: 5000 });
+  });
+
+  test("stores the automatic Picture-in-Picture tab-switch setting", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await optionsPage.locator("#autoPipOnTabSwitch").check();
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          chrome.storage.sync.get("autoPipOnTabSwitch"),
+        ),
+      )
+      .toMatchObject({ autoPipOnTabSwitch: true });
   });
 
   test("should clamp negative delay values in the options page", async ({

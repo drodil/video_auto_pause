@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Tastenkürzel-Aktion fehlgeschlagen."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Video beim Tabwechsel im Bild-in-Bild-Modus öffnen"
   }
 }

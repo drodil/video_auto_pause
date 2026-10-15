@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Sneltoetsactie mislukt."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Video openen in picture-in-picture bij wisselen van tabblad"
   }
 }

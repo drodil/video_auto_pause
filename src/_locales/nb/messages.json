@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Snarveihandlingen mislyktes."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Åpne video i bilde-i-bilde når du bytter fane"
   }
 }

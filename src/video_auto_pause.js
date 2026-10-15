@@ -25,6 +25,8 @@ if (window.autoPauseInjected !== true) {
   let userInteracted = false;
   let options = { ...DEFAULT_OPTIONS };
   let profiles = [];
+  let autoPipVideo = null;
+  let autoDocumentPipWindow = null;
 
   function recordUserInteraction(event) {
     if (!event.isTrusted) {
@@ -106,6 +108,118 @@ if (window.autoPauseInjected !== true) {
     toggleVideoOverlays();
     applyAutoplaySettings();
   }
+
+  async function openVideoInPictureInPicture(video) {
+    if (
+      document.pictureInPictureElement === video ||
+      autoDocumentPipWindow?.document.contains(video)
+    ) {
+      return;
+    }
+    const documentPip = window.documentPictureInPicture;
+    if (documentPip?.requestWindow && !documentPip.window) {
+      const parent = video.parentNode;
+      const nextSibling = video.nextSibling;
+      const originalStyle = video.getAttribute("style");
+      let pipWindow;
+      try {
+        pipWindow = await documentPip.requestWindow({
+          width: video.videoWidth || 640,
+          height: video.videoHeight || 360,
+        });
+        pipWindow.document.body.style.margin = "0";
+        pipWindow.document.body.style.background = "black";
+        pipWindow.document.body.append(video);
+        Object.assign(video.style, {
+          width: "100%",
+          height: "100%",
+          maxWidth: "100vw",
+          maxHeight: "100vh",
+        });
+        autoDocumentPipWindow = pipWindow;
+        autoPipVideo = video;
+        pipWindow.addEventListener(
+          "pagehide",
+          () => {
+            const restoreParent = parent?.isConnected ? parent : document.body;
+            if (restoreParent) {
+              restoreParent.insertBefore(
+                video,
+                nextSibling?.parentNode === restoreParent ? nextSibling : null,
+              );
+            }
+            if (originalStyle === null) {
+              video.removeAttribute("style");
+            } else {
+              video.setAttribute("style", originalStyle);
+            }
+            autoDocumentPipWindow = null;
+            autoPipVideo = null;
+          },
+          { once: true },
+        );
+        return;
+      } catch (error) {
+        console.error(
+          "Video Auto Pause could not open Document Picture-in-Picture:",
+          error,
+        );
+        if (pipWindow) {
+          if (pipWindow.document.contains(video)) {
+            const restoreParent = parent?.isConnected ? parent : document.body;
+            restoreParent?.insertBefore(
+              video,
+              nextSibling?.parentNode === restoreParent ? nextSibling : null,
+            );
+            if (originalStyle === null) {
+              video.removeAttribute("style");
+            } else {
+              video.setAttribute("style", originalStyle);
+            }
+          }
+          pipWindow.close();
+        }
+      }
+    }
+    try {
+      await video.requestPictureInPicture();
+      autoPipVideo = video;
+    } catch (error) {
+      console.error(
+        "Video Auto Pause could not open Picture-in-Picture:",
+        error,
+      );
+    }
+  }
+
+  async function handleVisibilityChange() {
+    await settingsReady;
+    if (document.hidden && options.autoPipOnTabSwitch) {
+      const video = allVideos().find(
+        (candidate) => !candidate.paused && !candidate.ended,
+      );
+      if (video) {
+        await openVideoInPictureInPicture(video);
+      }
+    } else if (!document.hidden && autoPipVideo) {
+      const video = autoPipVideo;
+      if (autoDocumentPipWindow) {
+        autoDocumentPipWindow.close();
+      } else if (document.pictureInPictureElement === video) {
+        await document.exitPictureInPicture();
+        autoPipVideo = null;
+      }
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    void handleVisibilityChange().catch((error) => {
+      console.error(
+        "Video Auto Pause could not handle the Picture-in-Picture tab switch:",
+        error,
+      );
+    });
+  });
 
   let settingsReady = refresh_settings();
   void settingsReady.catch((error) => {
@@ -644,7 +758,11 @@ if (window.autoPauseInjected !== true) {
   };
 
   const pauseVideo = async (video, actionToken, immediate = false) => {
-    if (document.pictureInPictureElement === video) {
+    if (
+      document.pictureInPictureElement === video ||
+      (options.autoPipOnTabSwitch &&
+        autoDocumentPipWindow?.document.contains(video))
+    ) {
       debugLog(`Ignoring stop command for ${video} because it is in PiP`);
       return;
     }

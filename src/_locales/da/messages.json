@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Genvejshandlingen mislykkedes."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Åbn video i billede-i-billede, når du skifter fane"
   }
 }

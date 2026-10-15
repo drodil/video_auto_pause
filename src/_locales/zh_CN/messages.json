@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "快捷键操作失败。"
+  },
+  "autoPipOnTabSwitch": {
+    "message": "切换标签页时以画中画方式打开视频"
   }
 }

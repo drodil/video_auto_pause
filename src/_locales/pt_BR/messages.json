@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Falha ao executar o atalho."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Abrir o vídeo em Picture-in-Picture ao trocar de guia"
   }
 }

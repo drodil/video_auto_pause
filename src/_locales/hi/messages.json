@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "शॉर्टकट कार्रवाई विफल हुई."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "टैब बदलते समय वीडियो को पिक्चर-इन-पिक्चर में खोलें"
   }
 }

@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Aðgerð flýtilykils mistókst."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Opna myndband í mynd-í-mynd þegar skipt er um flipa"
   }
 }

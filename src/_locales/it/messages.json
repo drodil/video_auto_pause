@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Azione della scorciatoia non riuscita."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Apri il video in Picture-in-Picture quando cambi scheda"
   }
 }

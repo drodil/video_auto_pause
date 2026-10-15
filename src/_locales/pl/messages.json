@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Nie udało się wykonać skrótu."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Otwórz wideo w trybie obraz w obrazie po przełączeniu karty"
   }
 }

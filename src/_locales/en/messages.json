@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "The shortcut action failed."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Open video in Picture-in-Picture when switching tabs"
   }
 }

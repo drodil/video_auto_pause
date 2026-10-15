@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Kiirklahvi toiming nurjus."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Ava vahekaartide vahetamisel video pilt-pildis režiimis"
   }
 }

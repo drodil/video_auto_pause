@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Échec de l’action du raccourci."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Ouvrir la vidéo en incrustation lors du changement d’onglet"
   }
 }

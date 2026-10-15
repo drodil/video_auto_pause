@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Tindakan pintasan gagal."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Buka video dalam mode Gambar-dalam-Gambar saat berpindah tab"
   }
 }

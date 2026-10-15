@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "No se pudo ejecutar el atajo."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Abrir el vídeo en imagen en imagen al cambiar de pestaña"
   }
 }

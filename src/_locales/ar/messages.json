@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "تعذر تنفيذ إجراء الاختصار."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "فتح الفيديو في نافذة صورة داخل صورة عند تبديل علامات التبويب"
   }
 }

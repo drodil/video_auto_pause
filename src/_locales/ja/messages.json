@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "ショートカット操作に失敗しました。"
+  },
+  "autoPipOnTabSwitch": {
+    "message": "タブ切り替え時に動画をピクチャー イン ピクチャーで開く"
   }
 }

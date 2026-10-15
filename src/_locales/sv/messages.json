@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Kortkommandot misslyckades."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Öppna video i bild-i-bild när du byter flik"
   }
 }

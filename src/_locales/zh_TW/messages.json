@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "快速鍵操作失敗。"
+  },
+  "autoPipOnTabSwitch": {
+    "message": "切換分頁時以子母畫面開啟影片"
   }
 }

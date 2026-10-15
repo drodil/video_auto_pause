@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Pikanäppäintoiminto epäonnistui."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Avaa video kuva kuvassa -tilassa välilehteä vaihdettaessa"
   }
 }

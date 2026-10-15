@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "단축키 동작에 실패했습니다."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "탭을 전환할 때 동영상을 화면 속 화면으로 열기"
   }
 }

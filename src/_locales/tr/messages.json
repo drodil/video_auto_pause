@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Kısayol işlemi başarısız oldu."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Sekme değiştirirken videoyu Resim içinde Resim modunda aç"
   }
 }

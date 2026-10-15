@@ -50,6 +50,8 @@ Advanced settings can enable configurable in-page video shortcuts for seeking,
 frame stepping, A-B looping, playback markers, frame capture, Picture-in-Picture,
 and captions. Shortcuts are disabled by default and can be left blank
 individually to avoid conflicts with a site's own controls.
+An optional tab-switch setting opens the playing video in a supported
+Picture-in-Picture window instead of pausing it.
 
 ## Player compatibility
 

@@ -625,5 +625,8 @@
   },
   "shortcutActionFailed": {
     "message": "Thao tác phím tắt không thành công."
+  },
+  "autoPipOnTabSwitch": {
+    "message": "Mở video ở chế độ Hình trong hình khi chuyển tab"
   }
 }
