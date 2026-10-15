@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Geçerli alan adını bu listeye ekle",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Video Auto Pause’a hoş geldiniz",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Sekme değiştirdiğinizde, sayfadan uzaklaştığınızda veya cihazınızı kilitlediğinizde videolar duraklatılır ve geri döndüğünüzde devam eder.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Hızlı erişim için uzantıyı araç çubuğuna sabitleyin.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Ayarları aç",
+    "description": "Welcome page text"
   }
 }

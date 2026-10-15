@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "वर्तमान डोमेन को इस सूची में जोड़ें",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Video Auto Pause में आपका स्वागत है",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "टैब बदलने, पेज से दूर स्क्रॉल करने या डिवाइस लॉक करने पर वीडियो रुकते हैं और लौटने पर फिर चलने लगते हैं।",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "त्वरित पहुँच के लिए एक्सटेंशन को टूलबार पर पिन करें।",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "सेटिंग खोलें",
+    "description": "Welcome page text"
   }
 }

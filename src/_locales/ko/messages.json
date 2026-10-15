@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "현재 도메인을 이 목록에 추가",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Video Auto Pause에 오신 것을 환영합니다",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "탭을 전환하거나 화면을 벗어나도록 스크롤하거나 기기를 잠그면 동영상이 일시 정지되고 돌아오면 다시 재생됩니다.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "빠르게 사용하려면 확장 프로그램을 도구 모음에 고정하세요.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "설정 열기",
+    "description": "Welcome page text"
   }
 }

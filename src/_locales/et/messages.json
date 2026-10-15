@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Lisa praegune domeen sellesse loendisse",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Tere tulemast kasutama Video Auto Pause’i",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Videod peatatakse vahelehe vahetamisel, eemale kerimisel või seadme lukustamisel ning jätkuvad naasmisel.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Kiireks juurdepääsuks kinnita laiendus tööriistaribale.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Ava seaded",
+    "description": "Welcome page text"
   }
 }

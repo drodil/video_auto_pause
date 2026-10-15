@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "أضف النطاق الحالي إلى هذه القائمة",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "مرحبًا بك في Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "يتم إيقاف الفيديو عند تبديل علامات التبويب أو التمرير بعيدًا أو قفل جهازك، ثم استئنافه عند العودة.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "ثبّت الإضافة في شريط الأدوات للوصول إليها بسرعة.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "فتح الإعدادات",
+    "description": "Welcome page text"
   }
 }

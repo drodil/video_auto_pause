@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Thêm miền hiện tại vào danh sách này",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Chào mừng bạn đến với Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Video sẽ tạm dừng khi bạn chuyển tab, cuộn khỏi video hoặc khóa thiết bị, rồi phát tiếp khi bạn quay lại.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Ghim tiện ích vào thanh công cụ để truy cập nhanh.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Mở cài đặt",
+    "description": "Welcome page text"
   }
 }

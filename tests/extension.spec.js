@@ -152,6 +152,26 @@ test.describe("Video Auto Pause Extension", () => {
     await page.waitForTimeout(1000);
   });
 
+  test("opens a localized onboarding page on first install", async ({
+    context,
+  }) => {
+    await expect
+      .poll(() =>
+        context.pages().some((candidate) =>
+          candidate.url().endsWith("/onboarding.html"),
+        ),
+      )
+      .toBe(true);
+
+    const onboarding = context
+      .pages()
+      .find((candidate) => candidate.url().endsWith("/onboarding.html"));
+    await expect(
+      onboarding.getByRole("heading", { name: "Welcome to Video Auto Pause" }),
+    ).toBeVisible();
+    await expect(onboarding.locator("#hotkeys")).toBeVisible();
+  });
+
   test("should pause video when switching tabs", async ({ page, context }) => {
     await page.goto(`http://localhost:${port}/video.html`);
 

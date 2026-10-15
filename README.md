@@ -11,6 +11,9 @@ visible area playing and pauses other videos.
 
 Features some useful keyboard shortcuts to control videos in the window.
 
+On first install, a short welcome page explains the main behaviors, shows available
+keyboard shortcuts, and links to the settings.
+
 ## Installing
 
 #### Chrome Web Store

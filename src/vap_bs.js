@@ -765,8 +765,18 @@ async function handleIdleStateChanged(s) {
 }
 env.idle.onStateChanged.addListener(handleIdleStateChanged);
 
-env.runtime.onInstalled.addListener(async () => {
+env.runtime.onInstalled.addListener(async (details) => {
   await settingsReady;
+  if (details.reason === "install") {
+    try {
+      await env.tabs.create({
+        url: env.runtime.getURL("onboarding.html"),
+        active: true,
+      });
+    } catch (error) {
+      console.error("Video Autopause could not open the onboarding page:", error);
+    }
+  }
   const tabs = await env.tabs.query({});
   for (const tab of tabs) {
     if (!tab.id || !tab.url?.startsWith("http")) {

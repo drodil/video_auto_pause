@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Huidig domein aan deze lijst toevoegen",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Welkom bij Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Video’s worden gepauzeerd wanneer je van tabblad wisselt, wegscrolt of je apparaat vergrendelt, en hervat wanneer je terugkomt.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Zet de extensie vast op de werkbalk voor snelle toegang.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Instellingen openen",
+    "description": "Welcome page text"
   }
 }

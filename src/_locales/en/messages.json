@@ -182,5 +182,21 @@
   "pipTitle": {
     "message": "Toggle Picture-in-Picture",
     "description": "Title text for the PiP button"
+  },
+  "onboardingTitle": {
+    "message": "Welcome to Video Auto Pause",
+    "description": "Welcome page heading"
+  },
+  "onboardingIntro": {
+    "message": "Videos pause when you switch tabs, scroll away, or lock your device—and resume when you return.",
+    "description": "Welcome page introduction"
+  },
+  "onboardingPin": {
+    "message": "Pin the extension to your toolbar for quick access.",
+    "description": "Welcome page reminder to pin the extension"
+  },
+  "onboardingOptions": {
+    "message": "Open settings",
+    "description": "Welcome page button to open settings"
   }
 }

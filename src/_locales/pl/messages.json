@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Dodaj bieżącą domenę do tej listy",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Witamy w Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Filmy są wstrzymywane po zmianie karty, przewinięciu poza nie lub zablokowaniu urządzenia i wznawiane po powrocie.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Przypnij rozszerzenie do paska narzędzi, aby mieć do niego szybki dostęp.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Otwórz ustawienia",
+    "description": "Welcome page text"
   }
 }

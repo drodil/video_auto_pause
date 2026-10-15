@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Bæta núverandi léni við þennan lista",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Velkomin í Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Myndskeið gera hlé þegar þú skiptir um flipa, flettir frá eða læsir tækinu og halda áfram þegar þú snýrð aftur.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Festu viðbótina á verkstikuna til að fá skjótan aðgang.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Opna stillingar",
+    "description": "Welcome page text"
   }
 }

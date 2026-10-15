@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "將目前網域新增至此清單",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "歡迎使用 Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "切換分頁、捲動離開影片或鎖定裝置時，影片會暫停；返回後會繼續播放。",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "將擴充功能釘選到工具列，以便快速存取。",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "開啟設定",
+    "description": "Welcome page text"
   }
 }

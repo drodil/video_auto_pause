@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "現在のドメインをこのリストに追加",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Video Auto Pause へようこそ",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "タブの切り替え、画面のスクロール、デバイスのロック時に動画を一時停止し、戻ると再開します。",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "すぐに使えるよう、拡張機能をツールバーに固定してください。",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "設定を開く",
+    "description": "Welcome page text"
   }
 }

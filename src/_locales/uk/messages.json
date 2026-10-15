@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Додати поточний домен до цього списку",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Вітаємо у Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Відео призупиняється під час перемикання вкладки, прокручування сторінки або блокування пристрою та відновлюється після повернення.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Закріпіть розширення на панелі інструментів для швидкого доступу.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Відкрити налаштування",
+    "description": "Welcome page text"
   }
 }

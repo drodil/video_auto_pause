@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Добавить текущий домен в этот список",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Добро пожаловать в Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Видео приостанавливается при переключении вкладки, прокрутке страницы или блокировке устройства и возобновляется, когда вы возвращаетесь.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Закрепите расширение на панели инструментов для быстрого доступа.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Открыть настройки",
+    "description": "Welcome page text"
   }
 }

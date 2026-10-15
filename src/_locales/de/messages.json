@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Aktuelle Domain zu dieser Liste hinzufügen",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Willkommen bei Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Videos werden pausiert, wenn du den Tab wechselst, wegscrollst oder dein Gerät sperrst, und bei deiner Rückkehr fortgesetzt.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "He pinne die Erweiterung für schnellen Zugriff an die Symbolleiste an.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Einstellungen öffnen",
+    "description": "Welcome page text"
   }
 }

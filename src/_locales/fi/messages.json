@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Lisää nykyinen verkkotunnus tähän luetteloon",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Tervetuloa käyttämään Video Auto Pausea",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Videot keskeytetään, kun vaihdat välilehte, vierität pois tai lukitset laitteen, ja niitä jatketaan palatessasi.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Kiinnitä laajennus työkalupalkkiin, jotta löydät sen nopeasti.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Avaa asetukset",
+    "description": "Welcome page text"
   }
 }

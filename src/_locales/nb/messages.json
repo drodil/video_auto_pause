@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Legg til gjeldende domene i denne listen",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Velkommen til Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Videoer settes på pause når du bytter fane, ruller bort eller låser enheten, og fortsetter når du kommer tilbake.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Fest utvidelsen på verktøylinjen for rask tilgang.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Åpne innstillinger",
+    "description": "Welcome page text"
   }
 }

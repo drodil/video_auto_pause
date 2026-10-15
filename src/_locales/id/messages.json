@@ -182,5 +182,21 @@
   "addCurrentDomainToList": {
     "message": "Tambahkan domain saat ini ke daftar ini",
     "description": "Tooltip and accessible label for adding the current domain to a domain list"
+  },
+  "onboardingTitle": {
+    "message": "Selamat datang di Video Auto Pause",
+    "description": "Welcome page text"
+  },
+  "onboardingIntro": {
+    "message": "Video dijeda saat Anda berpindah tab, menggulir menjauh, atau mengunci perangkat, lalu dilanjutkan saat Anda kembali.",
+    "description": "Welcome page text"
+  },
+  "onboardingPin": {
+    "message": "Sematkan ekstensi ke toolbar agar mudah diakses.",
+    "description": "Welcome page text"
+  },
+  "onboardingOptions": {
+    "message": "Buka setelan",
+    "description": "Welcome page text"
   }
 }
