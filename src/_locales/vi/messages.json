@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Tạm dừng video nền khi pin yếu"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Sử dụng Battery Status API của trình duyệt nếu có. Video sẽ tiếp tục khi tab được kích hoạt hoặc bắt đầu sạc."
   }
 }

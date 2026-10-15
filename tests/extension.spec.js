@@ -696,6 +696,8 @@ test.describe("Video Auto Pause Extension", () => {
       "audioOnlyDescription",
       "audioAllowList",
       "audioAllowListPlaceholder",
+      "pauseOnLowBattery",
+      "pauseOnLowBatteryDescription",
     ];
     for (const locale of fs.readdirSync(localeDirectory)) {
       const messages = JSON.parse(
@@ -1783,6 +1785,28 @@ test.describe("Video Auto Pause Extension", () => {
     await createAudioAndPlay();
     await sendStop();
     await expect(page.locator("#audio-only")).toHaveJSProperty("paused", false);
+  });
+
+  test("stores the optional low-battery pause preference", async ({
+    context,
+  }) => {
+    const worker = context.serviceWorkers()[0];
+    const optionsPage = await context.newPage();
+    await optionsPage.goto(
+      await worker.evaluate(() => chrome.runtime.getURL("options.html")),
+    );
+    await optionsPage
+      .locator(".collapsible_button")
+      .filter({ hasText: "Advanced Settings" })
+      .click();
+    await optionsPage.locator("#pauseOnLowBattery").check();
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          chrome.storage.sync.get("pauseOnLowBattery"),
+        ),
+      )
+      .toMatchObject({ pauseOnLowBattery: true });
   });
 
   test("should clamp negative delay values in the options page", async ({

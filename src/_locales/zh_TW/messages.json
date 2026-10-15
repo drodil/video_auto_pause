@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "電量不足時暫停背景影片"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "可用時使用瀏覽器 Battery Status API。分頁變成使用中或開始充電時會恢復影片。"
   }
 }

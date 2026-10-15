@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Keskeytä taustavideot akun ollessa vähissä"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Käyttää selaimen akun tilan rajapintaa, jos se on saatavilla. Videot jatkuvat, kun välilehti aktivoidaan tai lataus alkaa."
   }
 }

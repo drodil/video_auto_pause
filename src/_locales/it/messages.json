@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Metti in pausa i video in background quando la batteria è scarica"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Usa l’API sullo stato della batteria del browser, se disponibile. I video riprendono quando la scheda diventa attiva o inizia la ricarica."
   }
 }

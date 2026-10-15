@@ -38,6 +38,7 @@ globalThis.VAP_DEFAULT_OPTIONS = Object.freeze({
     toggleCaptions: "c",
   },
   idlePauseMinutes: 0,
+  pauseOnLowBattery: false,
   quietHoursStart: "",
   quietHoursEnd: "",
   peekMode: false,

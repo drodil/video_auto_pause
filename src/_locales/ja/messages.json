@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "バッテリー残量が少ないときにバックグラウンド動画を一時停止"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "利用可能な場合はブラウザーの Battery Status API を使用します。タブがアクティブになるか充電が始まると動画を再開します。"
   }
 }

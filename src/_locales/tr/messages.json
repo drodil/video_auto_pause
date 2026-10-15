@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Pil azken düzeydeyken arka plan videolarını duraklat"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Varsa tarayıcının Battery Status API'sini kullanır. Sekme etkinleştiğinde veya şarj başladığında videolar devam eder."
   }
 }

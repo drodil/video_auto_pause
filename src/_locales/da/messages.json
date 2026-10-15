@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Sæt baggrundsvideoer på pause ved lavt batteri"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Bruger browserens batteristatus-API, hvis den er tilgængelig. Videoer genoptages, når fanen bliver aktiv, eller opladningen begynder."
   }
 }

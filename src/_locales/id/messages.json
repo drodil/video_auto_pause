@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Jeda video latar belakang saat baterai lemah"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Menggunakan Battery Status API browser jika tersedia. Video dilanjutkan saat tab aktif atau pengisian daya dimulai."
   }
 }

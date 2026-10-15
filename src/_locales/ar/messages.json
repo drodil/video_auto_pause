@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "إيقاف الفيديوهات في الخلفية عند انخفاض البطارية"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "يستخدم واجهة حالة البطارية في المتصفح عند توفرها. تُستأنف الفيديوهات عند تنشيط علامة التبويب أو بدء الشحن."
   }
 }

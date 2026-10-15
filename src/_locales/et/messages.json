@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Peata taustal olevad videod, kui aku on tühi"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Kasutab võimaluse korral brauseri akuoleku API-t. Videod jätkuvad, kui vahekaart aktiveeritakse või laadimine algab."
   }
 }

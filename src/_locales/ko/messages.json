@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "배터리가 부족하면 백그라운드 동영상 일시 중지"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "지원되는 경우 브라우저 Battery Status API를 사용합니다. 탭이 활성화되거나 충전이 시작되면 동영상을 다시 재생합니다."
   }
 }

@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "बैटरी कम होने पर बैकग्राउंड वीडियो रोकें"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "उपलब्ध होने पर ब्राउज़र की Battery Status API का उपयोग करता है। टैब सक्रिय होने या चार्जिंग शुरू होने पर वीडियो फिर चलेंगे।"
   }
 }

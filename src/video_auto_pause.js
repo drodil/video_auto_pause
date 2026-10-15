@@ -27,6 +27,9 @@ if (window.autoPauseInjected !== true) {
   let profiles = [];
   let autoPipVideo = null;
   let autoDocumentPipWindow = null;
+  let batteryStatus = null;
+  let batteryListenersRegistered = false;
+  const batteryPausedVideos = new WeakSet();
 
   function recordUserInteraction(event) {
     if (!event.isTrusted) {
@@ -107,6 +110,65 @@ if (window.autoPauseInjected !== true) {
     togglePipButtons();
     toggleVideoOverlays();
     applyAutoplaySettings();
+    void updateBatteryAwareness().catch((error) => {
+      console.error("Video Auto Pause could not monitor battery state:", error);
+    });
+  }
+
+  async function applyBatteryPolicy() {
+    if (!batteryStatus) {
+      return;
+    }
+    const shouldPause =
+      options.pauseOnLowBattery &&
+      !batteryStatus.charging &&
+      batteryStatus.level <= 0.2 &&
+      document.hidden;
+    for (const video of allVideos()) {
+      if (shouldPause && !video.paused) {
+        batteryPausedVideos.add(video);
+        await handleVideoAction(video, { action: "stop", immediate: true });
+      } else if (!shouldPause && batteryPausedVideos.has(video)) {
+        batteryPausedVideos.delete(video);
+        if (options.autoresume) {
+          await handleVideoAction(video, { action: "resume" });
+        }
+      }
+    }
+  }
+
+  async function updateBatteryAwareness() {
+    if (
+      options.pauseOnLowBattery &&
+      typeof navigator.getBattery === "function"
+    ) {
+      batteryStatus ??= await navigator.getBattery();
+      if (!batteryListenersRegistered) {
+        batteryStatus.addEventListener("levelchange", () => {
+          void applyBatteryPolicy().catch((error) => {
+            console.error(
+              "Video Auto Pause could not apply battery policy:",
+              error,
+            );
+          });
+        });
+        batteryStatus.addEventListener("chargingchange", () => {
+          void applyBatteryPolicy().catch((error) => {
+            console.error(
+              "Video Auto Pause could not apply battery policy:",
+              error,
+            );
+          });
+        });
+        batteryListenersRegistered = true;
+      }
+    } else if (
+      options.pauseOnLowBattery &&
+      typeof navigator.getBattery !== "function"
+    ) {
+      debugLog("Battery Status API is unavailable in this browser");
+    }
+    await applyBatteryPolicy();
   }
 
   async function openVideoInPictureInPicture(video) {
@@ -194,6 +256,7 @@ if (window.autoPauseInjected !== true) {
 
   async function handleVisibilityChange() {
     await settingsReady;
+    await applyBatteryPolicy();
     if (document.hidden && options.autoPipOnTabSwitch) {
       const video = allVideos().find(
         (candidate) => !candidate.paused && !candidate.ended,
@@ -220,6 +283,20 @@ if (window.autoPauseInjected !== true) {
       );
     });
   });
+  document.addEventListener(
+    "play",
+    (event) => {
+      if (document.hidden && event.target?.tagName === "VIDEO") {
+        void applyBatteryPolicy().catch((error) => {
+          console.error(
+            "Video Auto Pause could not apply battery policy:",
+            error,
+          );
+        });
+      }
+    },
+    true,
+  );
 
   let settingsReady = refresh_settings();
   void settingsReady.catch((error) => {

@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Gera hlé á myndböndum í bakgrunni þegar rafhlaðan er lítil"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Notar Battery Status API vafrans þegar hún er í boði. Myndbönd halda áfram þegar flipinn verður virkur eða hleðsla hefst."
   }
 }

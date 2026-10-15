@@ -640,5 +640,11 @@
   },
   "audioAllowListPlaceholder": {
     "message": "open.spotify.com, music.youtube.com, soundcloud.com"
+  },
+  "pauseOnLowBattery": {
+    "message": "Wstrzymuj filmy w tle przy niskim poziomie baterii"
+  },
+  "pauseOnLowBatteryDescription": {
+    "message": "Używa interfejsu Battery Status API przeglądarki, jeśli jest dostępny. Filmy są wznawiane po aktywowaniu karty lub rozpoczęciu ładowania."
   }
 }
