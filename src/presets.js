@@ -1,4 +1,4 @@
-globalThis.VAP_PRESETS = Object.freeze({
+globalThis.SETTING_PRESETS = Object.freeze({
   study: Object.freeze({
     autopause: true,
     autoresume: true,

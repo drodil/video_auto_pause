@@ -251,18 +251,6 @@
     "message": "恢復延遲",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "網域排除",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "輸入要排除的網域（每行一個）：",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "音訊淡入淡出",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "淡入淡出持續時間（毫秒）",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "網域設定",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "輸入要包含的網域（每行一個）：",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "將目前網域新增至此清單",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "歡迎使用 Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "設定個別網站而不變更全域設定。",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "行為",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "使用全域行為",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "暫停",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "靜音",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "忽略網站",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "播放速度（0 = 記住上次速度）",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "暫停延遲（毫秒）",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "恢復延遲（毫秒）",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "儲存網站規則",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "僅啟用具有已啟用網站規則的網站",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "網站網域",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "輸入主機名稱，例如 example.com；包含子網域。",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "在此網站啟用擴充功能",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "已停用",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "覆寫",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "要覆寫的設定",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "僅選擇需要與全域預設值不同的設定。",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "篩選網站規則",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "編輯",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "項設定",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "播放速度（0 = 使用網站速度）",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "刪除網站設定",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "自動套用至網域",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "啟用影片頁面快速鍵"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "切換分頁時以子母畫面開啟影片"
   },
-  "audioOnlySupport": {
-    "message": "同時控制純音訊播放器"
-  },
-  "audioOnlyDescription": {
-    "message": "預設不會影響音訊。啟用後，清單網域的音訊仍可繼續播放。"
-  },
-  "audioAllowList": {
-    "message": "一律允許這些網域播放音訊"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "電量不足時暫停背景影片"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "無法儲存設定。請檢查瀏覽器同步儲存空間是否可用。"
+  },
+  "onboardingFeatures": {
+    "message": "擴充功能的作用",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "全螢幕時不會自動暫停或靜音影片。",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "所選時間到達後暫停所有分頁中的影片。",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "頁面上多個影片同時播放時，只有最顯眼的影片繼續播放。",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "指標到達視窗邊緣時暫停，返回時繼續播放。",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "開啟失去焦點時暫停後，指標停留在影片上時影片會繼續播放。",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "你手動暫停的影片在返回分頁時保持暫停。",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "音樂和 Podcast 等純音訊播放器會繼續播放。關閉後也會暫停它們。",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "在頁面上點擊或按鍵之前，影片無法自行開始播放。",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "關閉播放器的自動播放並阻止自動跳到下一部影片。",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "影片結束後，自動開始的下一部影片會被暫停。",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "直播會被靜音而不是暫停，以保持即時。",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "如果正在播放廣告，影片會靜音到廣告結束，然後暫停。",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "作用中分頁的媒體會暫停其他分頁的媒體；停止後會繼續播放上一個分頁。",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "擴充功能只在下方列出且已啟用的網站上執行。",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "速度：$1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "拖曳或使用方向鍵移動控制項",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "目前播放速度",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "頁面內快速鍵",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

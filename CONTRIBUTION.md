@@ -29,8 +29,16 @@ launch the extension from `src/`.
 - `npm run build` builds the Chrome and Firefox packages under
   `web-ext-artifacts`.
 - `npm run lint` runs the WebExtension linter against the Firefox manifest.
-- `npm run test:e2e` runs the Playwright end-to-end tests. The current test
-  configuration exercises the extension in Chromium.
+- `npm test` runs all Playwright tests.
+- `npm run test:unit` runs the fast Node.js unit tests in `tests/unit` (settings
+  model, migrations, validation, locale and manifest consistency). They do not
+  start a browser.
+- `npm run test:e2e` builds the Chrome package and runs the end-to-end tests in
+  `tests/e2e` with Chromium. Tests are grouped by feature into separate spec
+  files and run on several workers in parallel. Every test gets its own browser
+  profile and extension copy, so settings never leak between tests. Shared
+  fixtures (local test server, extension helpers) live in
+  `tests/e2e/fixtures.js`, and the test pages and media in `tests/e2e/pages`.
 
 Run the relevant checks before submitting a pull request, and include the
 results in the pull request description. If a check cannot be run, explain

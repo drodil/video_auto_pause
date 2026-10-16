@@ -251,18 +251,6 @@
     "message": "Atraso na Retomada",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Exclusões de Domínio",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Digite os domínios a serem excluídos (um por linha):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Desvanecimento de Áudio",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Duração do Desvanecimento (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Configurações de domínio",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "Insira domínios para incluir (um por linha):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "Adicionar o domínio atual a esta lista",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Boas-vindas ao Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Configure um site sem alterar as configurações globais.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Comportamento",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Usar comportamento global",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Pausar",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Silenciar",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Ignorar site",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Velocidade de reprodução (0 = lembrar a última)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Atraso da pausa (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Atraso da retomada (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Salvar regra do site",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Ativar somente sites com uma regra habilitada",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Domínio do site",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Digite um nome de host, como example.com; subdomínios estão incluídos.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Ativar a extensão neste site",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Desativada",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Substituir",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Configurações a substituir",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Selecione apenas as configurações diferentes dos padrões globais.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filtrar regras do site",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Editar",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "configurações",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Velocidade de reprodução (0 = usar a velocidade do site)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Excluir configurações do site",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Aplicar automaticamente aos domínios",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Ativar atalhos na página de vídeo"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Abrir o vídeo em Picture-in-Picture ao trocar de guia"
   },
-  "audioOnlySupport": {
-    "message": "Controlar também players somente de áudio"
-  },
-  "audioOnlyDescription": {
-    "message": "O áudio não é afetado por padrão. Quando ativado, o áudio dos domínios listados pode continuar tocando."
-  },
-  "audioAllowList": {
-    "message": "Sempre permitir áudio nestes domínios"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Pausar vídeos em segundo plano quando a bateria estiver fraca"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Não foi possível salvar as configurações. Verifique se o armazenamento de sincronização do navegador está disponível."
+  },
+  "onboardingFeatures": {
+    "message": "O que a extensão faz",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Os vídeos não são pausados nem silenciados automaticamente em tela cheia.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Pausa os vídeos em todas as abas quando o tempo escolhido termina.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Quando vários vídeos de uma página tocam ao mesmo tempo, só o mais visível continua.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Pausa quando o ponteiro chega à borda da janela e retoma quando ele volta.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Com a pausa ao perder o foco ativada, o vídeo continua enquanto o ponteiro estiver sobre ele.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Vídeos que você pausa continuam pausados quando você volta à aba.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Players só de áudio, como música e podcasts, continuam tocando. Desative para pausá-los também.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Os vídeos não podem começar sozinhos até você clicar ou pressionar uma tecla na página.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Desativa a reprodução automática do player e bloqueia saltos automáticos para o próximo vídeo.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Quando um vídeo termina, o próximo que começa sozinho é pausado.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Transmissões ao vivo são silenciadas em vez de pausadas para continuarem ao vivo.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Se um anúncio estiver tocando, o vídeo fica sem som até o anúncio terminar e depois é pausado.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "A mídia da aba ativa pausa a mídia de outras abas; a aba anterior retoma quando ela para.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "A extensão só funciona nos sites listados abaixo com a extensão ativada.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Velocidade: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Arraste ou use as setas para mover os controles",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Velocidade de reprodução atual",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Atalhos de teclado na página",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

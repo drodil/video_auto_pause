@@ -251,18 +251,6 @@
     "message": "Jätkamise viivitus",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domeeni erandid",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Sisestage välistatavad domeenid (üks rea kohta):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Heli hajumine",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Hajutuse kestus (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Domeeni seaded",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Sisestage kaasatavad domeenid (üks rea kohta):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Lisa praegune domeen sellesse loendisse",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Tere tulemast kasutama Video Auto Pause’i",
@@ -431,38 +411,6 @@
     "message": "Seadista saiti üldisi seadeid muutmata.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Käitumine",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Kasuta üldist käitumist",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Peata",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Vaigista",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Eira saiti",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Taasesituskiirus (0 = jäta viimane kiirus meelde)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Peatamise viivitus (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Jätkamise viivitus (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Salvesta saidireegel",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Luba ainult saidid, mille reegel on lubatud",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Saidi domeen",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Sisesta hostinimi, näiteks example.com; alamdomeenid kaasatakse.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Luba laiendus sellel saidil",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Keelatud",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Alista",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Alistatavad seaded",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Vali ainult seaded, mis erinevad üldistest vaikeväärtustest.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filtreeri saidireegleid",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Muuda",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "seadet",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Taasesituse kiirus (0 = kasuta saidi kiirust)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Kustuta saidi seaded",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Rakenda domeenidele automaatselt",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Luba videolehe kiirklahvid"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Ava vahekaartide vahetamisel video pilt-pildis režiimis"
   },
-  "audioOnlySupport": {
-    "message": "Juhi ka ainult helipleiereid"
-  },
-  "audioOnlyDescription": {
-    "message": "Vaikimisi heli ei mõjutata. Lubamisel saab loetletud domeenide heli edasi mängida."
-  },
-  "audioAllowList": {
-    "message": "Luba nendel domeenidel heli alati"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Peata taustal olevad videod, kui aku on tühi"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Seadeid ei saanud salvestada. Kontrolli, kas sünkroonimälu on saadaval."
+  },
+  "onboardingFeatures": {
+    "message": "Mida laiendus teeb",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Täisekraanil olevat videot ei peatata ega vaigistata automaatselt.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Peatab videod kõigil vahekaartidel, kui valitud aeg on möödas.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Kui lehel mängib korraga mitu videot, jätkab ainult kõige nähtavam.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Peatab, kui kursor jõuab akna servani, ja jätkab, kui see naaseb.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Kui fookuse kaotamisel peatamine on sees, mängib video edasi, kuni kursor on selle kohal.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Ise peatatud videod jäävad peatatuks, kui naased vahekaardile.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Ainult heli mängijad, nagu muusika ja taskuhäälingud, mängivad edasi. Lülita välja, et ka need peatada.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Videod ei saa ise käivituda enne, kui klõpsad või vajutad lehel klahvi.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Lülitab mängija automaatesituse välja ja blokeerib automaatse ülemineku järgmisele videole.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Kui video lõpeb, peatatakse järgmine iseenesest algav video.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Otseülekanded vaigistatakse peatamise asemel, et need jääksid otse.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Kui reklaam mängib, vaigistatakse video reklaami lõpuni ja seejärel peatatakse.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Aktiivse vahekaardi meedia peatab teiste vahekaartide meedia; eelmine vahekaart jätkab, kui see peatub.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Laiendus töötab ainult allpool loetletud saitidel, kus laiendus on lubatud.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Kiirus: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Lohista või kasuta nooleklahve juhtnuppude liigutamiseks",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Praegune taasesituskiirus",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Lehesisesed kiirklahvid",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

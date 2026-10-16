@@ -1,19 +1,21 @@
 const env = chrome.runtime ? chrome : browser;
 
 function localizePage() {
+  document.documentElement.lang = env.i18n.getUILanguage();
   document.documentElement.dir = env.i18n.getMessage("@@bidi_dir") || "ltr";
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
+  for (const element of document.querySelectorAll("[data-i18n]")) {
     const message = env.i18n.getMessage(element.dataset.i18n);
     if (message) {
       element.textContent = message;
     }
-  });
-  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
-    const message = env.i18n.getMessage(element.dataset.i18nTitle);
+  }
+  for (const element of document.querySelectorAll("[data-i18n-aria-label]")) {
+    const message = env.i18n.getMessage(element.dataset.i18nAriaLabel);
     if (message) {
-      element.title = message;
+      element.setAttribute("aria-label", message);
     }
-  });
+  }
+  initTooltips();
   document.title = env.i18n.getMessage("onboardingTitle") || "Video Auto Pause";
 }
 
@@ -35,16 +37,11 @@ document.getElementById("openSettings").addEventListener("click", () => {
   void env.runtime.openOptionsPage();
 });
 
-document.querySelectorAll("[data-preset]").forEach((button) => {
+for (const button of document.querySelectorAll("[data-preset]")) {
   button.addEventListener("click", async () => {
     const status = document.getElementById("presetStatus");
     try {
-      await globalThis.VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
-        env.storage.sync,
-        env.storage.local,
-        globalThis.VAP_DEFAULT_OPTIONS,
-        globalThis.VAP_PRESETS[button.dataset.preset],
-      );
+      await updateActiveProfileSettings(SETTING_PRESETS[button.dataset.preset]);
       status.textContent = env.i18n.getMessage("presetApplied");
     } catch (error) {
       status.textContent = env.i18n.getMessage("presetFailed");
@@ -54,7 +51,7 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
       );
     }
   });
-});
+}
 
 localizePage();
 showHotkeys();

@@ -251,18 +251,6 @@
     "message": "Áframhaldstöf",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Lén undantekningar",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Sláðu inn lén til að útiloka (eitt í hverri línu):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Hljóðdofnun",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Dofnunartími (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Lénsstillingar",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Sláðu inn lén til að taka með (eitt í hverri línu):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Bæta núverandi léni við þennan lista",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Velkomin í Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Stilltu vefsvæði án þess að breyta almennum stillingum.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Hegðun",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Nota almenna hegðun",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Gera hlé",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Þagga",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Hunsa vefsvæði",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Spilunarhraði (0 = muna síðasta hraða)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Hléseinkun (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Endurræsingarseinkun (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Vista vefsvæðisreglu",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Virkja aðeins vefsvæði með virkri reglu",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Lén vefsvæðis",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Sláðu inn hýsilheiti eins og example.com; undirlén eru með.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Virkja viðbótina á þessu vefsvæði",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Óvirkt",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Yfirskrifa",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Stillingar til að yfirskrifa",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Veldu aðeins stillingar sem eiga að víkja frá almennum sjálfgefnum gildum.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Sía vefsvæðisreglur",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Breyta",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "stillingar",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Afspilunarhraði (0 = nota hraða vefsvæðisins)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Eyða stillingum vefsvæðis",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Nota sjálfkrafa á lén",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Virkja flýtilykla á myndbandssíðum"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Opna myndband í mynd-í-mynd þegar skipt er um flipa"
   },
-  "audioOnlySupport": {
-    "message": "Stjórna einnig hreinum hljóðspilurum"
-  },
-  "audioOnlyDescription": {
-    "message": "Hljóð er óbreytt sjálfgefið. Þegar virkjað er heldur hljóð á skráðum lénum áfram að spilast."
-  },
-  "audioAllowList": {
-    "message": "Leyfa alltaf hljóð á þessum lénum"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Gera hlé á myndböndum í bakgrunni þegar rafhlaðan er lítil"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Ekki tókst að vista stillingar. Athugaðu hvort samstillingargeymsla vafrans sé tiltæk."
+  },
+  "onboardingFeatures": {
+    "message": "Hvað viðbótin gerir",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Myndbönd eru ekki sett í bið eða þögguð sjálfkrafa á öllum skjánum.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Setur myndbönd í bið í öllum flipum þegar valinn tími er liðinn.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Þegar mörg myndbönd spilast samtímis á síðu heldur aðeins það sýnilegasta áfram.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Setur í bið þegar bendillinn nær brún gluggans og heldur áfram þegar hann snýr aftur.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Þegar bið við fókustap er virk heldur myndband áfram á meðan bendillinn er yfir því.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Myndbönd sem þú setur sjálf(ur) í bið haldast í bið þegar þú snýrð aftur í flipann.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Hljóðspilarar, svo sem tónlist og hlaðvörp, halda áfram. Slökktu á til að setja þá líka í bið.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Myndbönd geta ekki byrjað sjálf fyrr en þú smellir eða ýtir á takka á síðunni.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Slekkur á sjálfvirkri spilun spilarans og hindrar sjálfvirkt stökk í næsta myndband.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Þegar myndband endar er næsta myndband sem byrjar sjálft sett í bið.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Beinar útsendingar eru þaggaðar í stað þess að fara í bið svo þær haldist í beinni.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Ef auglýsing er í gangi er myndbandið þaggað þar til auglýsingunni lýkur og svo sett í bið.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Miðlar í virka flipanum setja miðla í öðrum flipum í bið; fyrri flipinn heldur áfram þegar þeir stöðvast.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Viðbótin keyrir aðeins á vefsvæðum hér að neðan þar sem hún er virk.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Hraði: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Dragðu eða notaðu örvatakkana til að færa stýringarnar",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Núverandi spilunarhraði",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Flýtilyklar á síðunni",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

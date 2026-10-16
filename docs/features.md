@@ -1,7 +1,8 @@
 # Feature guide
 
 Video Auto Pause manages standard HTML video playback across browser tabs and
-windows. Audio-only playback is not affected.
+windows. Audio-only players are left alone by default; turn off
+"Allow audio-only playback" to control them too.
 
 ## Playback behavior
 
@@ -28,9 +29,12 @@ windows. Audio-only playback is not affected.
 - Manage per-site settings in a searchable domain list. Site settings inherit
   global values until customized. The extension can be disabled for an
   individual domain, and playback speed can be configured globally or per site.
-- Save named settings profiles and optionally associate them with domains.
-  The most specific matching profile is applied; other domains use global
-  settings.
+  The configured speed is applied when a video loads; you can still change it
+  afterwards with the player, shortcuts, or on-video controls.
+- Save named settings profiles and switch between them. Profiles sync between
+  browsers, while the active profile is chosen separately on each device.
+- Hover over or keyboard-focus a setting, mode, or icon button to see a tooltip
+  that explains it.
 - Export and import settings using a versioned JSON backup.
 - Legacy include and exclude settings are migrated automatically to site rules.
 
@@ -41,8 +45,8 @@ windows. Audio-only playback is not affected.
   ad-module placeholder alone is not considered an active ad.
 - Configure an idle timeout or daily quiet hours in local time to pause
   playback.
-- Disable autoplay-next on supported players or set a 30-minute sleep timer
-  that pauses active videos across tabs.
+- Disable autoplay-next on supported players or set a sleep timer (5 to 60
+  minutes) that pauses active videos across tabs.
 - Advanced settings can enable in-page shortcuts for seeking, frame stepping,
   A-B looping, playback markers, frame capture, Picture-in-Picture, and
   captions. These shortcuts are off by default and can be left blank

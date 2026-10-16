@@ -251,18 +251,6 @@
     "message": "Penundaan Lanjut",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Pengecualian Domain",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Masukkan domain yang akan dikecualikan (satu per baris):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Pudar Audio",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Durasi Pudar (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Pengaturan Domain",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Masukkan domain yang akan disertakan (satu per baris):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Tambahkan domain saat ini ke daftar ini",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Selamat datang di Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Atur situs tanpa mengubah pengaturan global.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Perilaku",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Gunakan perilaku global",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Jeda",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Bisukan",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Abaikan situs",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Kecepatan pemutaran (0 = ingat kecepatan terakhir)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Jeda (md)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Lanjutkan (md)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Simpan aturan situs",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Aktifkan hanya situs dengan aturan situs yang aktif",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Domain situs",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Masukkan nama host seperti example.com; subdomain disertakan.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Aktifkan ekstensi di situs ini",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Nonaktif",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Timpa",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Pengaturan yang ditimpa",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Pilih hanya pengaturan yang berbeda dari nilai global.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filter aturan situs",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Edit",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "pengaturan",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Kecepatan pemutaran (0 = gunakan kecepatan situs)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Hapus pengaturan situs",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Terapkan otomatis ke domain",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Aktifkan pintasan di halaman video"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Buka video dalam mode Gambar-dalam-Gambar saat berpindah tab"
   },
-  "audioOnlySupport": {
-    "message": "Kontrol juga pemutar audio saja"
-  },
-  "audioOnlyDescription": {
-    "message": "Audio tidak diubah secara default. Jika diaktifkan, audio dari domain yang tercantum tetap dapat diputar."
-  },
-  "audioAllowList": {
-    "message": "Selalu izinkan audio di domain ini"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Jeda video latar belakang saat baterai lemah"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Pengaturan tidak dapat disimpan. Periksa apakah penyimpanan sinkronisasi browser tersedia."
+  },
+  "onboardingFeatures": {
+    "message": "Yang dilakukan ekstensi",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Video tidak dijeda atau dibisukan otomatis saat dalam layar penuh.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Menjeda video di semua tab setelah waktu yang dipilih berlalu.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Saat beberapa video di halaman diputar bersamaan, hanya yang paling terlihat yang tetap diputar.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Menjeda saat penunjuk mencapai tepi jendela dan melanjutkan saat kembali.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Saat jeda ketika kehilangan fokus aktif, video tetap diputar selama penunjuk berada di atasnya.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Video yang Anda jeda sendiri tetap dijeda saat kembali ke tab.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Pemutar audio saja, seperti musik dan podcast, tetap diputar. Matikan untuk ikut menjedanya.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Video tidak dapat mulai sendiri sampai Anda mengklik atau menekan tombol di halaman.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Mematikan putar otomatis pemutar dan memblokir lompatan otomatis ke video berikutnya.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Saat video berakhir, video berikutnya yang mulai sendiri akan dijeda.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Siaran langsung dibisukan alih-alih dijeda agar tetap langsung.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Jika iklan sedang diputar, video dibisukan hingga iklan selesai lalu dijeda.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Media di tab aktif menjeda media di tab lain; tab sebelumnya dilanjutkan saat media berhenti.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Ekstensi hanya berjalan di situs yang tercantum di bawah dengan ekstensi aktif.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Kecepatan: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Seret, atau gunakan tombol panah, untuk memindahkan kontrol",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Kecepatan pemutaran saat ini",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Tombol pintasan di halaman",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

@@ -251,18 +251,6 @@
     "message": "पुनararambh देरी",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "डोमेन बहिष्कार",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "बाहर करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "ऑडियो फ़ेडिंग",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "फ़ेड अवधि (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "डोमेन सेटिंग",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "शामिल करने के लिए डोमेन दर्ज करें (प्रति पंक्ति एक):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "वर्तमान डोमेन को इस सूची में जोड़ें",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Video Auto Pause में आपका स्वागत है",
@@ -431,38 +411,6 @@
     "message": "वैश्विक सेटिंग बदले बिना किसी साइट को कॉन्फ़िगर करें।",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "व्यवहार",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "वैश्विक व्यवहार इस्तेमाल करें",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "रोकें",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "म्यूट करें",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "साइट अनदेखा करें",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "प्लेबैक गति (0 = पिछली गति याद रखें)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "रोकने में देरी (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "फिर चलाने में देरी (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "साइट नियम सहेजें",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "केवल सक्रिय साइट नियम वाले साइट सक्षम करें",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "साइट डोमेन",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "example.com जैसा होस्टनाम दर्ज करें; सबडोमेन भी शामिल हैं।",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "इस साइट पर एक्सटेंशन सक्षम करें",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "अक्षम",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "ओवरराइड",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "ओवरराइड करने वाली सेटिंग",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "केवल वे सेटिंग चुनें जो वैश्विक डिफ़ॉल्ट से अलग हों।",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "साइट नियम फ़िल्टर करें",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "संपादित करें",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "सेटिंग",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "प्लेबैक गति (0 = साइट की गति इस्तेमाल करें)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "साइट सेटिंग हटाएँ",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "डोमेन पर अपने-आप लागू करें",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "वीडियो पेज शॉर्टकट चालू करें"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "टैब बदलते समय वीडियो को पिक्चर-इन-पिक्चर में खोलें"
   },
-  "audioOnlySupport": {
-    "message": "केवल-ऑडियो प्लेयर भी नियंत्रित करें"
-  },
-  "audioOnlyDescription": {
-    "message": "डिफ़ॉल्ट रूप से ऑडियो पर असर नहीं पड़ता। चालू होने पर सूचीबद्ध डोमेन का ऑडियो चलता रहेगा।"
-  },
-  "audioAllowList": {
-    "message": "इन डोमेन पर ऑडियो हमेशा चलने दें"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "बैटरी कम होने पर बैकग्राउंड वीडियो रोकें"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "सेटिंग सहेजी नहीं जा सकी। जाँचें कि ब्राउज़र का सिंक स्टोरेज उपलब्ध है।"
+  },
+  "onboardingFeatures": {
+    "message": "एक्सटेंशन क्या करता है",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "फ़ुलस्क्रीन में वीडियो अपने आप रोका या म्यूट नहीं किया जाता।",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "चुना गया समय पूरा होने पर हर टैब के वीडियो रोक देता है।",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "जब किसी पेज पर कई वीडियो एक साथ चलते हैं, तो केवल सबसे अधिक दिखने वाला चलता रहता है।",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "पॉइंटर विंडो के किनारे पहुँचने पर रोकता है और लौटने पर फिर से चलाता है।",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "फ़ोकस खोने पर रोकना चालू होने पर, पॉइंटर वीडियो के ऊपर रहने तक वीडियो चलता रहता है।",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "आपके द्वारा रोके गए वीडियो टैब पर लौटने पर भी रुके रहते हैं।",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "केवल ऑडियो प्लेयर, जैसे संगीत और पॉडकास्ट, चलते रहते हैं। उन्हें भी रोकने के लिए बंद करें।",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "जब तक आप पेज पर क्लिक नहीं करते या कोई कुंजी नहीं दबाते, वीडियो अपने आप शुरू नहीं हो सकते।",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "प्लेयर का ऑटोप्ले बंद करता है और अगले वीडियो पर अपने आप जाने से रोकता है।",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "वीडियो खत्म होने पर अपने आप शुरू होने वाला अगला वीडियो रोक दिया जाता है।",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "लाइव स्ट्रीम रोकने के बजाय म्यूट की जाती हैं ताकि वे लाइव बनी रहें।",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "विज्ञापन चल रहा हो तो वीडियो विज्ञापन खत्म होने तक म्यूट रहता है और फिर रुक जाता है।",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "सक्रिय टैब का मीडिया अन्य टैब के मीडिया को रोकता है; उसके रुकने पर पिछला टैब फिर से चलता है।",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "एक्सटेंशन केवल नीचे दी गई उन साइटों पर चलता है जहाँ यह सक्षम है।",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "गति: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "नियंत्रण हटाने के लिए खींचें या तीर कुंजियों का उपयोग करें",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "वर्तमान प्लेबैक गति",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "पेज के अंदर शॉर्टकट कुंजियाँ",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

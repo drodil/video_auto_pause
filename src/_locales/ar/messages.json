@@ -251,18 +251,6 @@
     "message": "تأخير الاستئناف",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "استثناءات المجال",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "أدخل المجالات لاستبعادها (واحد في كل سطر):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "تلاشي الصوت",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "مدة التلاشي (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "إعدادات المجال",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "أدخل المجالات لتضمينها (واحد في كل سطر):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "أضف النطاق الحالي إلى هذه القائمة",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "مرحبًا بك في Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "اضبط إعدادات هذا الموقع دون تغيير الإعدادات العامة.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "السلوك",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "استخدام السلوك العام",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "إيقاف مؤقت",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "كتم الصوت",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "تجاهل الموقع",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "سرعة التشغيل (0 = تذكر السرعة الأخيرة)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "تأخير الإيقاف المؤقت (مللي ثانية)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "تأخير الاستئناف (مللي ثانية)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "حفظ قاعدة الموقع",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "فعّل المواقع التي لها قاعدة مفعّلة فقط",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "نطاق الموقع",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "أدخل اسم مضيف مثل example.com؛ تُضمّن النطاقات الفرعية.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "تفعيل الإضافة على هذا الموقع",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "معطّل",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "تجاوز",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "الإعدادات المطلوب تجاوزها",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "حدّد الإعدادات التي تختلف عن الإعدادات العامة فقط.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "تصفية قواعد المواقع",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "تعديل",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "إعدادات",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "سرعة التشغيل (0 = استخدام سرعة الموقع)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "حذف إعدادات الموقع",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "التطبيق تلقائيًا على النطاقات",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "تفعيل اختصارات الفيديو داخل الصفحة"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "فتح الفيديو في نافذة صورة داخل صورة عند تبديل علامات التبويب"
   },
-  "audioOnlySupport": {
-    "message": "التحكم في مشغلات الصوت فقط أيضًا"
-  },
-  "audioOnlyDescription": {
-    "message": "يظل الصوت دون تغيير افتراضيًا. عند التفعيل، يستمر تشغيل الصوت في النطاقات المدرجة."
-  },
-  "audioAllowList": {
-    "message": "السماح دائمًا بالصوت في هذه النطاقات"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "إيقاف الفيديوهات في الخلفية عند انخفاض البطارية"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "تعذر حفظ الإعدادات. تحقق من توفر مساحة التخزين المتزامنة."
+  },
+  "onboardingFeatures": {
+    "message": "ما الذي تفعله الإضافة",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "لا يتم إيقاف الفيديو مؤقتًا أو كتم صوته تلقائيًا أثناء عرضه بملء الشاشة.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "يوقف الفيديوهات مؤقتًا في كل علامات التبويب عند انتهاء الوقت المحدد.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "عند تشغيل عدة فيديوهات في الصفحة معًا، يستمر الفيديو الأكثر ظهورًا فقط.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "يوقف مؤقتًا عندما يصل المؤشر إلى حافة النافذة ويستأنف عند عودته.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "عند تفعيل الإيقاف عند فقدان التركيز، يستمر الفيديو في التشغيل ما دام المؤشر فوقه.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "الفيديوهات التي توقفها بنفسك تبقى متوقفة عند العودة إلى علامة التبويب.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "تستمر مشغلات الصوت فقط، مثل الموسيقى والبودكاست، في التشغيل. أوقف الخيار لإيقافها أيضًا.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "لا يمكن للفيديوهات أن تبدأ تلقائيًا حتى تنقر أو تضغط مفتاحًا في الصفحة.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "يوقف خيار التشغيل التلقائي في المشغل ويمنع الانتقال التلقائي إلى الفيديو التالي.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "عند انتهاء الفيديو، يتم إيقاف الفيديو التالي الذي يبدأ تلقائيًا.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "يتم كتم صوت البث المباشر بدلًا من إيقافه ليبقى مباشرًا.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "إذا كان هناك إعلان قيد التشغيل، يُكتم صوت الفيديو حتى ينتهي الإعلان ثم يُوقف مؤقتًا.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "الوسائط في علامة التبويب النشطة توقف الوسائط في علامات التبويب الأخرى، وتُستأنف علامة التبويب السابقة عند توقفها.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "تعمل الإضافة فقط على المواقع المدرجة أدناه والمفعّلة فيها الإضافة.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "السرعة: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "اسحب أو استخدم مفاتيح الأسهم لتحريك عناصر التحكم",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "سرعة التشغيل الحالية",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "مفاتيح الاختصار داخل الصفحة",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

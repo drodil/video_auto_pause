@@ -160,7 +160,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.collapsible_button {
+.collapsible-button {
   cursor: pointer;
   color: #667eea;
   background-color: #f3f4f6;
@@ -178,22 +178,22 @@ a:hover {
   justify-content: space-between;
 }
 
-.collapsible_button:hover {
+.collapsible-button:hover {
   background-color: #e5e7eb;
   border-color: #667eea;
 }
 
-.collapsible_button::after {
+.collapsible-button::after {
   content: "\25BC";
   font-size: 12px;
   transition: transform 0.2s ease;
 }
 
-.collapsible_button.active::after {
+.collapsible-button.active::after {
   transform: rotate(180deg);
 }
 
-.collapsible_content {
+.collapsible-content {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
@@ -280,46 +280,6 @@ button.support-link:hover:not(:disabled) {
   color: #fff;
 }
 
-.domain-list-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.domain-list-heading p {
-  margin: 0;
-}
-
-.domain-add-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-  padding: 0;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: white;
-  color: #4b5563;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.domain-add-button:hover {
-  border-color: #667eea;
-  background: #f3f4f6;
-  color: #667eea;
-}
-
-.domain-add-button:focus-visible {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-}
-
 #statsSummary {
   padding: 8px;
   border-radius: 4px;
@@ -340,8 +300,7 @@ button.support-link:hover:not(:disabled) {
   gap: 6px;
 }
 
-.preset-grid button,
-.onboarding-presets button {
+.preset-grid button {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 9px 6px;
@@ -352,14 +311,12 @@ button.support-link:hover:not(:disabled) {
   cursor: pointer;
 }
 
-.preset-grid button:hover,
-.onboarding-presets button:hover {
+.preset-grid button:hover {
   background: #eef2ff;
   border-color: #667eea;
 }
 
-.preset-grid button:focus-visible,
-.onboarding-presets button:focus-visible {
+.preset-grid button:focus-visible {
   outline: 2px solid #667eea;
   outline-offset: 2px;
 }
@@ -796,7 +753,7 @@ button:disabled {
   width: auto;
 }
 
-.collapsible_button,
+.collapsible-button,
 .preset-options summary {
   width: 100%;
   min-height: 42px;
@@ -816,13 +773,13 @@ button:disabled {
   gap: 12px;
 }
 
-.collapsible_button:hover,
+.collapsible-button:hover,
 .preset-options summary:hover {
   border-color: #c7d2fe;
   background: #eef2ff;
 }
 
-.collapsible_button::after,
+.collapsible-button::after,
 .preset-options summary::after {
   content: "";
   flex: 0 0 8px;
@@ -834,7 +791,7 @@ button:disabled {
   transition: transform 0.2s ease;
 }
 
-.collapsible_button.active::after,
+.collapsible-button.active::after,
 .preset-options[open] summary::after {
   transform: rotate(225deg);
 }
@@ -887,11 +844,17 @@ button:disabled {
   background: #dcfce7;
 }
 
-.collapsible_content {
+.collapsible-content {
   max-height: 0;
 }
 
-.collapsible_content.expanded {
+@media (prefers-reduced-motion: reduce) {
+  .collapsible-content {
+    transition: none;
+  }
+}
+
+.collapsible-content.expanded {
   max-height: 5000px;
   padding-top: 8px;
   padding-bottom: 8px;

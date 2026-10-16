@@ -251,18 +251,6 @@
     "message": "Återuppta fördröjning",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domänundantag",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Ange domäner som ska uteslutas (en per rad):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Ljudtoning",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Toningslängd (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Domäninställningar",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "Ange domäner att inkludera (en per rad):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "Lägg till den aktuella domänen i listan",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Välkommen till Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Konfigurera en webbplats utan att ändra globala inställningar.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Beteende",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Använd globalt beteende",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Pausa",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Ljud av",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Ignorera webbplats",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Uppspelningshastighet (0 = kom ihåg senaste hastigheten)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Pausfördröjning (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Återupptagningsfördröjning (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Spara webbplatsregel",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Aktivera endast webbplatser med en aktiverad regel",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Webbplatsdomän",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Ange ett värdnamn som example.com; underdomäner inkluderas.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Aktivera tillägget på den här webbplatsen",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Inaktiverad",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Åsidosätt",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Inställningar att åsidosätta",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Välj endast inställningar som ska skilja sig från de globala standardvärdena.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filtrera webbplatsregler",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Redigera",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "inställningar",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Uppspelningshastighet (0 = använd webbplatsens hastighet)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Ta bort webbplatsinställningar",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Tillämpa automatiskt på domäner",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Aktivera kortkommandon på videosidor"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Öppna video i bild-i-bild när du byter flik"
   },
-  "audioOnlySupport": {
-    "message": "Styr även ljudspelare utan video"
-  },
-  "audioOnlyDescription": {
-    "message": "Ljud påverkas inte som standard. När inställningen är aktiverad fortsätter ljud på listade domäner att spelas."
-  },
-  "audioAllowList": {
-    "message": "Tillåt alltid ljud på dessa domäner"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Pausa bakgrundsvideor när batteriet är lågt"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Det gick inte att spara inställningarna. Kontrollera att webbläsarens synkroniseringslagring är tillgänglig."
+  },
+  "onboardingFeatures": {
+    "message": "Vad tillägget gör",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Videor pausas eller tystas inte automatiskt i helskärm.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Pausar videor i alla flikar när den valda tiden har gått.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "När flera videor på en sida spelas samtidigt fortsätter bara den mest synliga.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Pausar när pekaren når fönstrets kant och fortsätter när den kommer tillbaka.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "När paus vid fokusförlust är på fortsätter en video medan pekaren är över den.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Videor som du själv pausar förblir pausade när du återvänder till fliken.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Spelare med bara ljud, som musik och poddar, fortsätter. Stäng av för att pausa dem också.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Videor kan inte starta av sig själva förrän du klickar eller trycker på en tangent på sidan.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Stänger av spelarens autouppspelning och blockerar automatiska hopp till nästa video.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "När en video tar slut pausas nästa video som startar av sig själv.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Direktsändningar tystas i stället för att pausas så att de förblir direkta.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Om en annons spelas tystas videon tills annonsen är slut och pausas sedan.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Media i den aktiva fliken pausar media i andra flikar; föregående flik fortsätter när det stoppar.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Tillägget körs bara på webbplatserna nedan där det är aktiverat.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Hastighet: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Dra, eller använd piltangenterna, för att flytta kontrollerna",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Aktuell uppspelningshastighet",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Kortkommandon på sidan",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

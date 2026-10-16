@@ -42,7 +42,7 @@
     }
   },
   "background": {
-    "scripts": ["defaults.js", "vap_bs.js"]
+    "scripts": ["settings.js", "vap_bs.js"]
   },
   "commands": {
     "toggle-extension": {

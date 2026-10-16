@@ -36,8 +36,10 @@
     "bump-test": "standard-version --dry-run --no-verify",
     "bump": "standard-version --no-verify",
     "prettier:fix": "prettier --write .",
-    "test:e2e": "npx playwright test",
-    "test:e2e:ui": "npx playwright test --ui"
+    "test:e2e": "npx playwright test --project=chromium",
+    "test:e2e:ui": "npx playwright test --project=chromium --ui",
+    "test": "npx playwright test",
+    "test:unit": "npx playwright test --project=unit"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.0",

@@ -251,18 +251,6 @@
     "message": "Затримка відновлення",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Виключення доменів",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Введіть домени для виключення (один у рядку):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Згасання звуку",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Тривалість згасання (мс)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Налаштування доменів",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Введіть домени для включення (один у рядку):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Додати поточний домен до цього списку",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Вітаємо у Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Налаштуйте сайт, не змінюючи загальні параметри.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Поведінка",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Використовувати загальну поведінку",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Призупиняти",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Вимикати звук",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Ігнорувати сайт",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Швидкість відтворення (0 = запам’ятати останню)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Затримка призупинення (мс)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Затримка відновлення (мс)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Зберегти правило сайту",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Вмикати лише сайти з активним правилом",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Домен сайту",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Введіть ім’я хоста, наприклад example.com; піддомени включено.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Увімкнути розширення на цьому сайті",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Вимкнено",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Перевизначити",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Налаштування для перевизначення",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Виберіть лише налаштування, що відрізняються від загальних значень.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Фільтр правил сайтів",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Змінити",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "налаштувань",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Швидкість відтворення (0 = використовувати швидкість сайту)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Видалити налаштування сайту",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Автоматично застосовувати до доменів",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Увімкнути комбінації клавіш на сторінках відео"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Відкривати відео в режимі «картинка в картинці» під час перемикання вкладок"
   },
-  "audioOnlySupport": {
-    "message": "Керувати також аудіопрогравачами"
-  },
-  "audioOnlyDescription": {
-    "message": "За замовчуванням аудіо не змінюється. Після ввімкнення звук на перелічених доменах продовжить відтворюватися."
-  },
-  "audioAllowList": {
-    "message": "Завжди дозволяти аудіо на цих доменах"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Призупиняти фонові відео за низького заряду батареї"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Не вдалося зберегти налаштування. Перевірте, чи доступне сховище синхронізації браузера."
+  },
+  "onboardingFeatures": {
+    "message": "Що робить розширення",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "У повноекранному режимі відео не ставиться на паузу й не вимикається звук автоматично.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Ставить відео на паузу в усіх вкладках, коли мине вибраний час.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Коли на сторінці одночасно грають кілька відео, продовжує лише найпомітніше.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Ставить на паузу, коли вказівник досягає краю вікна, і продовжує, коли він повертається.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Коли пауза при втраті фокуса ввімкнена, відео грає, доки над ним вказівник.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Відео, які ви поставили на паузу самі, залишаються на паузі, коли ви повертаєтеся до вкладки.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Аудіоплеєри, як-от музика й подкасти, продовжують грати. Вимкніть, щоб ставити їх на паузу теж.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Відео не можуть запуститися самі, доки ви не клацнете або не натиснете клавішу на сторінці.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Вимикає автовідтворення плеєра й блокує автоматичний перехід до наступного відео.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Коли відео закінчується, наступне відео, що запускається само, ставиться на паузу.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Прямі трансляції вимикають звук замість паузи, щоб залишатися в ефірі.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Якщо грає реклама, звук відео вимикається до її кінця, а потім відео ставиться на паузу.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Медіа в активній вкладці ставить на паузу медіа в інших вкладках; попередня вкладка продовжить, коли воно зупиниться.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Розширення працює лише на наведених нижче сайтах, де його ввімкнено.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Швидкість: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Перетягніть або скористайтеся стрілками, щоб перемістити елементи керування",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Поточна швидкість відтворення",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Гарячі клавіші на сторінці",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

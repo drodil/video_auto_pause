@@ -251,18 +251,6 @@
     "message": "Задержка возобновления",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Исключения доменов",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Введите домены для исключения (по одному в строке):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Звуковое затухание",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Длительность затухания (мс)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Настройки домена",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "Введите домены для включения (по одному в строке):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "Добавить текущий домен в этот список",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Добро пожаловать в Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Настройте сайт, не меняя общие параметры.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Поведение",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Использовать общие настройки",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Пауза",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Без звука",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Игнорировать сайт",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Скорость воспроизведения (0 — запомнить последнюю)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Задержка паузы (мс)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Задержка возобновления (мс)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Сохранить правило сайта",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Включать только сайты с активным правилом",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Домен сайта",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Введите имя хоста, например example.com; поддомены включены.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Включить расширение на этом сайте",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Отключено",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Переопределить",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Переопределяемые настройки",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Выберите только настройки, отличающиеся от общих значений.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Фильтр правил сайтов",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Изменить",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "настроек",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Скорость воспроизведения (0 = использовать скорость сайта)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Удалить настройки сайта",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Автоматически применять к доменам",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Включить горячие клавиши на страницах с видео"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Открывать видео в режиме «картинка в картинке» при переключении вкладок"
   },
-  "audioOnlySupport": {
-    "message": "Управлять также аудиоплеерами"
-  },
-  "audioOnlyDescription": {
-    "message": "По умолчанию аудио не затрагивается. При включении воспроизведение на указанных доменах продолжится."
-  },
-  "audioAllowList": {
-    "message": "Всегда разрешать аудио на этих доменах"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Приостанавливать фоновые видео при низком заряде батареи"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Не удалось сохранить настройки. Проверьте доступность синхронизации браузера."
+  },
+  "onboardingFeatures": {
+    "message": "Что делает расширение",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "В полноэкранном режиме видео не ставится на паузу и не заглушается автоматически.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Ставит видео на паузу во всех вкладках по истечении выбранного времени.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Если на странице одновременно играют несколько видео, продолжает только самое заметное.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Ставит на паузу, когда указатель достигает края окна, и продолжает, когда он возвращается.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "При включённой паузе при потере фокуса видео продолжает играть, пока над ним указатель.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Видео, которые вы поставили на паузу сами, остаются на паузе при возвращении на вкладку.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Аудиоплееры, например музыка и подкасты, продолжают играть. Отключите, чтобы ставить их на паузу.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Видео не могут запуститься сами, пока вы не нажмёте на странице кнопку мыши или клавишу.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Отключает автовоспроизведение в плеере и блокирует автоматический переход к следующему видео.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Когда видео заканчивается, следующее автоматически запущенное видео ставится на паузу.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Прямые трансляции заглушаются вместо паузы, чтобы оставаться в эфире.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Если идёт реклама, видео заглушается до её окончания, а затем ставится на паузу.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Медиа в активной вкладке ставит на паузу медиа в других вкладках; предыдущая вкладка продолжит, когда оно остановится.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Расширение работает только на перечисленных ниже сайтах, где оно включено.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Скорость: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Перетащите или используйте стрелки, чтобы переместить элементы управления",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Текущая скорость воспроизведения",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Сочетания клавиш на странице",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

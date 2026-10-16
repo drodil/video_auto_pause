@@ -251,18 +251,6 @@
     "message": "Devam Etme Gecikmesi",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Alan Adı Hariç Tutmaları",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Hariç tutulacak alan adlarını girin (satır başına bir tane):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Ses Azalması",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Azalma Süresi (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Alan Adı Ayarları",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Dahil edilecek alan adlarını girin (satır başına bir tane):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Geçerli alan adını bu listeye ekle",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Video Auto Pause’a hoş geldiniz",
@@ -431,38 +411,6 @@
     "message": "Genel ayarları değiştirmeden bir siteyi yapılandırın.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Davranış",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Genel davranışı kullan",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Duraklat",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Sessize al",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Siteyi yoksay",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Oynatma hızı (0 = son hızı hatırla)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Duraklatma gecikmesi (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Devam gecikmesi (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Site kuralını kaydet",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Yalnızca etkin site kuralı olan siteleri etkinleştir",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Site etki alanı",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "example.com gibi bir ana bilgisayar adı girin; alt etki alanları dahildir.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Bu sitede uzantıyı etkinleştir",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Devre dışı",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Geçersiz kıl",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Geçersiz kılınacak ayarlar",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Yalnızca genel varsayılanlardan farklı olacak ayarları seçin.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Site kurallarını filtrele",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Düzenle",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "ayar",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Oynatma hızı (0 = sitenin hızını kullan)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Site ayarlarını sil",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Alan adlarına otomatik uygula",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Video sayfası kısayollarını etkinleştir"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Sekme değiştirirken videoyu Resim içinde Resim modunda aç"
   },
-  "audioOnlySupport": {
-    "message": "Yalnızca ses oynatıcılarını da denetle"
-  },
-  "audioOnlyDescription": {
-    "message": "Ses varsayılan olarak etkilenmez. Etkinleştirildiğinde listelenen alan adlarındaki ses çalmaya devam eder."
-  },
-  "audioAllowList": {
-    "message": "Bu alan adlarında sese her zaman izin ver"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Pil azken düzeydeyken arka plan videolarını duraklat"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Ayarlar kaydedilemedi. Tarayıcı senkronizasyon depolamasının kullanılabilir olduğunu kontrol edin."
+  },
+  "onboardingFeatures": {
+    "message": "Eklentinin yaptıkları",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Tam ekrandayken videolar otomatik olarak duraklatılmaz veya sessize alınmaz.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Seçilen süre dolduğunda tüm sekmelerdeki videoları duraklatır.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Bir sayfada birden fazla video aynı anda oynatıldığında yalnızca en görünür olan devam eder.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "İşaretçi pencerenin kenarına ulaştığında duraklatır, geri döndüğünde devam eder.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Odak kaybında duraklatma açıkken, işaretçi videonun üzerindeyken video oynamaya devam eder.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Kendiniz duraklattığınız videolar sekmeye döndüğünüzde duraklatılmış kalır.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Müzik ve podcast gibi yalnızca ses oynatıcıları çalmaya devam eder. Bunları da duraklatmak için kapatın.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Sayfada tıklayana veya bir tuşa basana kadar videolar kendiliğinden başlayamaz.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Oynatıcının otomatik oynatmasını kapatır ve sonraki videoya otomatik geçişi engeller.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Bir video bittiğinde kendiliğinden başlayan sonraki video duraklatılır.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Canlı yayınlar canlı kalması için duraklatılmak yerine sessize alınır.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Reklam oynatılıyorsa video reklam bitene kadar sessize alınır, ardından duraklatılır.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Etkin sekmedeki medya diğer sekmelerdeki medyayı duraklatır; durduğunda önceki sekme devam eder.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Eklenti yalnızca aşağıda listelenen ve etkin olduğu sitelerde çalışır.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Hız: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Denetimleri taşımak için sürükleyin veya ok tuşlarını kullanın",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Geçerli oynatma hızı",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Sayfa içi kısayol tuşları",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

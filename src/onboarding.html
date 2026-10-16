@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="onboarding.css" />
+    <link rel="stylesheet" href="tooltips.css" />
     <title>Video Auto Pause</title>
   </head>
   <body>
@@ -13,7 +14,11 @@
         Videos pause when you leave a tab or lock your device, then resume when
         you return.
       </p>
-      <section class="behaviors" aria-label="What the extension does">
+      <section
+        class="behaviors"
+        aria-label="What the extension does"
+        data-i18n-aria-label="onboardingFeatures"
+      >
         <article class="behavior">
           <img src="images/icon_32.png" alt="" />
           <p data-i18n="autopause">Pause video when switching tabs</p>
@@ -37,8 +42,7 @@
             type="button"
             data-preset="study"
             data-i18n="presetStudy"
-            data-i18n-title="presetStudyDescription"
-            aria-describedby="presetStudyDescription"
+            data-i18n-tooltip="presetStudyDescription"
           >
             Study / lectures
           </button>
@@ -46,8 +50,7 @@
             type="button"
             data-preset="music"
             data-i18n="presetMusic"
-            data-i18n-title="presetMusicDescription"
-            aria-describedby="presetMusicDescription"
+            data-i18n-tooltip="presetMusicDescription"
           >
             Background music
           </button>
@@ -55,8 +58,7 @@
             type="button"
             data-preset="binge"
             data-i18n="presetBinge"
-            data-i18n-title="presetBingeDescription"
-            aria-describedby="presetBingeDescription"
+            data-i18n-tooltip="presetBingeDescription"
           >
             Binge / TV
           </button>
@@ -64,32 +66,11 @@
             type="button"
             data-preset="saver"
             data-i18n="presetSaver"
-            data-i18n-title="presetSaverDescription"
-            aria-describedby="presetSaverDescription"
+            data-i18n-tooltip="presetSaverDescription"
           >
             Battery saver / meetings
           </button>
         </div>
-        <span
-          class="sr-only"
-          id="presetStudyDescription"
-          data-i18n="presetStudyDescription"
-        ></span>
-        <span
-          class="sr-only"
-          id="presetMusicDescription"
-          data-i18n="presetMusicDescription"
-        ></span>
-        <span
-          class="sr-only"
-          id="presetBingeDescription"
-          data-i18n="presetBingeDescription"
-        ></span>
-        <span
-          class="sr-only"
-          id="presetSaverDescription"
-          data-i18n="presetSaverDescription"
-        ></span>
         <p id="presetStatus" role="status" aria-live="polite"></p>
       </section>
       <section id="hotkeys">
@@ -102,8 +83,9 @@
         </button>
       </div>
     </main>
-    <script src="defaults.js"></script>
+    <script src="settings.js"></script>
     <script src="presets.js"></script>
+    <script src="tooltips.js"></script>
     <script src="onboarding.js"></script>
   </body>
 </html>

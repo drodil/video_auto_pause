@@ -251,18 +251,6 @@
     "message": "재개 지연",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "도메인 제외",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "제외할 도메인 입력 (한 줄에 하나씩):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "오디오 페이딩",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "페이드 지속 시간 (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "도메인 설정",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "포함할 도메인 입력 (줄당 하나):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "현재 도메인을 이 목록에 추가",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Video Auto Pause에 오신 것을 환영합니다",
@@ -431,38 +411,6 @@
     "message": "전역 설정을 변경하지 않고 사이트별 설정을 구성합니다.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "동작",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "전역 동작 사용",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "일시 정지",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "음소거",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "사이트 무시",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "재생 속도(0 = 마지막 속도 기억)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "일시 정지 지연(ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "다시 재생 지연(ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "사이트 규칙 저장",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "활성 사이트 규칙이 있는 사이트만 사용",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "사이트 도메인",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "example.com과 같은 호스트 이름을 입력하세요. 하위 도메인도 포함됩니다.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "이 사이트에서 확장 프로그램 사용",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "사용 안 함",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "재정의",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "재정의할 설정",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "전역 기본값과 다르게 적용할 설정만 선택하세요.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "사이트 규칙 필터",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "편집",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "개 설정",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "재생 속도 (0 = 사이트 속도 사용)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "사이트 설정 삭제",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "도메인에 자동 적용",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "동영상 페이지 단축키 사용"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "탭을 전환할 때 동영상을 화면 속 화면으로 열기"
   },
-  "audioOnlySupport": {
-    "message": "오디오 전용 플레이어도 제어"
-  },
-  "audioOnlyDescription": {
-    "message": "기본적으로 오디오는 영향을 받지 않습니다. 사용 설정하면 목록의 도메인에서 오디오 재생을 계속 허용합니다."
-  },
-  "audioAllowList": {
-    "message": "다음 도메인에서는 항상 오디오 허용"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "배터리가 부족하면 백그라운드 동영상 일시 중지"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "설정을 저장할 수 없습니다. 브라우저 동기화 저장소를 사용할 수 있는지 확인하세요."
+  },
+  "onboardingFeatures": {
+    "message": "확장 프로그램의 기능",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "전체 화면에서는 동영상을 자동으로 일시정지하거나 음소거하지 않습니다.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "선택한 시간이 지나면 모든 탭의 동영상을 일시정지합니다.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "페이지에서 여러 동영상이 동시에 재생되면 가장 잘 보이는 동영상만 계속 재생합니다.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "포인터가 창 가장자리에 닿으면 일시정지하고 돌아오면 다시 재생합니다.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "포커스를 잃을 때 일시정지가 켜져 있으면 포인터가 동영상 위에 있는 동안 계속 재생합니다.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "직접 일시정지한 동영상은 탭으로 돌아와도 일시정지 상태로 유지됩니다.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "음악, 팟캐스트 같은 오디오 전용 플레이어는 계속 재생됩니다. 끄면 이들도 일시정지합니다.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "페이지를 클릭하거나 키를 누르기 전에는 동영상이 스스로 시작할 수 없습니다.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "플레이어의 자동 재생을 끄고 다음 동영상으로 자동 이동하는 것을 막습니다.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "동영상이 끝나면 자동으로 시작되는 다음 동영상을 일시정지합니다.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "라이브 스트림은 실시간을 유지하도록 일시정지 대신 음소거합니다.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "광고가 재생 중이면 광고가 끝날 때까지 동영상을 음소거한 다음 일시정지합니다.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "활성 탭의 미디어가 다른 탭의 미디어를 일시정지하고, 멈추면 이전 탭이 다시 재생됩니다.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "확장 프로그램은 아래에 나열된 사용 설정된 사이트에서만 작동합니다.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "속도: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "드래그하거나 화살표 키로 컨트롤 이동",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "현재 재생 속도",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "페이지 내 단축키",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

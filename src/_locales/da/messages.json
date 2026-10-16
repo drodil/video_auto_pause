@@ -251,18 +251,6 @@
     "message": "Genoptag forsinkelse",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domæneundtagelser",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Indtast domæner, der skal udelukkes (et pr. linje):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Lydfading",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Fading varighed (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Domæneindstillinger",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Indtast domæner, der skal medtages (et pr. linje):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Føj det aktuelle domæne til denne liste",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Velkommen til Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Konfigurer et individuelt websted uden at ændre globale indstillinger.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Adfærd",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Brug global adfærd",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Pause",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Slå lyden fra",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Ignorér websted",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Afspilningshastighed (0 = husk seneste hastighed)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Pausetid (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Genoptagelsesforsinkelse (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Gem webstedsregel",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Aktivér kun websteder med en aktiveret regel",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Webstedsdomæne",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Indtast et værtsnavn som example.com; underdomæner er inkluderet.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Aktivér udvidelsen på dette websted",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Deaktiveret",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Tilsidesæt",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Indstillinger, der skal tilsidesættes",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Vælg kun indstillinger, der skal afvige fra standardindstillingerne.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filtrer webstedsregler",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Rediger",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "indstillinger",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Afspilningshastighed (0 = brug webstedets hastighed)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Slet webstedsindstillinger",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Anvend automatisk på domæner",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Aktivér genveje på videosider"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Åbn video i billede-i-billede, når du skifter fane"
   },
-  "audioOnlySupport": {
-    "message": "Styr også lydafspillere"
-  },
-  "audioOnlyDescription": {
-    "message": "Lyd påvirkes ikke som standard. Når funktionen er aktiveret, fortsætter lyd på de angivne domæner."
-  },
-  "audioAllowList": {
-    "message": "Tillad altid lyd på disse domæner"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Sæt baggrundsvideoer på pause ved lavt batteri"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Indstillingerne kunne ikke gemmes. Kontrollér, at synkroniseringslageret er tilgængeligt."
+  },
+  "onboardingFeatures": {
+    "message": "Hvad udvidelsen gør",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Videoer sættes ikke automatisk på pause eller lydløs, mens en video er i fuld skærm.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Sætter videoer på pause i alle faner, når den valgte tid er gået.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Når flere videoer på en side afspilles samtidig, fortsætter kun den mest synlige.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Sætter på pause, når markøren når vinduets kant, og fortsætter, når den kommer tilbage.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Når pause ved fokustab er slået til, fortsætter en video, mens markøren er over den.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Videoer, du selv sætter på pause, forbliver på pause, når du vender tilbage til fanen.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Afspillere kun med lyd, såsom musik og podcasts, fortsætter. Slå fra for også at sætte dem på pause.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Videoer kan ikke starte af sig selv, før du klikker eller trykker på en tast på siden.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Slår afspillerens autoafspilning fra og blokerer automatiske skift til næste video.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Når en video slutter, sættes den næste video, der starter af sig selv, på pause.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Livestreams gøres lydløse i stedet for at blive sat på pause, så de forbliver live.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Hvis en reklame afspilles, gøres videoen lydløs, indtil reklamen slutter, og sættes derefter på pause.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Medier i den aktive fane sætter medier i andre faner på pause; den forrige fane fortsætter, når de stopper.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Udvidelsen kører kun på websteder nedenfor, hvor udvidelsen er slået til.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Hastighed: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Træk, eller brug piletasterne, for at flytte knapperne",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Aktuel afspilningshastighed",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Genvejstaster på siden",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

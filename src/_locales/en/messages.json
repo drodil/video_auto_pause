@@ -267,29 +267,9 @@
     "message": "Resume Delay",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domain Exclusions",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Enter domains to exclude (one per line):",
-    "description": "Description for domain exclusions textarea"
-  },
   "domainSettings": {
     "message": "Domain Settings",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Enter domains to include (one per line):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Add current domain to this list",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
-  },
-  "audioFading": {
-    "message": "Audio Fading",
-    "description": "Label for audio fading checkbox"
   },
   "fadeDuration": {
     "message": "Fade Duration (ms)",
@@ -431,38 +411,6 @@
     "message": "Configure an individual site without changing global settings.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Behavior",
-    "description": "Site rule behavior selector label"
-  },
-  "siteRuleDefault": {
-    "message": "Use global behavior",
-    "description": "Default site rule behavior"
-  },
-  "siteRulePause": {
-    "message": "Pause",
-    "description": "Pause behavior for a site rule"
-  },
-  "siteRuleMute": {
-    "message": "Mute",
-    "description": "Mute behavior for a site rule"
-  },
-  "siteRuleIgnore": {
-    "message": "Ignore site",
-    "description": "Disable automatic controls for a site rule"
-  },
-  "siteRuleSpeed": {
-    "message": "Playback speed (0 = remember last speed)",
-    "description": "Site rule playback speed"
-  },
-  "siteRulePauseDelay": {
-    "message": "Pause delay (ms)",
-    "description": "Site rule pause delay"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Resume delay (ms)",
-    "description": "Site rule resume delay"
-  },
   "siteRuleSave": {
     "message": "Save site rule",
     "description": "Save the active site's behavior rule"
@@ -483,14 +431,6 @@
     "message": "Only enable sites with an enabled site rule",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Site domain",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Enter a hostname such as example.com; subdomains are included.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Enable the extension on this site",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Disabled",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Override",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Settings to override",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Select only settings that should differ from global defaults.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Filter site rules",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Edit",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "settings",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Playback speed (0 = use the site’s speed)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Delete site settings",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Automatically apply to domains",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Enable in-page video shortcuts"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Open video in Picture-in-Picture when switching tabs"
   },
-  "audioOnlySupport": {
-    "message": "Also control audio-only players"
-  },
-  "audioOnlyDescription": {
-    "message": "Audio is untouched by default. When enabled, audio on listed domains is still allowed to continue playing."
-  },
-  "audioAllowList": {
-    "message": "Always allow audio on these domains"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Pause background videos when battery is low"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Could not save settings. Check that browser sync storage is available."
+  },
+  "onboardingFeatures": {
+    "message": "What the extension does",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Videos are not paused or muted automatically while a video is in fullscreen.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Pauses videos in every tab when the selected time has passed.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "When several videos on a page play at once, only the most visible one keeps playing.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Pauses when the pointer reaches the edge of the window and resumes when it returns.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "When focus pausing is on, a video keeps playing while the pointer is over it.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Videos you pause yourself stay paused when you return to the tab.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Audio-only players, such as music and podcasts, keep playing. Turn off to pause them too.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Videos cannot start on their own until you click or press a key on the page.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Turns off the player's autoplay toggle and blocks automatic jumps to the next video.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "When a video ends, the next video that starts on its own is paused.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Live streams are muted instead of paused so they stay live.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "If an ad is playing, the video is muted until the ad ends and then paused.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Media in the active tab pauses media in other tabs; the previous tab resumes when it stops.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "The extension runs only on sites listed below with the extension enabled.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Speed: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Drag, or use the arrow keys, to move these controls",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Current playback speed",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "In-page shortcut keys",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

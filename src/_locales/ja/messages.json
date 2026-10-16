@@ -251,18 +251,6 @@
     "message": "再開の遅延",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "ドメインの除外",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "除外するドメインを入力してください (1行に1つ):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "オーディオフェード",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "フェード期間 (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "ドメイン設定",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "含めるドメインを入力してください（1行に1つ）:",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "現在のドメインをこのリストに追加",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Video Auto Pause へようこそ",
@@ -431,38 +411,6 @@
     "message": "全体の設定を変えずにサイトごとの設定を行います。",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "動作",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "全体設定を使用",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "一時停止",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "ミュート",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "サイトを無視",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "再生速度（0 = 前回の速度を記憶）",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "一時停止の遅延（ミリ秒）",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "再開の遅延（ミリ秒）",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "サイトルールを保存",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "有効なサイトルールがあるサイトのみ有効にする",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "サイトのドメイン",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "example.com のようなホスト名を入力します。サブドメインも含まれます。",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "このサイトで拡張機能を有効にする",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "無効",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "上書き",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "上書きする設定",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "全体の既定値と異なる設定だけを選択してください。",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "サイトルールを絞り込む",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "編集",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "個の設定",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "再生速度（0 = サイトの速度を使用）",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "サイト設定を削除",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "ドメインに自動適用",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "動画ページのショートカットを有効にする"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "タブ切り替え時に動画をピクチャー イン ピクチャーで開く"
   },
-  "audioOnlySupport": {
-    "message": "音声のみのプレーヤーも制御する"
-  },
-  "audioOnlyDescription": {
-    "message": "デフォルトでは音声に影響しません。有効にすると、指定したドメインの音声再生は継続します。"
-  },
-  "audioAllowList": {
-    "message": "次のドメインでは常に音声を許可"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "バッテリー残量が少ないときにバックグラウンド動画を一時停止"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "設定を保存できませんでした。ブラウザーの同期ストレージが利用可能か確認してください。"
+  },
+  "onboardingFeatures": {
+    "message": "拡張機能でできること",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "全画面表示中は動画を自動で一時停止またはミュートしません。",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "選択した時間が経過すると、すべてのタブの動画を一時停止します。",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "ページ内で複数の動画が同時に再生されると、最も見えている動画だけを再生し続けます。",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "ポインターがウィンドウの端に達すると一時停止し、戻ると再開します。",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "フォーカス喪失時の一時停止がオンのとき、ポインターが動画上にある間は再生を続けます。",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "自分で一時停止した動画は、タブに戻っても一時停止のままです。",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "音楽やポッドキャストなどの音声のみのプレーヤーは再生を続けます。オフにするとそれらも一時停止します。",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "ページでクリックするかキーを押すまで、動画は自動で再生を開始できません。",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "プレーヤーの自動再生をオフにし、次の動画への自動移動をブロックします。",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "動画が終わると、自動で始まる次の動画を一時停止します。",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "ライブ配信は一時停止せずにミュートし、ライブのままにします。",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "広告の再生中は広告が終わるまで動画をミュートし、その後一時停止します。",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "アクティブなタブのメディアが他のタブのメディアを一時停止し、停止すると前のタブが再開します。",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "拡張機能は、下に表示された有効なサイトでのみ動作します。",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "速度: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "ドラッグするか矢印キーでコントロールを移動",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "現在の再生速度",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "ページ内ショートカットキー",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

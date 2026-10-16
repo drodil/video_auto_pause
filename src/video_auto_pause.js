@@ -1,6 +1,5 @@
 if (window.autoPauseInjected !== true) {
   const env = chrome.runtime ? chrome : browser;
-  const DEFAULT_OPTIONS = globalThis.VAP_DEFAULT_OPTIONS;
   window.autoPauseInjected = true;
   const manuallyPausedVideos = new WeakMap();
   const detectedVideos = new Set();
@@ -22,13 +21,14 @@ if (window.autoPauseInjected !== true) {
   const overlayPinRefreshers = new Set();
   const videoLoops = new WeakMap();
   const videosWithLoopListeners = new WeakSet();
+  const videosWithListeners = new WeakSet();
   let videoObserver;
   let lastVisibility = null;
   let userInteracted = false;
   let lastUserInteractionAt = 0;
   let lastVideoEndedAt = 0;
   let safeModeTriggered = false;
-  let options = { ...DEFAULT_OPTIONS };
+  let settings = { ...DEFAULT_SETTINGS };
   let autoPipVideo = null;
   let autoDocumentPipWindow = null;
   let batteryStatus = null;
@@ -49,63 +49,49 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener("keydown", recordUserInteraction, true);
 
   function debugLog(message) {
-    if (options.debugMode) {
+    if (settings.debugMode) {
       console.log(`Video auto pause: ${message}`);
     }
   }
 
-  async function refresh_settings() {
-    const savedOptions = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
-      env.storage.sync,
-      env.storage.local,
-      DEFAULT_OPTIONS,
-    );
+  // Automatic behaviors that stay off on sites where the extension is inactive.
+  // The overlay and PiP button remain so the site can be re-enabled in place.
+  const inactiveSiteOverrides = Object.freeze({
+    autopause: false,
+    autoresume: false,
+    muteVideo: false,
+    scrollpause: false,
+    lockpause: false,
+    lockresume: false,
+    focuspause: false,
+    focusresume: false,
+    blockAutoplay: false,
+    disableAutoplayNext: false,
+    liveStreamMute: false,
+    muteDuringAds: false,
+    prioritizeActiveTabMedia: false,
+    singleVideoPlayback: false,
+  });
+  const disabledExtensionOverrides = Object.freeze({
+    ...inactiveSiteOverrides,
+    cursorTracking: false,
+    debugMode: false,
+    showPipButton: false,
+    showVideoOverlay: false,
+  });
+
+  async function refreshSettings() {
+    const profileSettings = await getActiveProfileSettings();
     const hostname = location.hostname.toLowerCase();
-    const profileOptions = savedOptions;
-    const effectiveOptions = VAP_OPTIONS_FOR_SITE(hostname, profileOptions);
-    const siteEnabled = VAP_SITE_ENABLED(hostname, profileOptions);
-    options = profileOptions.disabled
-      ? {
-          ...effectiveOptions,
-          autopause: false,
-          autoresume: false,
-          muteVideo: false,
-          scrollpause: false,
-          lockpause: false,
-          lockresume: false,
-          focuspause: false,
-          focusresume: false,
-          cursorTracking: false,
-          blockAutoplay: false,
-          disableAutoplayNext: false,
-          liveStreamMute: false,
-          muteDuringAds: false,
-          prioritizeActiveTabMedia: false,
-          singleVideoPlayback: false,
-          debugMode: false,
-          showPipButton: false,
-          showVideoOverlay: false,
-        }
-      : siteEnabled
-        ? effectiveOptions
-        : {
-            ...effectiveOptions,
-            autopause: false,
-            autoresume: false,
-            muteVideo: false,
-            scrollpause: false,
-            lockpause: false,
-            lockresume: false,
-            focuspause: false,
-            focusresume: false,
-            blockAutoplay: false,
-            disableAutoplayNext: false,
-            liveStreamMute: false,
-            muteDuringAds: false,
-            prioritizeActiveTabMedia: false,
-            singleVideoPlayback: false,
-          };
-    toggleCursorTracking(options.cursorTracking);
+    const siteSettings = getSiteSettings(hostname, profileSettings);
+    if (profileSettings.disabled) {
+      settings = { ...siteSettings, ...disabledExtensionOverrides };
+    } else if (!isSiteEnabled(hostname, profileSettings)) {
+      settings = { ...siteSettings, ...inactiveSiteOverrides };
+    } else {
+      settings = siteSettings;
+    }
+    toggleCursorTracking(settings.cursorTracking);
     togglePipButtons();
     toggleVideoOverlays();
     applyAutoplaySettings();
@@ -125,7 +111,7 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     const shouldPause =
-      options.pauseOnLowBattery &&
+      settings.pauseOnLowBattery &&
       !batteryStatus.charging &&
       batteryStatus.level <= 0.2 &&
       document.hidden;
@@ -135,7 +121,7 @@ if (window.autoPauseInjected !== true) {
         await handleVideoAction(video, { action: "stop", immediate: true });
       } else if (!shouldPause && batteryPausedVideos.has(video)) {
         batteryPausedVideos.delete(video);
-        if (options.autoresume) {
+        if (settings.autoresume) {
           await handleVideoAction(video, { action: "resume" });
         }
       }
@@ -144,7 +130,7 @@ if (window.autoPauseInjected !== true) {
 
   async function updateBatteryAwareness() {
     if (
-      options.pauseOnLowBattery &&
+      settings.pauseOnLowBattery &&
       typeof navigator.getBattery === "function"
     ) {
       batteryStatus ??= await navigator.getBattery();
@@ -168,7 +154,7 @@ if (window.autoPauseInjected !== true) {
         batteryListenersRegistered = true;
       }
     } else if (
-      options.pauseOnLowBattery &&
+      settings.pauseOnLowBattery &&
       typeof navigator.getBattery !== "function"
     ) {
       debugLog("Battery Status API is unavailable in this browser");
@@ -179,7 +165,7 @@ if (window.autoPauseInjected !== true) {
   async function updateAudioOutputAwareness() {
     const mediaDevices = navigator.mediaDevices;
     if (
-      !options.pauseOnAudioOutputDisconnect ||
+      !settings.pauseOnAudioOutputDisconnect ||
       !mediaDevices?.enumerateDevices
     ) {
       audioOutputDeviceIds = null;
@@ -307,7 +293,7 @@ if (window.autoPauseInjected !== true) {
   async function handleVisibilityChange() {
     await settingsReady;
     await applyBatteryPolicy();
-    if (document.hidden && options.autoPipOnTabSwitch) {
+    if (document.hidden && settings.autoPipOnTabSwitch) {
       const video = allVideos().find(
         (candidate) => !candidate.paused && !candidate.ended,
       );
@@ -338,7 +324,7 @@ if (window.autoPauseInjected !== true) {
     (event) => {
       const video = event.target;
       if (
-        options.pauseAtEnd &&
+        settings.pauseAtEnd &&
         video instanceof HTMLVideoElement &&
         lastVideoEndedAt > 0 &&
         Date.now() - lastVideoEndedAt < 15000 &&
@@ -366,7 +352,7 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener(
     "ended",
     (event) => {
-      if (options.pauseAtEnd && event.target instanceof HTMLVideoElement) {
+      if (settings.pauseAtEnd && event.target instanceof HTMLVideoElement) {
         lastVideoEndedAt = Date.now();
       }
     },
@@ -375,7 +361,7 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener(
     "click",
     (event) => {
-      if (!options.disableAutoplayNext || event.isTrusted) {
+      if (!settings.disableAutoplayNext || event.isTrusted) {
         return;
       }
       const control = event.target?.closest?.(
@@ -406,7 +392,7 @@ if (window.autoPauseInjected !== true) {
     true,
   );
 
-  let settingsReady = refresh_settings();
+  let settingsReady = refreshSettings();
   void settingsReady.catch((error) => {
     console.error("Video Auto Pause could not load settings:", error);
   });
@@ -481,19 +467,13 @@ if (window.autoPauseInjected !== true) {
         refreshPinState();
       }
     }
-    const settingsChanged =
-      (namespace === "sync" &&
-        Object.keys(changes).some(
-          (key) => key === "vapProfileIds" || key.startsWith("vapProfile:"),
-        )) ||
-      (namespace === "local" && "vapActiveProfileId" in changes);
-    if (!settingsChanged) {
+    if (!isSettingsStorageChange(changes, namespace)) {
       return;
     }
-    settingsReady = refresh_settings();
+    settingsReady = refreshSettings();
     settingsReady
       .then(() => {
-        if (options.disabled) {
+        if (settings.disabled) {
           for (const media of allMedia()) {
             const pending = scheduledActions.get(media);
             if (pending) {
@@ -560,11 +540,11 @@ if (window.autoPauseInjected !== true) {
     }
     safeModeTriggered = true;
     const disabledOptions = Object.fromEntries(
-      Object.entries(DEFAULT_OPTIONS)
+      Object.entries(DEFAULT_SETTINGS)
         .filter(([, value]) => typeof value === "boolean")
         .map(([key]) => [key, false]),
     );
-    options = { ...options, ...disabledOptions, disabled: true };
+    settings = { ...settings, ...disabledOptions, disabled: true };
     toggleCursorTracking(false);
     togglePipButtons();
     toggleVideoOverlays();
@@ -608,38 +588,28 @@ if (window.autoPauseInjected !== true) {
     return allVideos().length > 0;
   };
 
-  function collectVideos(root = document) {
-    const videos = new Set(root.querySelectorAll?.("video") ?? []);
-    for (const element of root.querySelectorAll?.("*") ?? []) {
-      if (element.shadowRoot) {
-        for (const video of collectVideos(element.shadowRoot)) {
-          videos.add(video);
-        }
-      }
-    }
-    return [...videos];
-  }
-
-  function collectAudio(root = document) {
-    const audioElements = new Set(root.querySelectorAll?.("audio") ?? []);
-    for (const element of root.querySelectorAll?.("*") ?? []) {
-      if (element.shadowRoot) {
-        for (const audio of collectAudio(element.shadowRoot)) {
-          audioElements.add(audio);
-        }
-      }
-    }
-    return [...audioElements];
-  }
-
   function collectMedia(root = document) {
-    return [...new Set([...collectVideos(root), ...collectAudio(root)])];
+    const media = new Set(root.querySelectorAll?.("video, audio") ?? []);
+    for (const element of root.querySelectorAll?.("*") ?? []) {
+      if (element.shadowRoot) {
+        for (const nested of collectMedia(element.shadowRoot)) {
+          media.add(nested);
+        }
+      }
+    }
+    return [...media];
   }
 
+  function collectVideos(root = document) {
+    return collectMedia(root).filter((media) => media.localName === "video");
+  }
+
+  // Shadow-root media is tracked by observeRoot(), so hot paths only need a
+  // cheap light-DOM query instead of a deep scan of every element.
   function allVideos() {
-    return [...new Set([...collectVideos(), ...detectedVideos])].filter(
-      (video) => video.isConnected,
-    );
+    return [
+      ...new Set([...document.querySelectorAll("video"), ...detectedVideos]),
+    ].filter((video) => video.isConnected);
   }
 
   function getShortcutVideo() {
@@ -681,7 +651,7 @@ if (window.autoPauseInjected !== true) {
   }
 
   function getShortcutAction(event) {
-    const keys = options.contentShortcutKeys;
+    const keys = settings.contentShortcutKeys;
     if (!keys || typeof keys !== "object") {
       return null;
     }
@@ -861,16 +831,16 @@ if (window.autoPauseInjected !== true) {
 
   function handleContentShortcut(event) {
     if (
-      !options.contentShortcutsEnabled ||
-      options.disabled ||
+      !settings.contentShortcutsEnabled ||
+      settings.disabled ||
       event.altKey ||
       event.ctrlKey ||
       event.metaKey ||
       event.repeat ||
       event.target?.closest?.(
-        "input, textarea, select, [contenteditable='true'], [role='textbox']",
+        "input, textarea, select, [contenteditable='true'], [role='textbox'], .vap-video-overlay",
       ) ||
-      !VAP_SITE_ENABLED(location.hostname.toLowerCase(), options)
+      !isSiteEnabled(location.hostname.toLowerCase(), settings)
     ) {
       return;
     }
@@ -891,13 +861,17 @@ if (window.autoPauseInjected !== true) {
 
   function allMedia() {
     return [
-      ...new Set([...allVideos(), ...collectAudio(), ...detectedAudio]),
+      ...new Set([
+        ...allVideos(),
+        ...document.querySelectorAll("audio"),
+        ...detectedAudio,
+      ]),
     ].filter(
       (media) =>
         media.isConnected &&
         (media.tagName !== "AUDIO" ||
-          !options.allowAudio ||
-          options.prioritizeActiveTabMedia),
+          !settings.allowAudio ||
+          settings.prioritizeActiveTabMedia),
     );
   }
 
@@ -983,7 +957,7 @@ if (window.autoPauseInjected !== true) {
   const pauseVideo = async (video, actionToken, immediate = false) => {
     if (
       document.pictureInPictureElement === video ||
-      (options.autoPipOnTabSwitch &&
+      (settings.autoPipOnTabSwitch &&
         autoDocumentPipWindow?.document.contains(video))
     ) {
       debugLog(`Ignoring stop command for ${video} because it is in PiP`);
@@ -1000,10 +974,10 @@ if (window.autoPauseInjected !== true) {
         setVideoVolume(video, originalVolumes.get(video));
         originalVolumes.delete(video);
       }
-    } else if (options.fadeDuration > 0 && !document.hidden) {
+    } else if (settings.fadeDuration > 0 && !document.hidden) {
       const volume = video.volume;
       originalVolumes.set(video, volume);
-      await fadeAudio(video, 0, options.fadeDuration);
+      await fadeAudio(video, 0, settings.fadeDuration);
       if (videoActionTokens.get(video) !== actionToken) {
         return;
       }
@@ -1034,7 +1008,7 @@ if (window.autoPauseInjected !== true) {
     const targetVolume = originalVolumes.get(video);
     activeFades.get(video)?.cancel();
     if (
-      options.fadeDuration > 0 &&
+      settings.fadeDuration > 0 &&
       targetVolume !== undefined &&
       video.paused
     ) {
@@ -1043,7 +1017,7 @@ if (window.autoPauseInjected !== true) {
     const pausePosition = automaticPausePositions.get(video);
     if (
       pausePosition &&
-      options.rewindSeconds > 0 &&
+      settings.rewindSeconds > 0 &&
       Number.isFinite(video.duration) &&
       video.duration > 0
     ) {
@@ -1052,8 +1026,8 @@ if (window.autoPauseInjected !== true) {
         (Date.now() - pausePosition.pausedAt) / 1000,
       );
       const rewindSeconds = Math.min(
-        options.rewindSeconds * 2,
-        options.rewindSeconds * (1 + awaySeconds / 60),
+        settings.rewindSeconds * 2,
+        settings.rewindSeconds * (1 + awaySeconds / 60),
       );
       try {
         video.currentTime = Math.max(0, pausePosition.time - rewindSeconds);
@@ -1079,8 +1053,8 @@ if (window.autoPauseInjected !== true) {
           preventedSeconds: Math.max(0, (Date.now() - pauseStartedAt) / 1000),
         });
       }
-      if (options.fadeDuration > 0 && targetVolume !== undefined) {
-        await fadeAudio(video, targetVolume, options.fadeDuration);
+      if (settings.fadeDuration > 0 && targetVolume !== undefined) {
+        await fadeAudio(video, targetVolume, settings.fadeDuration);
       }
     } catch (error) {
       console.error("Video Auto Pause could not resume a video:", error);
@@ -1170,7 +1144,7 @@ if (window.autoPauseInjected !== true) {
   };
 
   const handleMuteAction = async (video, action, actionToken) => {
-    if (action === "toggle_mute") {
+    if (action === "toggleMute") {
       activeFades.get(video)?.cancel();
       video.muted = !video.muted;
       extensionMutedVideos.delete(video);
@@ -1179,8 +1153,8 @@ if (window.autoPauseInjected !== true) {
         muted: video.muted,
         volume: video.volume,
       });
-      if (options.fadeDuration > 0 && !document.hidden && !video.muted) {
-        await fadeAudio(video, 0, options.fadeDuration);
+      if (settings.fadeDuration > 0 && !document.hidden && !video.muted) {
+        await fadeAudio(video, 0, settings.fadeDuration);
         if (videoActionTokens.get(video) !== actionToken) {
           return;
         }
@@ -1193,12 +1167,12 @@ if (window.autoPauseInjected !== true) {
       const original = extensionMutedVideos.get(video);
       extensionMutedVideos.delete(video);
       if (video.muted === true) {
-        if (options.fadeDuration > 0 && !document.hidden) {
+        if (settings.fadeDuration > 0 && !document.hidden) {
           setVideoVolume(video, 0);
         }
         video.muted = original.muted;
-        if (options.fadeDuration > 0 && !document.hidden) {
-          await fadeAudio(video, original.volume, options.fadeDuration);
+        if (settings.fadeDuration > 0 && !document.hidden) {
+          await fadeAudio(video, original.volume, settings.fadeDuration);
         } else {
           setVideoVolume(video, original.volume);
         }
@@ -1217,7 +1191,7 @@ if (window.autoPauseInjected !== true) {
     }
     video.playbackRate = newRate;
     if (window.top === window) {
-      showToast(`Speed: ${newRate}x`);
+      showToast(env.i18n.getMessage("speedToast", [String(newRate)]));
     }
   };
 
@@ -1225,7 +1199,7 @@ if (window.autoPauseInjected !== true) {
     const actionToken = {};
     videoActionTokens.set(video, actionToken);
     const isManuallyPaused =
-      options.manualPause && manuallyPausedVideos.get(video);
+      settings.manualPause && manuallyPausedVideos.get(video);
 
     switch (request.action) {
       case "stop":
@@ -1239,7 +1213,7 @@ if (window.autoPauseInjected !== true) {
         }
         if (
           !isManuallyPaused &&
-          options.liveStreamMute &&
+          settings.liveStreamMute &&
           video instanceof HTMLVideoElement &&
           video.duration === Number.POSITIVE_INFINITY
         ) {
@@ -1249,7 +1223,7 @@ if (window.autoPauseInjected !== true) {
         if (
           !isManuallyPaused &&
           video instanceof HTMLVideoElement &&
-          options.muteDuringAds &&
+          settings.muteDuringAds &&
           isAdPlaying()
         ) {
           await handleMuteAction(video, "mute", actionToken);
@@ -1271,7 +1245,7 @@ if (window.autoPauseInjected !== true) {
       case "resume":
         if (
           video instanceof HTMLVideoElement &&
-          options.muteDuringAds &&
+          settings.muteDuringAds &&
           isAdPlaying()
         ) {
           if (!(await waitForAdToFinish(video, actionToken))) {
@@ -1294,7 +1268,7 @@ if (window.autoPauseInjected !== true) {
         break;
       case "mute":
       case "unmute":
-      case "toggle_mute":
+      case "toggleMute":
         await handleMuteAction(video, request.action, actionToken);
         break;
       case "toggle":
@@ -1312,7 +1286,7 @@ if (window.autoPauseInjected !== true) {
           }
         } else {
           extensionPausedVideos.delete(video);
-          if (options.manualPause) {
+          if (settings.manualPause) {
             manuallyPausedVideos.set(video, true);
           }
           video.pause();
@@ -1346,7 +1320,7 @@ if (window.autoPauseInjected !== true) {
         if (
           automaticActions.includes(request.action) &&
           document.fullscreenElement &&
-          options.disableOnFullscreen
+          settings.disableOnFullscreen
         ) {
           debugLog("Document is in fullscreen mode, ignoring automatic action");
           return;
@@ -1429,10 +1403,10 @@ if (window.autoPauseInjected !== true) {
     requestAnimationFrame(() => {
       videoArbitrationScheduled = false;
       if (
-        !options.singleVideoPlayback ||
-        options.disabled ||
+        !settings.singleVideoPlayback ||
+        settings.disabled ||
         document.hidden ||
-        (document.fullscreenElement && options.disableOnFullscreen)
+        (document.fullscreenElement && settings.disableOnFullscreen)
       ) {
         return;
       }
@@ -1513,13 +1487,16 @@ if (window.autoPauseInjected !== true) {
     sendMessage({ videoHovered: hoveredVideos.size > 0 });
   }
 
-  function attachVideoListeners(videoElement, intersection_observer) {
+  function attachVideoListeners(videoElement, intersectionObserver) {
     detectedVideos.add(videoElement);
     attachMediaStateListeners(videoElement);
 
-    if (videoElement.dataset.autoPauseListenerAttached) {
+    // Track elements in memory: data attributes are copied by cloneNode(), so
+    // they cannot tell whether this particular element has listeners.
+    if (videosWithListeners.has(videoElement)) {
       return;
     }
+    videosWithListeners.add(videoElement);
     videoElement.dataset.autoPauseListenerAttached = "true";
     videoElement.addEventListener("pointerenter", () => {
       reportVideoHover(videoElement, true);
@@ -1535,25 +1512,25 @@ if (window.autoPauseInjected !== true) {
       }
     });
     applySiteSpeed(videoElement);
-    if (options.disableAutoplayNext) {
+    if (settings.disableAutoplayNext) {
       videoElement.autoplay = false;
       videoElement.removeAttribute("autoplay");
     }
 
-    if (options.showPipButton) {
+    if (settings.showPipButton) {
       injectPipButton(videoElement);
     }
 
-    if (options.showVideoOverlay) {
+    if (settings.showVideoOverlay) {
       injectVideoOverlay(videoElement);
     }
 
-    intersection_observer.observe(videoElement);
+    intersectionObserver.observe(videoElement);
     videoResizeObserver?.observe(videoElement);
 
     videoElement.addEventListener("pause", () => {
       debugLog(
-        `Pause event: automaticallyPaused=${automaticallyPausedVideos.has(videoElement)}, manualPause=${options.manualPause}`,
+        `Pause event: automaticallyPaused=${automaticallyPausedVideos.has(videoElement)}, manualPause=${settings.manualPause}`,
       );
 
       if (videoElement.dataset.returningFromPiP === "true") {
@@ -1577,7 +1554,7 @@ if (window.autoPauseInjected !== true) {
           originalVolumes.delete(videoElement);
         }
         extensionPausedVideos.delete(videoElement);
-        if (options.manualPause) {
+        if (settings.manualPause) {
           debugLog(`Manually paused video`);
           manuallyPausedVideos.set(videoElement, true);
         }
@@ -1602,7 +1579,7 @@ if (window.autoPauseInjected !== true) {
       debugLog(`Video resumed`);
       autoNextPausedVideos.delete(videoElement);
       if (
-        options.blockAutoplay &&
+        settings.blockAutoplay &&
         !userInteracted &&
         !extensionInitiatedPlays.has(videoElement)
       ) {
@@ -1613,7 +1590,6 @@ if (window.autoPauseInjected !== true) {
         scheduleVideoArbitration();
         return;
       }
-      applySiteSpeed(videoElement);
       activeFades.get(videoElement)?.cancel();
       if (!extensionInitiatedPlays.has(videoElement)) {
         videoActionTokens.set(videoElement, {});
@@ -1628,19 +1604,15 @@ if (window.autoPauseInjected !== true) {
       extensionPausedVideos.delete(videoElement);
       scheduleVideoArbitration();
     });
-    videoElement.addEventListener("ratechange", () => {
-      const sitePlaybackSpeed = VAP_OPTIONS_FOR_SITE(
-        location.hostname.toLowerCase(),
-        options,
-      ).playbackSpeed;
-      if (Number.isFinite(sitePlaybackSpeed) && sitePlaybackSpeed > 0) {
-        applySiteSpeed(videoElement);
-      }
+    // Apply the configured speed whenever a new source loads, but let the
+    // user change it afterwards with the player, shortcuts, or overlay.
+    videoElement.addEventListener("loadedmetadata", () => {
+      applySiteSpeed(videoElement);
     });
   }
 
   function applyAutoplaySettings() {
-    if (!options.disableAutoplayNext) {
+    if (!settings.disableAutoplayNext) {
       return;
     }
     for (const video of allVideos()) {
@@ -1664,7 +1636,9 @@ if (window.autoPauseInjected !== true) {
 
     const btn = document.createElement("button");
     btn.className = "vap-pip-btn";
+    btn.type = "button";
     btn.title = env.i18n.getMessage("pipTitle");
+    btn.setAttribute("aria-label", btn.title);
     btn.innerHTML =
       '<svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg>';
 
@@ -1760,7 +1734,7 @@ if (window.autoPauseInjected !== true) {
 
   function togglePipButtons() {
     const videos = allVideos();
-    if (options.showPipButton) {
+    if (settings.showPipButton) {
       for (const video of videos) {
         injectPipButton(video);
       }
@@ -1777,57 +1751,37 @@ if (window.autoPauseInjected !== true) {
   const videoOverlayCleanups = new WeakMap();
 
   function applySiteSpeed(video) {
+    const speed = settings.playbackSpeed;
     if (
-      options.disabled ||
-      !VAP_SITE_ENABLED(location.hostname.toLowerCase(), options)
+      settings.disabled ||
+      !isSiteEnabled(location.hostname.toLowerCase(), settings) ||
+      !Number.isFinite(speed) ||
+      speed < 0.25 ||
+      speed > 4
     ) {
       return;
     }
-    const hostname = location.hostname.toLowerCase();
-    const speed = VAP_OPTIONS_FOR_SITE(hostname, options).playbackSpeed;
-    if (Number.isFinite(speed) && speed >= 0.25 && speed <= 4) {
-      if (Math.abs(video.playbackRate - speed) > 0.001) {
-        video.playbackRate = speed;
-      }
-      return;
+    if (Math.abs(video.playbackRate - speed) > 0.001) {
+      video.playbackRate = speed;
     }
-  }
-
-  function siteIsEnabled(hostname, settings) {
-    return VAP_SITE_ENABLED(hostname, settings);
   }
 
   async function toggleCurrentSite() {
     const hostname = location.hostname.toLowerCase();
-    const settings = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
-      env.storage.sync,
-      env.storage.local,
-      DEFAULT_OPTIONS,
-    );
-    const siteRules = Array.isArray(settings.siteRules)
-      ? [...settings.siteRules]
-      : [];
-    const enabled = siteIsEnabled(hostname, settings);
-    const existingRule = VAP_SITE_RULE_FOR(hostname, settings);
-    const updatedRule = existingRule
-      ? { ...existingRule, enabled: !enabled }
-      : { domain: hostname, enabled: !enabled, overrides: {} };
-    const updatedRules = siteRules.filter(
-      (rule) =>
-        VAP_NORMALIZE_DOMAIN(rule.domain) !==
-        VAP_NORMALIZE_DOMAIN(updatedRule.domain),
-    );
-    updatedRules.push(updatedRule);
-    await VAP_UPDATE_ACTIVE_PROFILE_SETTINGS(
-      env.storage.sync,
-      env.storage.local,
-      DEFAULT_OPTIONS,
-      { siteRules: updatedRules },
-    );
+    const profileSettings = await getActiveProfileSettings();
+    const existingRule = findSiteRule(hostname, profileSettings);
+    await updateActiveProfileSettings({
+      siteRules: upsertSiteRule(profileSettings.siteRules, {
+        overrides: {},
+        ...existingRule,
+        domain: existingRule?.domain ?? hostname,
+        enabled: !isSiteEnabled(hostname, profileSettings),
+      }),
+    });
   }
 
   function injectVideoOverlay(video) {
-    if (video.dataset.vapOverlayId) {
+    if (videoOverlayCleanups.has(video)) {
       return;
     }
     let container = video.parentElement;
@@ -1881,8 +1835,13 @@ if (window.autoPauseInjected !== true) {
       return button;
     };
     const handle = document.createElement("span");
+    handle.className = "vap-overlay-handle";
     handle.textContent = env.i18n.getMessage("overlayDragHandle");
-    handle.title = handle.textContent;
+    handle.title = env.i18n.getMessage("overlayDragHandleHint");
+    handle.tabIndex = 0;
+    handle.setAttribute("role", "button");
+    handle.setAttribute("aria-label", handle.textContent);
+    handle.setAttribute("aria-description", handle.title);
     handle.style.cursor = "grab";
     handle.style.padding = "4px";
     overlay.appendChild(handle);
@@ -1902,6 +1861,7 @@ if (window.autoPauseInjected !== true) {
     );
     const speedLabel = document.createElement("span");
     speedLabel.className = "vap-speed-label";
+    speedLabel.title = env.i18n.getMessage("overlaySpeed");
     overlay.appendChild(speedLabel);
     const siteButton = addButton("site-toggle", "");
     const pinButton = addButton("pin-toggle", "");
@@ -1914,17 +1874,21 @@ if (window.autoPauseInjected !== true) {
         : env.i18n.getMessage("overlayPause");
       playButton.setAttribute("aria-label", playButton.title);
       speedLabel.textContent = `${video.playbackRate.toFixed(2)}×`;
-      const enabled = siteIsEnabled(location.hostname.toLowerCase(), options);
+      const enabled = isSiteEnabled(location.hostname.toLowerCase(), settings);
       siteButton.textContent = enabled
         ? env.i18n.getMessage("overlaySiteOn")
         : env.i18n.getMessage("overlaySiteOff");
-      siteButton.title = siteButton.textContent;
+      siteButton.title = env.i18n.getMessage("siteRuleEnabled");
+      siteButton.setAttribute("aria-label", siteButton.title);
       siteButton.setAttribute("aria-pressed", String(enabled));
       pinButton.textContent = pinned ? "PIN" : "PIN+";
       pinButton.title = env.i18n.getMessage(
         pinned ? "unpinCurrentTab" : "pinCurrentTab",
       );
-      pinButton.setAttribute("aria-label", pinButton.title);
+      pinButton.setAttribute(
+        "aria-label",
+        env.i18n.getMessage("pinCurrentTab"),
+      );
       pinButton.setAttribute("aria-pressed", String(pinned));
     };
     refreshOverlay();
@@ -1964,11 +1928,8 @@ if (window.autoPauseInjected !== true) {
     siteButton.addEventListener("click", async () => {
       try {
         await toggleCurrentSite();
-        options = await VAP_GET_ACTIVE_PROFILE_SETTINGS(
-          env.storage.sync,
-          env.storage.local,
-          DEFAULT_OPTIONS,
-        );
+        settingsReady = refreshSettings();
+        await settingsReady;
         refreshOverlay();
       } catch (error) {
         console.error(
@@ -1999,20 +1960,25 @@ if (window.autoPauseInjected !== true) {
       clearTimeout(hideTimeout);
       overlay.style.opacity = "1";
       hideTimeout = setTimeout(() => {
-        if (!overlay.matches(":hover")) {
+        if (!overlay.matches(":hover, :focus-within")) {
           overlay.style.opacity = "0";
         }
       }, 2000);
     };
     const hideAfterLeave = () => {
+      clearTimeout(hideTimeout);
       hideTimeout = setTimeout(() => {
-        overlay.style.opacity = "0";
+        if (!overlay.matches(":focus-within")) {
+          overlay.style.opacity = "0";
+        }
       }, 800);
     };
     container.addEventListener("mouseenter", show);
     container.addEventListener("mousemove", show);
     container.addEventListener("mouseleave", hideAfterLeave);
     overlay.addEventListener("mouseenter", show);
+    overlay.addEventListener("focusin", show);
+    overlay.addEventListener("focusout", hideAfterLeave);
 
     let dragStart;
     handle.addEventListener("pointerdown", (event) => {
@@ -2041,6 +2007,25 @@ if (window.autoPauseInjected !== true) {
     handle.addEventListener("pointercancel", () => {
       dragStart = undefined;
     });
+    const keyboardMoves = {
+      ArrowLeft: [-10, 0],
+      ArrowRight: [10, 0],
+      ArrowUp: [0, -10],
+      ArrowDown: [0, 10],
+    };
+    handle.addEventListener("keydown", (event) => {
+      const move = keyboardMoves[event.key];
+      if (!move) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      const { offsetLeft, offsetTop } = overlay;
+      overlay.style.right = "auto";
+      overlay.style.bottom = "auto";
+      overlay.style.left = `${offsetLeft + move[0]}px`;
+      overlay.style.top = `${offsetTop + move[1]}px`;
+    });
 
     if (window.getComputedStyle(container).position === "static") {
       container.style.position = "relative";
@@ -2059,7 +2044,7 @@ if (window.autoPauseInjected !== true) {
   }
 
   function toggleVideoOverlays() {
-    if (options.showVideoOverlay && !options.disabled) {
+    if (settings.showVideoOverlay && !settings.disabled) {
       for (const video of allVideos()) {
         injectVideoOverlay(video);
       }
@@ -2073,8 +2058,8 @@ if (window.autoPauseInjected !== true) {
 
   function reportVisibility() {
     if (
-      !options.scrollpause ||
-      !options.autopause ||
+      !settings.scrollpause ||
+      !settings.autopause ||
       document.visibilityState === "hidden"
     ) {
       return;
@@ -2086,7 +2071,7 @@ if (window.autoPauseInjected !== true) {
     }
   }
 
-  const intersection_observer = new IntersectionObserver(
+  const intersectionObserver = new IntersectionObserver(
     function (entries) {
       for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -2109,7 +2094,7 @@ if (window.autoPauseInjected !== true) {
     videoObserver.observe(root, { childList: true, subtree: true });
     for (const media of collectMedia(root)) {
       if (media instanceof HTMLVideoElement) {
-        attachVideoListeners(media, intersection_observer);
+        attachVideoListeners(media, intersectionObserver);
       } else {
         attachAudioListeners(media);
       }
@@ -2121,6 +2106,35 @@ if (window.autoPauseInjected !== true) {
     }
   }
 
+  // Elements that may call attachShadow() (per the DOM standard). Only these
+  // are polled for shadow roots attached after insertion.
+  const shadowHostTags = new Set([
+    "article",
+    "aside",
+    "blockquote",
+    "body",
+    "div",
+    "footer",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "header",
+    "main",
+    "nav",
+    "p",
+    "section",
+    "span",
+  ]);
+
+  function canHostShadowRoot(element) {
+    return (
+      element.localName.includes("-") || shadowHostTags.has(element.localName)
+    );
+  }
+
   function discoverShadowHosts(root) {
     const elements = [];
     if (root.nodeType === Node.ELEMENT_NODE) {
@@ -2130,13 +2144,16 @@ if (window.autoPauseInjected !== true) {
     for (const element of elements) {
       if (element.shadowRoot) {
         observeRoot(element.shadowRoot);
-      } else {
+      } else if (canHostShadowRoot(element)) {
         shadowHosts.add(element);
       }
     }
   }
 
   function forgetShadowHosts(root) {
+    if (shadowHosts.size === 0) {
+      return;
+    }
     const elements = [];
     if (root.nodeType === Node.ELEMENT_NODE) {
       elements.push(root);
@@ -2163,20 +2180,17 @@ if (window.autoPauseInjected !== true) {
   }, 1000);
 
   function observeExistingVideos(retries = 5) {
-    const videoElements = collectVideos();
-    if (videoElements.length > 0) {
-      sendMessage({ hasVideos: true });
-      for (const element of videoElements) {
-        attachVideoListeners(element, intersection_observer);
-      }
-    } else {
-      sendMessage({ hasVideos: hasVideos() });
-      if (retries > 0) {
-        setTimeout(() => observeExistingVideos(retries - 1), 1000);
+    for (const media of collectMedia()) {
+      if (media.localName === "video") {
+        attachVideoListeners(media, intersectionObserver);
+      } else {
+        attachAudioListeners(media);
       }
     }
-    for (const audio of collectAudio()) {
-      attachAudioListeners(audio);
+    const videosFound = hasVideos();
+    sendMessage({ hasVideos: videosFound });
+    if (!videosFound && retries > 0) {
+      setTimeout(() => observeExistingVideos(retries - 1), 1000);
     }
     reportMediaState();
     reportVisibility();
@@ -2263,7 +2277,7 @@ if (window.autoPauseInjected !== true) {
             videoOverlayCleanups.delete(media);
             detectedVideos.delete(media);
             visibleVideos.delete(media);
-            intersection_observer.unobserve(media);
+            intersectionObserver.unobserve(media);
             videoResizeObserver?.unobserve(media);
           } else {
             detectedAudio.delete(media);
@@ -2280,7 +2294,7 @@ if (window.autoPauseInjected !== true) {
         }
         for (const media of mediaElements) {
           if (media instanceof HTMLVideoElement) {
-            attachVideoListeners(media, intersection_observer);
+            attachVideoListeners(media, intersectionObserver);
           } else {
             attachAudioListeners(media);
           }
@@ -2293,7 +2307,7 @@ if (window.autoPauseInjected !== true) {
       }
     }
 
-    if (options.disableAutoplayNext) {
+    if (settings.disableAutoplayNext) {
       applyAutoplaySettings();
     }
     if (changed) {

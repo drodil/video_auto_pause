@@ -1,0 +1,39 @@
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.tooltip[hidden] {
+  display: none;
+}
+
+[data-tooltip] > .label-text {
+  text-decoration: underline dotted rgba(55, 65, 81, 0.6);
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tooltip {
+    animation: tooltip-fade-in 120ms ease-out;
+  }
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

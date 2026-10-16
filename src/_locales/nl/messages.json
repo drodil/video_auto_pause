@@ -251,18 +251,6 @@
     "message": "Hervattingsvertraging",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domeinuitzonderingen",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Voer domeinen in om uit te sluiten (één per regel):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Geluid geleidelijk in- en uitfaden",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Fading duur (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Domeininstellingen",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "Voer domeinen in om op te nemen (één per regel):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "Huidig domein aan deze lijst toevoegen",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Welkom bij Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Configureer een site zonder globale instellingen te wijzigen.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Gedrag",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Globaal gedrag gebruiken",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Pauzeren",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Dempen",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Website negeren",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Afspeelsnelheid (0 = laatste snelheid onthouden)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Pauzevertraging (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Hervatvertraging (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Site-regel opslaan",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Alleen sites met een ingeschakelde regel activeren",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Sitedomein",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Voer een hostnaam in zoals example.com; subdomeinen zijn inbegrepen.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Extensie inschakelen op deze site",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Uitgeschakeld",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Overschrijven",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Instellingen om te overschrijven",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Selecteer alleen instellingen die afwijken van de algemene standaardwaarden.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Siteregels filteren",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Bewerken",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "instellingen",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Afspeelsnelheid (0 = snelheid van de site gebruiken)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Site-instellingen verwijderen",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Automatisch toepassen op domeinen",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Sneltoetsen op videopagina’s inschakelen"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Video openen in picture-in-picture bij wisselen van tabblad"
   },
-  "audioOnlySupport": {
-    "message": "Ook alleen-audiospelers bedienen"
-  },
-  "audioOnlyDescription": {
-    "message": "Audio wordt standaard niet beïnvloed. Indien ingeschakeld, kan audio op de vermelde domeinen blijven afspelen."
-  },
-  "audioAllowList": {
-    "message": "Audio op deze domeinen altijd toestaan"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Video's op de achtergrond pauzeren bij een lage batterij"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Instellingen kunnen niet worden opgeslagen. Controleer of browser-synchronisatieopslag beschikbaar is."
+  },
+  "onboardingFeatures": {
+    "message": "Wat de extensie doet",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Video's worden in volledig scherm niet automatisch gepauzeerd of gedempt.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Pauzeert video's in alle tabbladen wanneer de gekozen tijd voorbij is.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Als meerdere video's op een pagina tegelijk spelen, speelt alleen de meest zichtbare verder.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Pauzeert wanneer de aanwijzer de rand van het venster bereikt en hervat wanneer hij terugkomt.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Als pauzeren bij focusverlies aan staat, speelt een video door zolang de aanwijzer erboven is.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Video's die je zelf pauzeert, blijven gepauzeerd als je terugkeert naar het tabblad.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Spelers met alleen audio, zoals muziek en podcasts, spelen door. Zet uit om ze ook te pauzeren.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Video's kunnen pas vanzelf starten nadat je op de pagina klikt of een toets indrukt.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Zet automatisch afspelen van de speler uit en blokkeert automatisch doorgaan naar de volgende video.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Als een video afloopt, wordt de volgende video die vanzelf start gepauzeerd.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Livestreams worden gedempt in plaats van gepauzeerd, zodat ze live blijven.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Als er een advertentie speelt, wordt de video gedempt tot de advertentie voorbij is en daarna gepauzeerd.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Media in het actieve tabblad pauzeren media in andere tabbladen; het vorige tabblad hervat als ze stoppen.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "De extensie werkt alleen op de hieronder vermelde sites waarop ze is ingeschakeld.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Snelheid: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Sleep of gebruik de pijltjestoetsen om de bediening te verplaatsen",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Huidige afspeelsnelheid",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Sneltoetsen op de pagina",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

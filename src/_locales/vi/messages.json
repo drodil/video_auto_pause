@@ -251,18 +251,6 @@
     "message": "Trì hoãn tiếp tục",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Loại trừ tên miền",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Nhập các tên miền cần loại trừ (mỗi dòng một):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Làm mờ âm thanh",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Thời gian làm mờ (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Cài đặt tên miền",
     "description": "Domain settings section header"
-  },
-  "domainInclusionsDescription": {
-    "message": "Nhập các tên miền cần bao gồm (mỗi dòng một):",
-    "description": "Description for domain inclusions textarea"
-  },
-  "addCurrentDomainToList": {
-    "message": "Thêm miền hiện tại vào danh sách này",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Chào mừng bạn đến với Video Auto Pause",
@@ -431,38 +411,6 @@
     "message": "Cấu hình riêng một trang mà không đổi cài đặt chung.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Hành vi",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Dùng hành vi chung",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Tạm dừng",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Tắt tiếng",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Bỏ qua trang web",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Tốc độ phát (0 = nhớ tốc độ gần nhất)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Độ trễ tạm dừng (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Độ trễ tiếp tục (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Lưu quy tắc trang web",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Chỉ bật các trang có quy tắc trang được bật",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Tên miền trang",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Nhập tên máy chủ như example.com; bao gồm cả tên miền phụ.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Bật tiện ích trên trang này",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Tắt",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Ghi đè",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Cài đặt cần ghi đè",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Chỉ chọn các cài đặt khác với giá trị mặc định chung.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Lọc quy tắc trang",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Chỉnh sửa",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "cài đặt",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Tốc độ phát (0 = dùng tốc độ của trang web)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Xóa cài đặt trang",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Tự động áp dụng cho các tên miền",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Bật phím tắt trên trang video"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Mở video ở chế độ Hình trong hình khi chuyển tab"
   },
-  "audioOnlySupport": {
-    "message": "Điều khiển cả trình phát chỉ có âm thanh"
-  },
-  "audioOnlyDescription": {
-    "message": "Âm thanh không bị ảnh hưởng theo mặc định. Khi bật, âm thanh trên các tên miền được liệt kê vẫn tiếp tục phát."
-  },
-  "audioAllowList": {
-    "message": "Luôn cho phép âm thanh trên các tên miền này"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Tạm dừng video nền khi pin yếu"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Không thể lưu cài đặt. Hãy kiểm tra bộ nhớ đồng bộ của trình duyệt."
+  },
+  "onboardingFeatures": {
+    "message": "Tiện ích làm gì",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Video không tự động tạm dừng hoặc tắt tiếng khi ở chế độ toàn màn hình.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Tạm dừng video trong mọi thẻ khi hết thời gian đã chọn.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Khi nhiều video trên trang phát cùng lúc, chỉ video dễ thấy nhất tiếp tục phát.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Tạm dừng khi con trỏ chạm mép cửa sổ và tiếp tục khi con trỏ quay lại.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Khi bật tạm dừng lúc mất tiêu điểm, video vẫn phát khi con trỏ ở trên video.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Video bạn tự tạm dừng sẽ vẫn tạm dừng khi bạn quay lại thẻ.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Trình phát chỉ có âm thanh, như nhạc và podcast, vẫn tiếp tục. Tắt để tạm dừng cả chúng.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Video không thể tự phát cho đến khi bạn nhấp hoặc nhấn phím trên trang.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Tắt tự động phát của trình phát và chặn tự động chuyển sang video tiếp theo.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Khi video kết thúc, video tiếp theo tự bắt đầu sẽ bị tạm dừng.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Luồng trực tiếp được tắt tiếng thay vì tạm dừng để luôn trực tiếp.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Nếu đang phát quảng cáo, video được tắt tiếng đến khi hết quảng cáo rồi tạm dừng.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Nội dung ở thẻ đang hoạt động tạm dừng nội dung ở thẻ khác; thẻ trước tiếp tục khi nội dung dừng.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Tiện ích chỉ chạy trên các trang được liệt kê bên dưới có bật tiện ích.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Tốc độ: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Kéo hoặc dùng phím mũi tên để di chuyển bộ điều khiển",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Tốc độ phát hiện tại",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Phím tắt trên trang",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }

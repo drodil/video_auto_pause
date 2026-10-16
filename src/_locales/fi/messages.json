@@ -251,18 +251,6 @@
     "message": "Jatkamisviive",
     "description": "Label for resume delay input"
   },
-  "domainExclusions": {
-    "message": "Domain poikkeukset",
-    "description": "Label for domain exclusions section"
-  },
-  "domainExclusionsDescription": {
-    "message": "Syötä poissuljettavat domainit (yksi per rivi):",
-    "description": "Description for domain exclusions textarea"
-  },
-  "audioFading": {
-    "message": "Äänen häivytys",
-    "description": "Label for audio fading checkbox"
-  },
   "fadeDuration": {
     "message": "Häivytyksen kesto (ms)",
     "description": "Label for fade duration input"
@@ -294,14 +282,6 @@
   "domainSettings": {
     "message": "Verkkotunnusasetukset",
     "description": "Auto-translated"
-  },
-  "domainInclusionsDescription": {
-    "message": "Syötä sisällytettävät verkkotunnukset (yksi per rivi):",
-    "description": "Auto-translated"
-  },
-  "addCurrentDomainToList": {
-    "message": "Lisää nykyinen verkkotunnus tähän luetteloon",
-    "description": "Tooltip and accessible label for adding the current domain to a domain list"
   },
   "onboardingTitle": {
     "message": "Tervetuloa käyttämään Video Auto Pausea",
@@ -431,38 +411,6 @@
     "message": "Määritä sivusto muuttamatta yleisiä asetuksia.",
     "description": "Introduction to site-specific settings"
   },
-  "siteRuleBehavior": {
-    "message": "Toiminta",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleDefault": {
-    "message": "Käytä yleistä toimintaa",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePause": {
-    "message": "Keskeytä",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleMute": {
-    "message": "Mykistä",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleIgnore": {
-    "message": "Ohita sivusto",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleSpeed": {
-    "message": "Toistonopeus (0 = muista viimeisin nopeus)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRulePauseDelay": {
-    "message": "Keskeytysviive (ms)",
-    "description": "Per-site playback rule text"
-  },
-  "siteRuleResumeDelay": {
-    "message": "Jatkamisviive (ms)",
-    "description": "Per-site playback rule text"
-  },
   "siteRuleSave": {
     "message": "Tallenna sivustosääntö",
     "description": "Per-site playback rule text"
@@ -483,14 +431,6 @@
     "message": "Ota käyttöön vain sivustot, joilla on käytössä oleva sääntö",
     "description": "Only run the extension on sites with an enabled rule"
   },
-  "siteRuleDomain": {
-    "message": "Sivuston verkkotunnus",
-    "description": "Label for the site rule hostname field"
-  },
-  "siteRuleDomainHint": {
-    "message": "Anna isäntänimi, kuten example.com; aliverkkotunnukset sisältyvät.",
-    "description": "Hint for entering a site rule hostname"
-  },
   "siteRuleEnabled": {
     "message": "Ota laajennus käyttöön tällä sivustolla",
     "description": "Enable or disable the extension for a site"
@@ -503,29 +443,9 @@
     "message": "Ei käytössä",
     "description": "Disabled site rule option"
   },
-  "siteRuleOverride": {
-    "message": "Ohita oletus",
-    "description": "Prefix for a setting override control"
-  },
-  "siteRuleOverrides": {
-    "message": "Ohitettavat asetukset",
-    "description": "Heading for per-site setting overrides"
-  },
-  "siteRuleOverridesDescription": {
-    "message": "Valitse vain asetukset, joiden tulee poiketa yleisistä oletuksista.",
-    "description": "Help text for per-site setting overrides"
-  },
   "siteRuleFilter": {
     "message": "Suodata sivustosääntöjä",
     "description": "Filter field for the list of site rules"
-  },
-  "siteRuleEdit": {
-    "message": "Muokkaa",
-    "description": "Button to edit a saved site rule"
-  },
-  "siteRuleOverridesCount": {
-    "message": "asetusta",
-    "description": "Count label for site-specific setting overrides"
   },
   "playbackSpeed": {
     "message": "Toistonopeus (0 = käytä sivuston nopeutta)",
@@ -558,14 +478,6 @@
   "siteRuleDelete": {
     "message": "Poista sivuston asetukset",
     "description": "Delete the current site rule"
-  },
-  "profileDomains": {
-    "message": "Käytä automaattisesti verkkotunnuksissa",
-    "description": "Domains that automatically select this saved settings profile."
-  },
-  "profileDomainsPlaceholder": {
-    "message": "example.com, work.example.org",
-    "description": "Comma-separated domain examples for profile matching."
   },
   "contentShortcutsEnabled": {
     "message": "Ota käyttöön videosivun pikanäppäimet"
@@ -633,18 +545,6 @@
   "autoPipOnTabSwitch": {
     "message": "Avaa video kuva kuvassa -tilassa välilehteä vaihdettaessa"
   },
-  "audioOnlySupport": {
-    "message": "Ohjaa myös pelkkiä äänisoittimia"
-  },
-  "audioOnlyDescription": {
-    "message": "Ääntä ei käsitellä oletusarvoisesti. Käyttöönoton jälkeen lueteltujen verkkotunnusten ääni saa jatkua."
-  },
-  "audioAllowList": {
-    "message": "Salli ääni aina näissä verkkotunnuksissa"
-  },
-  "audioAllowListPlaceholder": {
-    "message": "open.spotify.com, music.youtube.com, soundcloud.com"
-  },
   "pauseOnLowBattery": {
     "message": "Keskeytä taustavideot akun ollessa vähissä"
   },
@@ -683,5 +583,81 @@
   },
   "settingsSaveFailed": {
     "message": "Asetuksia ei voitu tallentaa. Tarkista, että synkronointitallennustila on käytettävissä."
+  },
+  "onboardingFeatures": {
+    "message": "Mitä laajennus tekee",
+    "description": "Accessible name for the onboarding feature list."
+  },
+  "disableOnFullscreenDescription": {
+    "message": "Videoita ei keskeytetä eikä mykistetä automaattisesti koko näytön tilassa.",
+    "description": "Tooltip for the fullscreen setting."
+  },
+  "sleepTimerDescription": {
+    "message": "Keskeyttää videot kaikissa välilehdissä, kun valittu aika on kulunut.",
+    "description": "Tooltip for the sleep timer button."
+  },
+  "singleVideoPlaybackDescription": {
+    "message": "Kun sivulla toistuu useita videoita yhtä aikaa, vain näkyvin jatkaa.",
+    "description": "Tooltip for the single video playback setting."
+  },
+  "cursorTrackingDescription": {
+    "message": "Keskeyttää, kun osoitin saavuttaa ikkunan reunan, ja jatkaa, kun se palaa.",
+    "description": "Tooltip for the cursor tracking setting."
+  },
+  "peekModeDescription": {
+    "message": "Kun keskeytys kohdistuksen menetyksessä on päällä, video jatkuu osoittimen ollessa sen päällä.",
+    "description": "Tooltip for the peek mode setting."
+  },
+  "manualPauseDescription": {
+    "message": "Itse keskeyttämäsi videot pysyvät keskeytettyinä, kun palaat välilehdelle.",
+    "description": "Tooltip for the manual pause setting."
+  },
+  "allowAudioDescription": {
+    "message": "Pelkän äänen soittimet, kuten musiikki ja podcastit, jatkavat. Poista käytöstä keskeyttääksesi nekin.",
+    "description": "Tooltip for the audio-only playback setting."
+  },
+  "blockAutoplayDescription": {
+    "message": "Videot eivät voi alkaa itsestään ennen kuin napsautat tai painat näppäintä sivulla.",
+    "description": "Tooltip for the autoplay blocking setting."
+  },
+  "disableAutoplayNextDescription": {
+    "message": "Poistaa soittimen automaattisen toiston ja estää automaattiset siirtymät seuraavaan videoon.",
+    "description": "Tooltip for the next-video autoplay setting."
+  },
+  "pauseAtEndDescription": {
+    "message": "Kun video päättyy, seuraava itsestään alkava video keskeytetään.",
+    "description": "Tooltip for the pause-at-end setting."
+  },
+  "liveStreamMuteDescription": {
+    "message": "Suorat lähetykset mykistetään keskeyttämisen sijaan, jotta ne pysyvät suorina.",
+    "description": "Tooltip for the live stream setting."
+  },
+  "muteDuringAdsDescription": {
+    "message": "Jos mainos on käynnissä, video mykistetään mainoksen loppuun asti ja keskeytetään sitten.",
+    "description": "Tooltip for the ad muting setting."
+  },
+  "prioritizeActiveTabMediaDescription": {
+    "message": "Aktiivisen välilehden media keskeyttää muiden välilehtien median; edellinen välilehti jatkaa, kun se pysähtyy.",
+    "description": "Tooltip for the one-source-at-a-time setting."
+  },
+  "onlyConfiguredSitesDescription": {
+    "message": "Laajennus toimii vain alla luetelluilla sivustoilla, joilla se on käytössä.",
+    "description": "Tooltip for the configured-sites-only setting."
+  },
+  "speedToast": {
+    "message": "Nopeus: $1×",
+    "description": "On-page notice after changing playback speed. $1 is the new speed."
+  },
+  "overlayDragHandleHint": {
+    "message": "Siirrä painikkeita vetämällä tai nuolinäppäimillä",
+    "description": "Tooltip for the handle that moves the on-video controls."
+  },
+  "overlaySpeed": {
+    "message": "Nykyinen toistonopeus",
+    "description": "Tooltip for the playback speed shown in the on-video controls."
+  },
+  "contentShortcutKeys": {
+    "message": "Sivun pikanäppäimet",
+    "description": "Label for customizing in-page shortcut keys for a site."
   }
 }
