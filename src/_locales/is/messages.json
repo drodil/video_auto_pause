@@ -7,14 +7,6 @@
     "message": "Stöðvar margar vídeóþjónustur þegar flipi missir fókus og heldur áfram við fókus",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Stillingar",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Ítarlegar stillingar",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Flýtilyklar",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Spila aðeins eina miðlun í einu",
+    "message": "Forgangsraða miðlum á virkum flipa",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Koma í veg fyrir sjálfvirka spilun næsta myndbands",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Svefntímamælir"
   },
   "sleepTimerStart": {
     "message": "Ræsa svefntíma",
@@ -183,14 +178,6 @@
     "message": "Vista núverandi stillingar sem snið",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Virkja snið",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Eyða sniði",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Veldu snið",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "Lénsstillingar",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Velkomin í Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Áhrif þín þessa viku",
+    "message": "Tölfræði",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Þaggar myndbönd, deyfir hljóð og heldur spilun áfram þegar fókus breytist eða tækið læsist.",
+    "message": "Heldur spilun áfram þegar skipt er um flipa eða glugga eða tækinu er læst.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Vista vefsvæðisreglu",
-    "description": "Per-site playback rule text"
+    "message": "Vista stillingar vefsvæðis",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Fjarlægja",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Vefsvæðisregla vistuð",
-    "description": "Per-site playback rule text"
+    "message": "Stillingar vefsvæðis vistaðar",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Ekki tókst að vista vefsvæðisregluna.",
-    "description": "Per-site playback rule text"
+    "message": "Ekki tókst að vista stillingar vefsvæðis.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Virkja aðeins vefsvæði með virkri reglu",
+    "message": "Virkja aðeins stillt vefsvæði",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Óvirkt",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Sía vefsvæðisreglur",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Afspilunarhraði (0 = nota hraða vefsvæðisins)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Sérsníða fyrir þetta vefsvæði",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Virkt",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Eyða stillingum vefsvæðis",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Miðlar í virka flipanum setja miðla í öðrum flipum í bið; fyrri flipinn heldur áfram þegar þeir stöðvast.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Stýrir spilun milli flipa, ekki myndskeiðum á sömu síðu. Miðlar í virka flipanum setja miðla í öðrum flipum í bið; fyrri flipinn heldur áfram þegar þeir stöðvast.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Viðbótin keyrir aðeins á vefsvæðum hér að neðan þar sem hún er virk.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Flýtilyklar á síðunni",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Stillingar vefsvæðis"
+  },
+  "siteRuleDomain": {
+    "message": "Lén"
+  },
+  "siteRuleAddNew": {
+    "message": "Bæta við vefsvæði"
+  },
+  "siteRuleInherit": {
+    "message": "Nota sjálfgefnar stillingar"
+  },
+  "statsPeriodLabel": {
+    "message": "Tímabil"
+  },
+  "statsDays": {
+    "message": "Síðustu $1 dagar"
+  },
+  "statsPausesLabel": {
+    "message": "Hlé"
+  },
+  "statsResumesLabel": {
+    "message": "Endurupptökur"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Sjálfvirk spilun hindruð"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Spilun hindruð (mín.)"
+  },
+  "generalSettings": {
+    "message": "Almennar stillingar",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Fókus og sýnileiki",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Spilun og hljóð",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Myndstýringar og flýtilyklar",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Sjálfvirkni",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Spilunarstillingar",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Úrræðaleit",
+    "description": "Settings section: Troubleshooting"
   }
 }

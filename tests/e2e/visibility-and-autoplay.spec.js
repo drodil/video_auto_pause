@@ -116,6 +116,11 @@ test.describe("Visibility and autoplay", () => {
     );
     const optionsPage = await context.newPage();
     await optionsPage.goto(`${optionsUrl}?popup`);
+    await expect(optionsPage.locator("#sleepTimerSection")).not.toHaveAttribute(
+      "open",
+      "",
+    );
+    await optionsPage.locator("#sleepTimerSection summary").click();
     await expect(optionsPage.locator("#sleepTimerMinutes option")).toHaveText([
       "5",
       "10",
@@ -126,6 +131,12 @@ test.describe("Visibility and autoplay", () => {
     await optionsPage.locator("#sleepTimerMinutes").selectOption("5");
     await optionsPage.locator("#startSleepTimer").click();
     await expect(optionsPage.locator("#cancelSleepTimer")).toBeVisible();
+    await optionsPage.reload();
+    await expect(optionsPage.locator("#cancelSleepTimer")).toBeVisible();
+    await expect(optionsPage.locator("#sleepTimerSection")).toHaveAttribute(
+      "open",
+      "",
+    );
     await expect
       .poll(() =>
         worker.evaluate(async () => {
@@ -143,6 +154,10 @@ test.describe("Visibility and autoplay", () => {
       .toBe(true);
     await worker.evaluate(() => pauseEverythingForSleepTimer());
     await expect(video).toHaveJSProperty("paused", true);
+    await expect(optionsPage.locator("#sleepTimerSection")).not.toHaveAttribute(
+      "open",
+      "",
+    );
   });
 
   test("should pause video when scrolling out of view", async ({

@@ -154,7 +154,13 @@ function normalizeDomain(entry) {
 }
 
 function isValidDomain(domain) {
-  return /^[a-z\d.-]+$/i.test(domain);
+  return (
+    typeof domain === "string" &&
+    domain.length <= 253 &&
+    domain
+      .split(".")
+      .every((label) => /^[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?$/i.test(label))
+  );
 }
 
 function matchesDomain(hostname, domain) {

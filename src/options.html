@@ -27,7 +27,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path
               d="M16 3a1 1 0 0 1 1 1v3l2 3v2h-6v8l-1 1-1-1v-8H5v-2l2-3V4a1 1 0 0 1 1-1z"
-            />
+            ></path>
           </svg>
         </button>
         <p id="pinStatus" role="status" aria-live="polite"></p>
@@ -35,7 +35,7 @@
 
       <div id="settingsViews">
         <div id="globalSettingsView" class="settings-view">
-          <div id="activeProfileControl" class="container section" hidden>
+          <div id="activeProfileControl" class="container section" hidden="">
             <label
               for="activeProfileSelect"
               data-i18n="profileSelectPlaceholder"
@@ -44,14 +44,14 @@
             <select id="activeProfileSelect"></select>
           </div>
           <p id="settingsSaveStatus" role="status" aria-live="polite"></p>
-          <div class="container section">
+          <div class="container section" data-settings-group="generalSettings">
             <button
               class="collapsible-button active"
               type="button"
               aria-expanded="true"
               aria-controls="settingsContent"
             >
-              <span data-i18n="settings">Settings</span>
+              <span data-i18n="generalSettings">General settings</span>
             </button>
             <div class="collapsible-content expanded" id="settingsContent">
               <div class="spacing-top-small">
@@ -59,39 +59,38 @@
                   <input type="checkbox" id="autopause" />
                   <span class="label-text" data-i18n="autopause"
                     >Pause video when switching tabs</span
-                  >
-                </label>
-                <label>
+                  > </label
+                ><label>
                   <input type="checkbox" id="autoresume" />
                   <span class="label-text" data-i18n="autoresume"
                     >Resume video when returning to tab</span
-                  >
-                </label>
-                <label>
+                  > </label
+                ><label>
                   <input type="checkbox" id="focuspause" />
                   <span class="label-text" data-i18n="focuspause"
                     >Pause video when browser loses focus</span
-                  >
-                </label>
-                <label>
+                  > </label
+                ><label>
                   <input type="checkbox" id="focusresume" />
                   <span class="label-text" data-i18n="focusresume"
                     >Resume video when browser gains focus</span
-                  >
-                </label>
-                <label>
-                  <input type="checkbox" id="disabledTabs" />
-                  <span class="label-text" data-i18n="disabledTabs"
-                    >Disable extension for current tab</span
-                  >
-                </label>
-                <label data-i18n-tooltip="disableOnFullscreenDescription">
+                  > </label
+                ><label data-i18n-tooltip="manualPauseDescription">
+                  <input type="checkbox" id="manualPause" />
+                  <span class="label-text" data-i18n="manualPause"
+                    >Prevent auto-resume after manual pause</span
+                  > </label
+                ><label data-i18n-tooltip="disableOnFullscreenDescription">
                   <input type="checkbox" id="disableOnFullscreen" />
                   <span class="label-text" data-i18n="disableOnFullscreen"
                     >Disable when video is fullscreen</span
-                  >
-                </label>
-                <label>
+                  > </label
+                ><label>
+                  <input type="checkbox" id="disabledTabs" />
+                  <span class="label-text" data-i18n="disabledTabs"
+                    >Disable extension for current tab</span
+                  > </label
+                ><label>
                   <input type="checkbox" id="disabled" />
                   <span class="label-text" data-i18n="disabled"
                     >Disable extension completely</span
@@ -100,81 +99,108 @@
               </div>
             </div>
           </div>
-
           <div class="container section">
-            <div id="sleepTimerDurationControl" class="sleep-timer-duration">
-              <label for="sleepTimerMinutes" data-i18n="sleepTimerDuration"
-                >Duration (minutes)</label
-              >
-              <select id="sleepTimerMinutes">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="30" selected>30</option>
-                <option value="60">60</option>
-              </select>
-            </div>
-            <div class="sleep-timer-controls">
-              <button
-                id="startSleepTimer"
-                type="button"
-                class="button button-primary"
-                data-i18n="sleepTimerStart"
-                data-i18n-tooltip="sleepTimerDescription"
-              >
-                Start sleep timer
-              </button>
-              <button
-                id="cancelSleepTimer"
-                type="button"
-                class="button button-secondary"
-                data-i18n="sleepTimerCancel"
-                hidden
-              >
-                Cancel sleep timer
-              </button>
-            </div>
-            <p id="sleepTimerStatus" role="status" aria-live="polite"></p>
-            <details class="preset-options">
+            <details class="preset-options settings-disclosure">
               <summary data-i18n="presetTitle">Choose a mode</summary>
-              <div class="preset-grid">
-                <button
-                  type="button"
-                  data-preset="study"
-                  data-i18n="presetStudy"
-                  data-i18n-tooltip="presetStudyDescription"
-                >
-                  Study / lectures
-                </button>
-                <button
-                  type="button"
-                  data-preset="music"
-                  data-i18n="presetMusic"
-                  data-i18n-tooltip="presetMusicDescription"
-                >
-                  Background music
-                </button>
-                <button
-                  type="button"
-                  data-preset="binge"
-                  data-i18n="presetBinge"
-                  data-i18n-tooltip="presetBingeDescription"
-                >
-                  Binge / TV
-                </button>
-                <button
-                  type="button"
-                  data-preset="saver"
-                  data-i18n="presetSaver"
-                  data-i18n-tooltip="presetSaverDescription"
-                >
-                  Battery saver / meetings
-                </button>
+              <div class="disclosure-content">
+                <div class="preset-grid">
+                  <button
+                    type="button"
+                    data-preset="study"
+                    data-i18n="presetStudy"
+                    data-i18n-tooltip="presetStudyDescription"
+                  >
+                    Study / lectures
+                  </button>
+                  <button
+                    type="button"
+                    data-preset="music"
+                    data-i18n="presetMusic"
+                    data-i18n-tooltip="presetMusicDescription"
+                  >
+                    Background music
+                  </button>
+                  <button
+                    type="button"
+                    data-preset="binge"
+                    data-i18n="presetBinge"
+                    data-i18n-tooltip="presetBingeDescription"
+                  >
+                    Binge / TV
+                  </button>
+                  <button
+                    type="button"
+                    data-preset="saver"
+                    data-i18n="presetSaver"
+                    data-i18n-tooltip="presetSaverDescription"
+                  >
+                    Battery saver / meetings
+                  </button>
+                </div>
+                <p id="presetStatus" role="status" aria-live="polite"></p>
               </div>
-              <p id="presetStatus" role="status" aria-live="polite"></p>
             </details>
           </div>
+          <div class="container section">
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="domainContent"
+            >
+              <span data-i18n="siteSettings">Site settings</span>
+            </button>
+            <div class="collapsible-content" id="domainContent">
+              <div class="spacing-top-small">
+                <label data-i18n-tooltip="onlyConfiguredSitesDescription">
+                  <input type="checkbox" id="onlyConfiguredSites" />
+                  <span class="label-text" data-i18n="onlyConfiguredSites"
+                    >Only enable configured sites</span
+                  >
+                </label>
 
+                <div class="site-rules-editor-spacing" id="siteRulesEditor">
+                  <p data-i18n="siteRuleIntro">
+                    Configure an individual site without changing global
+                    settings.
+                  </p>
+                  <form id="newSiteForm" class="site-add-form">
+                    <label for="newSiteDomain" data-i18n="siteRuleDomain"
+                      >Domain name</label
+                    >
+                    <input
+                      id="newSiteDomain"
+                      type="text"
+                      required=""
+                      autocomplete="off"
+                      placeholder="example.com"
+                      autocapitalize="none"
+                      spellcheck="false"
+                    />
+                    <div class="site-add-actions">
+                      <button
+                        type="submit"
+                        class="button button-primary"
+                        data-i18n="siteRuleAddNew"
+                      >
+                        Add new site
+                      </button>
+                      <button
+                        type="button"
+                        id="addSiteRule"
+                        class="button button-primary"
+                        data-i18n="siteRuleAdd"
+                      >
+                        Add current site
+                      </button>
+                    </div>
+                  </form>
+                  <p id="siteRuleStatus" role="status" aria-live="polite"></p>
+                  <ul id="siteRuleList" class="settings-list"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="container section">
             <button
               class="collapsible-button"
@@ -182,10 +208,37 @@
               aria-expanded="false"
               aria-controls="profilesContent"
             >
-              <span data-i18n="profilesAndBackup">Profiles &amp; backup</span>
+              <span id="profilesHeading" data-i18n="profilesAndBackup"
+                >Profiles &amp; backup</span
+              >
             </button>
             <div class="collapsible-content" id="profilesContent">
-              <div class="profile-actions">
+              <label for="profileName" data-i18n="profileName"
+                >Profile name</label
+              >
+              <input
+                type="text"
+                id="profileName"
+                maxlength="40"
+                autocomplete="off"
+                data-i18n-placeholder="profileNamePlaceholder"
+                placeholder="e.g. Work"
+              />
+              <button
+                type="button"
+                id="saveProfile"
+                class="button button-primary"
+                data-i18n="saveProfile"
+              >
+                Save profile
+              </button>
+              <ul
+                id="profileList"
+                class="settings-list"
+                aria-labelledby="profilesHeading"
+              ></ul>
+              <p id="profileStatus" role="status" aria-live="polite"></p>
+              <div class="profile-actions backup-actions">
                 <button
                   type="button"
                   id="exportSettings"
@@ -206,179 +259,249 @@
                   type="file"
                   id="importSettingsFile"
                   accept="application/json,.json"
-                  hidden
+                  hidden=""
                 />
               </div>
               <p id="settingsImportStatus" role="status" aria-live="polite"></p>
-              <label for="profileName" data-i18n="profileName"
-                >Profile name</label
-              >
-              <input
-                type="text"
-                id="profileName"
-                maxlength="40"
-                autocomplete="off"
-                data-i18n-placeholder="profileNamePlaceholder"
-                placeholder="e.g. Work"
-              />
-              <button
-                type="button"
-                id="saveProfile"
-                class="button button-primary"
-                data-i18n="saveProfile"
-              >
-                Save profile
-              </button>
-              <select
-                id="profileSelect"
-                data-i18n-aria-label="profileSelectPlaceholder"
-                aria-label="Choose a profile"
-              ></select>
-              <div class="profile-actions">
-                <button
-                  type="button"
-                  id="applyProfile"
-                  class="button button-secondary"
-                  data-i18n="applyProfile"
-                  disabled
-                >
-                  Apply profile
-                </button>
-                <button
-                  type="button"
-                  id="deleteProfile"
-                  class="button button-danger"
-                  data-i18n="deleteProfile"
-                  disabled
-                >
-                  Delete profile
-                </button>
-              </div>
-              <p id="profileStatus" role="status" aria-live="polite"></p>
             </div>
           </div>
-
-          <div class="container section">
+          <div class="container section" data-settings-group="focusSettings">
             <button
               class="collapsible-button"
               type="button"
               aria-expanded="false"
-              aria-controls="advancedContent"
+              aria-controls="focusSettingsContent"
             >
-              <span data-i18n="advancedSettings">Advanced Settings</span>
+              <span data-i18n="focusSettings">Focus &amp; visibility</span>
             </button>
-            <div class="collapsible-content" id="advancedContent">
+            <div class="collapsible-content" id="focusSettingsContent">
               <div class="spacing-top-small">
-                <label>
-                  <input type="checkbox" id="lockpause" />
-                  <span class="label-text" data-i18n="lockpause"
-                    >Pause video when computer is locked</span
-                  >
-                </label>
-                <label>
-                  <input type="checkbox" id="lockresume" />
-                  <span class="label-text" data-i18n="lockresume"
-                    >Resume video when computer is unlocked</span
-                  >
-                </label>
                 <label>
                   <input type="checkbox" id="scrollpause" />
                   <span class="label-text" data-i18n="scrollpause"
                     >Pause video when scrolled out of view</span
-                  >
-                </label>
-                <label data-i18n-tooltip="singleVideoPlaybackDescription">
+                  > </label
+                ><label data-i18n-tooltip="singleVideoPlaybackDescription">
                   <input type="checkbox" id="singleVideoPlayback" />
                   <span class="label-text" data-i18n="singleVideoPlayback"
                     >Play only the most visible video</span
-                  >
-                </label>
-                <label data-i18n-tooltip="cursorTrackingDescription">
+                  > </label
+                ><label>
+                  <input type="checkbox" id="lockpause" />
+                  <span class="label-text" data-i18n="lockpause"
+                    >Pause video when computer is locked</span
+                  > </label
+                ><label>
+                  <input type="checkbox" id="lockresume" />
+                  <span class="label-text" data-i18n="lockresume"
+                    >Resume video when computer is unlocked</span
+                  > </label
+                ><label data-i18n-tooltip="peekModeDescription">
+                  <input type="checkbox" id="peekMode" />
+                  <span class="label-text" data-i18n="peekMode"
+                    >Keep playing while the pointer is over the video</span
+                  > </label
+                ><label data-i18n-tooltip="cursorTrackingDescription">
                   <input type="checkbox" id="cursorTracking" />
                   <span class="label-text" data-i18n="cursorTracking"
                     >Pause when cursor leaves browser window</span
                   >
                 </label>
-                <label data-i18n-tooltip="peekModeDescription">
-                  <input type="checkbox" id="peekMode" />
-                  <span class="label-text" data-i18n="peekMode"
-                    >Keep playing while the pointer is over the video</span
-                  >
-                </label>
-                <label data-i18n-tooltip="manualPauseDescription">
-                  <input type="checkbox" id="manualPause" />
-                  <span class="label-text" data-i18n="manualPause"
-                    >Prevent auto-resume after manual pause</span
-                  >
-                </label>
-                <label>
-                  <input type="checkbox" id="showPipButton" />
-                  <span class="label-text" data-i18n="showPipButton"
-                    >Show Picture-in-Picture Button</span
-                  >
-                </label>
-                <label>
-                  <input type="checkbox" id="autoPipOnTabSwitch" />
-                  <span class="label-text" data-i18n="autoPipOnTabSwitch"
-                    >Open video in Picture-in-Picture when switching tabs</span
-                  >
-                </label>
-                <label>
-                  <input type="checkbox" id="showVideoOverlay" />
-                  <span class="label-text" data-i18n="showVideoOverlay"
-                    >Show draggable video controls</span
-                  >
-                </label>
-
-                <label>
-                  <input type="checkbox" id="muteVideo" />
-                  <span class="label-text" data-i18n="muteVideo"
-                    >Mute video instead of pausing</span
-                  >
-                </label>
-                <label data-i18n-tooltip="allowAudioDescription">
-                  <input type="checkbox" id="allowAudio" />
-                  <span class="label-text" data-i18n="allowAudio"
-                    >Allow audio-only playback</span
-                  >
-                </label>
+              </div>
+            </div>
+          </div>
+          <div class="container section" data-settings-group="playbackSettings">
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="playbackSettingsContent"
+            >
+              <span data-i18n="playbackSettings">Playback &amp; audio</span>
+            </button>
+            <div class="collapsible-content" id="playbackSettingsContent">
+              <div class="spacing-top-small">
                 <label data-i18n-tooltip="blockAutoplayDescription">
                   <input type="checkbox" id="blockAutoplay" />
                   <span class="label-text" data-i18n="blockAutoplay"
                     >Block video autoplay before interaction</span
-                  >
-                </label>
-                <label data-i18n-tooltip="disableAutoplayNextDescription">
+                  > </label
+                ><label data-i18n-tooltip="disableAutoplayNextDescription">
                   <input type="checkbox" id="disableAutoplayNext" />
                   <span class="label-text" data-i18n="disableAutoplayNext"
                     >Stop videos from autoplaying the next video</span
-                  >
-                </label>
-                <label data-i18n-tooltip="pauseAtEndDescription">
+                  > </label
+                ><label data-i18n-tooltip="prioritizeActiveTabMediaDescription">
+                  <input type="checkbox" id="prioritizeActiveTabMedia" />
+                  <span class="label-text" data-i18n="prioritizeActiveTabMedia"
+                    >Prioritize media in the active tab</span
+                  > </label
+                ><label>
+                  <input type="checkbox" id="muteVideo" />
+                  <span class="label-text" data-i18n="muteVideo"
+                    >Mute video instead of pausing</span
+                  > </label
+                ><label data-i18n-tooltip="allowAudioDescription">
+                  <input type="checkbox" id="allowAudio" />
+                  <span class="label-text" data-i18n="allowAudio"
+                    >Allow audio-only playback</span
+                  > </label
+                ><label data-i18n-tooltip="pauseAtEndDescription">
                   <input type="checkbox" id="pauseAtEnd" />
                   <span class="label-text" data-i18n="pauseAtEnd"
                     >Stop automatic playback of the next video at the end</span
-                  >
-                </label>
-                <label data-i18n-tooltip="liveStreamMuteDescription">
+                  > </label
+                ><label data-i18n-tooltip="liveStreamMuteDescription">
                   <input type="checkbox" id="liveStreamMute" />
                   <span class="label-text" data-i18n="liveStreamMute"
                     >Mute live streams instead of pausing</span
-                  >
-                </label>
-                <label data-i18n-tooltip="muteDuringAdsDescription">
+                  > </label
+                ><label data-i18n-tooltip="muteDuringAdsDescription">
                   <input type="checkbox" id="muteDuringAds" />
                   <span class="label-text" data-i18n="muteDuringAds"
                     >Mute during ads, then pause when they end</span
                   >
                 </label>
-                <label data-i18n-tooltip="prioritizeActiveTabMediaDescription">
-                  <input type="checkbox" id="prioritizeActiveTabMedia" />
-                  <span class="label-text" data-i18n="prioritizeActiveTabMedia"
-                    >Play only one source at a time</span
+              </div>
+            </div>
+          </div>
+          <div
+            class="container section"
+            data-settings-group="playbackAdjustments"
+          >
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="playbackAdjustmentsContent"
+            >
+              <span data-i18n="playbackAdjustments">Playback adjustments</span>
+            </button>
+            <div class="collapsible-content" id="playbackAdjustmentsContent">
+              <div class="spacing-top-small">
+                <div class="spacing-top-compact">
+                  <label
+                    class="field-label"
+                    for="playbackSpeed"
+                    data-i18n="playbackSpeed"
+                    >Playback speed (0 = use the site's speed)</label
                   >
-                </label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    id="playbackSpeed"
+                    min="0"
+                    max="4"
+                    step="0.25"
+                  />
+                </div>
+                <div class="spacing-top-compact">
+                  <label
+                    class="field-label"
+                    for="rewindSeconds"
+                    data-i18n="rewindSeconds"
+                    >Rewind on resume (seconds; 0 to disable)</label
+                  >
+                  <input
+                    class="form-control"
+                    type="number"
+                    id="rewindSeconds"
+                    min="0"
+                    max="60"
+                    step="1"
+                    placeholder="3"
+                  />
+                </div>
+                <div class="spacing-top-compact">
+                  <span class="section-label" data-i18n="delays"
+                    >Delays (ms)</span
+                  >
+                  <div class="field-row">
+                    <div class="flex-field">
+                      <label
+                        class="field-label"
+                        for="pauseDelay"
+                        data-i18n="pauseDelay"
+                        >Pause Delay</label
+                      >
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="pauseDelay"
+                        min="0"
+                        step="100"
+                        placeholder="0"
+                      />
+                    </div>
+                    <div class="flex-field">
+                      <label
+                        class="field-label"
+                        for="resumeDelay"
+                        data-i18n="resumeDelay"
+                        >Resume Delay</label
+                      >
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="resumeDelay"
+                        min="0"
+                        step="100"
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="spacing-top-compact">
+                  <label
+                    class="field-label"
+                    for="fadeDuration"
+                    data-i18n="fadeDuration"
+                    >Fade Duration (ms, 0 disables)</label
+                  >
+                  <input
+                    class="form-control"
+                    type="number"
+                    id="fadeDuration"
+                    min="0"
+                    step="50"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="container section"
+            data-settings-group="videoControlsSettings"
+          >
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="videoControlsSettingsContent"
+            >
+              <span data-i18n="videoControlsSettings"
+                >Video controls &amp; shortcuts</span
+              >
+            </button>
+            <div class="collapsible-content" id="videoControlsSettingsContent">
+              <div class="spacing-top-small">
                 <label>
+                  <input type="checkbox" id="showVideoOverlay" />
+                  <span class="label-text" data-i18n="showVideoOverlay"
+                    >Show draggable video controls</span
+                  > </label
+                ><label>
+                  <input type="checkbox" id="showPipButton" />
+                  <span class="label-text" data-i18n="showPipButton"
+                    >Show Picture-in-Picture Button</span
+                  > </label
+                ><label>
+                  <input type="checkbox" id="autoPipOnTabSwitch" />
+                  <span class="label-text" data-i18n="autoPipOnTabSwitch"
+                    >Open video in Picture-in-Picture when switching tabs</span
+                  > </label
+                ><label>
                   <input type="checkbox" id="contentShortcutsEnabled" />
                   <span class="label-text" data-i18n="contentShortcutsEnabled"
                     >Enable in-page video shortcuts</span
@@ -387,7 +510,7 @@
                 <p
                   id="contentShortcutsDescription"
                   data-i18n="contentShortcutsDescription"
-                  hidden
+                  hidden=""
                 >
                   Shortcuts apply when the page is focused. Leave a key blank to
                   disable that action.
@@ -395,7 +518,8 @@
                 <div
                   id="contentShortcutSettings"
                   class="content-shortcut-settings"
-                  hidden
+                  hidden=""
+                  data-setting="contentShortcutKeys"
                 >
                   <label
                     for="contentShortcutSeekBackward"
@@ -502,27 +626,40 @@
                   role="status"
                   aria-live="polite"
                 ></p>
-                <div class="spacing-top-medium">
-                  <label data-i18n-tooltip="pauseOnLowBatteryDescription">
-                    <input type="checkbox" id="pauseOnLowBattery" />
-                    <span class="label-text" data-i18n="pauseOnLowBattery"
-                      >Pause background videos when battery is low</span
-                    >
-                  </label>
-                </div>
-                <div class="spacing-top-medium">
-                  <label
-                    data-i18n-tooltip="pauseOnAudioOutputDisconnectDescription"
-                  >
-                    <input type="checkbox" id="pauseOnAudioOutputDisconnect" />
-                    <span
-                      class="label-text"
-                      data-i18n="pauseOnAudioOutputDisconnect"
-                      >Pause videos when an audio output disconnects</span
-                    >
-                  </label>
-                </div>
-                <div class="spacing-top-medium">
+              </div>
+            </div>
+          </div>
+          <div class="container section">
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="hotkeysContent"
+            >
+              <span data-i18n="hotkeys">Hotkeys</span>
+            </button>
+            <div class="collapsible-content" id="hotkeysContent">
+              <div class="spacing-top-small" id="hotkeys"></div>
+              <p data-i18n="hotkeysDescription">
+                You can configure hotkeys in the Extensions menu
+              </p>
+            </div>
+          </div>
+          <div
+            class="container section"
+            data-settings-group="automationSettings"
+          >
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="automationSettingsContent"
+            >
+              <span data-i18n="automationSettings">Automation</span>
+            </button>
+            <div class="collapsible-content" id="automationSettingsContent">
+              <div class="spacing-top-small">
+                <div>
                   <label
                     class="field-label"
                     for="idlePauseMinutes"
@@ -571,177 +708,183 @@
                     </div>
                   </div>
                 </div>
+                <div class="spacing-top-medium">
+                  <label data-i18n-tooltip="pauseOnLowBatteryDescription">
+                    <input type="checkbox" id="pauseOnLowBattery" />
+                    <span class="label-text" data-i18n="pauseOnLowBattery"
+                      >Pause background videos when battery is low</span
+                    > </label
+                  ><label
+                    data-i18n-tooltip="pauseOnAudioOutputDisconnectDescription"
+                  >
+                    <input type="checkbox" id="pauseOnAudioOutputDisconnect" />
+                    <span
+                      class="label-text"
+                      data-i18n="pauseOnAudioOutputDisconnect"
+                      >Pause videos when an audio output disconnects</span
+                    >
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container section">
+            <details id="sleepTimerSection" class="settings-disclosure">
+              <summary>
+                <span class="disclosure-title" data-i18n="sleepTimerTitle"
+                  >Sleep timer</span
+                >
+                <span
+                  id="sleepTimerRemaining"
+                  class="sleep-timer-remaining"
+                  aria-hidden="true"
+                  hidden=""
+                ></span>
+              </summary>
+              <div class="disclosure-content">
+                <div
+                  id="sleepTimerDurationControl"
+                  class="sleep-timer-duration"
+                >
+                  <label for="sleepTimerMinutes" data-i18n="sleepTimerDuration"
+                    >Duration (minutes)</label
+                  >
+                  <select id="sleepTimerMinutes">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="30" selected="">30</option>
+                    <option value="60">60</option>
+                  </select>
+                </div>
+                <div class="sleep-timer-controls">
+                  <button
+                    id="startSleepTimer"
+                    type="button"
+                    class="button button-primary"
+                    data-i18n="sleepTimerStart"
+                    data-i18n-tooltip="sleepTimerDescription"
+                  >
+                    Start sleep timer
+                  </button>
+                  <button
+                    id="cancelSleepTimer"
+                    type="button"
+                    class="button button-secondary"
+                    data-i18n="sleepTimerCancel"
+                    hidden=""
+                  >
+                    Cancel sleep timer
+                  </button>
+                </div>
+                <p id="sleepTimerStatus" role="status" aria-live="polite"></p>
+              </div>
+            </details>
+          </div>
+          <div class="container section">
+            <details id="statisticsSection" class="settings-disclosure">
+              <summary data-i18n="statsHeading">Statistics</summary>
+              <div class="disclosure-content">
+                <div class="stats-toolbar">
+                  <span
+                    id="statsPeriodLabel"
+                    class="field-label"
+                    data-i18n="statsPeriodLabel"
+                    >Time period</span
+                  >
+                  <div
+                    id="statsPeriod"
+                    class="stats-period"
+                    role="group"
+                    aria-labelledby="statsPeriodLabel"
+                  >
+                    <button
+                      type="button"
+                      class="button"
+                      data-stats-days="7"
+                      aria-pressed="true"
+                    >
+                      Last 7 days
+                    </button>
+                    <button
+                      type="button"
+                      class="button"
+                      data-stats-days="30"
+                      aria-pressed="false"
+                    >
+                      Last 30 days
+                    </button>
+                    <button
+                      type="button"
+                      class="button"
+                      data-stats-days="90"
+                      aria-pressed="false"
+                    >
+                      Last 90 days
+                    </button>
+                  </div>
+                </div>
+                <dl class="stats-grid">
+                  <div class="stat-card">
+                    <dt data-i18n="statsPausesLabel">Pauses</dt>
+                    <dd id="statsPauses">0</dd>
+                  </div>
+                  <div class="stat-card">
+                    <dt data-i18n="statsResumesLabel">Resumes</dt>
+                    <dd id="statsResumes">0</dd>
+                  </div>
+                  <div class="stat-card">
+                    <dt data-i18n="statsAutoplayBlocksLabel">
+                      Autoplay blocked
+                    </dt>
+                    <dd id="statsAutoplayBlocks">0</dd>
+                  </div>
+                  <div class="stat-card">
+                    <dt data-i18n="statsPreventedMinutesLabel">
+                      Playback prevented (min)
+                    </dt>
+                    <dd id="statsPreventedMinutes">0</dd>
+                  </div>
+                </dl>
+                <p id="statsSummary" class="sr-only" aria-live="polite"></p>
+                <div id="statsActions">
+                  <a
+                    id="rateExtension"
+                    href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-i18n="statsRate"
+                    hidden=""
+                    >Rate Video Auto Pause</a
+                  >
+                </div>
+              </div>
+            </details>
+          </div>
+          <div
+            class="container section"
+            data-settings-group="troubleshootingSettings"
+          >
+            <button
+              class="collapsible-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="troubleshootingSettingsContent"
+            >
+              <span data-i18n="troubleshootingSettings">Troubleshooting</span>
+            </button>
+            <div
+              class="collapsible-content"
+              id="troubleshootingSettingsContent"
+            >
+              <div class="spacing-top-small">
                 <label>
                   <input type="checkbox" id="debugMode" />
                   <span class="label-text" data-i18n="debugMode"
                     >Show debug messages in console</span
                   >
                 </label>
-                <div class="advanced-section">
-                  <span class="section-label" data-i18n="delays"
-                    >Delays (ms)</span
-                  >
-                  <div class="field-row">
-                    <div class="flex-field">
-                      <label
-                        class="field-label"
-                        for="pauseDelay"
-                        data-i18n="pauseDelay"
-                        >Pause Delay</label
-                      >
-                      <input
-                        class="form-control"
-                        type="number"
-                        id="pauseDelay"
-                        min="0"
-                        step="100"
-                        placeholder="0"
-                      />
-                    </div>
-                    <div class="flex-field">
-                      <label
-                        class="field-label"
-                        for="resumeDelay"
-                        data-i18n="resumeDelay"
-                        >Resume Delay</label
-                      >
-                      <input
-                        class="form-control"
-                        type="number"
-                        id="resumeDelay"
-                        min="0"
-                        step="100"
-                        placeholder="0"
-                      />
-                    </div>
-                  </div>
-                  <div class="spacing-top-compact">
-                    <label
-                      class="field-label"
-                      for="rewindSeconds"
-                      data-i18n="rewindSeconds"
-                      >Rewind on resume (seconds; 0 to disable)</label
-                    >
-                    <input
-                      class="form-control"
-                      type="number"
-                      id="rewindSeconds"
-                      min="0"
-                      max="60"
-                      step="1"
-                      placeholder="3"
-                    />
-                  </div>
-                  <div class="spacing-top-compact">
-                    <label
-                      class="field-label"
-                      for="playbackSpeed"
-                      data-i18n="playbackSpeed"
-                      >Playback speed (0 = use the site's speed)</label
-                    >
-                    <input
-                      class="form-control"
-                      type="number"
-                      id="playbackSpeed"
-                      min="0"
-                      max="4"
-                      step="0.25"
-                    />
-                  </div>
-                  <div class="field-section">
-                    <label for="fadeDuration" data-i18n="fadeDuration"
-                      >Fade Duration (ms, 0 disables)</label
-                    >
-                    <input
-                      type="number"
-                      id="fadeDuration"
-                      min="0"
-                      step="50"
-                      placeholder="0"
-                    />
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-
-          <div class="container section">
-            <button
-              class="collapsible-button"
-              type="button"
-              aria-expanded="false"
-              aria-controls="domainContent"
-            >
-              <span data-i18n="domainSettings">Domain Settings</span>
-            </button>
-            <div class="collapsible-content" id="domainContent">
-              <div class="spacing-top-small">
-                <label data-i18n-tooltip="onlyConfiguredSitesDescription">
-                  <input type="checkbox" id="onlyConfiguredSites" />
-                  <span class="label-text" data-i18n="onlyConfiguredSites"
-                    >Only enable sites with an enabled site rule</span
-                  >
-                </label>
-
-                <div class="site-rules-editor-spacing" id="siteRulesEditor">
-                  <p data-i18n="siteRuleIntro">
-                    Configure an individual site without changing global
-                    settings.
-                  </p>
-                  <button
-                    type="button"
-                    id="addSiteRule"
-                    class="button button-primary"
-                    data-i18n="siteRuleAdd"
-                  >
-                    Add current site
-                  </button>
-                  <p id="siteRuleStatus" role="status" aria-live="polite"></p>
-                  <label for="siteRuleFilter" data-i18n="siteRuleFilter"
-                    >Filter site rules</label
-                  >
-                  <input
-                    class="form-control"
-                    type="search"
-                    id="siteRuleFilter"
-                    autocomplete="off"
-                  />
-                  <ul id="siteRuleList"></ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="container section">
-            <button
-              class="collapsible-button"
-              type="button"
-              aria-expanded="false"
-              aria-controls="hotkeysContent"
-            >
-              <span data-i18n="hotkeys">Hotkeys</span>
-            </button>
-            <div class="collapsible-content" id="hotkeysContent">
-              <div class="spacing-top-small" id="hotkeys"></div>
-              <p data-i18n="hotkeysDescription">
-                You can configure hotkeys in the Extensions menu
-              </p>
-            </div>
-          </div>
-
-          <div class="container section">
-            <h4 data-i18n="statsHeading">Your impact this week</h4>
-            <p id="statsSummary" aria-live="polite"></p>
-            <div id="statsActions">
-              <a
-                id="rateExtension"
-                href="https://chromewebstore.google.com/detail/pbehcnkdmffkllmlfjpblpjhflnafioo/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-i18n="statsRate"
-                hidden
-                >Rate Video Auto Pause</a
-              >
             </div>
           </div>
 
@@ -801,7 +944,7 @@
 
           <div class="footer">
             <p>
-              <span data-i18n="madeWithLove">Made with &hearts; by</span>
+              <span data-i18n="madeWithLove">Made with ♥ by</span>
               <a
                 href="https://github.com/drodil"
                 target="_blank"
@@ -821,12 +964,40 @@
             <h3 id="siteSettingsTitle"></h3>
           </div>
           <div class="container section">
+            <label for="siteSettingsDomain" data-i18n="siteRuleDomain"
+              >Domain name</label
+            >
+            <input
+              id="siteSettingsDomain"
+              class="form-control"
+              type="text"
+              required=""
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
             <p data-i18n="siteSettingsIntro">
               These settings apply only to this site. Leave a setting on its
               global value unless you customize it.
             </p>
+            <p class="tri-state-legend">
+              <span
+                >[-]
+                <span data-i18n="siteRuleInherit"
+                  >Use default settings</span
+                ></span
+              >
+              <span
+                >[x]
+                <span data-i18n="siteRuleEnabledOption">Enabled</span></span
+              >
+              <span
+                >[ ]
+                <span data-i18n="siteRuleDisabledOption">Disabled</span></span
+              >
+            </p>
             <label>
-              <input type="checkbox" id="siteRuleEnabled" checked />
+              <input type="checkbox" id="siteRuleEnabled" checked="" />
               <span class="label-text" data-i18n="siteRuleEnabled">
                 Enable the extension on this site
               </span>

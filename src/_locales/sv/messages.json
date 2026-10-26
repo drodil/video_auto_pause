@@ -7,14 +7,6 @@
     "message": "Pausar flera videotjänster när fliken tappar fokus och återupptar vid fokus",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Inställningar",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Avancerade inställningar",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Kortkommandon",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Spela bara upp en källa åt gången",
+    "message": "Prioritera medier i den aktiva fliken",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Förhindra automatisk uppspelning av nästa video",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Insomningstimer"
   },
   "sleepTimerStart": {
     "message": "Starta sovtimer",
@@ -183,14 +178,6 @@
     "message": "Spara aktuella inställningar som profil",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Använd profil",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Ta bort profil",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Välj en profil",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Återställ uppspelningshastighet",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "Domäninställningar",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Välkommen till Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Din påverkan den här veckan",
+    "message": "Statistik",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Stänger av ljudet på videor, tonar ljudet och låter uppspelningen fortsätta när du byter fokus eller låser enheten.",
+    "message": "Fortsätter uppspelningen när du byter flik eller fönster eller låser enheten.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Spara webbplatsregel",
-    "description": "Per-site playback rule text"
+    "message": "Spara webbplatsinställningar",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Ta bort",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Webbplatsregeln har sparats",
-    "description": "Per-site playback rule text"
+    "message": "Webbplatsinställningar sparade",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Det gick inte att spara webbplatsregeln.",
-    "description": "Per-site playback rule text"
+    "message": "Kunde inte spara webbplatsinställningar.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Aktivera endast webbplatser med en aktiverad regel",
+    "message": "Aktivera endast konfigurerade webbplatser",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Inaktiverad",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Filtrera webbplatsregler",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Uppspelningshastighet (0 = använd webbplatsens hastighet)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Anpassa för den här webbplatsen",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Aktiverad",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Ta bort webbplatsinställningar",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Media i den aktiva fliken pausar media i andra flikar; föregående flik fortsätter när det stoppar.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Styr uppspelning mellan flikar, inte videor på samma sida. Media i den aktiva fliken pausar media i andra flikar; föregående flik fortsätter när det stoppar.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Tillägget körs bara på webbplatserna nedan där det är aktiverat.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Kortkommandon på sidan",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Webbplatsinställningar"
+  },
+  "siteRuleDomain": {
+    "message": "Domännamn"
+  },
+  "siteRuleAddNew": {
+    "message": "Lägg till ny webbplats"
+  },
+  "siteRuleInherit": {
+    "message": "Använd standardinställningar"
+  },
+  "statsPeriodLabel": {
+    "message": "Tidsperiod"
+  },
+  "statsDays": {
+    "message": "Senaste $1 dagarna"
+  },
+  "statsPausesLabel": {
+    "message": "Pauser"
+  },
+  "statsResumesLabel": {
+    "message": "Återupptagningar"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Autouppspelning blockerad"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Förhindrad uppspelning (min)"
+  },
+  "generalSettings": {
+    "message": "Allmänna inställningar",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Fokus och synlighet",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Uppspelning och ljud",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Videokontroller och kortkommandon",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automatisering",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Uppspelningsjusteringar",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Felsökning",
+    "description": "Settings section: Troubleshooting"
   }
 }

@@ -4,7 +4,7 @@ const presetDescriptions = {
   study:
     "Pauses and resumes when you switch tabs or windows, then rewinds 5 seconds.",
   music:
-    "Mutes videos, fades audio, and keeps playback going when you change focus or lock your device.",
+    "Keeps playback going when you switch tabs or windows or lock your device.",
   binge:
     "Pauses and resumes on tab changes and device lock; ignores focus changes and disables itself in fullscreen.",
   saver:

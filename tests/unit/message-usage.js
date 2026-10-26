@@ -56,7 +56,7 @@ function collectUsedMessageKeys() {
   )) {
     used.add(`${action}Shortcut`);
   }
-  for (const key of ["settings", "advancedSettings", "quietHours"]) {
+  for (const key of ["quietHours"]) {
     used.add(key);
   }
   return used;

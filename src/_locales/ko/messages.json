@@ -7,14 +7,6 @@
     "message": "탭 포커스를 잃었을 때 동영상 서비스를 중지하고 포커스 시 다시 시작합니다",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "설정",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "고급 설정",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "단축키",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "한 번에 하나의 미디어만 재생",
+    "message": "활성 탭의 미디어 우선 재생",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "다음 동영상 자동 재생 중지",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "취침 타이머"
   },
   "sleepTimerStart": {
     "message": "취침 타이머 시작",
@@ -183,14 +178,6 @@
     "message": "현재 설정을 프로필로 저장",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "프로필 적용",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "프로필 삭제",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "프로필 선택",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "재생 속도 초기화",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "도메인 설정",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Video Auto Pause에 오신 것을 환영합니다",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "이번 주 이용 효과",
+    "message": "통계",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "동영상을 음소거하고 오디오를 서서히 조절하며, 포커스를 바꾸거나 기기를 잠가도 재생을 계속합니다.",
+    "message": "탭이나 창을 전환하거나 기기를 잠가도 재생을 계속합니다.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "사이트 규칙 저장",
-    "description": "Per-site playback rule text"
+    "message": "사이트 설정 저장",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "삭제",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "사이트 규칙을 저장했습니다",
-    "description": "Per-site playback rule text"
+    "message": "사이트 설정이 저장되었습니다",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "사이트 규칙을 저장할 수 없습니다.",
-    "description": "Per-site playback rule text"
+    "message": "사이트 설정을 저장할 수 없습니다.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "활성 사이트 규칙이 있는 사이트만 사용",
+    "message": "설정된 사이트에서만 사용",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "사용 안 함",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "사이트 규칙 필터",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "재생 속도 (0 = 사이트 속도 사용)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "이 사이트에 맞게 사용자 지정",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "사용",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "사이트 설정 삭제",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "활성 탭의 미디어가 다른 탭의 미디어를 일시정지하고, 멈추면 이전 탭이 다시 재생됩니다.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "같은 페이지의 동영상이 아닌 탭 간 재생을 제어합니다. 활성 탭의 미디어가 다른 탭의 미디어를 일시정지하고, 멈추면 이전 탭이 다시 재생됩니다.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "확장 프로그램은 아래에 나열된 사용 설정된 사이트에서만 작동합니다.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "페이지 내 단축키",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "사이트 설정"
+  },
+  "siteRuleDomain": {
+    "message": "도메인 이름"
+  },
+  "siteRuleAddNew": {
+    "message": "새 사이트 추가"
+  },
+  "siteRuleInherit": {
+    "message": "기본 설정 사용"
+  },
+  "statsPeriodLabel": {
+    "message": "기간"
+  },
+  "statsDays": {
+    "message": "지난 $1일"
+  },
+  "statsPausesLabel": {
+    "message": "일시 중지"
+  },
+  "statsResumesLabel": {
+    "message": "재개"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "차단된 자동 재생"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "방지된 재생 시간(분)"
+  },
+  "generalSettings": {
+    "message": "일반 설정",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "포커스 및 표시",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "재생 및 오디오",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "동영상 컨트롤 및 단축키",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "자동화",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "재생 조정",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "문제 해결",
+    "description": "Settings section: Troubleshooting"
   }
 }

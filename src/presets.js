@@ -1,39 +1,49 @@
+function createSettingPreset(overrides) {
+  const preservedSettings = [
+    "disabled",
+    "onlyConfiguredSites",
+    "siteRules",
+    "debugMode",
+    "showPipButton",
+    "showVideoOverlay",
+    "contentShortcutsEnabled",
+    "contentShortcutKeys",
+  ];
+  const playbackDefaults = Object.fromEntries(
+    Object.entries(DEFAULT_SETTINGS).filter(
+      ([key]) => !preservedSettings.includes(key),
+    ),
+  );
+  return Object.freeze({ ...playbackDefaults, ...overrides });
+}
+
 globalThis.SETTING_PRESETS = Object.freeze({
-  study: Object.freeze({
-    autopause: true,
-    autoresume: true,
+  study: createSettingPreset({
     focuspause: true,
     focusresume: true,
     rewindSeconds: 5,
-    scrollpause: false,
-    muteVideo: false,
   }),
-  music: Object.freeze({
-    muteVideo: true,
+  music: createSettingPreset({
+    autopause: false,
+    autoresume: false,
     fadeDuration: 200,
     lockpause: false,
     lockresume: false,
-    focuspause: false,
-    focusresume: false,
   }),
-  binge: Object.freeze({
-    lockpause: true,
-    lockresume: true,
-    focuspause: false,
-    focusresume: false,
-    disableOnFullscreen: true,
-    autopause: true,
-    autoresume: true,
-  }),
-  saver: Object.freeze({
-    autopause: true,
+  binge: createSettingPreset({}),
+  saver: createSettingPreset({
     autoresume: false,
+    allowAudio: false,
     focuspause: true,
-    focusresume: false,
-    lockpause: true,
     lockresume: false,
     scrollpause: true,
+    disableOnFullscreen: false,
     blockAutoplay: true,
-    muteVideo: false,
+    disableAutoplayNext: true,
+    pauseAtEnd: true,
+    pauseOnLowBattery: true,
+    pauseOnAudioOutputDisconnect: true,
+    liveStreamMute: false,
+    muteDuringAds: false,
   }),
 });

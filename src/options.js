@@ -12,13 +12,6 @@ if (settingsView) {
 const tabStorage = env.storage.session ?? env.storage.local;
 const settingKeys = Object.keys(DEFAULT_SETTINGS);
 const timeSettings = new Set(TIME_SETTINGS);
-const basicSiteSettings = new Set([
-  "autopause",
-  "autoresume",
-  "focuspause",
-  "focusresume",
-  "disableOnFullscreen",
-]);
 const contentShortcutInputs = [
   ["seekBackward", "contentShortcutSeekBackward"],
   ["seekForward", "contentShortcutSeekForward"],
@@ -35,6 +28,11 @@ let settingsUpdateQueue = Promise.resolve();
 let optionsRestoreQueue = Promise.resolve();
 let siteRulesCache = [];
 let editingSiteDomain = "";
+let siteDefaultSettings = DEFAULT_SETTINGS;
+let sleepTimerExpiresAt = 0;
+let sleepTimerActive;
+let sleepTimerInterval;
+let statisticsDays = 7;
 
 function message(key, substitutions) {
   return env.i18n.getMessage(key, substitutions);
@@ -159,35 +157,75 @@ function createSiteValueInput(setting, defaultValue) {
   return input;
 }
 
+function setSiteBooleanState(input, state) {
+  input.dataset.siteState = state;
+  input.indeterminate = state === "inherit";
+  input.checked = state === "enabled";
+  input.setAttribute(
+    "aria-checked",
+    state === "inherit" ? "mixed" : String(input.checked),
+  );
+  const inherited = siteDefaultSettings[input.dataset.siteValue];
+  const description = document
+    .getElementById(input.dataset.siteValue)
+    ?.closest("[data-tooltip]")?.dataset.tooltip;
+  const stateDescription =
+    state === "inherit"
+      ? `${message("siteRuleInherit")}: ${message(inherited ? "siteRuleEnabledOption" : "siteRuleDisabledOption")}`
+      : message(
+          input.checked ? "siteRuleEnabledOption" : "siteRuleDisabledOption",
+        );
+  setTooltip(
+    input.closest("label"),
+    [description, stateDescription].filter(Boolean).join(" "),
+  );
+}
+
 function buildSiteSettingsFields() {
-  const groups = [
-    {
-      key: "settings",
-      settings: SITE_OVERRIDE_SETTINGS.filter((setting) =>
-        basicSiteSettings.has(setting),
-      ),
-      open: true,
-    },
-    {
-      key: "advancedSettings",
-      settings: SITE_OVERRIDE_SETTINGS.filter(
-        (setting) => !basicSiteSettings.has(setting),
-      ),
-      open: false,
-    },
-  ];
   const container = document.getElementById("siteSettingsFields");
-  for (const group of groups) {
+  for (const group of document.querySelectorAll("[data-settings-group]")) {
+    const settings = new Set(
+      [...group.querySelectorAll("input[id], [data-setting]")]
+        .map((input) => input.dataset.setting ?? input.id)
+        .filter((setting) => SITE_OVERRIDE_SETTINGS.includes(setting)),
+    );
     const details = document.createElement("details");
-    details.open = group.open;
+    details.className = "settings-disclosure";
+    details.dataset.siteSettingsGroup = group.dataset.settingsGroup;
+    details.open =
+      group
+        .querySelector(".collapsible-button")
+        .getAttribute("aria-expanded") === "true";
     const summary = document.createElement("summary");
-    summary.textContent = message(group.key);
+    summary.textContent = message(group.dataset.settingsGroup);
     details.appendChild(summary);
-    for (const setting of group.settings) {
+    const content = document.createElement("div");
+    content.className = "disclosure-content";
+    for (const setting of settings) {
       const defaultValue = DEFAULT_SETTINGS[setting];
       const label = getSettingLabel(setting);
       const row = document.createElement("div");
       row.className = "site-setting-row";
+      if (typeof defaultValue === "boolean") {
+        row.classList.add("site-setting-boolean");
+        const fieldLabel = document.createElement("label");
+        const input = createSiteValueInput(setting, defaultValue);
+        const name = document.createElement("span");
+        name.className = "label-text";
+        name.textContent = label;
+        fieldLabel.append(input, name);
+        row.appendChild(fieldLabel);
+        input.addEventListener("click", () => {
+          const next = {
+            inherit: "enabled",
+            enabled: "disabled",
+            disabled: "inherit",
+          };
+          setSiteBooleanState(input, next[input.dataset.siteState]);
+        });
+        content.appendChild(row);
+        continue;
+      }
       const settingName = document.createElement("strong");
       settingName.textContent = label;
       const customizeLabel = document.createElement("label");
@@ -226,17 +264,7 @@ function buildSiteSettingsFields() {
       } else {
         const input = createSiteValueInput(setting, defaultValue);
         valueInputs = [input];
-        if (input.type === "checkbox") {
-          const valueLabel = document.createElement("label");
-          valueLabel.className = "site-setting-value-label";
-          valueLabel.append(
-            input,
-            document.createTextNode(message("siteRuleValueEnabled")),
-          );
-          row.append(settingName, customizeLabel, valueLabel);
-        } else {
-          row.append(settingName, customizeLabel, input);
-        }
+        row.append(settingName, customizeLabel, input);
       }
       for (const input of valueInputs) {
         input.disabled = true;
@@ -246,11 +274,12 @@ function buildSiteSettingsFields() {
           input.disabled = !customize.checked;
         }
         if (customize.checked) {
-          setSiteValueInputs(setting, defaultValue);
+          setSiteValueInputs(setting, siteDefaultSettings[setting]);
         }
       });
-      details.appendChild(row);
+      content.appendChild(row);
     }
+    details.appendChild(content);
     container.appendChild(details);
   }
 }
@@ -276,10 +305,18 @@ function setSiteValueInputs(setting, value) {
 }
 
 function setSiteSettingsValues(rule, settings) {
+  siteDefaultSettings = settings;
   const overrides = rule?.overrides ?? {};
   document.getElementById("siteRuleEnabled").checked = rule?.enabled !== false;
   for (const setting of SITE_OVERRIDE_SETTINGS) {
     const customized = Object.prototype.hasOwnProperty.call(overrides, setting);
+    if (typeof DEFAULT_SETTINGS[setting] === "boolean") {
+      setSiteBooleanState(
+        document.querySelector(`[data-site-value="${setting}"]`),
+        customized ? (overrides[setting] ? "enabled" : "disabled") : "inherit",
+      );
+      continue;
+    }
     document.querySelector(`[data-site-override="${setting}"]`).checked =
       customized;
     const inputs =
@@ -322,6 +359,7 @@ async function openSiteSettings(domain) {
     "siteSettingsTitle",
     [normalizedDomain],
   );
+  document.getElementById("siteSettingsDomain").value = normalizedDomain;
   setStatus("siteSettingsStatus");
   setSiteSettingsValues(rule, settings);
   setSettingsViewOpen(true);
@@ -333,20 +371,25 @@ function closeSiteSettings() {
   const domain = editingSiteDomain;
   setSettingsViewOpen(false);
   editingSiteDomain = "";
-  document
-    .querySelector(`[data-open-site-rule="${CSS.escape(domain)}"]`)
-    ?.focus();
+  const target =
+    document.querySelector(`[data-open-site-rule="${CSS.escape(domain)}"]`) ??
+    document.getElementById("newSiteDomain");
+  target.focus();
 }
 
 function renderSiteRules() {
   const list = document.getElementById("siteRuleList");
-  const filter = normalizeDomain(
-    document.getElementById("siteRuleFilter").value,
-  );
+  const focusedButton = list.contains(document.activeElement)
+    ? document.activeElement
+    : null;
+  const focusedAttribute = focusedButton?.hasAttribute("data-open-site-rule")
+    ? "data-open-site-rule"
+    : "data-remove-site-rule";
+  const focusedDomain = focusedButton?.getAttribute(focusedAttribute);
   const items = [];
   for (const rule of siteRulesCache) {
     const domain = normalizeDomain(rule.domain);
-    if (!domain || (filter && !domain.includes(filter))) {
+    if (!domain) {
       continue;
     }
     const item = document.createElement("li");
@@ -368,6 +411,7 @@ function renderSiteRules() {
     );
     const remove = document.createElement("button");
     remove.type = "button";
+    remove.className = "button button-danger";
     remove.dataset.removeSiteRule = domain;
     remove.textContent = message("siteRuleRemove");
     remove.setAttribute("aria-label", `${remove.textContent}: ${domain}`);
@@ -384,6 +428,13 @@ function renderSiteRules() {
     items.push(item);
   }
   list.replaceChildren(...items);
+  if (focusedDomain) {
+    const target =
+      list.querySelector(
+        `[${focusedAttribute}="${CSS.escape(focusedDomain)}"]`,
+      ) ?? document.getElementById("newSiteDomain");
+    target.focus();
+  }
 }
 
 async function restoreSiteRules(settings) {
@@ -402,6 +453,13 @@ async function addCurrentSiteRule() {
 function readSiteOverrides() {
   const overrides = {};
   for (const setting of SITE_OVERRIDE_SETTINGS) {
+    if (typeof DEFAULT_SETTINGS[setting] === "boolean") {
+      const input = document.querySelector(`[data-site-value="${setting}"]`);
+      if (input.dataset.siteState !== "inherit") {
+        overrides[setting] = input.checked;
+      }
+      continue;
+    }
     if (!document.querySelector(`[data-site-override="${setting}"]`).checked) {
       continue;
     }
@@ -429,15 +487,36 @@ async function saveSiteSettings() {
   if (!editingSiteDomain) {
     throw new Error("No site is currently selected.");
   }
-  const updated = upsertSiteRule(siteRulesCache, {
-    domain: editingSiteDomain,
-    enabled: document.getElementById("siteRuleEnabled").checked,
-    overrides: readSiteOverrides(),
-  });
+  const domainInput = document.getElementById("siteSettingsDomain");
+  const domain = normalizeDomain(domainInput.value);
+  if (!domainInput.reportValidity() || !isValidDomain(domain)) {
+    throw new Error("The site rule has an invalid domain.");
+  }
+  if (
+    domain !== editingSiteDomain &&
+    siteRulesCache.some((rule) => rule.domain === domain)
+  ) {
+    throw new Error("A rule already exists for this site.");
+  }
+  const updated = upsertSiteRule(
+    siteRulesCache.filter((rule) => rule.domain !== editingSiteDomain),
+    {
+      domain,
+      enabled: document.getElementById("siteRuleEnabled").checked,
+      overrides: readSiteOverrides(),
+    },
+  );
   await queueSettingsUpdate({ siteRules: updated });
   siteRulesCache = updated;
+  editingSiteDomain = domain;
+  domainInput.value = domain;
+  document.getElementById("siteSettingsTitle").textContent = message(
+    "siteSettingsTitle",
+    [domain],
+  );
   renderSiteRules();
-  setStatus("siteSettingsStatus", "siteRuleSaved");
+  setStatus("siteRuleStatus", "siteRuleSaved");
+  closeSiteSettings();
 }
 
 async function deleteSiteRule(domain) {
@@ -447,6 +526,7 @@ async function deleteSiteRule(domain) {
   await queueSettingsUpdate({ siteRules: updated });
   siteRulesCache = updated;
   renderSiteRules();
+  setStatus("siteRuleStatus");
   if (editingSiteDomain === domain) {
     closeSiteSettings();
   }
@@ -524,7 +604,10 @@ async function importSettingsFile(file) {
 async function restoreProfiles() {
   const { profiles, activeProfileId } = await loadProfiles();
   const activeSelect = document.getElementById("activeProfileSelect");
-  const select = document.getElementById("profileSelect");
+  const list = document.getElementById("profileList");
+  const focusedProfileId = list.contains(document.activeElement)
+    ? document.activeElement.dataset.removeProfile
+    : undefined;
   const createOption = (value, text) =>
     Object.assign(document.createElement("option"), {
       value,
@@ -534,23 +617,72 @@ async function restoreProfiles() {
     profile.id === DEFAULT_PROFILE_ID
       ? message("profileDefault") || profile.name
       : profile.name;
-  activeSelect.replaceChildren(
-    ...profiles.map((profile) =>
-      createOption(profile.id, profileLabel(profile)),
-    ),
+  const customProfiles = profiles.filter(
+    (profile) => profile.id !== DEFAULT_PROFILE_ID,
   );
-  select.replaceChildren(
-    createOption("", message("profileSelectPlaceholder")),
-    ...profiles.map((profile) =>
-      createOption(profile.id, profileLabel(profile)),
-    ),
+  if (
+    activeSelect.options.length !== profiles.length ||
+    profiles.some(
+      (profile, index) =>
+        activeSelect.options[index].value !== profile.id ||
+        activeSelect.options[index].textContent !== profileLabel(profile),
+    )
+  ) {
+    activeSelect.replaceChildren(
+      ...profiles.map((profile) =>
+        createOption(profile.id, profileLabel(profile)),
+      ),
+    );
+  }
+  list.replaceChildren(
+    ...customProfiles.map((profile) => {
+      const item = document.createElement("li");
+      item.dataset.profileId = profile.id;
+      if (profile.id === activeProfileId) {
+        item.setAttribute("aria-current", "true");
+      }
+      const name = document.createElement("span");
+      name.textContent = profileLabel(profile);
+      item.appendChild(name);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "button button-danger";
+      remove.dataset.removeProfile = profile.id;
+      remove.textContent = message("siteRuleRemove");
+      remove.setAttribute(
+        "aria-label",
+        `${remove.textContent}: ${profileLabel(profile)}`,
+      );
+      remove.addEventListener("click", () => {
+        void optionsReady
+          .then(() => deleteSavedProfile(profile.id))
+          .then(
+            () => setStatus("profileStatus", "profileDeleted"),
+            (error) => {
+              setStatus("profileStatus", "profileFailed");
+              console.error(
+                "Video Auto Pause could not remove a profile:",
+                error,
+              );
+            },
+          );
+      });
+      item.appendChild(remove);
+      return item;
+    }),
   );
-  activeSelect.value = activeProfileId;
-  select.value = activeProfileId;
+  list.hidden = customProfiles.length === 0;
+  if (activeSelect.value !== activeProfileId) {
+    activeSelect.value = activeProfileId;
+  }
   document.getElementById("activeProfileControl").hidden = profiles.length < 2;
-  document.getElementById("applyProfile").disabled = true;
-  document.getElementById("deleteProfile").disabled =
-    activeProfileId === DEFAULT_PROFILE_ID;
+  if (focusedProfileId) {
+    const target =
+      list.querySelector(
+        `[data-remove-profile="${CSS.escape(focusedProfileId)}"]`,
+      ) ?? document.getElementById("profileName");
+    target.focus();
+  }
 }
 
 async function saveProfile() {
@@ -568,9 +700,8 @@ async function applySelectedProfile(profileId) {
   await queueOptionsRestore();
 }
 
-async function deleteSelectedProfile() {
+async function deleteSavedProfile(profileId) {
   const { activeProfileId } = await loadProfiles();
-  const profileId = document.getElementById("profileSelect").value;
   await deleteProfile(profileId);
   await restoreProfiles();
   if (activeProfileId === profileId) {
@@ -701,10 +832,11 @@ async function restoreOptions(changedKeys = settingKeys) {
 
 // Statistics and sleep timer
 
-function getWeeklyStats(stats) {
+function getPeriodStats(stats, days) {
   const cutoff = new Date();
   cutoff.setUTCHours(0, 0, 0, 0);
-  cutoff.setUTCDate(cutoff.getUTCDate() - 6);
+  cutoff.setUTCDate(cutoff.getUTCDate() - days + 1);
+  const today = new Date().toISOString().slice(0, 10);
   const summary = {
     pauses: 0,
     resumes: 0,
@@ -715,6 +847,7 @@ function getWeeklyStats(stats) {
   for (const [day, values] of Object.entries(stats)) {
     if (
       /^\d{4}-\d{2}-\d{2}$/.test(day) &&
+      day <= today &&
       Date.parse(`${day}T00:00:00Z`) >= cutoff.getTime()
     ) {
       summary.pauses += values.pauses ?? 0;
@@ -728,7 +861,17 @@ function getWeeklyStats(stats) {
 
 async function restoreStats() {
   const { vapStats = {} } = await env.storage.local.get("vapStats");
-  const stats = getWeeklyStats(vapStats);
+  const stats = getPeriodStats(vapStats, statisticsDays);
+  for (const [id, value] of Object.entries({
+    statsPauses: stats.pauses,
+    statsResumes: stats.resumes,
+    statsAutoplayBlocks: stats.autoplayBlocked,
+    statsPreventedMinutes: Math.floor(stats.preventedSeconds / 60),
+  })) {
+    document.getElementById(id).textContent = new Intl.NumberFormat(
+      document.documentElement.lang,
+    ).format(value);
+  }
   document.getElementById("statsSummary").textContent = message(
     "statsSummary",
     [
@@ -745,17 +888,41 @@ async function restoreSleepTimer() {
   const { vapSleepTimerExpiresAt } = await env.storage.local.get(
     "vapSleepTimerExpiresAt",
   );
-  const active =
-    Number.isFinite(vapSleepTimerExpiresAt) &&
-    vapSleepTimerExpiresAt > Date.now();
+  sleepTimerExpiresAt = Number.isFinite(vapSleepTimerExpiresAt)
+    ? vapSleepTimerExpiresAt
+    : 0;
+  clearInterval(sleepTimerInterval);
+  renderSleepTimer();
+  if (sleepTimerExpiresAt > Date.now()) {
+    sleepTimerInterval = setInterval(renderSleepTimer, 1000);
+  }
+}
+
+function renderSleepTimer() {
+  const seconds = Math.max(
+    0,
+    Math.ceil((sleepTimerExpiresAt - Date.now()) / 1000),
+  );
+  const active = seconds > 0;
+  if (sleepTimerActive !== active) {
+    document.getElementById("sleepTimerSection").open = active;
+    sleepTimerActive = active;
+  }
+  const remaining = document.getElementById("sleepTimerRemaining");
+  remaining.hidden = !active;
+  remaining.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
   document.getElementById("sleepTimerDurationControl").hidden = active;
   document.getElementById("startSleepTimer").hidden = active;
   document.getElementById("cancelSleepTimer").hidden = !active;
-  document.getElementById("sleepTimerStatus").textContent = active
-    ? message("sleepTimerSet", [
-        String(Math.ceil((vapSleepTimerExpiresAt - Date.now()) / 60000)),
-      ])
+  const status = active
+    ? message("sleepTimerSet", [String(Math.ceil(seconds / 60))])
     : "";
+  if (document.getElementById("sleepTimerStatus").textContent !== status) {
+    document.getElementById("sleepTimerStatus").textContent = status;
+  }
+  if (!active) {
+    clearInterval(sleepTimerInterval);
+  }
 }
 
 async function updateSleepTimer(action) {
@@ -862,6 +1029,18 @@ document.getElementById("version").textContent =
 localizeUI();
 buildSiteSettingsFields();
 showHotkeys();
+for (const button of document.querySelectorAll("[data-stats-days]")) {
+  button.textContent = message("statsDays", [button.dataset.statsDays]);
+  button.addEventListener("click", () => {
+    statisticsDays = Number(button.dataset.statsDays);
+    for (const period of document.querySelectorAll("[data-stats-days]")) {
+      period.setAttribute("aria-pressed", String(period === button));
+    }
+    void restoreStats().catch((error) =>
+      console.error("Video Auto Pause could not restore statistics:", error),
+    );
+  });
+}
 
 optionsReady = (async () => {
   try {
@@ -997,34 +1176,12 @@ bindAction(
   saveProfile,
 );
 bindAction(
-  "applyProfile",
-  "profileStatus",
-  "profileApplied",
-  "profileFailed",
-  () => applySelectedProfile(document.getElementById("profileSelect").value),
-);
-bindAction(
-  "deleteProfile",
-  "profileStatus",
-  "profileDeleted",
-  "profileFailed",
-  deleteSelectedProfile,
-);
-bindAction(
   "copyDiagnostics",
   "diagnosticsStatus",
   "diagnosticsCopied",
   "diagnosticsFailed",
   copyDiagnostics,
 );
-document.getElementById("profileSelect").addEventListener("change", (event) => {
-  const profileId = event.currentTarget.value;
-  document.getElementById("applyProfile").disabled =
-    !profileId ||
-    profileId === document.getElementById("activeProfileSelect").value;
-  document.getElementById("deleteProfile").disabled =
-    !profileId || profileId === DEFAULT_PROFILE_ID;
-});
 document
   .getElementById("activeProfileSelect")
   .addEventListener("change", (event) => {
@@ -1047,9 +1204,22 @@ document.getElementById("addSiteRule").addEventListener("click", () => {
     console.error("Video Auto Pause could not add a site rule:", error);
   });
 });
-document
-  .getElementById("siteRuleFilter")
-  .addEventListener("input", renderSiteRules);
+document.getElementById("newSiteForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = document.getElementById("newSiteDomain");
+  void optionsReady
+    .then(() => openSiteSettings(input.value))
+    .then(
+      () => {
+        input.value = "";
+        setStatus("siteRuleStatus");
+      },
+      (error) => {
+        setStatus("siteRuleStatus", "siteRuleFailed");
+        console.error("Video Auto Pause could not add a site:", error);
+      },
+    );
+});
 document
   .getElementById("backToGlobal")
   .addEventListener("click", closeSiteSettings);

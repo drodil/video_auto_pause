@@ -7,14 +7,6 @@
     "message": "Stopper flere videotjenester når fanen mister fokus og fortsetter ved fokus",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Innstillinger",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Avanserte innstillinger",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Hurtigtaster",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Spill av bare én kilde om gangen",
+    "message": "Prioriter medier i den aktive fanen",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Hindre automatisk avspilling av neste video",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Innsovningstimer"
   },
   "sleepTimerStart": {
     "message": "Start sovetimer",
@@ -183,14 +178,6 @@
     "message": "Lagre gjeldende innstillinger som profil",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Bruk profil",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Slett profil",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Velg en profil",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "Domeneinnstillinger",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Velkommen til Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Din effekt denne uken",
+    "message": "Statistikk",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Slår av lyden på videoer, toner lyden og lar avspillingen fortsette når du bytter fokus eller låser enheten.",
+    "message": "Fortsetter avspillingen når du bytter fane eller vindu eller låser enheten.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Lagre nettstedsregel",
-    "description": "Per-site playback rule text"
+    "message": "Lagre nettstedsinnstillinger",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Fjern",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Nettstedsregel lagret",
-    "description": "Per-site playback rule text"
+    "message": "Nettstedsinnstillinger lagret",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Kunne ikke lagre nettstedsregelen.",
-    "description": "Per-site playback rule text"
+    "message": "Kunne ikke lagre nettstedsinnstillinger.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Aktiver bare nettsteder med en aktivert regel",
+    "message": "Aktiver bare konfigurerte nettsteder",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Deaktivert",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Filtrer nettstedsregler",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Avspillingshastighet (0 = bruk nettstedets hastighet)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Tilpass for dette nettstedet",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Aktivert",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Slett nettstedsinnstillinger",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Medier i den aktive fanen setter medier i andre faner på pause; forrige fane fortsetter når de stopper.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Styrer avspilling på tvers av faner, ikke videoer på samme side. Medier i den aktive fanen setter medier i andre faner på pause; forrige fane fortsetter når de stopper.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Utvidelsen kjører bare på nettsteder nedenfor der den er slått på.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Hurtigtaster på siden",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Nettstedsinnstillinger"
+  },
+  "siteRuleDomain": {
+    "message": "Domenenavn"
+  },
+  "siteRuleAddNew": {
+    "message": "Legg til nytt nettsted"
+  },
+  "siteRuleInherit": {
+    "message": "Bruk standardinnstillinger"
+  },
+  "statsPeriodLabel": {
+    "message": "Tidsperiode"
+  },
+  "statsDays": {
+    "message": "Siste $1 dager"
+  },
+  "statsPausesLabel": {
+    "message": "Pauser"
+  },
+  "statsResumesLabel": {
+    "message": "Gjenopptakelser"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Autospill blokkert"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Avspilling forhindret (min)"
+  },
+  "generalSettings": {
+    "message": "Generelle innstillinger",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Fokus og synlighet",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Avspilling og lyd",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Videokontroller og snarveier",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automatisering",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Avspillingsjusteringer",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Feilsøking",
+    "description": "Settings section: Troubleshooting"
   }
 }

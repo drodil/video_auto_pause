@@ -7,14 +7,6 @@
     "message": "タブのフォーカスが外れたときに複数の動画サービスを停止し、フォーカス時に再開します",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "設定",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "詳細設定",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "ホットキー",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "一度に再生するソースを1つにする",
+    "message": "アクティブなタブのメディアを優先",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "次の動画の自動再生を停止",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "スリープタイマー"
   },
   "sleepTimerStart": {
     "message": "スリープタイマーを開始",
@@ -183,14 +178,6 @@
     "message": "現在の設定をプロファイルとして保存",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "プロファイルを適用",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "プロファイルを削除",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "プロファイルを選択",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "再生速度をリセット",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "ドメイン設定",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Video Auto Pause へようこそ",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "今週の利用状況",
+    "message": "統計",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "動画をミュートし、音量をフェードさせ、フォーカス変更やデバイスのロック中も再生を続けます。",
+    "message": "タブやウィンドウを切り替えたり、端末をロックしたりしても再生を続けます。",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "サイトルールを保存",
-    "description": "Per-site playback rule text"
+    "message": "サイト設定を保存",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "削除",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "サイトルールを保存しました",
-    "description": "Per-site playback rule text"
+    "message": "サイト設定を保存しました",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "サイトルールを保存できませんでした。",
-    "description": "Per-site playback rule text"
+    "message": "サイト設定を保存できませんでした。",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "有効なサイトルールがあるサイトのみ有効にする",
+    "message": "設定済みのサイトのみ有効にする",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "無効",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "サイトルールを絞り込む",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "再生速度（0 = サイトの速度を使用）",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "このサイト用にカスタマイズ",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "有効",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "サイト設定を削除",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "アクティブなタブのメディアが他のタブのメディアを一時停止し、停止すると前のタブが再開します。",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "同じページ内の動画ではなく、タブ間の再生を制御します。 アクティブなタブのメディアが他のタブのメディアを一時停止し、停止すると前のタブが再開します。",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "拡張機能は、下に表示された有効なサイトでのみ動作します。",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "ページ内ショートカットキー",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "サイト設定"
+  },
+  "siteRuleDomain": {
+    "message": "ドメイン名"
+  },
+  "siteRuleAddNew": {
+    "message": "新しいサイトを追加"
+  },
+  "siteRuleInherit": {
+    "message": "デフォルト設定を使用"
+  },
+  "statsPeriodLabel": {
+    "message": "期間"
+  },
+  "statsDays": {
+    "message": "過去$1日間"
+  },
+  "statsPausesLabel": {
+    "message": "一時停止"
+  },
+  "statsResumesLabel": {
+    "message": "再開"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "ブロックした自動再生"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "抑止した再生時間（分）"
+  },
+  "generalSettings": {
+    "message": "一般設定",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "フォーカスと表示",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "再生と音声",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "動画コントロールとショートカット",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "自動化",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "再生の調整",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "トラブルシューティング",
+    "description": "Settings section: Troubleshooting"
   }
 }

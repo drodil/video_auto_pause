@@ -7,14 +7,6 @@
     "message": "Sekme odağını kaybettiğinde birden fazla video hizmetini durdurur ve odaklandığında devam ettirir",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Ayarlar",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Gelişmiş Ayarlar",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Kısayol Tuşları",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Aynı anda yalnızca bir kaynak oynat",
+    "message": "Etkin sekmedeki medyaya öncelik ver",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Sonraki videonun otomatik oynatılmasını durdur",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Uyku zamanlayıcısı"
   },
   "sleepTimerStart": {
     "message": "Uyku zamanlayıcısını başlat",
@@ -183,14 +178,6 @@
     "message": "Geçerli ayarları profil olarak kaydet",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Profili uygula",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Profili sil",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Bir profil seçin",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "Alan Adı Ayarları",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Video Auto Pause’a hoş geldiniz",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Bu haftaki etkiniz",
+    "message": "İstatistikler",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Videoları sessize alır, sesi kademeli değiştirir ve odağı değiştirdiğinizde veya cihazı kilitlediğinizde oynatmayı sürdürür.",
+    "message": "Sekme veya pencere değiştirdiğinizde ya da cihazı kilitlediğinizde oynatmaya devam eder.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Site kuralını kaydet",
-    "description": "Per-site playback rule text"
+    "message": "Site ayarlarını kaydet",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Kaldır",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Site kuralı kaydedildi",
-    "description": "Per-site playback rule text"
+    "message": "Site ayarları kaydedildi",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Site kuralı kaydedilemedi.",
-    "description": "Per-site playback rule text"
+    "message": "Site ayarları kaydedilemedi.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Yalnızca etkin site kuralı olan siteleri etkinleştir",
+    "message": "Yalnızca yapılandırılmış sitelerde etkinleştir",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Devre dışı",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Site kurallarını filtrele",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Oynatma hızı (0 = sitenin hızını kullan)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Bu site için özelleştir",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Etkin",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Site ayarlarını sil",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Etkin sekmedeki medya diğer sekmelerdeki medyayı duraklatır; durduğunda önceki sekme devam eder.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Aynı sayfadaki videoları değil, sekmeler arasındaki oynatmayı kontrol eder. Etkin sekmedeki medya diğer sekmelerdeki medyayı duraklatır; durduğunda önceki sekme devam eder.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Eklenti yalnızca aşağıda listelenen ve etkin olduğu sitelerde çalışır.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Sayfa içi kısayol tuşları",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Site ayarları"
+  },
+  "siteRuleDomain": {
+    "message": "Alan adı"
+  },
+  "siteRuleAddNew": {
+    "message": "Yeni site ekle"
+  },
+  "siteRuleInherit": {
+    "message": "Varsayılan ayarları kullan"
+  },
+  "statsPeriodLabel": {
+    "message": "Zaman aralığı"
+  },
+  "statsDays": {
+    "message": "Son $1 gün"
+  },
+  "statsPausesLabel": {
+    "message": "Duraklatmalar"
+  },
+  "statsResumesLabel": {
+    "message": "Devam ettirmeler"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Engellenen otomatik oynatmalar"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Önlenen oynatma (dk)"
+  },
+  "generalSettings": {
+    "message": "Genel ayarlar",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Odak ve görünürlük",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Oynatma ve ses",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Video kontrolleri ve kısayollar",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Otomasyon",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Oynatma düzenlemeleri",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Sorun giderme",
+    "description": "Settings section: Troubleshooting"
   }
 }

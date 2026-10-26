@@ -7,14 +7,6 @@
     "message": "Stops multiple video services on tab unfocus and continues on focus",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Settings",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Advanced Settings",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Hotkeys",
     "description": "Hotkeys section header"
@@ -32,7 +24,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Play only one source at a time",
+    "message": "Prioritize media in the active tab",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -54,6 +46,9 @@
   "disableAutoplayNext": {
     "message": "Stop videos from autoplaying the next video",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Sleep timer"
   },
   "sleepTimerStart": {
     "message": "Start sleep timer",
@@ -187,14 +182,6 @@
     "message": "Save current settings as profile",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Apply profile",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Delete profile",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Choose a profile",
     "description": "Choose a saved profile."
@@ -267,10 +254,6 @@
     "message": "Resume Delay",
     "description": "Label for resume delay input"
   },
-  "domainSettings": {
-    "message": "Domain Settings",
-    "description": "Domain settings section header"
-  },
   "fadeDuration": {
     "message": "Fade Duration (ms)",
     "description": "Label for fade duration input"
@@ -300,7 +283,7 @@
     "description": "Welcome page button to open settings"
   },
   "statsHeading": {
-    "message": "Your impact this week",
+    "message": "Statistics",
     "description": "Weekly statistics heading"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Mutes videos, fades audio, and keeps playback going when you change focus or lock your device.",
+    "message": "Keeps playback going when you switch tabs or windows or lock your device.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Save site rule",
-    "description": "Save the active site's behavior rule"
+    "message": "Save site settings",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Remove",
     "description": "Remove a site rule"
   },
   "siteRuleSaved": {
-    "message": "Site rule saved",
-    "description": "Successful site rule save status"
+    "message": "Site settings saved",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Could not save the site rule.",
-    "description": "Failed site rule save status"
+    "message": "Could not save site settings.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Only enable sites with an enabled site rule",
+    "message": "Only enable configured sites",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Disabled",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Filter site rules",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Playback speed (0 = use the site’s speed)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Customize for this site",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Enabled",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Delete site settings",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Media in the active tab pauses media in other tabs; the previous tab resumes when it stops.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Controls playback across tabs, not videos on the same page. Media in the active tab pauses media in other tabs; the previous tab resumes when it stops.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "The extension runs only on sites listed below with the extension enabled.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "In-page shortcut keys",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Site settings"
+  },
+  "siteRuleDomain": {
+    "message": "Domain name"
+  },
+  "siteRuleAddNew": {
+    "message": "Add new site"
+  },
+  "siteRuleInherit": {
+    "message": "Use default settings"
+  },
+  "statsPeriodLabel": {
+    "message": "Time period"
+  },
+  "statsDays": {
+    "message": "Last $1 days"
+  },
+  "statsPausesLabel": {
+    "message": "Pauses"
+  },
+  "statsResumesLabel": {
+    "message": "Resumes"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Autoplay blocked"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Playback prevented (min)"
+  },
+  "generalSettings": {
+    "message": "General settings",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Focus & visibility",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Playback & audio",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Video controls & shortcuts",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automation",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Playback adjustments",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Troubleshooting",
+    "description": "Settings section: Troubleshooting"
   }
 }

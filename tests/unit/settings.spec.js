@@ -57,6 +57,30 @@ test.beforeEach(() => {
 });
 
 test.describe("domains and site rules", () => {
+  test("validates domain labels and length", () => {
+    for (const domain of [
+      "example.com",
+      "localhost",
+      "my-site.example",
+      "127.0.0.1",
+    ]) {
+      expect(s.isValidDomain(domain), domain).toBe(true);
+    }
+    for (const domain of [
+      "",
+      ".",
+      ".example.com",
+      "example..com",
+      "-example.com",
+      "example-.com",
+      "bad domain",
+      `${"a".repeat(64)}.com`,
+      `${"a".repeat(63)}.${"b".repeat(63)}.${"c".repeat(63)}.${"d".repeat(63)}`,
+    ]) {
+      expect(s.isValidDomain(domain), domain).toBe(false);
+    }
+  });
+
   test("normalizes domains from URLs, wildcards, and ports", () => {
     expect(s.normalizeDomain(" HTTPS://WWW.Example.com:8080/path?q#x ")).toBe(
       "www.example.com",

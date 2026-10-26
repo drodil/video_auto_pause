@@ -22,4 +22,13 @@ async function computedStyles(locator, properties) {
   );
 }
 
-module.exports = { openSection, computedStyles };
+async function openSettingsGroups(optionsPage) {
+  const titles = await optionsPage
+    .locator("[data-settings-group] .collapsible-button")
+    .allTextContents();
+  for (const title of titles) {
+    await openSection(optionsPage, title.trim());
+  }
+}
+
+module.exports = { openSection, openSettingsGroups, computedStyles };

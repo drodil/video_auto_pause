@@ -7,14 +7,6 @@
     "message": "Peatab mitu videoteenust vahekaardi fookuse kaotamisel ja jätkab fookuse taastumisel",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Seaded",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Täpsemad seaded",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Kiirklahvid",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Esita korraga ainult üht allikat",
+    "message": "Eelista aktiivse vahekaardi meediat",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Peata järgmise video automaatne esitamine",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Unetaimer"
   },
   "sleepTimerStart": {
     "message": "Käivita unetaimer",
@@ -183,14 +178,6 @@
     "message": "Salvesta praegused seaded profiilina",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Rakenda profiil",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Kustuta profiil",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Vali profiil",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "Domeeni seaded",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Tere tulemast kasutama Video Auto Pause’i",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Sinu mõju sel nädalal",
+    "message": "Statistika",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Vaigistab videod, hajutab heli ning jätkab taasesitust fookuse muutmisel või seadme lukustamisel.",
+    "message": "Jätkab taasesitust vahekaardi või akna vahetamisel ja seadme lukustamisel.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Salvesta saidireegel",
-    "description": "Per-site playback rule text"
+    "message": "Salvesta saidi seaded",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Eemalda",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Saidireegel salvestatud",
-    "description": "Per-site playback rule text"
+    "message": "Saidi seaded salvestatud",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Saidireeglit ei saanud salvestada.",
-    "description": "Per-site playback rule text"
+    "message": "Saidi seadeid ei saanud salvestada.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Luba ainult saidid, mille reegel on lubatud",
+    "message": "Luba ainult seadistatud saidid",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Keelatud",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Filtreeri saidireegleid",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Taasesituse kiirus (0 = kasuta saidi kiirust)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Kohanda selle saidi jaoks",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Lubatud",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Kustuta saidi seaded",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Aktiivse vahekaardi meedia peatab teiste vahekaartide meedia; eelmine vahekaart jätkab, kui see peatub.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Juhib taasesitust vahekaartide vahel, mitte sama lehe videoid. Aktiivse vahekaardi meedia peatab teiste vahekaartide meedia; eelmine vahekaart jätkab, kui see peatub.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Laiendus töötab ainult allpool loetletud saitidel, kus laiendus on lubatud.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Lehesisesed kiirklahvid",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Saidi seaded"
+  },
+  "siteRuleDomain": {
+    "message": "Domeeninimi"
+  },
+  "siteRuleAddNew": {
+    "message": "Lisa uus sait"
+  },
+  "siteRuleInherit": {
+    "message": "Kasuta vaikeseadeid"
+  },
+  "statsPeriodLabel": {
+    "message": "Ajavahemik"
+  },
+  "statsDays": {
+    "message": "Viimased $1 päeva"
+  },
+  "statsPausesLabel": {
+    "message": "Peatamised"
+  },
+  "statsResumesLabel": {
+    "message": "Jätkamised"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Blokeeritud automaatesitused"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Välditud esitus (min)"
+  },
+  "generalSettings": {
+    "message": "Üldseaded",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Fookus ja nähtavus",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Taasesitus ja heli",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Video juhtnupud ja kiirklahvid",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automaatika",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Taasesituse kohandused",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Tõrkeotsing",
+    "description": "Settings section: Troubleshooting"
   }
 }

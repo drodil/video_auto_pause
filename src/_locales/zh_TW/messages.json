@@ -7,14 +7,6 @@
     "message": "當分頁失去焦點時暫停多個影片服務，並在重新獲得焦點時繼續播放",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "設定",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "進階設定",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "熱鍵",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "一次只播放一個來源",
+    "message": "優先播放使用中分頁的媒體",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "停止自動播放下一部影片",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "睡眠計時器"
   },
   "sleepTimerStart": {
     "message": "啟動睡眠計時器",
@@ -183,14 +178,6 @@
     "message": "將目前設定儲存為設定檔",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "套用設定檔",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "刪除設定檔",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "選擇設定檔",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "網域設定",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "歡迎使用 Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "本週使用成效",
+    "message": "統計",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "將影片靜音、淡化音量，並在切換焦點或鎖定裝置時繼續播放。",
+    "message": "切換分頁、視窗或鎖定裝置時繼續播放。",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "儲存網站規則",
-    "description": "Per-site playback rule text"
+    "message": "儲存網站設定",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "移除",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "已儲存網站規則",
-    "description": "Per-site playback rule text"
+    "message": "網站設定已儲存",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "無法儲存網站規則。",
-    "description": "Per-site playback rule text"
+    "message": "無法儲存網站設定。",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "僅啟用具有已啟用網站規則的網站",
+    "message": "僅在已設定的網站上啟用",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "已停用",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "篩選網站規則",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "播放速度（0 = 使用網站速度）",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "為此網站自訂",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "已啟用",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "刪除網站設定",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "作用中分頁的媒體會暫停其他分頁的媒體；停止後會繼續播放上一個分頁。",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "控制不同分頁之間的播放，而不是同一頁面上的影片。 作用中分頁的媒體會暫停其他分頁的媒體；停止後會繼續播放上一個分頁。",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "擴充功能只在下方列出且已啟用的網站上執行。",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "頁面內快速鍵",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "網站設定"
+  },
+  "siteRuleDomain": {
+    "message": "網域名稱"
+  },
+  "siteRuleAddNew": {
+    "message": "新增網站"
+  },
+  "siteRuleInherit": {
+    "message": "使用預設設定"
+  },
+  "statsPeriodLabel": {
+    "message": "時間範圍"
+  },
+  "statsDays": {
+    "message": "過去 $1 天"
+  },
+  "statsPausesLabel": {
+    "message": "暫停次數"
+  },
+  "statsResumesLabel": {
+    "message": "恢復次數"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "已封鎖的自動播放"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "已避免的播放時間（分鐘）"
+  },
+  "generalSettings": {
+    "message": "一般設定",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "焦點與可見性",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "播放與音訊",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "影片控制項與快捷鍵",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "自動化",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "播放調整",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "疑難排解",
+    "description": "Settings section: Troubleshooting"
   }
 }

@@ -7,14 +7,6 @@
     "message": "Para vários serviços de vídeo ao desfocar a aba e continua ao focar",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Configurações",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Configurações Avançadas",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Atalhos",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Reproduzir apenas uma fonte por vez",
+    "message": "Priorizar a mídia da aba ativa",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Impedir a reprodução automática do próximo vídeo",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Temporizador"
   },
   "sleepTimerStart": {
     "message": "Iniciar temporizador de suspensão",
@@ -183,14 +178,6 @@
     "message": "Salvar as configurações atuais como perfil",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Aplicar perfil",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Excluir perfil",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Escolha um perfil",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Redefinir velocidade de reprodução",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "Configurações de domínio",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Boas-vindas ao Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Seu impacto nesta semana",
+    "message": "Estatísticas",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Silencia vídeos, suaviza o volume e mantém a reprodução ao mudar o foco ou bloquear o dispositivo.",
+    "message": "Mantém a reprodução ao trocar de aba ou janela ou bloquear o dispositivo.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Salvar regra do site",
-    "description": "Per-site playback rule text"
+    "message": "Salvar configurações do site",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Remover",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Regra do site salva",
-    "description": "Per-site playback rule text"
+    "message": "Configurações do site salvas",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Não foi possível salvar a regra do site.",
-    "description": "Per-site playback rule text"
+    "message": "Não foi possível salvar as configurações do site.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Ativar somente sites com uma regra habilitada",
+    "message": "Ativar apenas sites configurados",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Desativada",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Filtrar regras do site",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Velocidade de reprodução (0 = usar a velocidade do site)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Personalizar para este site",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Ativada",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Excluir configurações do site",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "A mídia da aba ativa pausa a mídia de outras abas; a aba anterior retoma quando ela para.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Controla a reprodução entre abas, não os vídeos da mesma página. A mídia da aba ativa pausa a mídia de outras abas; a aba anterior retoma quando ela para.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "A extensão só funciona nos sites listados abaixo com a extensão ativada.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Atalhos de teclado na página",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Configurações do site"
+  },
+  "siteRuleDomain": {
+    "message": "Nome de domínio"
+  },
+  "siteRuleAddNew": {
+    "message": "Adicionar novo site"
+  },
+  "siteRuleInherit": {
+    "message": "Usar configurações padrão"
+  },
+  "statsPeriodLabel": {
+    "message": "Período"
+  },
+  "statsDays": {
+    "message": "Últimos $1 dias"
+  },
+  "statsPausesLabel": {
+    "message": "Pausas"
+  },
+  "statsResumesLabel": {
+    "message": "Retomadas"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Reprodução automática bloqueada"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Reprodução evitada (min)"
+  },
+  "generalSettings": {
+    "message": "Configurações gerais",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Foco e visibilidade",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Reprodução e áudio",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Controles de vídeo e atalhos",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automação",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Ajustes de reprodução",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Solução de problemas",
+    "description": "Settings section: Troubleshooting"
   }
 }

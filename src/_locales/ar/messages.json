@@ -7,14 +7,6 @@
     "message": "يوقف خدمات الفيديو المتعددة عند فقدان التركيز على علامة التبويب ويستأنف عند التركيز",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "الإعدادات",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "إعدادات متقدمة",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "مفاتيح الاختصار",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "شغّل مصدرًا واحدًا فقط في كل مرة",
+    "message": "إعطاء الأولوية للوسائط في علامة التبويب النشطة",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "أوقف تشغيل الفيديو التالي تلقائيًا",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "مؤقت النوم"
   },
   "sleepTimerStart": {
     "message": "ابدأ مؤقت النوم",
@@ -183,14 +178,6 @@
     "message": "حفظ الإعدادات الحالية كملف شخصي",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "تطبيق الملف الشخصي",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "حذف الملف الشخصي",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "اختر ملفًا شخصيًا",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "إعدادات المجال",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "مرحبًا بك في Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "أثرك هذا الأسبوع",
+    "message": "الإحصاءات",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "يكتم الفيديوهات ويخفّض الصوت تدريجيًا، ويواصل التشغيل عند تغيير التركيز أو قفل الجهاز.",
+    "message": "يستمر التشغيل عند تبديل علامات التبويب أو النوافذ أو قفل الجهاز.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "حفظ قاعدة الموقع",
-    "description": "Per-site playback rule text"
+    "message": "حفظ إعدادات الموقع",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "إزالة",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "تم حفظ قاعدة الموقع",
-    "description": "Per-site playback rule text"
+    "message": "تم حفظ إعدادات الموقع",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "تعذر حفظ قاعدة الموقع.",
-    "description": "Per-site playback rule text"
+    "message": "تعذر حفظ إعدادات الموقع.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "فعّل المواقع التي لها قاعدة مفعّلة فقط",
+    "message": "تفعيل المواقع المُعدّة فقط",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "معطّل",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "تصفية قواعد المواقع",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "سرعة التشغيل (0 = استخدام سرعة الموقع)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "تخصيص لهذا الموقع",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "مفعّل",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "حذف إعدادات الموقع",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "الوسائط في علامة التبويب النشطة توقف الوسائط في علامات التبويب الأخرى، وتُستأنف علامة التبويب السابقة عند توقفها.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "يتحكم في التشغيل بين علامات التبويب، وليس بين الفيديوهات في الصفحة نفسها. الوسائط في علامة التبويب النشطة توقف الوسائط في علامات التبويب الأخرى، وتُستأنف علامة التبويب السابقة عند توقفها.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "تعمل الإضافة فقط على المواقع المدرجة أدناه والمفعّلة فيها الإضافة.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "مفاتيح الاختصار داخل الصفحة",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "إعدادات الموقع"
+  },
+  "siteRuleDomain": {
+    "message": "اسم النطاق"
+  },
+  "siteRuleAddNew": {
+    "message": "إضافة موقع جديد"
+  },
+  "siteRuleInherit": {
+    "message": "استخدام الإعدادات الافتراضية"
+  },
+  "statsPeriodLabel": {
+    "message": "الفترة الزمنية"
+  },
+  "statsDays": {
+    "message": "آخر $1 أيام"
+  },
+  "statsPausesLabel": {
+    "message": "مرات الإيقاف المؤقت"
+  },
+  "statsResumesLabel": {
+    "message": "مرات الاستئناف"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "تشغيل تلقائي محظور"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "تشغيل تم منعه (دقائق)"
+  },
+  "generalSettings": {
+    "message": "الإعدادات العامة",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "التركيز والظهور",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "التشغيل والصوت",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "عناصر تحكم الفيديو والاختصارات",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "الأتمتة",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "تعديلات التشغيل",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "استكشاف الأخطاء وإصلاحها",
+    "description": "Settings section: Troubleshooting"
   }
 }

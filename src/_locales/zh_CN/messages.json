@@ -7,14 +7,6 @@
     "message": "当标签页失去焦点时暂停多个视频服务，并在重新获得焦点时继续播放",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "设置",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "高级设置",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "热键",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "一次只播放一个来源",
+    "message": "优先播放活动标签页的媒体",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "停止自动播放下一个视频",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "睡眠定时器"
   },
   "sleepTimerStart": {
     "message": "启动睡眠定时器",
@@ -183,14 +178,6 @@
     "message": "将当前设置保存为配置文件",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "应用配置文件",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "删除配置文件",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "选择配置文件",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "重置播放速度",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "域名设置",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "欢迎使用 Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "本周使用成效",
+    "message": "统计",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "将视频静音、淡化音量，并在切换焦点或锁定设备时继续播放。",
+    "message": "切换标签页、窗口或锁定设备时继续播放。",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "保存网站规则",
-    "description": "Per-site playback rule text"
+    "message": "保存网站设置",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "移除",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "已保存网站规则",
-    "description": "Per-site playback rule text"
+    "message": "网站设置已保存",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "无法保存网站规则。",
-    "description": "Per-site playback rule text"
+    "message": "无法保存网站设置。",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "仅启用具有已启用站点规则的网站",
+    "message": "仅在已配置的网站上启用",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "已停用",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "筛选站点规则",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "播放速度（0 = 使用网站速度）",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "为此网站自定义",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "已启用",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "删除网站设置",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "活动标签页中的媒体会暂停其他标签页中的媒体；停止后会继续播放上一个标签页。",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "控制不同标签页之间的播放，而不是同一页面上的视频。 活动标签页中的媒体会暂停其他标签页中的媒体；停止后会继续播放上一个标签页。",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "扩展只在下方列出且已启用的网站上运行。",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "页面内快捷键",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "网站设置"
+  },
+  "siteRuleDomain": {
+    "message": "域名"
+  },
+  "siteRuleAddNew": {
+    "message": "添加新网站"
+  },
+  "siteRuleInherit": {
+    "message": "使用默认设置"
+  },
+  "statsPeriodLabel": {
+    "message": "时间范围"
+  },
+  "statsDays": {
+    "message": "过去 $1 天"
+  },
+  "statsPausesLabel": {
+    "message": "暂停次数"
+  },
+  "statsResumesLabel": {
+    "message": "恢复次数"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "已阻止的自动播放"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "已避免的播放时长（分钟）"
+  },
+  "generalSettings": {
+    "message": "常规设置",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "焦点与可见性",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "播放与音频",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "视频控件与快捷键",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "自动化",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "播放调整",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "故障排除",
+    "description": "Settings section: Troubleshooting"
   }
 }

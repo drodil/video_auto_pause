@@ -9,6 +9,121 @@ const fs = require("fs");
 const { openSection } = require("./helpers");
 
 test.describe("Profiles and backups", () => {
+  for (const layout of [
+    { name: "full page" },
+    { name: "popup", popup: true },
+    { name: "narrow page", viewport: { width: 320, height: 720 } },
+  ]) {
+    test(`lists profiles with individual removal controls in the ${layout.name}`, async ({
+      extension,
+    }) => {
+      await extension.updateSettings({ playbackSpeed: 1.5 });
+      const optionsPage = await extension.openOptions(layout);
+      await openSection(optionsPage, "Profiles & backup");
+      const list = optionsPage.locator("#profileList");
+      await expect(list.locator("li")).toHaveCount(0);
+      await expect(list).toBeHidden();
+      await expect(list.getByRole("button")).toHaveCount(0);
+      await expect(optionsPage.locator("#activeProfileControl")).toBeHidden();
+      await expect(
+        optionsPage.locator(
+          "#profilesContent select, #applyProfile, #profileSelect",
+        ),
+      ).toHaveCount(0);
+
+      const workName = "W".repeat(40);
+      await optionsPage.locator("#profileName").fill(workName);
+      await optionsPage.locator("#saveProfile").click();
+      await expect(optionsPage.locator("#profileStatus")).toContainText(
+        "saved",
+      );
+      const workId = await optionsPage
+        .locator("#activeProfileSelect")
+        .inputValue();
+      await extension.updateSettings({ playbackSpeed: 1.25 });
+      await optionsPage.locator("#profileName").fill("Personal");
+      await optionsPage.locator("#saveProfile").click();
+      await expect(list.locator("li > span")).toHaveText([
+        workName,
+        "Personal",
+      ]);
+      const personalId = await optionsPage
+        .locator("#activeProfileSelect")
+        .inputValue();
+      expect(personalId).not.toBe(workId);
+      await extension.updateSettings({ playbackSpeed: 2 });
+      await expect(list.locator('[aria-current="true"] > span')).toHaveText(
+        "Personal",
+      );
+      await expect(list.getByRole("button")).toHaveCount(2);
+      await expect(
+        optionsPage.locator("#activeProfileSelect option[value=default]"),
+      ).toHaveText("Default");
+      await expect(list.locator('[data-profile-id="default"]')).toHaveCount(0);
+      const listBox = await list.boundingBox();
+      const exportBox = await optionsPage
+        .locator("#exportSettings")
+        .boundingBox();
+      expect(exportBox.y).toBeGreaterThanOrEqual(listBox.y + listBox.height);
+      const removeBox = await list.getByRole("button").first().boundingBox();
+      expect(removeBox.height).toBe(28);
+      expect(removeBox.width).toBeLessThanOrEqual(70);
+      expect(
+        await list.evaluate(
+          (element) => element.scrollWidth <= element.clientWidth,
+        ),
+      ).toBe(true);
+
+      await optionsPage.locator("#activeProfileSelect").selectOption(workId);
+      await expect
+        .poll(() => extension.getSettings())
+        .toMatchObject({ playbackSpeed: 1.25 });
+      await expect(list.locator('[aria-current="true"] > span')).toHaveText(
+        workName,
+      );
+      await optionsPage
+        .locator("#activeProfileSelect")
+        .selectOption(personalId);
+      await expect
+        .poll(() => extension.getSettings())
+        .toMatchObject({ playbackSpeed: 2 });
+      const removeWork = list.getByRole("button", {
+        name: `Remove: ${workName}`,
+        exact: true,
+      });
+      await removeWork.focus();
+      await optionsPage.keyboard.press("Space");
+      await expect(list.locator("li > span")).toHaveText(["Personal"]);
+      await expect(optionsPage.locator("#profileStatus")).toContainText(
+        "deleted",
+      );
+      await expect(optionsPage.locator("#activeProfileSelect")).toHaveValue(
+        personalId,
+      );
+      await expect(optionsPage.locator("#profileName")).toBeFocused();
+      await expect
+        .poll(() => extension.getSettings())
+        .toMatchObject({ playbackSpeed: 2 });
+
+      await optionsPage.reload();
+      await openSection(optionsPage, "Profiles & backup");
+      await expect(list.locator("li > span")).toHaveText(["Personal"]);
+      await expect(optionsPage.locator("#activeProfileSelect")).toHaveValue(
+        personalId,
+      );
+      await list
+        .getByRole("button", { name: "Remove: Personal", exact: true })
+        .click();
+      await expect(list.locator("li")).toHaveCount(0);
+      await expect(list).toBeHidden();
+      await expect(optionsPage.locator("#activeProfileControl")).toBeHidden();
+      await expect(list.getByRole("button")).toHaveCount(0);
+      await expect
+        .poll(() => extension.getSettings())
+        .toMatchObject({ playbackSpeed: 1.5 });
+    });
+  }
+
   test("exports and validates versioned settings JSON", async ({
     page,
     context,
@@ -249,13 +364,15 @@ test.describe("Profiles and backups", () => {
       .poll(() => extension.getSettings())
       .toMatchObject({ playbackSpeed: 1.25 });
 
-    await optionsPage.locator("#deleteProfile").click();
+    await optionsPage
+      .getByRole("button", { name: "Remove: Work", exact: true })
+      .click();
     await expect(optionsPage.locator("#profileStatus")).toContainText(
       "deleted",
     );
     await expect(optionsPage.locator("#activeProfileSelect")).toBeHidden();
-    await expect(optionsPage.locator("#profileSelect option")).toHaveCount(2);
-    await expect(optionsPage.locator("#deleteProfile")).toBeDisabled();
+    await expect(optionsPage.locator("#profileList li")).toHaveCount(0);
+    await expect(optionsPage.locator("[data-remove-profile]")).toHaveCount(0);
     await expect(extension.getSettings()).resolves.toMatchObject({
       playbackSpeed: 1.5,
     });

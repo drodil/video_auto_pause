@@ -7,14 +7,6 @@
     "message": "Dừng nhiều dịch vụ video khi rời khỏi tab và tiếp tục khi quay lại",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Cài Đặt",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Cài Đặt Nâng Cao",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Phím Tắt",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Chỉ phát một nguồn cùng lúc",
+    "message": "Ưu tiên phương tiện trong thẻ đang hoạt động",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Ngăn video tự động phát video tiếp theo",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Hẹn giờ ngủ"
   },
   "sleepTimerStart": {
     "message": "Bắt đầu hẹn giờ ngủ",
@@ -183,14 +178,6 @@
     "message": "Lưu cài đặt hiện tại thành hồ sơ",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Áp dụng hồ sơ",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Xóa hồ sơ",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Chọn hồ sơ",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Reset playback speed",
     "description": "Command description for resetting playback speed"
   },
-  "domainSettings": {
-    "message": "Cài đặt tên miền",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Chào mừng bạn đến với Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Tác động của bạn trong tuần này",
+    "message": "Thống kê",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Tắt tiếng video, làm mờ âm thanh và tiếp tục phát khi bạn đổi tiêu điểm hoặc khóa thiết bị.",
+    "message": "Tiếp tục phát khi bạn chuyển thẻ hoặc cửa sổ hay khóa thiết bị.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Lưu quy tắc trang web",
-    "description": "Per-site playback rule text"
+    "message": "Lưu cài đặt trang web",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Xóa",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Đã lưu quy tắc trang web",
-    "description": "Per-site playback rule text"
+    "message": "Đã lưu cài đặt trang web",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Không thể lưu quy tắc trang web.",
-    "description": "Per-site playback rule text"
+    "message": "Không thể lưu cài đặt trang web.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Chỉ bật các trang có quy tắc trang được bật",
+    "message": "Chỉ bật trên các trang web đã cấu hình",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Tắt",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Lọc quy tắc trang",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Tốc độ phát (0 = dùng tốc độ của trang web)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Tùy chỉnh cho trang này",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Bật",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Xóa cài đặt trang",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Nội dung ở thẻ đang hoạt động tạm dừng nội dung ở thẻ khác; thẻ trước tiếp tục khi nội dung dừng.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Điều khiển phát giữa các thẻ, không phải các video trên cùng một trang. Nội dung ở thẻ đang hoạt động tạm dừng nội dung ở thẻ khác; thẻ trước tiếp tục khi nội dung dừng.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Tiện ích chỉ chạy trên các trang được liệt kê bên dưới có bật tiện ích.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Phím tắt trên trang",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Cài đặt trang web"
+  },
+  "siteRuleDomain": {
+    "message": "Tên miền"
+  },
+  "siteRuleAddNew": {
+    "message": "Thêm trang web mới"
+  },
+  "siteRuleInherit": {
+    "message": "Dùng cài đặt mặc định"
+  },
+  "statsPeriodLabel": {
+    "message": "Khoảng thời gian"
+  },
+  "statsDays": {
+    "message": "$1 ngày qua"
+  },
+  "statsPausesLabel": {
+    "message": "Tạm dừng"
+  },
+  "statsResumesLabel": {
+    "message": "Tiếp tục"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Tự động phát bị chặn"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Thời gian phát đã ngăn (phút)"
+  },
+  "generalSettings": {
+    "message": "Cài đặt chung",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Tiêu điểm và khả năng hiển thị",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Phát lại và âm thanh",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Điều khiển video và phím tắt",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Tự động hóa",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Điều chỉnh phát lại",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Khắc phục sự cố",
+    "description": "Settings section: Troubleshooting"
   }
 }

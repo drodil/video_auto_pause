@@ -7,14 +7,6 @@
     "message": "Зупиняє кілька відеосервісів при втраті фокусу вкладки та продовжує при відновленні",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Налаштування",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Розширені налаштування",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Гарячі клавіші",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Відтворювати лише одне джерело одночасно",
+    "message": "Пріоритет медіа в активній вкладці",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Заборонити автоматичне відтворення наступного відео",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Таймер сну"
   },
   "sleepTimerStart": {
     "message": "Запустити таймер сну",
@@ -183,14 +178,6 @@
     "message": "Зберегти поточні налаштування як профіль",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Застосувати профіль",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Видалити профіль",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Виберіть профіль",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Скинути швидкість відтворення",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "Налаштування доменів",
-    "description": "Domain settings section header"
-  },
   "onboardingTitle": {
     "message": "Вітаємо у Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Ваш результат цього тижня",
+    "message": "Статистика",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Вимикає звук відео, плавно змінює гучність і продовжує відтворення під час зміни фокуса або блокування пристрою.",
+    "message": "Продовжує відтворення під час зміни вкладок чи вікон або блокування пристрою.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Зберегти правило сайту",
-    "description": "Per-site playback rule text"
+    "message": "Зберегти налаштування сайту",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Видалити",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Правило сайту збережено",
-    "description": "Per-site playback rule text"
+    "message": "Налаштування сайту збережено",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Не вдалося зберегти правило сайту.",
-    "description": "Per-site playback rule text"
+    "message": "Не вдалося зберегти налаштування сайту.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Вмикати лише сайти з активним правилом",
+    "message": "Вмикати лише на налаштованих сайтах",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Вимкнено",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Фільтр правил сайтів",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Швидкість відтворення (0 = використовувати швидкість сайту)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Налаштувати для цього сайту",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Увімкнено",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Видалити налаштування сайту",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Медіа в активній вкладці ставить на паузу медіа в інших вкладках; попередня вкладка продовжить, коли воно зупиниться.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Керує відтворенням між вкладками, а не відео на одній сторінці. Медіа в активній вкладці ставить на паузу медіа в інших вкладках; попередня вкладка продовжить, коли воно зупиниться.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Розширення працює лише на наведених нижче сайтах, де його ввімкнено.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Гарячі клавіші на сторінці",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Налаштування сайту"
+  },
+  "siteRuleDomain": {
+    "message": "Доменне ім’я"
+  },
+  "siteRuleAddNew": {
+    "message": "Додати новий сайт"
+  },
+  "siteRuleInherit": {
+    "message": "Використовувати типові налаштування"
+  },
+  "statsPeriodLabel": {
+    "message": "Період"
+  },
+  "statsDays": {
+    "message": "Останні $1 днів"
+  },
+  "statsPausesLabel": {
+    "message": "Паузи"
+  },
+  "statsResumesLabel": {
+    "message": "Відновлення"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Заблоковані автовідтворення"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Запобігле відтворення (хв)"
+  },
+  "generalSettings": {
+    "message": "Загальні налаштування",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Фокус і видимість",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Відтворення та звук",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Керування відео та комбінації клавіш",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Автоматизація",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Параметри відтворення",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Усунення несправностей",
+    "description": "Settings section: Troubleshooting"
   }
 }

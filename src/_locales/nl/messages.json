@@ -7,14 +7,6 @@
     "message": "Stopt meerdere videoservices bij tabblad-onscherpte en gaat door bij focus",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Instellingen",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Geavanceerde instellingen",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Sneltoetsen",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Speel slechts één bron tegelijk af",
+    "message": "Geef media op het actieve tabblad voorrang",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Voorkom automatisch afspelen van de volgende video",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Slaaptimer"
   },
   "sleepTimerStart": {
     "message": "Slaaptimer starten",
@@ -183,14 +178,6 @@
     "message": "Huidige instellingen als profiel opslaan",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Profiel toepassen",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Profiel verwijderen",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Kies een profiel",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Afspeelsnelheid resetten",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "Domeininstellingen",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Welkom bij Video Auto Pause",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Jouw impact deze week",
+    "message": "Statistieken",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Dempt video's, laat het volume geleidelijk veranderen en laat de weergave doorgaan wanneer je de focus wijzigt of je apparaat vergrendelt.",
+    "message": "Laat het afspelen doorgaan wanneer je van tabblad of venster wisselt of het apparaat vergrendelt.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Site-regel opslaan",
-    "description": "Per-site playback rule text"
+    "message": "Site-instellingen opslaan",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Verwijderen",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Site-regel opgeslagen",
-    "description": "Per-site playback rule text"
+    "message": "Site-instellingen opgeslagen",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "De site-regel kon niet worden opgeslagen.",
-    "description": "Per-site playback rule text"
+    "message": "Kan site-instellingen niet opslaan.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Alleen sites met een ingeschakelde regel activeren",
+    "message": "Alleen geconfigureerde sites inschakelen",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Uitgeschakeld",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Siteregels filteren",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Afspeelsnelheid (0 = snelheid van de site gebruiken)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Aanpassen voor deze site",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Ingeschakeld",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Site-instellingen verwijderen",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Media in het actieve tabblad pauzeren media in andere tabbladen; het vorige tabblad hervat als ze stoppen.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Regelt het afspelen tussen tabbladen, niet video's op dezelfde pagina. Media in het actieve tabblad pauzeren media in andere tabbladen; het vorige tabblad hervat als ze stoppen.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "De extensie werkt alleen op de hieronder vermelde sites waarop ze is ingeschakeld.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Sneltoetsen op de pagina",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Site-instellingen"
+  },
+  "siteRuleDomain": {
+    "message": "Domeinnaam"
+  },
+  "siteRuleAddNew": {
+    "message": "Nieuwe site toevoegen"
+  },
+  "siteRuleInherit": {
+    "message": "Standaardinstellingen gebruiken"
+  },
+  "statsPeriodLabel": {
+    "message": "Periode"
+  },
+  "statsDays": {
+    "message": "Afgelopen $1 dagen"
+  },
+  "statsPausesLabel": {
+    "message": "Pauzes"
+  },
+  "statsResumesLabel": {
+    "message": "Hervattingen"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Automatisch afspelen geblokkeerd"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Voorkomen afspeeltijd (min)"
+  },
+  "generalSettings": {
+    "message": "Algemene instellingen",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Focus en zichtbaarheid",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Afspelen en audio",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Videobediening en sneltoetsen",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automatisering",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Afspeelaanpassingen",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Problemen oplossen",
+    "description": "Settings section: Troubleshooting"
   }
 }

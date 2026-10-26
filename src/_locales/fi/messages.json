@@ -7,14 +7,6 @@
     "message": "Pysäyttää useita videopalveluita välilehden taustaessa ja jatkaa fokusoinnissa",
     "description": "Description of the extension"
   },
-  "settings": {
-    "message": "Asetukset",
-    "description": "Settings section header"
-  },
-  "advancedSettings": {
-    "message": "Lisäasetukset",
-    "description": "Advanced settings section header"
-  },
   "hotkeys": {
     "message": "Pikanäppäimet",
     "description": "Hotkeys section header"
@@ -28,7 +20,7 @@
     "description": "Prevent videos from starting before the user interacts with the page"
   },
   "prioritizeActiveTabMedia": {
-    "message": "Toista vain yhtä lähdettä kerrallaan",
+    "message": "Suosi aktiivisen välilehden mediaa",
     "description": "Pause other tabs' media and resume the previous source when the current source stops."
   },
   "idlePauseMinutes": {
@@ -50,6 +42,9 @@
   "disableAutoplayNext": {
     "message": "Estä seuraavan videon automaattinen toisto",
     "description": "Prevent playlist or autoplay-next playback."
+  },
+  "sleepTimerTitle": {
+    "message": "Uniajastin"
   },
   "sleepTimerStart": {
     "message": "Aloita uniajastin",
@@ -183,14 +178,6 @@
     "message": "Tallenna nykyiset asetukset profiiliksi",
     "description": "Save current settings to a profile."
   },
-  "applyProfile": {
-    "message": "Käytä profiilia",
-    "description": "Apply the selected profile."
-  },
-  "deleteProfile": {
-    "message": "Poista profiili",
-    "description": "Delete the selected profile."
-  },
   "profileSelectPlaceholder": {
     "message": "Valitse profiili",
     "description": "Choose a saved profile."
@@ -279,10 +266,6 @@
     "message": "Nollaa toistonopeus",
     "description": "Auto-translated"
   },
-  "domainSettings": {
-    "message": "Verkkotunnusasetukset",
-    "description": "Auto-translated"
-  },
   "onboardingTitle": {
     "message": "Tervetuloa käyttämään Video Auto Pausea",
     "description": "Welcome page text"
@@ -300,7 +283,7 @@
     "description": "Welcome page text"
   },
   "statsHeading": {
-    "message": "Vaikutuksesi tällä viikolla",
+    "message": "Tilastot",
     "description": "Local weekly statistics text"
   },
   "statsSummary": {
@@ -336,7 +319,7 @@
     "description": "Explanation shown for the study preset"
   },
   "presetMusicDescription": {
-    "message": "Mykistää videot, häivyttää ääntä ja jatkaa toistoa, kun vaihdat kohdetta tai lukitset laitteen.",
+    "message": "Jatkaa toistoa, kun vaihdat välilehteä tai ikkunaa tai lukitset laitteen.",
     "description": "Explanation shown for the music preset"
   },
   "presetBingeDescription": {
@@ -412,23 +395,23 @@
     "description": "Introduction to site-specific settings"
   },
   "siteRuleSave": {
-    "message": "Tallenna sivustosääntö",
-    "description": "Per-site playback rule text"
+    "message": "Tallenna sivuston asetukset",
+    "description": "Save settings for this site"
   },
   "siteRuleRemove": {
     "message": "Poista",
     "description": "Per-site playback rule text"
   },
   "siteRuleSaved": {
-    "message": "Sivustosääntö tallennettu",
-    "description": "Per-site playback rule text"
+    "message": "Sivuston asetukset tallennettu",
+    "description": "Successful site settings save status"
   },
   "siteRuleFailed": {
-    "message": "Sivustosääntöä ei voitu tallentaa.",
-    "description": "Per-site playback rule text"
+    "message": "Sivuston asetuksia ei voitu tallentaa.",
+    "description": "Failed site settings save status"
   },
   "onlyConfiguredSites": {
-    "message": "Ota käyttöön vain sivustot, joilla on käytössä oleva sääntö",
+    "message": "Ota käyttöön vain määritetyt sivustot",
     "description": "Only run the extension on sites with an enabled rule"
   },
   "siteRuleEnabled": {
@@ -442,10 +425,6 @@
   "siteRuleDisabledOption": {
     "message": "Ei käytössä",
     "description": "Disabled site rule option"
-  },
-  "siteRuleFilter": {
-    "message": "Suodata sivustosääntöjä",
-    "description": "Filter field for the list of site rules"
   },
   "playbackSpeed": {
     "message": "Toistonopeus (0 = käytä sivuston nopeutta)",
@@ -470,10 +449,6 @@
   "siteRuleCustomize": {
     "message": "Mukauta tälle sivustolle",
     "description": "Control to customize a setting for one site"
-  },
-  "siteRuleValueEnabled": {
-    "message": "Käytössä",
-    "description": "Label for the enabled value of a boolean setting"
   },
   "siteRuleDelete": {
     "message": "Poista sivuston asetukset",
@@ -637,8 +612,8 @@
     "description": "Tooltip for the ad muting setting."
   },
   "prioritizeActiveTabMediaDescription": {
-    "message": "Aktiivisen välilehden media keskeyttää muiden välilehtien median; edellinen välilehti jatkaa, kun se pysähtyy.",
-    "description": "Tooltip for the one-source-at-a-time setting."
+    "message": "Ohjaa toistoa välilehtien välillä, ei saman sivun videoita. Aktiivisen välilehden media keskeyttää muiden välilehtien median; edellinen välilehti jatkaa, kun se pysähtyy.",
+    "description": "Tooltip for prioritizing media across tabs."
   },
   "onlyConfiguredSitesDescription": {
     "message": "Laajennus toimii vain alla luetelluilla sivustoilla, joilla se on käytössä.",
@@ -659,5 +634,63 @@
   "contentShortcutKeys": {
     "message": "Sivun pikanäppäimet",
     "description": "Label for customizing in-page shortcut keys for a site."
+  },
+  "siteSettings": {
+    "message": "Sivuston asetukset"
+  },
+  "siteRuleDomain": {
+    "message": "Verkkotunnus"
+  },
+  "siteRuleAddNew": {
+    "message": "Lisää uusi sivusto"
+  },
+  "siteRuleInherit": {
+    "message": "Käytä oletusasetuksia"
+  },
+  "statsPeriodLabel": {
+    "message": "Ajanjakso"
+  },
+  "statsDays": {
+    "message": "Viimeiset $1 päivää"
+  },
+  "statsPausesLabel": {
+    "message": "Keskeytykset"
+  },
+  "statsResumesLabel": {
+    "message": "Jatkamiset"
+  },
+  "statsAutoplayBlocksLabel": {
+    "message": "Estetyt automaattitoistot"
+  },
+  "statsPreventedMinutesLabel": {
+    "message": "Estetty toisto (min)"
+  },
+  "generalSettings": {
+    "message": "Yleiset asetukset",
+    "description": "Settings section: General settings"
+  },
+  "focusSettings": {
+    "message": "Kohdistus ja näkyvyys",
+    "description": "Settings section: Focus & visibility"
+  },
+  "playbackSettings": {
+    "message": "Toisto ja ääni",
+    "description": "Settings section: Playback & audio"
+  },
+  "videoControlsSettings": {
+    "message": "Videon ohjaimet ja pikanäppäimet",
+    "description": "Settings section: Video controls & shortcuts"
+  },
+  "automationSettings": {
+    "message": "Automaatio",
+    "description": "Settings section: Automation"
+  },
+  "playbackAdjustments": {
+    "message": "Toiston säädöt",
+    "description": "Settings section: Playback adjustments"
+  },
+  "troubleshootingSettings": {
+    "message": "Vianmääritys",
+    "description": "Settings section: Troubleshooting"
   }
 }

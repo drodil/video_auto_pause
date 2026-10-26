@@ -5,6 +5,8 @@ if (window.autoPauseInjected !== true) {
   const detectedVideos = new Set();
   const detectedAudio = new Set();
   const extensionPausedVideos = new WeakSet();
+  // Visibility changes must not undo pauses from tab, lock, or automation rules.
+  const singleVideoPausedVideos = new WeakSet();
   const extensionInitiatedPlays = new WeakSet();
   const pauseOnNextPlay = new WeakMap();
   const automaticallyPausedVideos = new WeakSet();
@@ -1203,6 +1205,11 @@ if (window.autoPauseInjected !== true) {
 
     switch (request.action) {
       case "stop":
+        if (request.reason === "singleVideoPlayback") {
+          singleVideoPausedVideos.add(video);
+        } else {
+          singleVideoPausedVideos.delete(video);
+        }
         if (
           !isManuallyPaused &&
           video.paused &&
@@ -1413,7 +1420,9 @@ if (window.autoPauseInjected !== true) {
 
       const candidates = allVideos().filter(
         (video) =>
-          (!video.paused && !video.ended) || extensionPausedVideos.has(video),
+          (!video.paused && !video.ended) ||
+          (extensionPausedVideos.has(video) &&
+            singleVideoPausedVideos.has(video)),
       );
       if (candidates.length < 2) {
         return;
@@ -1449,6 +1458,7 @@ if (window.autoPauseInjected !== true) {
           return handleVideoAction(video, {
             action: "stop",
             immediate: true,
+            reason: "singleVideoPlayback",
           });
         }
         return Promise.resolve();
@@ -1554,6 +1564,7 @@ if (window.autoPauseInjected !== true) {
           originalVolumes.delete(videoElement);
         }
         extensionPausedVideos.delete(videoElement);
+        singleVideoPausedVideos.delete(videoElement);
         if (settings.manualPause) {
           debugLog(`Manually paused video`);
           manuallyPausedVideos.set(videoElement, true);
@@ -1602,6 +1613,7 @@ if (window.autoPauseInjected !== true) {
       }
       manuallyPausedVideos.delete(videoElement);
       extensionPausedVideos.delete(videoElement);
+      singleVideoPausedVideos.delete(videoElement);
       scheduleVideoArbitration();
     });
     // Apply the configured speed whenever a new source loads, but let the
