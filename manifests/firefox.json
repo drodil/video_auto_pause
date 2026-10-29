@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extName__",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "description": "__MSG_extDescription__",
   "permissions": [
     "tabs",
@@ -16,11 +16,15 @@
       "id": "drodil@youtube_auto_pause",
       "strict_min_version": "127.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "homepage_url": "https://github.com/drodil/video_auto_pause",
   "options_ui": {
     "page": "options.html",
@@ -42,7 +46,10 @@
     }
   },
   "background": {
-    "scripts": ["settings.js", "vap_bs.js"]
+    "scripts": [
+      "settings.js",
+      "vap_bs.js"
+    ]
   },
   "commands": {
     "toggle-extension": {

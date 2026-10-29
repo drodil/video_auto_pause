@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/drodil/video_auto_pause/compare/v1.14.1...v1.15.0) (2026-10-29)
+
+
+### Features
+
+* ad handling ([7fb1e4b](https://github.com/drodil/video_auto_pause/commit/7fb1e4b90c7eb178809d290ddfc4600b380786d0))
+* **ads:** detect active ad markers across players ([b2f7259](https://github.com/drodil/video_auto_pause/commit/b2f7259da4846a65ce189ea48cf1a8c2ca29c0da))
+* **audio:** add opt-in audio-only handling ([8dd8c89](https://github.com/drodil/video_auto_pause/commit/8dd8c896201c345fdd260ae03cf38ff2b1f63a6d))
+* **autoplay:** add next-video control and sleep timer ([f1a47ed](https://github.com/drodil/video_auto_pause/commit/f1a47ed4e869a6bd331038ca5c047f9b5d295a30))
+* **autoplay:** stop automatic playback at video end ([e920518](https://github.com/drodil/video_auto_pause/commit/e9205181c27b70f5a65153aa12fdf6b556a8f6db))
+* **compat:** add player support guidance and site reports ([7fe590c](https://github.com/drodil/video_auto_pause/commit/7fe590c71b02198a98dc290ecd02d6cf4e650977))
+* **context:** add idle and quiet-hour pause rules ([16f5568](https://github.com/drodil/video_auto_pause/commit/16f5568b124409e87db0117bbee0d30dd6a5b3e3))
+* **context:** add low-battery pause rule ([fde0963](https://github.com/drodil/video_auto_pause/commit/fde096384b5c30c2b490aa69231ae8966e2bc3b1))
+* **context:** pause on audio output disconnect ([c45ac5f](https://github.com/drodil/video_auto_pause/commit/c45ac5f427e4be7472121938678033dcdad2fdc4))
+* **diagnostics:** add local settings report export ([ce0397f](https://github.com/drodil/video_auto_pause/commit/ce0397ff42ebfc94e61fab2604d9470e11bb9c01))
+* expand profile-bound settings and controls ([6018099](https://github.com/drodil/video_auto_pause/commit/6018099b0998c65c3797f2a2b5eb918ad3f2cab5))
+* **focus:** add pointer-aware peek mode ([bc759c4](https://github.com/drodil/video_auto_pause/commit/bc759c4a2bc873ca84778c6ec1f9bebd9aad816f))
+* **media:** handle live streams and player ads ([7d718b9](https://github.com/drodil/video_auto_pause/commit/7d718b9c105d9250dafcc544129b46baed17cec8))
+* **mobile:** improve touch settings layout ([66318f9](https://github.com/drodil/video_auto_pause/commit/66318f92d23eff15475cc27fa1dbb0be00fc2883))
+* **onboarding:** add first-run welcome page ([c001435](https://github.com/drodil/video_auto_pause/commit/c0014358212fc25ccddfe086551567b7e8d343e1))
+* **options:** improve domain and audio fade controls ([13edb63](https://github.com/drodil/video_auto_pause/commit/13edb63c8104ed51c38c4913177e73386ea87d19))
+* **overlay:** add draggable on-video controls ([4c2f79b](https://github.com/drodil/video_auto_pause/commit/4c2f79bb6cf1525545d4872f673f032346a01f87))
+* **pin:** keep selected tabs playing in background ([11e840d](https://github.com/drodil/video_auto_pause/commit/11e840df4669251fd2011ea9caeef794edd65b5d))
+* **pip:** pop out video on tab switch ([62657c0](https://github.com/drodil/video_auto_pause/commit/62657c08864fba968e7f7ae5886ed9c6f27ba471))
+* **presets:** add one-click playback modes ([0b5347d](https://github.com/drodil/video_auto_pause/commit/0b5347d125e02d4039b78d85f3f85303224c017f))
+* **presets:** explain modes with localized tooltips ([270e903](https://github.com/drodil/video_auto_pause/commit/270e903198cc8092ec24894e383dc5d62b017681))
+* **profiles:** apply saved settings by domain ([87e6f53](https://github.com/drodil/video_auto_pause/commit/87e6f53c523ba740427c6d40b7a9aef390e5dcb6))
+* **resume:** rewind videos after automatic pauses ([8b21b80](https://github.com/drodil/video_auto_pause/commit/8b21b8084466af9f907700b59db0320b79e15eda))
+* **safety:** disable tabs after content errors ([ab6e184](https://github.com/drodil/video_auto_pause/commit/ab6e18406763447eaa8e398cc97ee9e6798775e1))
+* **settings:** add inheritable per-site rules ([aab9560](https://github.com/drodil/video_auto_pause/commit/aab95600ba048525490c624eb3fd82ffd44330e9))
+* **shortcuts:** add remappable in-page video controls ([2b588ef](https://github.com/drodil/video_auto_pause/commit/2b588ef21d85a189e38625f5981179bbccabc1f5))
+* **stats:** add private weekly playback dashboard ([f68e9e0](https://github.com/drodil/video_auto_pause/commit/f68e9e046118876ab0ab74badfbe3c6cc32c0592))
+* **stats:** remove weekly summary copy action ([9de692a](https://github.com/drodil/video_auto_pause/commit/9de692a63e588a5969077a6267b574567e1117b0))
+* ui improvements ([1afcdd2](https://github.com/drodil/video_auto_pause/commit/1afcdd2a4417a25dd51137e8674ca5c1d15d6ed8))
+
+
+### Bug Fixes
+
+* pause media started while device is locked ([a572a76](https://github.com/drodil/video_auto_pause/commit/a572a764cdc2ab6b16b9fc6d290ceb64f9ff49dc))
+
+
+### Maintenance
+
+* refactoring ([aa451a7](https://github.com/drodil/video_auto_pause/commit/aa451a7f9d31a096d5be9506f6844f034bda618d))
+
 ### [1.14.1](https://github.com/drodil/video_auto_pause/compare/v1.14.0...v1.14.1) (2026-10-16)
 
 ### Bug Fixes
