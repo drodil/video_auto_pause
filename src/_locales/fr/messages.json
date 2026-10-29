@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Couper le son pendant les publicités, puis mettre en pause à leur fin",
+    "message": "Couper le son pendant les publicités",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Mettre en pause à la fin de la publicité",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Ignorer automatiquement les publicités",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Accélérer les publicités à 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Afficher les commandes vidéo déplaçables",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Échec de l’action du raccourci."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Ouvrir la vidéo en incrustation lors du changement d’onglet"
-  },
   "pauseOnLowBattery": {
     "message": "Mettre en pause les vidéos en arrière-plan lorsque la batterie est faible"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Si une publicité est en cours, la vidéo est coupée jusqu’à la fin de la publicité puis mise en pause.",
+    "message": "Couper le son des vidéos pendant la lecture d’une publicité.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Attendre la fin de la publicité avant de mettre la vidéo en pause.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Cliquer automatiquement sur les commandes visibles pour ignorer les publicités dès qu’elles sont disponibles.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Lire la publicité à 16x, puis restaurer la vitesse de lecture précédente.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Contrôle la lecture entre les onglets, pas les vidéos d’une même page. Le média de l’onglet actif met en pause ceux des autres onglets ; l’onglet précédent reprend quand il s’arrête.",

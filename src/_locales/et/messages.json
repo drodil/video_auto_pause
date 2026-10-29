@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Vaigista reklaamide ajal ja peata nende lõppedes",
+    "message": "Vaigista reklaamide ajal",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Peata pärast reklaami lõppu",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Jäta reklaamid automaatselt vahele",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Kiirenda reklaame 16x-ni",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Kuva lohistatavaid video juhtnuppe",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Kiirklahvi toiming nurjus."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Ava vahekaartide vahetamisel video pilt-pildis režiimis"
-  },
   "pauseOnLowBattery": {
     "message": "Peata taustal olevad videod, kui aku on tühi"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Kui reklaam mängib, vaigistatakse video reklaami lõpuni ja seejärel peatatakse.",
+    "message": "Vaigista videod reklaami esitamise ajal.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Enne video peatamist oota reklaami lõppemist.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klõpsa saadaolevatel nähtavatel reklaami vahelejätmise nuppudel automaatselt.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Esita reklaami kiirusel 16x ja taasta seejärel eelmine taasesituskiirus.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Juhib taasesitust vahekaartide vahel, mitte sama lehe videoid. Aktiivse vahekaardi meedia peatab teiste vahekaartide meedia; eelmine vahekaart jätkab, kui see peatub.",

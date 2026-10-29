@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Bisukan selama iklan, lalu jeda setelah iklan selesai",
+    "message": "Bisukan selama iklan",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Jeda setelah iklan berakhir",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Lewati iklan secara otomatis",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Percepat iklan hingga 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Tampilkan kontrol video yang dapat digeser",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Tindakan pintasan gagal."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Buka video dalam mode Gambar-dalam-Gambar saat berpindah tab"
-  },
   "pauseOnLowBattery": {
     "message": "Jeda video latar belakang saat baterai lemah"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Jika iklan sedang diputar, video dibisukan hingga iklan selesai lalu dijeda.",
+    "message": "Bisukan video selama iklan diputar.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Tunggu hingga iklan berakhir sebelum menjeda video.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klik kontrol lewati iklan yang terlihat secara otomatis saat tersedia.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Putar iklan pada kecepatan 16x lalu pulihkan kecepatan pemutaran sebelumnya.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Mengontrol pemutaran antar-tab, bukan video di halaman yang sama. Media di tab aktif menjeda media di tab lain; tab sebelumnya dilanjutkan saat media berhenti.",

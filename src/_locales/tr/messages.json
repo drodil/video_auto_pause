@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Reklamlar sırasında sessize al, bitince duraklat",
+    "message": "Reklamlar sırasında sessize al",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Reklam bitince duraklat",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Reklamları otomatik atla",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Reklamları 16x hızlandır",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Sürüklenebilir video kontrollerini göster",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Kısayol işlemi başarısız oldu."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Sekme değiştirirken videoyu Resim içinde Resim modunda aç"
-  },
   "pauseOnLowBattery": {
     "message": "Pil azken düzeydeyken arka plan videolarını duraklat"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Reklam oynatılıyorsa video reklam bitene kadar sessize alınır, ardından duraklatılır.",
+    "message": "Reklam oynatılırken videoları sessize al.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Videoyu duraklatmadan önce reklamın bitmesini bekle.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Kullanılabilir olduklarında görünür reklam atlama kontrollerine otomatik tıkla.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Reklamı 16x hızda oynat ve ardından önceki oynatma hızını geri yükle.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Aynı sayfadaki videoları değil, sekmeler arasındaki oynatmayı kontrol eder. Etkin sekmedeki medya diğer sekmelerdeki medyayı duraklatır; durduğunda önceki sekme devam eder.",

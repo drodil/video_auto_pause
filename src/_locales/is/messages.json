@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Þagga meðan á auglýsingum stendur og gera hlé þegar þeim lýkur",
+    "message": "Þagga meðan á auglýsingum stendur",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Gera hlé þegar auglýsingu lýkur",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Sleppa auglýsingum sjálfkrafa",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Hraða auglýsingum í 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Sýna færanlegar myndstýringar",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Aðgerð flýtilykils mistókst."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Opna myndband í mynd-í-mynd þegar skipt er um flipa"
-  },
   "pauseOnLowBattery": {
     "message": "Gera hlé á myndböndum í bakgrunni þegar rafhlaðan er lítil"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Ef auglýsing er í gangi er myndbandið þaggað þar til auglýsingunni lýkur og svo sett í bið.",
+    "message": "Þagga myndbönd á meðan auglýsing er í spilun.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Bíddu þar til auglýsingu lýkur áður en myndband er sett í bið.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Smelltu sjálfkrafa á sýnilega hnappa til að sleppa auglýsingum þegar þeir eru tiltækir.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Spilaðu auglýsinguna á 16x hraða og endurstilltu fyrri spilunarhraða eftir á.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Stýrir spilun milli flipa, ekki myndskeiðum á sömu síðu. Miðlar í virka flipanum setja miðla í öðrum flipum í bið; fyrri flipinn heldur áfram þegar þeir stöðvast.",

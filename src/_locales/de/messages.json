@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Während Werbung stummschalten und danach pausieren",
+    "message": "Während Werbung stummschalten",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Nach Ende der Werbung pausieren",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Werbung automatisch überspringen",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Werbung auf 16x beschleunigen",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Verschiebbare Videosteuerung anzeigen",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Tastenkürzel-Aktion fehlgeschlagen."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Video beim Tabwechsel im Bild-in-Bild-Modus öffnen"
-  },
   "pauseOnLowBattery": {
     "message": "Hintergrundvideos bei niedrigem Akkustand pausieren"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Läuft Werbung, wird das Video bis zum Ende der Werbung stummgeschaltet und dann pausiert.",
+    "message": "Videos während einer Werbeeinblendung stummschalten.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Vor dem Pausieren warten, bis die Werbung beendet ist.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Sichtbare Schaltflächen zum Überspringen automatisch anklicken, sobald sie verfügbar sind.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Werbung mit 16x abspielen und anschließend die vorherige Wiedergabegeschwindigkeit wiederherstellen.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Steuert die Wiedergabe zwischen Tabs, nicht Videos auf derselben Seite. Medien im aktiven Tab pausieren Medien in anderen Tabs; der vorherige Tab läuft weiter, wenn sie stoppen.",

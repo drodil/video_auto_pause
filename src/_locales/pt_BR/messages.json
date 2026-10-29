@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Silenciar durante anúncios e pausar quando terminarem",
+    "message": "Silenciar durante anúncios",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Pausar após o fim do anúncio",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Pular anúncios automaticamente",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Acelerar anúncios para 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Mostrar controles de vídeo arrastáveis",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Falha ao executar o atalho."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Abrir o vídeo em Picture-in-Picture ao trocar de guia"
-  },
   "pauseOnLowBattery": {
     "message": "Pausar vídeos em segundo plano quando a bateria estiver fraca"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Se um anúncio estiver tocando, o vídeo fica sem som até o anúncio terminar e depois é pausado.",
+    "message": "Silencie os vídeos enquanto um anúncio estiver sendo reproduzido.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Aguarde o anúncio terminar antes de pausar o vídeo.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Clique automaticamente nos controles visíveis para pular anúncios quando estiverem disponíveis.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Reproduza o anúncio em 16x e restaure a velocidade de reprodução anterior depois.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Controla a reprodução entre abas, não os vídeos da mesma página. A mídia da aba ativa pausa a mídia de outras abas; a aba anterior retoma quando ela para.",

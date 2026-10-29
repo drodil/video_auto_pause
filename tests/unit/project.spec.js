@@ -74,6 +74,18 @@ test.describe("markup and manifests", () => {
     expect(missing).toEqual([]);
   });
 
+  test("ad handling settings can be overridden per site", () => {
+    const { SITE_OVERRIDE_SETTINGS } = loadSettingsGlobals();
+    expect(SITE_OVERRIDE_SETTINGS).toEqual(
+      expect.arrayContaining([
+        "muteDuringAds",
+        "pauseAfterAdEnds",
+        "autoSkipAds",
+        "speedUpAds",
+      ]),
+    );
+  });
+
   test("pages do not rely on title attributes for help text", () => {
     for (const page of ["options.html", "onboarding.html"]) {
       const html = fs.readFileSync(path.join(srcDir, page), "utf8");

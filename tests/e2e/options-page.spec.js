@@ -74,16 +74,14 @@ test.describe("Options page", () => {
           "pauseAtEnd",
           "liveStreamMute",
           "muteDuringAds",
+          "pauseAfterAdEnds",
+          "autoSkipAds",
+          "speedUpAds",
         ],
       ],
       [
         "videoControlsSettings",
-        [
-          "showVideoOverlay",
-          "showPipButton",
-          "autoPipOnTabSwitch",
-          "contentShortcutsEnabled",
-        ],
+        ["showVideoOverlay", "showPipButton", "contentShortcutsEnabled"],
       ],
       [
         "automationSettings",

@@ -33,7 +33,6 @@ const playbackDefaults = {
   rewindSeconds: 0,
   playbackSpeed: 0,
   fadeDuration: 0,
-  autoPipOnTabSwitch: false,
   blockAutoplay: false,
   disableAutoplayNext: false,
   pauseAtEnd: false,
@@ -45,6 +44,9 @@ const playbackDefaults = {
   peekMode: false,
   liveStreamMute: true,
   muteDuringAds: true,
+  pauseAfterAdEnds: false,
+  autoSkipAds: true,
+  speedUpAds: true,
   prioritizeActiveTabMedia: false,
   singleVideoPlayback: true,
 };

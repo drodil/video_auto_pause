@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "كتم الصوت أثناء الإعلانات ثم الإيقاف المؤقت عند انتهائها",
+    "message": "كتم الصوت أثناء الإعلانات",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "إيقاف الفيديو مؤقتًا بعد انتهاء الإعلان",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "تخطي الإعلانات تلقائيًا",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "تسريع الإعلانات إلى 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "إظهار عناصر تحكم قابلة للسحب فوق الفيديو",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "تعذر تنفيذ إجراء الاختصار."
   },
-  "autoPipOnTabSwitch": {
-    "message": "فتح الفيديو في نافذة صورة داخل صورة عند تبديل علامات التبويب"
-  },
   "pauseOnLowBattery": {
     "message": "إيقاف الفيديوهات في الخلفية عند انخفاض البطارية"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "إذا كان هناك إعلان قيد التشغيل، يُكتم صوت الفيديو حتى ينتهي الإعلان ثم يُوقف مؤقتًا.",
+    "message": "كتم صوت الفيديو أثناء تشغيل الإعلان.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "انتظر انتهاء الإعلان قبل إيقاف الفيديو مؤقتًا.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "انقر تلقائيًا على عناصر تخطي الإعلان الظاهرة عند توفرها.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "شغّل الإعلان بسرعة 16x ثم استعد سرعة التشغيل السابقة.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "يتحكم في التشغيل بين علامات التبويب، وليس بين الفيديوهات في الصفحة نفسها. الوسائط في علامة التبويب النشطة توقف الوسائط في علامات التبويب الأخرى، وتُستأنف علامة التبويب السابقة عند توقفها.",

@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "광고 중 음소거하고 광고가 끝나면 일시 정지",
+    "message": "광고 중 음소거",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "광고가 끝난 후 일시정지",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "광고 자동 건너뛰기",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "광고를 16배속으로 재생",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "드래그 가능한 동영상 컨트롤 표시",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "단축키 동작에 실패했습니다."
   },
-  "autoPipOnTabSwitch": {
-    "message": "탭을 전환할 때 동영상을 화면 속 화면으로 열기"
-  },
   "pauseOnLowBattery": {
     "message": "배터리가 부족하면 백그라운드 동영상 일시 중지"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "광고가 재생 중이면 광고가 끝날 때까지 동영상을 음소거한 다음 일시정지합니다.",
+    "message": "광고가 재생되는 동안 동영상을 음소거합니다.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "동영상을 일시정지하기 전에 광고가 끝날 때까지 기다립니다.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "사용 가능한 광고 건너뛰기 버튼을 자동으로 클릭합니다.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "광고를 16배속으로 재생한 뒤 이전 재생 속도로 복원합니다.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "같은 페이지의 동영상이 아닌 탭 간 재생을 제어합니다. 활성 탭의 미디어가 다른 탭의 미디어를 일시정지하고, 멈추면 이전 탭이 다시 재생됩니다.",

@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Dempen tijdens advertenties en pauzeren zodra ze zijn afgelopen",
+    "message": "Dempen tijdens advertenties",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Pauzeren zodra de advertentie is afgelopen",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Advertenties automatisch overslaan",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Advertenties versnellen tot 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Versleepbare videobediening tonen",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Sneltoetsactie mislukt."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Video openen in picture-in-picture bij wisselen van tabblad"
-  },
   "pauseOnLowBattery": {
     "message": "Video's op de achtergrond pauzeren bij een lage batterij"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Als er een advertentie speelt, wordt de video gedempt tot de advertentie voorbij is en daarna gepauzeerd.",
+    "message": "Demp video's terwijl een advertentie wordt afgespeeld.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Wacht tot de advertentie voorbij is voordat je de video pauzeert.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klik automatisch op zichtbare knoppen om advertenties over te slaan zodra ze beschikbaar zijn.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Speel de advertentie af op 16x en herstel daarna de vorige afspeelsnelheid.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Regelt het afspelen tussen tabbladen, niet video's op dezelfde pagina. Media in het actieve tabblad pauzeren media in andere tabbladen; het vorige tabblad hervat als ze stoppen.",

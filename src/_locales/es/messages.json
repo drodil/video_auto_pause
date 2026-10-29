@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Silenciar durante los anuncios y pausar cuando terminen",
+    "message": "Silenciar durante los anuncios",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Pausar cuando termine el anuncio",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Omitir anuncios automáticamente",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Acelerar anuncios a 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Mostrar controles de vídeo arrastrables",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "No se pudo ejecutar el atajo."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Abrir el vídeo en imagen en imagen al cambiar de pestaña"
-  },
   "pauseOnLowBattery": {
     "message": "Pausar vídeos en segundo plano cuando la batería esté baja"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Si se está reproduciendo un anuncio, el vídeo se silencia hasta que termine y luego se pausa.",
+    "message": "Silenciar los vídeos mientras se reproduce un anuncio.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Esperar a que termine el anuncio antes de pausar el vídeo.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Hacer clic automáticamente en los controles visibles para omitir anuncios cuando estén disponibles.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Reproducir el anuncio a 16x y restaurar después la velocidad de reproducción anterior.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Controla la reproducción entre pestañas, no los vídeos de una misma página. El contenido de la pestaña activa pausa el de otras pestañas; la pestaña anterior se reanuda cuando se detiene.",

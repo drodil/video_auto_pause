@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Tắt tiếng khi có quảng cáo rồi tạm dừng khi quảng cáo kết thúc",
+    "message": "Tắt tiếng khi có quảng cáo",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Tạm dừng sau khi quảng cáo kết thúc",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Tự động bỏ qua quảng cáo",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Tăng tốc quảng cáo lên 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Hiện các nút điều khiển video có thể kéo",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Thao tác phím tắt không thành công."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Mở video ở chế độ Hình trong hình khi chuyển tab"
-  },
   "pauseOnLowBattery": {
     "message": "Tạm dừng video nền khi pin yếu"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Nếu đang phát quảng cáo, video được tắt tiếng đến khi hết quảng cáo rồi tạm dừng.",
+    "message": "Tắt tiếng video trong khi quảng cáo đang phát.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Chờ quảng cáo kết thúc trước khi tạm dừng video.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Tự động nhấp vào nút bỏ qua quảng cáo đang hiển thị khi có thể.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Phát quảng cáo ở tốc độ 16x rồi khôi phục tốc độ phát trước đó.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Điều khiển phát giữa các thẻ, không phải các video trên cùng một trang. Nội dung ở thẻ đang hoạt động tạm dừng nội dung ở thẻ khác; thẻ trước tiếp tục khi nội dung dừng.",

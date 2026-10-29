@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Slå lyden fra under annoncer, og sæt på pause, når de slutter",
+    "message": "Slå lyden fra under annoncer",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Sæt på pause, når annoncen slutter",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Spring annoncer over automatisk",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Sæt annoncehastigheden op til 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Vis trækbare videokontroller",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Genvejshandlingen mislykkedes."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Åbn video i billede-i-billede, når du skifter fane"
-  },
   "pauseOnLowBattery": {
     "message": "Sæt baggrundsvideoer på pause ved lavt batteri"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Hvis en reklame afspilles, gøres videoen lydløs, indtil reklamen slutter, og sættes derefter på pause.",
+    "message": "Slå lyden fra på videoer, mens en annonce afspilles.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Vent på, at annoncen slutter, før videoen sættes på pause.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klik automatisk på synlige knapper til at springe annoncer over, når de er tilgængelige.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Afspil annoncen ved 16x, og gendan derefter den tidligere afspilningshastighed.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Styrer afspilning på tværs af faner, ikke videoer på samme side. Medier i den aktive fane sætter medier i andre faner på pause; den forrige fane fortsætter, når de stopper.",

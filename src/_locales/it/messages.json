@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Disattiva l’audio durante gli annunci e metti in pausa quando finiscono",
+    "message": "Disattiva l’audio durante gli annunci",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Metti in pausa al termine dell’annuncio",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Salta automaticamente gli annunci",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Accelera gli annunci a 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Mostra i controlli video trascinabili",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Azione della scorciatoia non riuscita."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Apri il video in Picture-in-Picture quando cambi scheda"
-  },
   "pauseOnLowBattery": {
     "message": "Metti in pausa i video in background quando la batteria è scarica"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Se è in corso una pubblicità, il video viene silenziato fino alla fine e poi messo in pausa.",
+    "message": "Disattiva l’audio dei video durante la riproduzione di un annuncio.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Attendi la fine dell’annuncio prima di mettere in pausa il video.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Fai clic automaticamente sui controlli visibili per saltare gli annunci quando disponibili.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Riproduci l’annuncio a 16x e poi ripristina la velocità di riproduzione precedente.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Controlla la riproduzione tra schede, non i video della stessa pagina. I contenuti della scheda attiva mettono in pausa quelli delle altre schede; la scheda precedente riprende quando si fermano.",

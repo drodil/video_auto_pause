@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Mykistä mainosten ajaksi ja keskeytä niiden päätyttyä",
+    "message": "Mykistä mainosten ajaksi",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Keskeytä mainoksen päätyttyä",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Ohita mainokset automaattisesti",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Nopeuta mainokset 16-kertaisiksi",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Näytä siirrettävät videon ohjaimet",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Pikanäppäintoiminto epäonnistui."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Avaa video kuva kuvassa -tilassa välilehteä vaihdettaessa"
-  },
   "pauseOnLowBattery": {
     "message": "Keskeytä taustavideot akun ollessa vähissä"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Jos mainos on käynnissä, video mykistetään mainoksen loppuun asti ja keskeytetään sitten.",
+    "message": "Mykistä videot mainoksen toiston ajaksi.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Odota mainoksen päättymistä ennen videon keskeyttämistä.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Napsauta näkyviä mainoksen ohituspainikkeita automaattisesti, kun ne ovat käytettävissä.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Toista mainos 16-kertaisella nopeudella ja palauta sen jälkeen aiempi toistonopeus.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Ohjaa toistoa välilehtien välillä, ei saman sivun videoita. Aktiivisen välilehden media keskeyttää muiden välilehtien median; edellinen välilehti jatkaa, kun se pysähtyy.",

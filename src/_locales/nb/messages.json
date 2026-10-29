@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Demp under annonser, og sett på pause når de er ferdige",
+    "message": "Demp under annonser",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Sett på pause når annonsen er ferdig",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Hopp over annonser automatisk",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Spill annonser 16 ganger raskere",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Vis flyttbare videokontroller",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Snarveihandlingen mislyktes."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Åpne video i bilde-i-bilde når du bytter fane"
-  },
   "pauseOnLowBattery": {
     "message": "Sett bakgrunnsvideoer på pause når batteriet er lavt"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Hvis en reklame spilles, dempes videoen til reklamen er ferdig, og settes deretter på pause.",
+    "message": "Demp videoer mens en annonse spilles av.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Vent til annonsen er ferdig før videoen settes på pause.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klikk automatisk på synlige knapper for å hoppe over annonser når de blir tilgjengelige.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Spill av annonsen i 16x hastighet, og gjenopprett deretter forrige avspillingshastighet.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Styrer avspilling på tvers av faner, ikke videoer på samme side. Medier i den aktive fanen setter medier i andre faner på pause; forrige fane fortsetter når de stopper.",

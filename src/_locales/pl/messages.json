@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Wyciszaj podczas reklam, a po ich zakończeniu wstrzymuj odtwarzanie",
+    "message": "Wyciszaj podczas reklam",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Wstrzymaj po zakończeniu reklamy",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Automatycznie pomijaj reklamy",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Przyspieszaj reklamy do 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Pokaż przesuwane elementy sterujące wideo",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Nie udało się wykonać skrótu."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Otwórz wideo w trybie obraz w obrazie po przełączeniu karty"
-  },
   "pauseOnLowBattery": {
     "message": "Wstrzymuj filmy w tle przy niskim poziomie baterii"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Jeśli trwa reklama, film jest wyciszony do jej końca, a potem wstrzymany.",
+    "message": "Wyciszaj filmy podczas odtwarzania reklamy.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Poczekaj na koniec reklamy przed wstrzymaniem filmu.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Automatycznie klikaj widoczne przyciski pomijania reklam, gdy są dostępne.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Odtwarzaj reklamę z prędkością 16x, a potem przywróć poprzednią prędkość odtwarzania.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Steruje odtwarzaniem między kartami, a nie filmami na tej samej stronie. Multimedia w aktywnej karcie wstrzymują multimedia w innych kartach; poprzednia karta wznawia się, gdy się zatrzymają.",

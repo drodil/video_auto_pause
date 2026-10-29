@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "廣告播放時靜音，廣告結束後暫停",
+    "message": "廣告期間靜音",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "廣告結束後暫停",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "自動略過廣告",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "將廣告加速至16倍",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "顯示可拖曳的影片控制項",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "快速鍵操作失敗。"
   },
-  "autoPipOnTabSwitch": {
-    "message": "切換分頁時以子母畫面開啟影片"
-  },
   "pauseOnLowBattery": {
     "message": "電量不足時暫停背景影片"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "如果正在播放廣告，影片會靜音到廣告結束，然後暫停。",
+    "message": "廣告播放期間將影片靜音。",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "等待廣告結束後再暫停影片。",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "有可用的廣告略過控制項時自動點擊。",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "以16倍速播放廣告，然後還原先前的播放速度。",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "控制不同分頁之間的播放，而不是同一頁面上的影片。 作用中分頁的媒體會暫停其他分頁的媒體；停止後會繼續播放上一個分頁。",

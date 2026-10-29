@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "広告中はミュートし、終了後に一時停止",
+    "message": "広告中はミュート",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "広告終了後に一時停止",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "広告を自動的にスキップ",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "広告を16倍速で再生",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "ドラッグ可能な動画コントロールを表示",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "ショートカット操作に失敗しました。"
   },
-  "autoPipOnTabSwitch": {
-    "message": "タブ切り替え時に動画をピクチャー イン ピクチャーで開く"
-  },
   "pauseOnLowBattery": {
     "message": "バッテリー残量が少ないときにバックグラウンド動画を一時停止"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "広告の再生中は広告が終わるまで動画をミュートし、その後一時停止します。",
+    "message": "広告の再生中は動画をミュートします。",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "動画を一時停止する前に広告の終了を待ちます。",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "利用可能になった広告スキップ操作を自動的にクリックします。",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "広告を16倍速で再生し、その後元の再生速度に戻します。",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "同じページ内の動画ではなく、タブ間の再生を制御します。 アクティブなタブのメディアが他のタブのメディアを一時停止し、停止すると前のタブが再開します。",

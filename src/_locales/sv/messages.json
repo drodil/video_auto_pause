@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Ljud av under annonser och pausa när de är slut",
+    "message": "Ljud av under annonser",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Pausa när annonsen är slut",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Hoppa över annonser automatiskt",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Snabba upp annonser till 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Visa flyttbara videokontroller",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Kortkommandot misslyckades."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Öppna video i bild-i-bild när du byter flik"
-  },
   "pauseOnLowBattery": {
     "message": "Pausa bakgrundsvideor när batteriet är lågt"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Om en annons spelas tystas videon tills annonsen är slut och pausas sedan.",
+    "message": "Tysta videor medan en annons spelas upp.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Vänta tills annonsen är slut innan videon pausas.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Klicka automatiskt på synliga knappar för att hoppa över annonser när de blir tillgängliga.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Spela upp annonsen i 16x hastighet och återställ sedan den tidigare uppspelningshastigheten.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Styr uppspelning mellan flikar, inte videor på samma sida. Media i den aktiva fliken pausar media i andra flikar; föregående flik fortsätter när det stoppar.",

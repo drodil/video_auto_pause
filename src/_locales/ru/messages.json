@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Отключать звук во время рекламы и ставить на паузу после неё",
+    "message": "Отключать звук во время рекламы",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Ставить на паузу после окончания рекламы",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Автоматически пропускать рекламу",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Ускорять рекламу до 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Показывать перетаскиваемые элементы управления видео",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Не удалось выполнить действие горячей клавиши."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Открывать видео в режиме «картинка в картинке» при переключении вкладок"
-  },
   "pauseOnLowBattery": {
     "message": "Приостанавливать фоновые видео при низком заряде батареи"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Если идёт реклама, видео заглушается до её окончания, а затем ставится на паузу.",
+    "message": "Отключать звук видео во время воспроизведения рекламы.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Дождаться окончания рекламы перед паузой видео.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Автоматически нажимать видимые кнопки пропуска рекламы, когда они становятся доступны.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Воспроизводить рекламу на скорости 16x, затем восстановить прежнюю скорость видео.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Управляет воспроизведением между вкладками, а не видео на одной странице. Медиа в активной вкладке ставит на паузу медиа в других вкладках; предыдущая вкладка продолжит, когда оно остановится.",

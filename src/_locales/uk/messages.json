@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "Вимикати звук під час реклами й призупиняти після її завершення",
+    "message": "Вимикати звук під час реклами",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Призупиняти після завершення реклами",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Автоматично пропускати рекламу",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Прискорювати рекламу до 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Показувати перетягувані елементи керування відео",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "Не вдалося виконати дію комбінації клавіш."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Відкривати відео в режимі «картинка в картинці» під час перемикання вкладок"
-  },
   "pauseOnLowBattery": {
     "message": "Призупиняти фонові відео за низького заряду батареї"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "Якщо грає реклама, звук відео вимикається до її кінця, а потім відео ставиться на паузу.",
+    "message": "Вимикати звук відео під час відтворення реклами.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Дочекатися завершення реклами, перш ніж призупиняти відео.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Автоматично натискати видимі кнопки пропуску реклами, коли вони доступні.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Відтворювати рекламу на швидкості 16x, а потім відновити попередню швидкість.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Керує відтворенням між вкладками, а не відео на одній сторінці. Медіа в активній вкладці ставить на паузу медіа в інших вкладках; попередня вкладка продовжить, коли воно зупиниться.",

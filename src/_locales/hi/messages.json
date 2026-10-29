@@ -347,8 +347,20 @@
     "description": "Live stream and ad handling setting"
   },
   "muteDuringAds": {
-    "message": "विज्ञापन के दौरान म्यूट करें और उसके बाद वीडियो रोकें",
+    "message": "विज्ञापन के दौरान म्यूट करें",
     "description": "Live stream and ad handling setting"
+  },
+  "pauseAfterAdEnds": {
+    "message": "विज्ञापन समाप्त होने पर रोकें",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "विज्ञापन अपने आप छोड़ें",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "विज्ञापन 16x तेज़ चलाएँ",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "वीडियो पर खिसकाए जा सकने वाले नियंत्रण दिखाएँ",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "शॉर्टकट कार्रवाई विफल हुई."
   },
-  "autoPipOnTabSwitch": {
-    "message": "टैब बदलते समय वीडियो को पिक्चर-इन-पिक्चर में खोलें"
-  },
   "pauseOnLowBattery": {
     "message": "बैटरी कम होने पर बैकग्राउंड वीडियो रोकें"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "विज्ञापन चल रहा हो तो वीडियो विज्ञापन खत्म होने तक म्यूट रहता है और फिर रुक जाता है।",
+    "message": "विज्ञापन चलने के दौरान वीडियो म्यूट करें।",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "वीडियो रोकने से पहले विज्ञापन समाप्त होने की प्रतीक्षा करें।",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "उपलब्ध होने पर विज्ञापन छोड़ने वाले दिखाई देने वाले नियंत्रणों पर अपने आप क्लिक करें।",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "विज्ञापन 16x गति से चलाएँ और बाद में पिछली प्लेबैक गति बहाल करें।",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "यह अलग-अलग टैब में प्लेबैक नियंत्रित करता है, एक ही पेज के वीडियो नहीं। सक्रिय टैब का मीडिया अन्य टैब के मीडिया को रोकता है; उसके रुकने पर पिछला टैब फिर से चलता है।",

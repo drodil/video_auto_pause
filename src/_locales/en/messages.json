@@ -347,8 +347,20 @@
     "description": "Mute live videos when an automatic pause would occur"
   },
   "muteDuringAds": {
-    "message": "Mute during ads, then pause when they end",
+    "message": "Mute during ads",
     "description": "Mute media while a recognized ad is playing"
+  },
+  "pauseAfterAdEnds": {
+    "message": "Pause after ad ends",
+    "description": "Pause a video after an ad ends"
+  },
+  "autoSkipAds": {
+    "message": "Automatically skip ads",
+    "description": "Automatically skip available ad controls"
+  },
+  "speedUpAds": {
+    "message": "Speed up ads to 16x",
+    "description": "Play ads at 16x speed"
   },
   "showVideoOverlay": {
     "message": "Show draggable on-video controls",
@@ -517,9 +529,6 @@
   "shortcutActionFailed": {
     "message": "The shortcut action failed."
   },
-  "autoPipOnTabSwitch": {
-    "message": "Open video in Picture-in-Picture when switching tabs"
-  },
   "pauseOnLowBattery": {
     "message": "Pause background videos when battery is low"
   },
@@ -608,8 +617,20 @@
     "description": "Tooltip for the live stream setting."
   },
   "muteDuringAdsDescription": {
-    "message": "If an ad is playing, the video is muted until the ad ends and then paused.",
+    "message": "Mute videos while an ad is playing.",
     "description": "Tooltip for the ad muting setting."
+  },
+  "pauseAfterAdEndsDescription": {
+    "message": "Wait for an ad to end before pausing the video.",
+    "description": "Tooltip for the post-ad pause setting."
+  },
+  "autoSkipAdsDescription": {
+    "message": "Click visible skip-ad controls automatically when available.",
+    "description": "Tooltip for automatic ad skipping."
+  },
+  "speedUpAdsDescription": {
+    "message": "Play the ad at 16x and restore the previous playback speed afterward.",
+    "description": "Tooltip for ad playback speed."
   },
   "prioritizeActiveTabMediaDescription": {
     "message": "Controls playback across tabs, not videos on the same page. Media in the active tab pauses media in other tabs; the previous tab resumes when it stops.",
