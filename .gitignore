@@ -9,3 +9,4 @@ playwright-report/
 test-results/
 test-dist/
 .playwright-mcp/
+graphify-out/
