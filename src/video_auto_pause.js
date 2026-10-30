@@ -85,6 +85,16 @@ if (window.autoPauseInjected !== true) {
   });
 
   let settingsGeneration = 0;
+  // Safe mode lasts for the page's lifetime, even when settings change later.
+  function applySafeModeSettings() {
+    const disabledOptions = Object.fromEntries(
+      Object.entries(DEFAULT_SETTINGS)
+        .filter(([, value]) => typeof value === "boolean")
+        .map(([key]) => [key, false]),
+    );
+    settings = { ...settings, ...disabledOptions, disabled: true };
+  }
+
   async function refreshSettings() {
     const generation = ++settingsGeneration;
     const profileSettings = await getActiveProfileSettings();
@@ -100,6 +110,9 @@ if (window.autoPauseInjected !== true) {
       settings = { ...siteSettings, ...inactiveSiteOverrides };
     } else {
       settings = siteSettings;
+    }
+    if (safeModeTriggered) {
+      applySafeModeSettings();
     }
     toggleCursorTracking(settings.cursorTracking);
     togglePipButtons();
@@ -343,7 +356,8 @@ if (window.autoPauseInjected !== true) {
 
   let cursorTrackingEnabled = false;
   function toggleCursorTracking(enable) {
-    if (enable && !cursorTrackingEnabled) {
+    // Frame-relative coordinates would treat iframe edges as window edges.
+    if (enable && !cursorTrackingEnabled && window.top === window) {
       debugLog("Enabling cursor tracking listeners");
       window.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseleave", onMouseLeave);
@@ -446,15 +460,11 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     safeModeTriggered = true;
-    const disabledOptions = Object.fromEntries(
-      Object.entries(DEFAULT_SETTINGS)
-        .filter(([, value]) => typeof value === "boolean")
-        .map(([key]) => [key, false]),
-    );
-    settings = { ...settings, ...disabledOptions, disabled: true };
+    applySafeModeSettings();
     toggleCursorTracking(false);
     togglePipButtons();
     toggleVideoOverlays();
+    updateAdMonitoring();
     sendMessage({
       contentScriptError: {
         message: String(errorMessage).slice(0, 240),
@@ -742,6 +752,20 @@ if (window.autoPauseInjected !== true) {
     }
   }
 
+  function isEditableShortcutTarget(event) {
+    // composedPath() reaches inputs inside shadow roots that event.target hides.
+    return event
+      .composedPath()
+      .some(
+        (node) =>
+          node instanceof Element &&
+          (node.isContentEditable ||
+            node.matches(
+              "input, textarea, select, [role='textbox'], .vap-video-overlay",
+            )),
+      );
+  }
+
   function handleContentShortcut(event) {
     if (
       !settings.contentShortcutsEnabled ||
@@ -750,9 +774,7 @@ if (window.autoPauseInjected !== true) {
       event.ctrlKey ||
       event.metaKey ||
       event.repeat ||
-      event.target?.closest?.(
-        "input, textarea, select, [contenteditable='true'], [role='textbox'], .vap-video-overlay",
-      ) ||
+      isEditableShortcutTarget(event) ||
       !isSiteEnabled(location.hostname.toLowerCase(), settings)
     ) {
       return;
@@ -2060,17 +2082,11 @@ if (window.autoPauseInjected !== true) {
   }
 
   async function toggleCurrentSite() {
-    const hostname = location.hostname.toLowerCase();
-    const profileSettings = await getActiveProfileSettings();
-    const existingRule = findSiteRule(hostname, profileSettings);
-    await updateActiveProfileSettings({
-      siteRules: upsertSiteRule(profileSettings.siteRules, {
-        overrides: {},
-        ...existingRule,
-        domain: existingRule?.domain ?? hostname,
-        enabled: !isSiteEnabled(hostname, profileSettings),
-      }),
-    });
+    // The background owns settings writes so they cannot overwrite each other.
+    const response = await env.runtime.sendMessage({ siteAction: "toggle" });
+    if (response?.error) {
+      throw new Error(response.error);
+    }
   }
 
   function injectVideoOverlay(video) {

@@ -370,6 +370,31 @@ test.describe("profiles", () => {
     ]);
   });
 
+  test("keeps concurrent updates from overwriting each other", async () => {
+    s.navigator = globalThis.navigator;
+    const storage = createStorage();
+    await s.loadProfiles(storage, { persist: true });
+    const get = storage.sync.get;
+    storage.sync.get = async (keys) => {
+      const result = await get(keys);
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      return result;
+    };
+    await Promise.all([
+      s.updateActiveProfileSettings({ muteVideo: true }, storage),
+      s.updateActiveProfileSettings({ rewindSeconds: 5 }, storage),
+      s.updateActiveProfileSettingsWith(
+        (settings) => ({ disabled: !settings.disabled }),
+        storage,
+      ),
+    ]);
+    expect(await s.getActiveProfileSettings(storage)).toMatchObject({
+      muteVideo: true,
+      rewindSeconds: 5,
+      disabled: true,
+    });
+  });
+
   test("keeps the active profile per device while syncing profiles", async () => {
     const storage = createStorage();
     const workId = await s.createProfile("Work", storage);

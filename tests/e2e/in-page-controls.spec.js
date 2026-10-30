@@ -48,6 +48,29 @@ test.describe("In-page controls", () => {
     await expect
       .poll(() => video.evaluate((element) => element.currentTime))
       .toBe(5);
+
+    for (const id of ["shadow-host", "plain-editable"]) {
+      await page.evaluate((targetId) => {
+        if (targetId === "shadow-host") {
+          const host = document.createElement("div");
+          host.id = targetId;
+          document.body.appendChild(host);
+          const input = document.createElement("input");
+          host.attachShadow({ mode: "open" }).appendChild(input);
+          input.focus();
+        } else {
+          const editable = document.createElement("div");
+          editable.id = targetId;
+          editable.setAttribute("contenteditable", "plaintext-only");
+          document.body.appendChild(editable);
+          editable.focus();
+        }
+      }, id);
+      await page.keyboard.press("k");
+      await expect
+        .poll(() => video.evaluate((element) => element.currentTime))
+        .toBe(5);
+    }
   });
 
   test("supports A-B loops, local playback markers, and caption shortcuts", async ({

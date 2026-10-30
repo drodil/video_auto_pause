@@ -593,7 +593,9 @@ async function importSettingsFile(file) {
   await optionsReady;
   const imported = validateSettingsPayload(JSON.parse(await file.text()));
   if (imported.profiles) {
-    await storeProfiles(imported.profiles, imported.activeProfileId);
+    await withSettingsLock(() =>
+      storeProfiles(imported.profiles, imported.activeProfileId),
+    );
     await restoreProfiles();
     await queueOptionsRestore();
   } else {

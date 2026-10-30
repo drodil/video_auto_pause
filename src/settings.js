@@ -646,77 +646,105 @@ async function getActiveProfileSettings(storage = getExtensionStorage()) {
   return profiles.find((profile) => profile.id === activeProfileId).settings;
 }
 
-async function updateActiveProfileSettings(
+// Serializes read-modify-write updates across the background and extension
+// pages, which share an origin. Callers must not nest it (it would deadlock).
+function withSettingsLock(callback) {
+  const locks = globalThis.navigator?.locks;
+  return locks
+    ? locks.request("vap-settings-write", () => callback())
+    : callback();
+}
+
+function updateActiveProfileSettings(
   settingsPatch,
   storage = getExtensionStorage(),
 ) {
-  const { profiles, activeProfileId } = await loadProfiles(storage, {
-    persist: true,
-  });
-  const profile = profiles.find((entry) => entry.id === activeProfileId);
-  const updatedProfile = {
-    ...profile,
-    settings: normalizeSettings({ ...profile.settings, ...settingsPatch }),
-  };
-  await storage.sync.set({
-    [getProfileStorageKey(profile.id)]: toStoredProfile(updatedProfile),
-  });
-  return updatedProfile.settings;
+  return updateActiveProfileSettingsWith(() => settingsPatch, storage);
 }
 
-async function activateProfile(profileId, storage = getExtensionStorage()) {
-  const { profiles } = await loadProfiles(storage, { persist: true });
-  if (!profiles.some((profile) => profile.id === profileId)) {
-    throw new Error("The selected settings profile does not exist.");
-  }
-  await storage.local.set({ [ACTIVE_PROFILE_KEY]: profileId });
+// Applies a patch computed from the latest stored settings of the active profile.
+function updateActiveProfileSettingsWith(
+  createPatch,
+  storage = getExtensionStorage(),
+) {
+  return withSettingsLock(async () => {
+    const { profiles, activeProfileId } = await loadProfiles(storage, {
+      persist: true,
+    });
+    const profile = profiles.find((entry) => entry.id === activeProfileId);
+    const updatedProfile = {
+      ...profile,
+      settings: normalizeSettings({
+        ...profile.settings,
+        ...createPatch(profile.settings),
+      }),
+    };
+    await storage.sync.set({
+      [getProfileStorageKey(profile.id)]: toStoredProfile(updatedProfile),
+    });
+    return updatedProfile.settings;
+  });
+}
+
+function activateProfile(profileId, storage = getExtensionStorage()) {
+  return withSettingsLock(async () => {
+    const { profiles } = await loadProfiles(storage, { persist: true });
+    if (!profiles.some((profile) => profile.id === profileId)) {
+      throw new Error("The selected settings profile does not exist.");
+    }
+    await storage.local.set({ [ACTIVE_PROFILE_KEY]: profileId });
+  });
 }
 
 // Saves the active settings as a new profile and activates it.
 async function createProfile(name, storage = getExtensionStorage()) {
   const profileName = validateProfileName(name);
-  const { profiles, activeProfileId } = await loadProfiles(storage, {
-    persist: true,
+  return withSettingsLock(async () => {
+    const { profiles, activeProfileId } = await loadProfiles(storage, {
+      persist: true,
+    });
+    if (
+      profileName.toLowerCase() === DEFAULT_PROFILE_ID ||
+      profiles.some(
+        (profile) => profile.name.toLowerCase() === profileName.toLowerCase(),
+      )
+    ) {
+      throw new Error("A profile with that name already exists.");
+    }
+    const activeProfile = profiles.find(
+      (profile) => profile.id === activeProfileId,
+    );
+    const id = crypto.randomUUID();
+    await storeProfiles(
+      [
+        ...profiles,
+        { id, name: profileName, settings: { ...activeProfile.settings } },
+      ],
+      id,
+      storage,
+    );
+    return id;
   });
-  if (
-    profileName.toLowerCase() === DEFAULT_PROFILE_ID ||
-    profiles.some(
-      (profile) => profile.name.toLowerCase() === profileName.toLowerCase(),
-    )
-  ) {
-    throw new Error("A profile with that name already exists.");
-  }
-  const activeProfile = profiles.find(
-    (profile) => profile.id === activeProfileId,
-  );
-  const id = crypto.randomUUID();
-  await storeProfiles(
-    [
-      ...profiles,
-      { id, name: profileName, settings: { ...activeProfile.settings } },
-    ],
-    id,
-    storage,
-  );
-  return id;
 }
 
-async function deleteProfile(profileId, storage = getExtensionStorage()) {
-  const { profiles, activeProfileId } = await loadProfiles(storage, {
-    persist: true,
+function deleteProfile(profileId, storage = getExtensionStorage()) {
+  return withSettingsLock(async () => {
+    const { profiles, activeProfileId } = await loadProfiles(storage, {
+      persist: true,
+    });
+    if (profileId === DEFAULT_PROFILE_ID) {
+      throw new Error("The Default profile cannot be deleted.");
+    }
+    if (!profiles.some((profile) => profile.id === profileId)) {
+      throw new Error("The selected settings profile does not exist.");
+    }
+    const nextActiveProfileId =
+      activeProfileId === profileId ? DEFAULT_PROFILE_ID : activeProfileId;
+    await storeProfiles(
+      profiles.filter((profile) => profile.id !== profileId),
+      nextActiveProfileId,
+      storage,
+    );
+    return nextActiveProfileId;
   });
-  if (profileId === DEFAULT_PROFILE_ID) {
-    throw new Error("The Default profile cannot be deleted.");
-  }
-  if (!profiles.some((profile) => profile.id === profileId)) {
-    throw new Error("The selected settings profile does not exist.");
-  }
-  const nextActiveProfileId =
-    activeProfileId === profileId ? DEFAULT_PROFILE_ID : activeProfileId;
-  await storeProfiles(
-    profiles.filter((profile) => profile.id !== profileId),
-    nextActiveProfileId,
-    storage,
-  );
-  return nextActiveProfileId;
 }

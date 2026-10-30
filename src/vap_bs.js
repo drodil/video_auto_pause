@@ -922,6 +922,25 @@ async function handlePageMessage(request, sender) {
     return { pinned: await toggleTabPin(tab) };
   }
 
+  if (request.siteAction === "toggle") {
+    const hostname = new URL(sender.url ?? tab.url).hostname.toLowerCase();
+    if (!hostname) {
+      throw new Error("This page has no site to toggle.");
+    }
+    const updated = await updateActiveProfileSettingsWith((settings) => {
+      const existingRule = findSiteRule(hostname, settings);
+      return {
+        siteRules: upsertSiteRule(settings.siteRules, {
+          overrides: {},
+          ...existingRule,
+          domain: existingRule?.domain ?? hostname,
+          enabled: !isSiteEnabled(hostname, settings),
+        }),
+      };
+    });
+    return { enabled: isSiteEnabled(hostname, updated) };
+  }
+
   if ("statsEvent" in request) {
     await recordStatistic(request.statsEvent, request.preventedSeconds);
     return;
@@ -1078,9 +1097,10 @@ env.runtime.onMessage.addListener((request, sender, sendResponse) => {
 async function handleCommand(command) {
   await settingsReady;
   if (command === "toggle-extension") {
-    const disabled = !globalSettings.disabled;
+    const { disabled } = await updateActiveProfileSettingsWith((settings) => ({
+      disabled: !settings.disabled,
+    }));
     debugLog(`Toggle extension command received, extension state ${disabled}`);
-    await updateActiveProfileSettings({ disabled });
     settingsReady = refreshSettings();
     await settingsReady;
   } else if (command === "toggle-tab") {
@@ -1192,7 +1212,7 @@ env.runtime.onInstalled.addListener(async (details) => {
   }
   const tabs = await env.tabs.query({});
   for (const tab of tabs) {
-    if (!tab.id || !tab.url?.startsWith("http")) {
+    if (!tab.id || !/^(https?|file):/.test(tab.url ?? "")) {
       continue;
     }
     try {
