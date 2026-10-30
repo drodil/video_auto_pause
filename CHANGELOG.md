@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.1](https://github.com/drodil/video_auto_pause/compare/v1.15.0...v1.15.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **playback:** resolve ad handling and race conditions ([1001c90](https://github.com/drodil/video_auto_pause/commit/1001c90e47e824bbe254e3f7f711f805a4cc5ecb))
+
 ## [1.15.0](https://github.com/drodil/video_auto_pause/compare/v1.14.1...v1.15.0) (2026-10-29)
 
 
