@@ -65,11 +65,13 @@ globalThis.MAX_PROFILE_NAME_LENGTH = 40;
 globalThis.MAX_SHORTCUT_KEY_LENGTH = 20;
 
 // Numeric settings are clamped to [0, max]; playbackSpeed uses 0.25 steps and
-// every other numeric setting is a whole number.
+// every other numeric setting is a whole number. Millisecond delays are capped
+// at the largest value setTimeout supports without overflowing to ~0.
+globalThis.MAX_TIMER_DELAY = 2147483647;
 globalThis.NUMERIC_SETTING_LIMITS = Object.freeze({
-  pauseDelay: Object.freeze({ max: Number.POSITIVE_INFINITY }),
-  resumeDelay: Object.freeze({ max: Number.POSITIVE_INFINITY }),
-  fadeDuration: Object.freeze({ max: Number.POSITIVE_INFINITY }),
+  pauseDelay: Object.freeze({ max: MAX_TIMER_DELAY }),
+  resumeDelay: Object.freeze({ max: MAX_TIMER_DELAY }),
+  fadeDuration: Object.freeze({ max: MAX_TIMER_DELAY }),
   rewindSeconds: Object.freeze({ max: 60 }),
   playbackSpeed: Object.freeze({ max: 4, step: 0.25 }),
   idlePauseMinutes: Object.freeze({ max: 240 }),
@@ -376,6 +378,10 @@ function validateSettings(settings) {
         throw new Error("Site rules must be an array.");
       }
       validated.siteRules = settings.siteRules.map(validateSiteRule);
+      const domains = validated.siteRules.map((rule) => rule.domain);
+      if (new Set(domains).size !== domains.length) {
+        throw new Error("Site rules must use unique domains.");
+      }
       continue;
     }
     validated[setting] = validateSettingValue(

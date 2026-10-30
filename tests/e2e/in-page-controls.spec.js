@@ -151,6 +151,46 @@ test.describe("In-page controls", () => {
     await expect(siteToggle).toHaveAttribute("aria-pressed", "true");
   });
 
+  test("recreates the video overlay when the player is moved or reinserted", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    await extension.updateSettings({
+      showVideoOverlay: true,
+      singleVideoPlayback: false,
+    });
+    await page.goto(server.url("video.html"));
+    const overlay = page.locator(".vap-video-overlay");
+    await expect(overlay).toHaveCount(1, { timeout: 10000 });
+
+    await page.evaluate(() => {
+      const wrapper = document.createElement("div");
+      wrapper.id = "moved-wrapper";
+      document.body.append(wrapper);
+      wrapper.append(document.getElementById("v"));
+    });
+    await expect(
+      page.locator("#moved-wrapper > .vap-video-overlay"),
+    ).toHaveCount(1);
+    await expect(overlay).toHaveCount(1);
+
+    await page.evaluate(() => {
+      window.detachedVideo = document.getElementById("v");
+      window.detachedVideo.remove();
+    });
+    await expect(overlay).toHaveCount(0);
+    await page.evaluate(() => {
+      const wrapper = document.createElement("div");
+      wrapper.id = "reinserted-wrapper";
+      document.body.append(wrapper);
+      wrapper.append(window.detachedVideo);
+    });
+    await expect(
+      page.locator("#reinserted-wrapper > .vap-video-overlay"),
+    ).toHaveCount(1);
+  });
+
   test("supports touch interaction with the video overlay", async ({
     page,
     context,

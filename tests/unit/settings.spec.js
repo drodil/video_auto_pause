@@ -151,6 +151,8 @@ test.describe("normalization and validation", () => {
     expect(s.clampNumericSetting("playbackSpeed", 1.6)).toBe(1.5);
     expect(s.clampNumericSetting("idlePauseMinutes", 1000)).toBe(240);
     expect(s.clampNumericSetting("idlePauseMinutes", "abc")).toBe(0);
+    expect(s.clampNumericSetting("pauseDelay", 2 ** 31)).toBe(2 ** 31 - 1);
+    expect(s.clampNumericSetting("resumeDelay", 1e15)).toBe(2 ** 31 - 1);
   });
 
   test("fills defaults and drops unknown or malformed data", () => {
@@ -222,6 +224,15 @@ test.describe("normalization and validation", () => {
     [
       "invalid enabled flags",
       { siteRules: [{ domain: "a.b", enabled: "no" }] },
+    ],
+    [
+      "duplicate site rule domains",
+      {
+        siteRules: [
+          { domain: "EXAMPLE.com", enabled: true },
+          { domain: "https://example.com/", enabled: false },
+        ],
+      },
     ],
   ]) {
     test(`rejects ${name}`, () => {

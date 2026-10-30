@@ -157,6 +157,55 @@ test.describe("Muting, ads, fading, and audio", () => {
     );
   });
 
+  test("mutes ads in the foreground and ignores non-ad skip links", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    await extension.updateSettings({
+      autoSkipAds: true,
+      muteDuringAds: true,
+      speedUpAds: false,
+      pauseAfterAdEnds: false,
+    });
+    const video = await openVideoPage(page, server.url("video.html"));
+    await video.evaluate(async (element) => {
+      await element.play();
+      element.muted = false;
+      const nav = document.createElement("button");
+      nav.id = "skip-nav";
+      nav.setAttribute("aria-label", "Skip navigation");
+      nav.addEventListener("click", () => {
+        nav.dataset.clicked = "true";
+      });
+      document.body.prepend(nav);
+      const ad = document.createElement("div");
+      ad.className = "ad-showing";
+      ad.id = "test-ad";
+      const skip = document.createElement("button");
+      skip.id = "ad-skip";
+      skip.className = "ytp-skip-ad-button";
+      skip.textContent = "Skip";
+      skip.addEventListener("click", () => {
+        skip.dataset.clicked = "true";
+      });
+      ad.append(skip);
+      document.body.append(ad);
+    });
+
+    await expect(video).toHaveJSProperty("muted", true);
+    await expect(page.locator("#ad-skip")).toHaveAttribute(
+      "data-clicked",
+      "true",
+    );
+    await expect(page.locator("#skip-nav")).not.toHaveAttribute(
+      "data-clicked",
+      "true",
+    );
+    await page.locator("#test-ad").evaluate((ad) => ad.remove());
+    await expect(video).toHaveJSProperty("muted", false);
+  });
+
   test("does not click ad skip controls when automatic skipping is disabled", async ({
     page,
     server,

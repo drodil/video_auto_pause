@@ -191,6 +191,57 @@ test.describe("Visibility and autoplay", () => {
     await expect(video).toHaveJSProperty("paused", false);
   });
 
+  test("keeps scroll pause working for a video that is detached and reinserted", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    await extension.updateSettings({ scrollpause: true });
+    const video = await openVideoPage(page, server.url("video.html"));
+    await page.evaluate(async () => {
+      const element = document.getElementById("v");
+      element.remove();
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      const wrapper = document.createElement("div");
+      document.body.prepend(wrapper);
+      wrapper.append(element);
+      document.body.style.height = "5000px";
+      const spacer = document.createElement("div");
+      spacer.style.height = "2000px";
+      document.body.appendChild(spacer);
+    });
+    await video.evaluate(async (element) => element.play());
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await page.evaluate(() => window.scrollTo(0, 2000));
+    await expect(video).toHaveJSProperty("paused", true);
+  });
+
+  test("pauses an off-screen video when scroll pause is enabled later", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    await extension.updateSettings({
+      scrollpause: false,
+      singleVideoPlayback: false,
+    });
+    const video = await openVideoPage(page, server.url("video.html"));
+    await page.evaluate(() => {
+      document.body.style.height = "5000px";
+      const spacer = document.createElement("div");
+      spacer.style.height = "2000px";
+      document.body.appendChild(spacer);
+    });
+    await video.evaluate(async (element) => element.play());
+    await page.evaluate(() => window.scrollTo(0, 2000));
+    await page.waitForTimeout(300);
+    await expect(video).toHaveJSProperty("paused", false);
+
+    await extension.updateSettings({ scrollpause: true });
+    await expect(video).toHaveJSProperty("paused", true);
+  });
+
   test("should keep playing while any video remains visible", async ({
     page,
     context,

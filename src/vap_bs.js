@@ -67,6 +67,9 @@ async function initialize() {
   await loadNavigationState();
   await refreshSettings();
   await registerContentScriptIfNeeded();
+  await restoreSleepTimer().catch((error) => {
+    console.error("Video Autopause could not restore the sleep timer:", error);
+  });
   previousIdleState = await env.idle.queryState(getIdleDetectionInterval());
   state = previousIdleState;
 }
@@ -165,6 +168,23 @@ async function setSleepTimer(minutes) {
 async function cancelSleepTimer() {
   await env.alarms.clear(SLEEP_TIMER_ALARM);
   await env.storage.local.remove("vapSleepTimerExpiresAt");
+}
+
+// Firefox does not persist alarms across browser restarts.
+async function restoreSleepTimer() {
+  const { vapSleepTimerExpiresAt } = await env.storage.local.get(
+    "vapSleepTimerExpiresAt",
+  );
+  if (!Number.isFinite(vapSleepTimerExpiresAt)) {
+    return;
+  }
+  if (vapSleepTimerExpiresAt <= Date.now()) {
+    await pauseEverythingForSleepTimer();
+  } else if (!(await env.alarms.get(SLEEP_TIMER_ALARM))) {
+    await env.alarms.create(SLEEP_TIMER_ALARM, {
+      when: vapSleepTimerExpiresAt,
+    });
+  }
 }
 
 async function pauseEverythingForSleepTimer() {
@@ -626,8 +646,23 @@ env.storage.onChanged.addListener(async function (changes, areaName) {
   }
 });
 
+// Tab activation and window focus handlers read and update the shared
+// navigation state, so they must run one at a time in event order.
+let navigationOperation = Promise.resolve();
+function queueNavigationOperation(operation, description) {
+  const nextOperation = navigationOperation.then(operation);
+  navigationOperation = nextOperation.catch((error) => {
+    console.error(`Video Autopause could not handle ${description}:`, error);
+  });
+  return navigationOperation;
+}
+
 // Tab change listener
-env.tabs.onActivated.addListener(async function (info) {
+env.tabs.onActivated.addListener((info) =>
+  queueNavigationOperation(() => handleTabActivated(info), "tab activation"),
+);
+
+async function handleTabActivated(info) {
   await settingsReady;
 
   let tab;
@@ -695,7 +730,7 @@ env.tabs.onActivated.addListener(async function (info) {
     previousTabs,
   });
   await refreshIcon(info.tabId);
-});
+}
 
 env.tabs.onCreated.addListener(async function (tab) {
   await settingsReady;
@@ -773,7 +808,14 @@ env.tabs.onRemoved.addListener(async function (tabId) {
 });
 
 // Window focus listener
-env.windows.onFocusChanged.addListener(async function (windowId) {
+env.windows.onFocusChanged.addListener((windowId) =>
+  queueNavigationOperation(
+    () => handleWindowFocusChanged(windowId),
+    "window focus change",
+  ),
+);
+
+async function handleWindowFocusChanged(windowId) {
   await settingsReady;
 
   if (windowId !== previousWindowId) {
@@ -816,7 +858,7 @@ env.windows.onFocusChanged.addListener(async function (windowId) {
     await sessionStorage.set({ previousWindowId, previousTabs });
     await refreshIcon();
   }
-});
+}
 
 env.windows.onRemoved.addListener(function (windowId) {
   delete previousTabs[windowId];

@@ -36,7 +36,7 @@ if (window.autoPauseInjected !== true) {
   let audioOutputDeviceIds = null;
   let audioDeviceListenerRegistered = false;
   const batteryPausedVideos = new WeakSet();
-  const adMutedVideos = new WeakSet();
+  const adMutedVideos = new Set();
 
   function recordUserInteraction(event) {
     if (!event.isTrusted) {
@@ -84,8 +84,14 @@ if (window.autoPauseInjected !== true) {
     showVideoOverlay: false,
   });
 
+  let settingsGeneration = 0;
   async function refreshSettings() {
+    const generation = ++settingsGeneration;
     const profileSettings = await getActiveProfileSettings();
+    // A newer refresh started while this one was reading storage.
+    if (generation !== settingsGeneration) {
+      return;
+    }
     const hostname = location.hostname.toLowerCase();
     const siteSettings = getSiteSettings(hostname, profileSettings);
     if (profileSettings.disabled) {
@@ -244,7 +250,11 @@ if (window.autoPauseInjected !== true) {
   document.addEventListener(
     "ended",
     (event) => {
-      if (settings.pauseAtEnd && event.target instanceof HTMLVideoElement) {
+      if (
+        settings.pauseAtEnd &&
+        event.target instanceof HTMLVideoElement &&
+        !isAdPlaying()
+      ) {
         lastVideoEndedAt = Date.now();
       }
     },
@@ -381,6 +391,7 @@ if (window.autoPauseInjected !== true) {
           }
         }
         reportMediaState();
+        reportVisibility();
         scheduleVideoArbitration();
         updateAdMonitoring();
         if (!settings.muteDuringAds) {
@@ -936,6 +947,7 @@ if (window.autoPauseInjected !== true) {
     try {
       extensionInitiatedPlays.add(video);
       await video.play();
+      extensionInitiatedPlays.delete(video);
       if (videoActionTokens.get(video) !== actionToken) {
         return;
       }
@@ -955,6 +967,7 @@ if (window.autoPauseInjected !== true) {
         await fadeAudio(video, targetVolume, settings.fadeDuration);
       }
     } catch (error) {
+      extensionInitiatedPlays.delete(video);
       console.error("Video Auto Pause could not resume a video:", error);
       if (targetVolume !== undefined) {
         setVideoVolume(video, targetVolume);
@@ -1015,55 +1028,149 @@ if (window.autoPauseInjected !== true) {
 
   const adSkipTextPattern =
     /skip|saltar|sauter|überspring|omitir|pular|overslaan|hop over|ohita|пропустить|пропуст|跳过|略過|건너뛰|bỏ qua|تخطى|تخطي|छोड़ें/i;
-  const adSkipButtonSelector =
-    ".ytp-ad-skip-button, .ytp-ad-skip-button-modern, .ytp-skip-ad-button, button[aria-label], button[title], [role='button'][aria-label], [role='button'][title], [data-testid*='skip' i], [data-test*='skip' i], [class*='skip' i], button, [role='button']";
+  // Accessibility/content skip links (e.g. YouTube's "Skip navigation") must never be mistaken for ad controls.
+  const nonAdSkipPattern =
+    /skip[\s-]*(to|navigation|nav|link|intro|recap|credits|main|content)/i;
+  const knownAdSkipSelector =
+    ".ytp-skip-ad-button, .ytp-ad-skip-button-modern, .ytp-ad-skip-button, .videoAdUiSkipButton, [id^='skip-button']";
+  const genericSkipCandidateSelector =
+    "button, [role='button'], [data-testid*='skip' i], [data-test*='skip' i], [class*='skip' i]";
+  const adContainerSelector = [
+    ...activeAdMarkers,
+    ...visibleAdMarkers,
+    ".video-ads",
+    ".ytp-ad-module",
+  ].join(", ");
   const lastAdSkipAttempts = new WeakMap();
   const adPlaybackSpeeds = new WeakMap();
   const adPlaybackSpeedVideos = new Set();
+  const adUnmutedByUser = new Set();
+  const adMarkerObserver = new MutationObserver(() => scheduleAdCheck());
   let adMonitorTimer;
   let adEndTimer;
+  let adCheckScheduled = false;
   let adCurrentlyPlaying = false;
+  let lastAdSkipClickAt = 0;
 
   function restoreAdMutedVideos() {
-    for (const video of allVideos()) {
-      if (adMutedVideos.has(video)) {
-        adMutedVideos.delete(video);
-        void handleMuteAction(
-          video,
-          "unmute",
-          videoActionTokens.get(video),
-        ).catch((error) => {
-          console.error("Video Auto Pause could not restore ad audio:", error);
-        });
+    for (const video of [...adMutedVideos]) {
+      adMutedVideos.delete(video);
+      if (!video.isConnected) {
+        extensionMutedVideos.delete(video);
+        continue;
+      }
+      void handleMuteAction(
+        video,
+        "unmute",
+        videoActionTokens.get(video),
+      ).catch((error) => {
+        console.error("Video Auto Pause could not restore ad audio:", error);
+      });
+    }
+  }
+
+  // Prefer videos inside the ad marker (e.g. YouTube's #movie_player.ad-showing)
+  // so unrelated players on the page are left alone.
+  function getAdVideos() {
+    const scopedVideos = new Set();
+    for (const marker of document.querySelectorAll(
+      activeAdMarkers.join(", "),
+    )) {
+      if (marker.localName === "video") {
+        scopedVideos.add(marker);
+      }
+      for (const video of marker.querySelectorAll("video")) {
+        scopedVideos.add(video);
+      }
+    }
+    if (scopedVideos.size > 0) {
+      return { videos: [...scopedVideos], scoped: true };
+    }
+    return {
+      videos: allVideos().filter((video) => !video.paused && !video.ended),
+      scoped: false,
+    };
+  }
+
+  function observeAdMarkers() {
+    for (const marker of document.querySelectorAll(
+      activeAdMarkers.join(", "),
+    )) {
+      adMarkerObserver.observe(marker, {
+        attributes: true,
+        attributeFilter: [
+          "class",
+          "data-ad-playing",
+          "data-ad-state",
+          "data-is-ad",
+          "data-ad",
+        ],
+      });
+    }
+  }
+
+  function speedUpAdVideos(videos) {
+    for (const video of videos) {
+      if (video.ended) {
+        continue;
+      }
+      if (!adPlaybackSpeeds.has(video)) {
+        adPlaybackSpeeds.set(video, video.playbackRate);
+        adPlaybackSpeedVideos.add(video);
+      }
+      if (video.playbackRate !== 16) {
+        video.playbackRate = 16;
       }
     }
   }
 
-  function syncAdPlaybackSpeed(adPlaying) {
-    const shouldSpeedUp = settings.speedUpAds && adPlaying;
-    if (shouldSpeedUp) {
-      for (const video of allVideos()) {
-        if (video.paused || video.ended) {
-          continue;
-        }
-        if (!adPlaybackSpeeds.has(video)) {
-          adPlaybackSpeeds.set(video, video.playbackRate);
-          adPlaybackSpeedVideos.add(video);
-        }
-        if (video.playbackRate !== 16) {
-          video.playbackRate = 16;
-        }
-      }
-    } else {
-      for (const video of adPlaybackSpeedVideos) {
-        const previousSpeed = adPlaybackSpeeds.get(video);
+  // Restores the rate but keeps the recorded speed until the ad break is over,
+  // so a follow-up ad in the same pod does not record 16x as the original rate.
+  function restoreAdPlaybackSpeeds({ forget }) {
+    for (const video of [...adPlaybackSpeedVideos]) {
+      const previousSpeed = adPlaybackSpeeds.get(video);
+      if (forget) {
         adPlaybackSpeeds.delete(video);
         adPlaybackSpeedVideos.delete(video);
-        if (video.playbackRate === 16) {
-          video.playbackRate = previousSpeed;
-          applySiteSpeed(video);
+      }
+      if (video.playbackRate === 16) {
+        video.playbackRate = previousSpeed;
+      }
+      applySiteSpeed(video);
+    }
+  }
+
+  function muteAdVideos(videos) {
+    for (const video of videos) {
+      if (adUnmutedByUser.has(video)) {
+        continue;
+      }
+      if (adMutedVideos.has(video)) {
+        if (!extensionMutedVideos.has(video)) {
+          adMutedVideos.delete(video);
+        } else if (video.muted) {
+          continue;
+        } else if (Date.now() - lastUserInteractionAt < 1500) {
+          adMutedVideos.delete(video);
+          extensionMutedVideos.delete(video);
+          adUnmutedByUser.add(video);
+          continue;
+        } else {
+          // Players may re-apply their own audio state when the next ad in a pod loads.
+          video.muted = true;
+          continue;
         }
       }
+      if (video.muted || extensionMutedVideos.has(video)) {
+        continue;
+      }
+      activeFades.get(video)?.cancel();
+      extensionMutedVideos.set(video, {
+        muted: false,
+        volume: video.volume,
+      });
+      video.muted = true;
+      adMutedVideos.add(video);
     }
   }
 
@@ -1073,64 +1180,157 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     adCurrentlyPlaying = false;
-    syncAdPlaybackSpeed(false);
+    lastAdSkipClickAt = 0;
+    adUnmutedByUser.clear();
+    adMarkerObserver.disconnect();
+    restoreAdPlaybackSpeeds({ forget: true });
     restoreAdMutedVideos();
   }
 
-  function trySkipAd() {
-    const adDetected = isAdPlaying();
-    if (adDetected) {
-      adCurrentlyPlaying = true;
-      if (adEndTimer) {
-        clearTimeout(adEndTimer);
-        adEndTimer = null;
-      }
-    } else if (adCurrentlyPlaying && !adEndTimer) {
-      adEndTimer = setTimeout(finishAdPlayback, 750);
-    }
-    syncAdPlaybackSpeed(adCurrentlyPlaying);
-    if (!settings.autoSkipAds || !adDetected) {
-      return;
-    }
+  function describeButton(button) {
+    return [
+      button.getAttribute("aria-label"),
+      button.getAttribute("title"),
+      button.getAttribute("data-testid"),
+      button.getAttribute("data-test"),
+      button.id,
+      typeof button.className === "string" ? button.className : "",
+      button.textContent,
+    ]
+      .filter((value) => typeof value === "string")
+      .join(" ");
+  }
 
-    const now = Date.now();
-    for (const element of document.querySelectorAll(adSkipButtonSelector)) {
+  function isClickableSkipButton(button) {
+    return (
+      isVisibleAdMarker(button) &&
+      !button.disabled &&
+      button.getAttribute("aria-disabled") !== "true"
+    );
+  }
+
+  function findAdSkipButton() {
+    for (const button of document.querySelectorAll(knownAdSkipSelector)) {
+      if (isClickableSkipButton(button)) {
+        return button;
+      }
+    }
+    const candidates = new Set();
+    for (const container of document.querySelectorAll(adContainerSelector)) {
+      for (const element of container.querySelectorAll(
+        genericSkipCandidateSelector,
+      )) {
+        candidates.add(element);
+      }
+    }
+    for (const element of document.querySelectorAll(
+      genericSkipCandidateSelector,
+    )) {
+      candidates.add(element);
+    }
+    for (const element of candidates) {
       const button = element.matches("button, [role='button']")
         ? element
         : (element.querySelector("button, [role='button']") ??
           element.closest("button, [role='button']") ??
           element);
-      const label = [
-        button.getAttribute("aria-label"),
-        button.getAttribute("title"),
-        button.getAttribute("data-testid"),
-        button.getAttribute("data-test"),
-        button.className,
-        button.textContent,
-      ]
-        .filter((value) => typeof value === "string")
-        .join(" ");
+      const label = describeButton(button);
       if (
-        !adSkipTextPattern.test(label) ||
-        !isVisibleAdMarker(button) ||
-        button.disabled ||
-        button.getAttribute("aria-disabled") === "true" ||
-        now - (lastAdSkipAttempts.get(button) ?? 0) < 3000
+        adSkipTextPattern.test(label) &&
+        !nonAdSkipPattern.test(label) &&
+        isClickableSkipButton(button)
       ) {
-        continue;
+        return button;
       }
+    }
+    return null;
+  }
+
+  function skipAd(adVideos) {
+    const button = findAdSkipButton();
+    if (!button) {
+      return;
+    }
+    const now = Date.now();
+    if (now - (lastAdSkipAttempts.get(button) ?? 0) >= 3000) {
       lastAdSkipAttempts.set(button, now);
+      lastAdSkipClickAt = now;
       button.click();
-      break;
+      return;
+    }
+    // Some players ignore synthetic clicks; once skipping is offered, end the ad media directly.
+    if (
+      adVideos.scoped &&
+      lastAdSkipClickAt > 0 &&
+      now - lastAdSkipClickAt >= 1000
+    ) {
+      for (const video of adVideos.videos) {
+        if (
+          Number.isFinite(video.duration) &&
+          video.duration > 0 &&
+          video.currentTime < video.duration - 0.1
+        ) {
+          video.currentTime = video.duration;
+        }
+      }
     }
   }
 
-  function updateAdMonitoring() {
-    if (settings.autoSkipAds || settings.speedUpAds) {
-      if (!adMonitorTimer) {
-        trySkipAd();
-        adMonitorTimer = setInterval(trySkipAd, 800);
+  function checkAds() {
+    const adDetected = isAdPlaying();
+    if (!adDetected) {
+      if (adCurrentlyPlaying) {
+        // Restore speed right away so the main video never runs at 16x.
+        restoreAdPlaybackSpeeds({ forget: false });
+        if (!adEndTimer) {
+          adEndTimer = setTimeout(finishAdPlayback, 300);
+        }
       }
+      return;
+    }
+    adCurrentlyPlaying = true;
+    if (adEndTimer) {
+      clearTimeout(adEndTimer);
+      adEndTimer = null;
+    }
+    observeAdMarkers();
+    const adVideos = getAdVideos();
+    if (settings.muteDuringAds) {
+      muteAdVideos(adVideos.videos);
+    }
+    if (settings.speedUpAds) {
+      speedUpAdVideos(adVideos.videos);
+    } else {
+      restoreAdPlaybackSpeeds({ forget: true });
+    }
+    if (settings.autoSkipAds) {
+      skipAd(adVideos);
+    }
+  }
+
+  function scheduleAdCheck() {
+    if (!adMonitorTimer || adCheckScheduled) {
+      return;
+    }
+    adCheckScheduled = true;
+    setTimeout(() => {
+      adCheckScheduled = false;
+      if (adMonitorTimer) {
+        checkAds();
+      }
+    }, 0);
+  }
+
+  for (const eventName of ["loadstart", "loadeddata", "playing", "emptied"]) {
+    document.addEventListener(eventName, scheduleAdCheck, true);
+  }
+
+  function updateAdMonitoring() {
+    if (settings.autoSkipAds || settings.speedUpAds || settings.muteDuringAds) {
+      if (!adMonitorTimer) {
+        adMonitorTimer = setInterval(checkAds, 500);
+      }
+      checkAds();
     } else if (adMonitorTimer) {
       clearInterval(adMonitorTimer);
       adMonitorTimer = null;
@@ -1139,7 +1339,10 @@ if (window.autoPauseInjected !== true) {
         adEndTimer = null;
       }
       adCurrentlyPlaying = false;
-      syncAdPlaybackSpeed(false);
+      lastAdSkipClickAt = 0;
+      adUnmutedByUser.clear();
+      adMarkerObserver.disconnect();
+      restoreAdPlaybackSpeeds({ forget: true });
       restoreAdMutedVideos();
     }
   }
@@ -1224,6 +1427,7 @@ if (window.autoPauseInjected !== true) {
     } else if (action === "unmute" && extensionMutedVideos.has(video)) {
       const original = extensionMutedVideos.get(video);
       extensionMutedVideos.delete(video);
+      adMutedVideos.delete(video);
       if (video.muted === true) {
         if (settings.fadeDuration > 0 && !document.hidden) {
           setVideoVolume(video, 0);
@@ -1354,6 +1558,8 @@ if (window.autoPauseInjected !== true) {
               await video.play();
             } catch (error) {
               console.error("Video Auto Pause could not play a video:", error);
+            } finally {
+              extensionInitiatedPlays.delete(video);
             }
           }
         } else {
@@ -1565,6 +1771,16 @@ if (window.autoPauseInjected !== true) {
   function attachVideoListeners(videoElement, intersectionObserver) {
     detectedVideos.add(videoElement);
     attachMediaStateListeners(videoElement);
+    // Re-run on every attach: removal cleanup undoes these when a site detaches
+    // and later reinserts the same element.
+    intersectionObserver.observe(videoElement);
+    videoResizeObserver?.observe(videoElement);
+    if (settings.showPipButton) {
+      injectPipButton(videoElement);
+    }
+    if (settings.showVideoOverlay) {
+      injectVideoOverlay(videoElement);
+    }
 
     // Track elements in memory: data attributes are copied by cloneNode(), so
     // they cannot tell whether this particular element has listeners.
@@ -1591,17 +1807,6 @@ if (window.autoPauseInjected !== true) {
       videoElement.autoplay = false;
       videoElement.removeAttribute("autoplay");
     }
-
-    if (settings.showPipButton) {
-      injectPipButton(videoElement);
-    }
-
-    if (settings.showVideoOverlay) {
-      injectVideoOverlay(videoElement);
-    }
-
-    intersectionObserver.observe(videoElement);
-    videoResizeObserver?.observe(videoElement);
 
     videoElement.addEventListener("pause", () => {
       debugLog(
@@ -2122,6 +2327,9 @@ if (window.autoPauseInjected !== true) {
     container.appendChild(overlay);
     videoOverlayCleanups.set(video, () => {
       clearTimeout(hideTimeout);
+      video.removeEventListener("play", refreshOverlay);
+      video.removeEventListener("pause", refreshOverlay);
+      video.removeEventListener("ratechange", refreshOverlay);
       container.removeEventListener("mouseenter", show);
       container.removeEventListener("mousemove", show);
       container.removeEventListener("mouseleave", hideAfterLeave);
@@ -2357,12 +2565,23 @@ if (window.autoPauseInjected !== true) {
           mediaElements.add(node);
         }
         for (const media of mediaElements) {
+          // The overlay belongs to the old container; the add pass re-creates it.
+          videoOverlayCleanups.get(media)?.();
+          videoOverlayCleanups.delete(media);
+          // Moved elements are reported as removed even though they are back in the DOM.
+          if (media.isConnected) {
+            continue;
+          }
+          const pending = scheduledActions.get(media);
+          if (pending) {
+            clearTimeout(pending);
+            scheduledActions.delete(media);
+          }
+          videoActionTokens.set(media, {});
           if (media instanceof HTMLVideoElement) {
             if (hoveredVideos.delete(media)) {
               sendMessage({ videoHovered: hoveredVideos.size > 0 });
             }
-            videoOverlayCleanups.get(media)?.();
-            videoOverlayCleanups.delete(media);
             detectedVideos.delete(media);
             visibleVideos.delete(media);
             intersectionObserver.unobserve(media);
