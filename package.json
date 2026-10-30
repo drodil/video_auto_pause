@@ -43,11 +43,11 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.0",
-    "adm-zip": "^0.5.16",
+    "adm-zip": "^0.6.1",
     "prettier": "^3.8.0",
     "shx": "^0.4.0",
     "standard-version": "^9.5.0",
-    "web-ext": "^9.2.0"
+    "web-ext": "^10.8.0"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
