@@ -218,6 +218,7 @@ env.runtime.onStartup.addListener(async () => {
       "previousTabs",
       "pinnedTabs",
       "safeModeTabs",
+      "tabVideos",
     ]);
   }
 });
@@ -273,7 +274,9 @@ async function loadNavigationState() {
     "previousTabId",
     "previousWindowId",
     "previousTabs",
+    "tabVideos",
   ]);
+  tabVideos = navigationState.tabVideos ?? {};
   previousTabs = navigationState.previousTabs ?? {};
   previousTabId = navigationState.previousTabId ?? -1;
   previousWindowId =
@@ -755,6 +758,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     delete tabVideos[tabId];
     delete tabVisibility[tabId];
     delete tabVideoHover[tabId];
+    await sessionStorage.set({ tabVideos });
   }
 
   if (
@@ -804,7 +808,7 @@ env.tabs.onRemoved.addListener(async function (tabId) {
   if (previousTabId === tabId) {
     previousTabId = -1;
   }
-  await sessionStorage.set({ previousTabId, previousTabs });
+  await sessionStorage.set({ previousTabId, previousTabs, tabVideos });
 });
 
 // Window focus listener
@@ -843,6 +847,9 @@ async function handleWindowFocusChanged(windowId) {
       const tabsResume = await env.tabs.query({ windowId: windowId });
       debugLog(`Window changed, resuming videos in window ${windowId}`);
       for (let i = 0; i < tabsResume.length; i++) {
+        if (tabsResume[i].active) {
+          sendMessage(tabsResume[i], { action: "check" });
+        }
         const settings = getTabSettings(tabsResume[i]);
         if (!isEnabledForTab(tabsResume[i]) || !settings.focusresume) {
           continue;
@@ -996,9 +1003,11 @@ async function handlePageMessage(request, sender) {
     return;
   }
 
-  if ("hasVideos" in request && tab.active) {
+  // Record background tabs too, so the icon is correct when they are activated.
+  if ("hasVideos" in request) {
     tabVideos[tab.id] ??= {};
-    tabVideos[tab.id][sender.frameId] = request.hasVideos;
+    tabVideos[tab.id][sender.frameId ?? 0] = request.hasVideos;
+    await sessionStorage.set({ tabVideos });
     await refreshIcon(tab.id);
   }
 
