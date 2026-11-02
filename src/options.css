@@ -378,13 +378,6 @@ button.support-link:hover:not(:disabled) {
   padding: 0;
 }
 
-#statsActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
 .preset-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -673,6 +666,10 @@ label[for]:hover,
 }
 
 .centered-source-link {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
   margin-top: 12px;
   text-align: center;
 }
