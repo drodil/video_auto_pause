@@ -1035,7 +1035,8 @@ button:disabled {
   white-space: nowrap;
 }
 
-#pinCurrentTab {
+#pinCurrentTab,
+#headerSleepTimer {
   display: grid;
   width: 34px;
   height: 34px;
@@ -1051,7 +1052,9 @@ button:disabled {
 }
 
 #pinCurrentTab:hover,
-#pinCurrentTab[aria-pressed="true"] {
+#pinCurrentTab[aria-pressed="true"],
+#headerSleepTimer:hover,
+#headerSleepTimer[aria-pressed="true"] {
   background: #ffffff33;
 }
 
@@ -1060,7 +1063,8 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#pinCurrentTab svg {
+#pinCurrentTab svg,
+#headerSleepTimer svg {
   width: 18px;
   height: 18px;
   fill: currentColor;
@@ -1103,7 +1107,8 @@ button:disabled {
     min-height: 44px;
   }
 
-  #pinCurrentTab {
+  #pinCurrentTab,
+  #headerSleepTimer {
     width: 44px;
     height: 44px;
     min-height: 44px;

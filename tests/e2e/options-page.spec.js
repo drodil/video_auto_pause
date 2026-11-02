@@ -580,6 +580,42 @@ test.describe("Options page", () => {
     await expect(optionsPage.locator("#sleepTimerStatus")).toBeEmpty();
   });
 
+  test("starts the sleep timer from the header with the last used duration", async ({
+    extension,
+  }) => {
+    const optionsPage = await extension.openOptions();
+    const headerButton = optionsPage.locator("#headerSleepTimer");
+    await expect(headerButton).toHaveAttribute("aria-pressed", "false");
+    await headerButton.click();
+    await expect(headerButton).toHaveAttribute("aria-pressed", "true");
+    expect(
+      await extension.evaluate(() =>
+        chrome.storage.local.get("vapSleepTimerMinutes"),
+      ),
+    ).toEqual({ vapSleepTimerMinutes: 30 });
+    await headerButton.click();
+    await expect(headerButton).toHaveAttribute("aria-pressed", "false");
+
+    await optionsPage.locator("#sleepTimerSection summary").click();
+    await optionsPage.locator("#sleepTimerMinutes").selectOption("10");
+    await optionsPage.locator("#startSleepTimer").click();
+    await expect(headerButton).toHaveAttribute("aria-pressed", "true");
+    await headerButton.click();
+    await optionsPage.reload();
+    await expect(optionsPage.locator("#sleepTimerMinutes")).toHaveValue("10");
+    await optionsPage.locator("#headerSleepTimer").click();
+    await expect
+      .poll(() =>
+        extension.evaluate(async () => {
+          const { vapSleepTimerExpiresAt } = await chrome.storage.local.get(
+            "vapSleepTimerExpiresAt",
+          );
+          return Math.round((vapSleepTimerExpiresAt - Date.now()) / 60000);
+        }),
+      )
+      .toBe(10);
+  });
+
   test("sizes the popup and full page layouts", async ({ extension }) => {
     const popupPage = await extension.openOptions({
       popup: true,

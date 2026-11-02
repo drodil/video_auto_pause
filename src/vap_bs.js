@@ -167,7 +167,10 @@ async function setSleepTimer(minutes) {
     );
   }
   const expiresAt = Date.now() + minutes * 60 * 1000;
-  await env.storage.local.set({ vapSleepTimerExpiresAt: expiresAt });
+  await env.storage.local.set({
+    vapSleepTimerExpiresAt: expiresAt,
+    vapSleepTimerMinutes: minutes,
+  });
   await env.alarms.create(SLEEP_TIMER_ALARM, { when: expiresAt });
   return expiresAt;
 }

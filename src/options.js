@@ -887,9 +887,19 @@ async function restoreStats() {
 }
 
 async function restoreSleepTimer() {
-  const { vapSleepTimerExpiresAt } = await env.storage.local.get(
-    "vapSleepTimerExpiresAt",
-  );
+  const { vapSleepTimerExpiresAt, vapSleepTimerMinutes } =
+    await env.storage.local.get([
+      "vapSleepTimerExpiresAt",
+      "vapSleepTimerMinutes",
+    ]);
+  const minutesSelect = document.getElementById("sleepTimerMinutes");
+  if (
+    [...minutesSelect.options].some(
+      (option) => option.value === String(vapSleepTimerMinutes),
+    )
+  ) {
+    minutesSelect.value = String(vapSleepTimerMinutes);
+  }
   sleepTimerExpiresAt = Number.isFinite(vapSleepTimerExpiresAt)
     ? vapSleepTimerExpiresAt
     : 0;
@@ -916,6 +926,13 @@ function renderSleepTimer() {
   document.getElementById("sleepTimerDurationControl").hidden = active;
   document.getElementById("startSleepTimer").hidden = active;
   document.getElementById("cancelSleepTimer").hidden = !active;
+  const headerButton = document.getElementById("headerSleepTimer");
+  const headerLabel = message(active ? "sleepTimerCancel" : "sleepTimerStart");
+  headerButton.setAttribute("aria-pressed", String(active));
+  if (headerButton.getAttribute("aria-label") !== headerLabel) {
+    headerButton.setAttribute("aria-label", headerLabel);
+    setTooltip(headerButton, headerLabel);
+  }
   const status = active
     ? message("sleepTimerSet", [String(Math.ceil(seconds / 60))])
     : "";
@@ -1142,6 +1159,9 @@ document.getElementById("startSleepTimer").addEventListener("click", () => {
 });
 document.getElementById("cancelSleepTimer").addEventListener("click", () => {
   void updateSleepTimer("cancel");
+});
+document.getElementById("headerSleepTimer").addEventListener("click", () => {
+  void updateSleepTimer(sleepTimerActive ? "cancel" : "start");
 });
 bindAction(
   "exportSettings",
