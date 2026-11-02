@@ -29,6 +29,8 @@ const quietHoursTabs = new Map();
 let globalSettings = normalizeSettings();
 const QUIET_HOURS_ALARM = "vap-quiet-hours";
 const SLEEP_TIMER_ALARM = "vap-sleep-timer";
+const IDLE_CHECK_ALARM = "vap-idle-check";
+let idlePausedTabs = [];
 
 function debugLog(message) {
   if (globalSettings.debugMode) {
@@ -202,7 +204,12 @@ async function pauseEverythingForSleepTimer() {
   }
 }
 
-env.alarms.onAlarm.addListener((alarm) => {
+env.alarms.onAlarm.addListener(async (alarm) => {
+  try {
+    await settingsReady;
+  } catch {
+    return;
+  }
   if (alarm.name === QUIET_HOURS_ALARM) {
     void applyQuietHours().catch((error) => {
       console.error("Video Auto Pause could not apply quiet hours:", error);
@@ -210,6 +217,10 @@ env.alarms.onAlarm.addListener((alarm) => {
   } else if (alarm.name === SLEEP_TIMER_ALARM) {
     void pauseEverythingForSleepTimer().catch((error) => {
       console.error("Video Auto Pause could not apply the sleep timer:", error);
+    });
+  } else if (alarm.name === IDLE_CHECK_ALARM) {
+    void pauseIdleTabs().catch((error) => {
+      console.error("Video Auto Pause could not apply idle pause:", error);
     });
   }
 });
@@ -226,6 +237,8 @@ env.runtime.onStartup.addListener(async () => {
       "tabVideos",
       "quietHoursTabs",
       "tabMedia",
+      "tabVisibility",
+      "idlePausedTabs",
     ]);
   }
 });
@@ -284,9 +297,13 @@ async function loadNavigationState() {
     "tabVideos",
     "quietHoursTabs",
     "tabMedia",
+    "tabVisibility",
+    "idlePausedTabs",
   ]);
   tabVideos = navigationState.tabVideos ?? {};
   tabMedia = navigationState.tabMedia ?? {};
+  tabVisibility = navigationState.tabVisibility ?? {};
+  idlePausedTabs = navigationState.idlePausedTabs ?? [];
   for (const [tabId, active] of navigationState.quietHoursTabs ?? []) {
     quietHoursTabs.set(tabId, active);
   }
@@ -771,7 +788,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     delete tabVideos[tabId];
     delete tabVisibility[tabId];
     delete tabVideoHover[tabId];
-    await sessionStorage.set({ tabVideos });
+    await sessionStorage.set({ tabVideos, tabVisibility });
   }
 
   if (
@@ -822,11 +839,14 @@ env.tabs.onRemoved.addListener(async function (tabId) {
   if (previousTabId === tabId) {
     previousTabId = -1;
   }
+  idlePausedTabs = idlePausedTabs.filter((id) => id !== tabId);
   await sessionStorage.set({
     previousTabId,
     previousTabs,
     tabVideos,
     tabMedia,
+    tabVisibility,
+    idlePausedTabs,
   });
 });
 
@@ -1084,6 +1104,7 @@ async function handlePageMessage(request, sender) {
   if ("visible" in request && settings.scrollpause && tab.active) {
     tabVisibility[tab.id] ??= {};
     tabVisibility[tab.id][sender.frameId] = request.visible;
+    await sessionStorage.set({ tabVisibility });
     const videoFrames = Object.entries(tabVideos[tab.id] ?? {})
       .filter(([, hasVideos]) => hasVideos)
       .map(([frameId]) => frameId);
@@ -1185,16 +1206,90 @@ async function handleCommand(command) {
 env.commands.onCommand.addListener(handleCommand);
 
 // Listener for computer idle/locked/active
+function getIdlePauseSeconds(settings) {
+  const minutes = Number(settings.idlePauseMinutes);
+  return Number.isFinite(minutes) && minutes > 0
+    ? Math.min(240, Math.max(1, minutes)) * 60
+    : 0;
+}
+
+// The idle event fires after the shortest configured timeout, so tabs with
+// longer per-site timeouts are re-checked every minute until they expire.
+async function pauseIdleTabs() {
+  if (state !== "idle") {
+    await env.alarms.clear(IDLE_CHECK_ALARM);
+    return;
+  }
+  const detectionSeconds = getIdleDetectionInterval();
+  let pending = false;
+  for (const tab of await env.tabs.query({})) {
+    if (
+      !isEnabledForTab(tab) ||
+      idlePausedTabs.includes(tab.id) ||
+      pinnedTabs.includes(tab.id)
+    ) {
+      continue;
+    }
+    const seconds = getIdlePauseSeconds(getTabSettings(tab));
+    if (!seconds) {
+      continue;
+    }
+    if (
+      seconds > detectionSeconds &&
+      (await env.idle.queryState(seconds)) !== "idle"
+    ) {
+      pending = true;
+      continue;
+    }
+    debugLog(`User idle, stopping videos in tab ${tab.id}`);
+    idlePausedTabs.push(tab.id);
+    stop(tab);
+  }
+  await sessionStorage.set({ idlePausedTabs });
+  if (pending) {
+    await env.alarms.create(IDLE_CHECK_ALARM, { periodInMinutes: 1 });
+  } else {
+    await env.alarms.clear(IDLE_CHECK_ALARM);
+  }
+}
+
+async function resumeIdleTabs() {
+  await env.alarms.clear(IDLE_CHECK_ALARM);
+  const tabIds = idlePausedTabs;
+  idlePausedTabs = [];
+  await sessionStorage.set({ idlePausedTabs });
+  for (const tabId of tabIds) {
+    let tab;
+    try {
+      tab = await env.tabs.get(tabId);
+    } catch {
+      continue;
+    }
+    const settings = getTabSettings(tab);
+    if (
+      isEnabledForTab(tab) &&
+      settings.autoresume &&
+      (tab.active || !settings.autopause)
+    ) {
+      debugLog(`User active, resuming videos in tab ${tab.id}`);
+      resume(tab);
+    }
+  }
+}
+
 async function handleIdleStateChanged(s) {
   await settingsReady;
   const wasLocked = previousIdleState === "locked";
-  const wasIdle = previousIdleState === "idle";
   previousIdleState = s;
   state = s;
-  const tabs =
-    s === "idle" || (s === "active" && wasIdle)
-      ? await env.tabs.query({})
-      : await env.tabs.query({ active: true, lastFocusedWindow: true });
+  if (s === "idle") {
+    await pauseIdleTabs();
+    return;
+  }
+  if (s === "active") {
+    await resumeIdleTabs();
+  }
+  const tabs = await env.tabs.query({ active: true, lastFocusedWindow: true });
 
   for (let i = 0; i < tabs.length; i++) {
     if (!isEnabledForTab(tabs[i])) {
@@ -1205,19 +1300,9 @@ async function handleIdleStateChanged(s) {
     if (state === "locked" && settings.lockpause) {
       debugLog(`Computer locked, stopping all videos`);
       stop(tabs[i]);
-    } else if (state === "idle" && settings.idlePauseMinutes > 0) {
-      debugLog(`User idle, stopping videos`);
-      stop(tabs[i]);
-    } else if (
-      state === "active" &&
-      wasIdle &&
-      settings.idlePauseMinutes > 0 &&
-      settings.autoresume &&
-      (tabs[i].active || !settings.autopause)
-    ) {
-      debugLog(`User active, resuming videos`);
-      resume(tabs[i]);
     } else if (state === "active" && wasLocked && settings.lockresume) {
+      debugLog(`Computer unlocked, resuming videos`);
+      resume(tabs[i]);
       debugLog(`Computer unlocked, resuming videos`);
       resume(tabs[i]);
     }

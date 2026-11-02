@@ -263,6 +263,48 @@ test.describe("Focus, device, and schedule rules", () => {
       .toEqual({ overnight: true, daytime: false });
   });
 
+  test("waits for a longer site idle timeout before pausing", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    const url = server.url("video.html");
+    await extension.updateSettings({
+      autopause: true,
+      autoresume: true,
+      idlePauseMinutes: 1,
+      singleVideoPlayback: false,
+      siteRules: [
+        {
+          domain: new URL(url).hostname,
+          enabled: true,
+          overrides: { idlePauseMinutes: 30 },
+        },
+      ],
+    });
+    const video = await openVideoPage(page, url);
+    await video.evaluate((element) => element.play());
+    const worker = await extension.worker();
+    await expect
+      .poll(() => worker.evaluate(() => globalSettings.siteRules.length))
+      .toBe(1);
+    await worker.evaluate(() => handleIdleStateChanged("idle"));
+    await expect
+      .poll(() =>
+        worker.evaluate(async () =>
+          Boolean(await chrome.alarms.get(IDLE_CHECK_ALARM)),
+        ),
+      )
+      .toBe(true);
+    await expect(video).toHaveJSProperty("paused", false);
+    await worker.evaluate(() => handleIdleStateChanged("active"));
+    expect(
+      await worker.evaluate(async () =>
+        Boolean(await chrome.alarms.get(IDLE_CHECK_ALARM)),
+      ),
+    ).toBe(false);
+  });
+
   test("keeps a video playing on focus loss while it is hovered", async ({
     page,
     context,
