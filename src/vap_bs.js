@@ -65,7 +65,8 @@ async function initialize() {
   }
   await loadTabLists();
   await loadNavigationState();
-  await refreshSettings();
+  // A service worker restart must not re-pause videos for ongoing quiet hours.
+  await refreshSettings(false);
   await registerContentScriptIfNeeded();
   await restoreSleepTimer().catch((error) => {
     console.error("Video Autopause could not restore the sleep timer:", error);
@@ -113,6 +114,7 @@ function getIdleDetectionInterval() {
 
 async function applyQuietHours(date = new Date(), force = false, targetTab) {
   const tabs = targetTab ? [targetTab] : await env.tabs.query({});
+  const previousQuietHoursTabs = JSON.stringify([...quietHoursTabs]);
   for (const tab of tabs) {
     if (!isEnabledForTab(tab)) {
       continue;
@@ -133,6 +135,9 @@ async function applyQuietHours(date = new Date(), force = false, targetTab) {
     } else if (!active && wasActive && settings.autoresume) {
       resume(tab);
     }
+  }
+  if (JSON.stringify([...quietHoursTabs]) !== previousQuietHoursTabs) {
+    await sessionStorage.set({ quietHoursTabs: [...quietHoursTabs] });
   }
 }
 
@@ -219,6 +224,8 @@ env.runtime.onStartup.addListener(async () => {
       "pinnedTabs",
       "safeModeTabs",
       "tabVideos",
+      "quietHoursTabs",
+      "tabMedia",
     ]);
   }
 });
@@ -250,10 +257,10 @@ async function registerContentScriptIfNeeded() {
   await env.scripting.registerContentScripts([{ ...CONTENT_SCRIPT }]);
 }
 
-async function refreshSettings() {
+async function refreshSettings(forceQuietHours = true) {
   globalSettings = await getActiveProfileSettings();
   debugLog(`Settings refreshed: ${JSON.stringify(globalSettings)}`);
-  await configureContextRules(true);
+  await configureContextRules(forceQuietHours);
 }
 
 async function loadTabLists() {
@@ -275,8 +282,14 @@ async function loadNavigationState() {
     "previousWindowId",
     "previousTabs",
     "tabVideos",
+    "quietHoursTabs",
+    "tabMedia",
   ]);
   tabVideos = navigationState.tabVideos ?? {};
+  tabMedia = navigationState.tabMedia ?? {};
+  for (const [tabId, active] of navigationState.quietHoursTabs ?? []) {
+    quietHoursTabs.set(tabId, active);
+  }
   previousTabs = navigationState.previousTabs ?? {};
   previousTabId = navigationState.previousTabId ?? -1;
   previousWindowId =
@@ -778,6 +791,7 @@ env.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 env.tabs.onRemoved.addListener(async function (tabId) {
   await settingsReady;
   quietHoursTabs.delete(tabId);
+  await sessionStorage.set({ quietHoursTabs: [...quietHoursTabs] });
   delete tabVideos[tabId];
   delete tabVisibility[tabId];
   delete tabMedia[tabId];
@@ -808,7 +822,12 @@ env.tabs.onRemoved.addListener(async function (tabId) {
   if (previousTabId === tabId) {
     previousTabId = -1;
   }
-  await sessionStorage.set({ previousTabId, previousTabs, tabVideos });
+  await sessionStorage.set({
+    previousTabId,
+    previousTabs,
+    tabVideos,
+    tabMedia,
+  });
 });
 
 // Window focus listener
@@ -957,6 +976,7 @@ async function handlePageMessage(request, sender) {
     const wasPlaying = isMediaPlaying(tab.id);
     tabMedia[tab.id] ??= {};
     tabMedia[tab.id][sender.frameId ?? 0] = request.mediaState;
+    await sessionStorage.set({ tabMedia });
     const settings = getTabSettings(tab);
     if (
       state === "locked" &&
@@ -1192,7 +1212,8 @@ async function handleIdleStateChanged(s) {
       state === "active" &&
       wasIdle &&
       settings.idlePauseMinutes > 0 &&
-      settings.autoresume
+      settings.autoresume &&
+      (tabs[i].active || !settings.autopause)
     ) {
       debugLog(`User active, resuming videos`);
       resume(tabs[i]);

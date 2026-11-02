@@ -1613,6 +1613,11 @@ if (window.autoPauseInjected !== true) {
       .then(async () => {
         if (request.action === "check") {
           sendMessage({ hasVideos: allVideos().length > 0 });
+          // The background loses this state when its service worker restarts.
+          reportMediaState();
+          if (hoveredVideos.size > 0) {
+            sendMessage({ videoHovered: true });
+          }
           return;
         }
 
@@ -2636,6 +2641,7 @@ if (window.autoPauseInjected !== true) {
     if (changed) {
       sendMessage({ hasVideos: hasVideos() });
       reportMediaState();
+      reportVisibility();
       scheduleVideoArbitration();
     }
   });
