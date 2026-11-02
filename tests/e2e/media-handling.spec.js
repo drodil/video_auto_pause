@@ -206,6 +206,35 @@ test.describe("Muting, ads, fading, and audio", () => {
     await expect(video).toHaveJSProperty("muted", false);
   });
 
+  test("clicks the skip button inside a YouTube skip slot after the ad video ends", async ({
+    page,
+    server,
+    extension,
+  }) => {
+    await extension.updateSettings({ autoSkipAds: true });
+    await page.goto(server.url());
+    await page.evaluate(() => {
+      const ad = document.createElement("div");
+      ad.className = "ad-showing";
+      const slot = document.createElement("span");
+      slot.id = "skip-button:5";
+      const button = document.createElement("button");
+      button.id = "ad-next";
+      button.textContent = "Next";
+      button.addEventListener("click", () => {
+        button.dataset.clicked = "true";
+      });
+      slot.append(button);
+      ad.append(slot);
+      document.body.append(ad);
+    });
+
+    await expect(page.locator("#ad-next")).toHaveAttribute(
+      "data-clicked",
+      "true",
+    );
+  });
+
   test("does not click ad skip controls when automatic skipping is disabled", async ({
     page,
     server,

@@ -1232,7 +1232,11 @@ if (window.autoPauseInjected !== true) {
   }
 
   function findAdSkipButton() {
-    for (const button of document.querySelectorAll(knownAdSkipSelector)) {
+    for (const element of document.querySelectorAll(knownAdSkipSelector)) {
+      // YouTube's "skip-button:N" id is on a wrapper slot, which ignores clicks.
+      const button = element.matches("button, [role='button']")
+        ? element
+        : (element.querySelector("button, [role='button']") ?? element);
       if (isClickableSkipButton(button)) {
         return button;
       }
