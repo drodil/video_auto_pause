@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.2](https://github.com/drodil/video_auto_pause/compare/v1.15.1...v1.15.2) (2026-11-02)
+
+
+### Bug Fixes
+
+* **ads:** click the button inside YouTube skip slots ([5fd7f04](https://github.com/drodil/video_auto_pause/commit/5fd7f046bf6f4fe02a1943d56b66eb1ae1a748ab))
+* **deps:** upgrade web-ext and adm-zip to resolve audit vulnerabilities ([3894a28](https://github.com/drodil/video_auto_pause/commit/3894a2808fa1728c881dba3f9cb158374d40b0a7))
+* honor per-site idle timeouts and keep visibility across restarts ([83a942a](https://github.com/drodil/video_auto_pause/commit/83a942a865cd0cd5ef6aa1e28bc520845f6676e7))
+* keep extension icon in sync with detected videos ([a938dd1](https://github.com/drodil/video_auto_pause/commit/a938dd1692f5dbd8de1c7e2fd4ffef9ed09566fb))
+* preserve playback state across service worker restarts ([97594d9](https://github.com/drodil/video_auto_pause/commit/97594d932e9910f1d357b704690bb2fa36bdff42))
+* **settings:** serialize settings writes and harden content script ([0d7e7be](https://github.com/drodil/video_auto_pause/commit/0d7e7be2c5ef8e2924e57415c17e2cbef6887639))
+
+
+### Maintenance
+
+* add gitignore ([e578abe](https://github.com/drodil/video_auto_pause/commit/e578abe62a22c63a2bd5569801283b2b16d402fd))
+* **options:** add sleep timer button to the header ([ddb5577](https://github.com/drodil/video_auto_pause/commit/ddb5577386c2e0b6db60d5e5adc2613a980e523d))
+* **options:** show rate link next to the GitHub source link ([a985076](https://github.com/drodil/video_auto_pause/commit/a9850765fcccff7d7503b70d4df6b7d5ca595bbe))
+
 ### [1.15.1](https://github.com/drodil/video_auto_pause/compare/v1.15.0...v1.15.1) (2026-10-30)
 
 
