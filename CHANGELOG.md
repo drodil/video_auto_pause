@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.3](https://github.com/drodil/video_auto_pause/compare/v1.15.2...v1.15.3) (2026-11-23)
+
+
+### Bug Fixes
+
+* **ads:** improve YouTube skipping and make 16x speed-up opt-in ([c24875c](https://github.com/drodil/video_auto_pause/commit/c24875c471c21ae0c85cbec010687ef04bb71478))
+
 ### [1.15.2](https://github.com/drodil/video_auto_pause/compare/v1.15.1...v1.15.2) (2026-11-02)
 
 
