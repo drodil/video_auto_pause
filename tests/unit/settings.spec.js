@@ -1,3 +1,4 @@
+const { rejects } = require("node:assert/strict");
 const { test, expect } = require("@playwright/test");
 const { loadSettingsGlobals } = require("./message-usage");
 
@@ -416,13 +417,13 @@ test.describe("profiles", () => {
   test("activates, deletes, and protects profiles", async () => {
     const storage = createStorage();
     const workId = await s.createProfile("Work", storage);
-    await expect(s.createProfile("work", storage)).rejects.toThrow("exists");
-    await expect(s.createProfile("Default", storage)).rejects.toThrow();
-    await expect(s.createProfile(" ", storage)).rejects.toThrow();
+    await rejects(s.createProfile("work", storage), /exists/);
+    await rejects(s.createProfile("Default", storage));
+    await rejects(s.createProfile(" ", storage));
     await s.activateProfile("default", storage);
     expect(storage.local.data.vapActiveProfileId).toBe("default");
-    await expect(s.activateProfile("missing", storage)).rejects.toThrow();
-    await expect(s.deleteProfile("default", storage)).rejects.toThrow();
+    await rejects(s.activateProfile("missing", storage));
+    await rejects(s.deleteProfile("default", storage));
 
     await s.activateProfile(workId, storage);
     expect(await s.deleteProfile(workId, storage)).toBe("default");
@@ -520,9 +521,7 @@ test.describe("profiles", () => {
     );
     const storage = createStorage({ sync: { excludedDomains } });
     withItemQuota(storage.sync);
-    await expect(s.loadProfiles(storage, { persist: true })).rejects.toThrow(
-      "QUOTA",
-    );
+    await rejects(s.loadProfiles(storage, { persist: true }), /QUOTA/);
     const settings = await s.getActiveProfileSettings(storage);
     expect(settings.siteRules).toHaveLength(400);
     expect(storage.sync.data.excludedDomains).toHaveLength(400);
