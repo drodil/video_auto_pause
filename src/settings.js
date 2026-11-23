@@ -50,7 +50,7 @@ globalThis.DEFAULT_SETTINGS = Object.freeze({
   muteDuringAds: true,
   pauseAfterAdEnds: false,
   autoSkipAds: true,
-  speedUpAds: true,
+  speedUpAds: false,
   prioritizeActiveTabMedia: false,
   singleVideoPlayback: true,
   onlyConfiguredSites: false,

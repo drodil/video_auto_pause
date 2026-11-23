@@ -82,6 +82,8 @@ windows. Audio-only players are left alone by default; turn off
 - Detect active ads using player markers, YouTube's active ad UI,
   `data-ad-playing` signals, and common player-ad overlays. An empty YouTube
   ad-module placeholder alone is not considered an active ad.
+- Automatically click the player's Skip control when it becomes available.
+  Speeding ads up to 16× is off by default and can be enabled in settings.
 - Configure an idle timeout or daily quiet hours in local time to pause
   playback.
 - Disable autoplay-next on supported players or set a sleep timer (5 to 60

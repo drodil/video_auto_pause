@@ -131,7 +131,10 @@ test.describe("Muting, ads, fading, and audio", () => {
     server,
     extension,
   }) => {
-    expect(await extension.getSettings()).toMatchObject({ autoSkipAds: true });
+    expect(await extension.getSettings()).toMatchObject({
+      autoSkipAds: true,
+      speedUpAds: false,
+    });
     await page.goto(server.url());
     await page.evaluate(() => {
       const ad = document.createElement("div");
@@ -206,7 +209,7 @@ test.describe("Muting, ads, fading, and audio", () => {
     await expect(video).toHaveJSProperty("muted", false);
   });
 
-  test("clicks the skip button inside a YouTube skip slot after the ad video ends", async ({
+  test("clicks the enabled YouTube skip slot button without an ad-playing class", async ({
     page,
     server,
     extension,
@@ -214,25 +217,64 @@ test.describe("Muting, ads, fading, and audio", () => {
     await extension.updateSettings({ autoSkipAds: true });
     await page.goto(server.url());
     await page.evaluate(() => {
-      const ad = document.createElement("div");
-      ad.className = "ad-showing";
-      const slot = document.createElement("span");
-      slot.id = "skip-button:5";
-      const button = document.createElement("button");
-      button.id = "ad-next";
-      button.textContent = "Next";
-      button.addEventListener("click", () => {
-        button.dataset.clicked = "true";
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<button id="skip-button:unrelated">Skip intro</button>
+         <div id="movie_player">
+           <span id="skip-button:5" aria-disabled="true">
+             <button id="ad-hidden" style="opacity:0">Skip</button>
+             <button id="ad-next">Weiter</button>
+           </span>
+         </div>`,
+      );
+      document.body.addEventListener("click", ({ target }) => {
+        target.dataset.clicked = "true";
       });
-      slot.append(button);
-      ad.append(slot);
-      document.body.append(ad);
     });
 
-    await expect(page.locator("#ad-next")).toHaveAttribute(
+    const slot = page.locator('[id="skip-button:5"]');
+    const button = page.locator("#ad-next");
+    // Give the monitor a chance to check while the slot is still disabled.
+    await page.waitForTimeout(750);
+    await expect(button).not.toHaveAttribute("data-clicked", "true");
+    await slot.evaluate((element) => element.removeAttribute("aria-disabled"));
+    await expect(button).toHaveAttribute("data-clicked", "true");
+    await expect(page.locator("#ad-hidden")).not.toHaveAttribute(
       "data-clicked",
       "true",
     );
+    await expect(page.locator('[id="skip-button:unrelated"]')).not.toHaveAttribute(
+      "data-clicked",
+      "true",
+    );
+  });
+
+  test("retries the skip control without seeking when the player ignores a click", async ({
+    page,
+    server,
+  }) => {
+    const video = await openVideoPage(page, server.url("video.html"));
+    await expect.poll(() => video.evaluate((v) => v.duration)).toBeGreaterThan(0);
+    await video.evaluate((element) => {
+      element.pause();
+      const player = document.createElement("div");
+      player.className = "ad-showing";
+      player.innerHTML = '<button class="ytp-skip-ad-button">Skip</button>';
+      player.firstElementChild.addEventListener("click", (event) => {
+        const button = event.currentTarget;
+        button.dataset.clicks = Number(button.dataset.clicks ?? 0) + 1;
+      });
+      element.after(player);
+      player.append(element);
+      element.addEventListener("seeking", () => {
+        element.dataset.sought = "true";
+      });
+    });
+    await expect(page.locator(".ytp-skip-ad-button")).toHaveAttribute(
+      "data-clicks",
+      "2",
+    );
+    await expect(video).not.toHaveAttribute("data-sought", "true");
   });
 
   test("does not click ad skip controls when automatic skipping is disabled", async ({

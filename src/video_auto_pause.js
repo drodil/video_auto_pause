@@ -1020,6 +1020,14 @@ if (window.autoPauseInjected !== true) {
     ".ima-ad-container",
     ".vp-ad",
   ];
+  const buttonSelector = "button, [role='button']";
+  const youtubeSkipControlSelector =
+    ".ytp-skip-ad-button, .ytp-ad-skip-button-modern, .ytp-ad-skip-button";
+  const youtubeSkipSlotSelector =
+    ".ytp-ad-skip-button-container, .ytp-ad-skip-button-slot, :is(#movie_player, .html5-video-player, .ytp-ad-module) :is([id='skip-button'], [id^='skip-button:'])";
+  const youtubeSkipButtonSelector =
+    `:is(${youtubeSkipControlSelector}):is(${buttonSelector}), ` +
+    `:is(${youtubeSkipControlSelector}, ${youtubeSkipSlotSelector}) :is(${buttonSelector})`;
 
   function isVisibleAdMarker(element) {
     const style = window.getComputedStyle(element);
@@ -1038,6 +1046,9 @@ if (window.autoPauseInjected !== true) {
     if (
       visibleAdMarkers.some((selector) =>
         [...document.querySelectorAll(selector)].some(isVisibleAdMarker),
+      ) ||
+      [...document.querySelectorAll(youtubeSkipButtonSelector)].some(
+        isClickableSkipButton,
       )
     ) {
       return true;
@@ -1053,17 +1064,15 @@ if (window.autoPauseInjected !== true) {
   // Accessibility/content skip links (e.g. YouTube's "Skip navigation") must never be mistaken for ad controls.
   const nonAdSkipPattern =
     /skip[\s-]*(to|navigation|nav|link|intro|recap|credits|main|content)/i;
-  const knownAdSkipSelector =
-    ".ytp-skip-ad-button, .ytp-ad-skip-button-modern, .ytp-ad-skip-button, .videoAdUiSkipButton, [id^='skip-button']";
-  const genericSkipCandidateSelector =
-    "button, [role='button'], [data-testid*='skip' i], [data-test*='skip' i], [class*='skip' i]";
+  const thirdPartySkipButtonSelector =
+    `.videoAdUiSkipButton:is(${buttonSelector}), .videoAdUiSkipButton :is(${buttonSelector})`;
   const adContainerSelector = [
     ...activeAdMarkers,
     ...visibleAdMarkers,
     ".video-ads",
     ".ytp-ad-module",
   ].join(", ");
-  const lastAdSkipAttempts = new WeakMap();
+  let lastAdSkipAttempts = new WeakMap();
   const adPlaybackSpeeds = new WeakMap();
   const adPlaybackSpeedVideos = new Set();
   const adUnmutedByUser = new Set();
@@ -1072,7 +1081,6 @@ if (window.autoPauseInjected !== true) {
   let adEndTimer;
   let adCheckScheduled = false;
   let adCurrentlyPlaying = false;
-  let lastAdSkipClickAt = 0;
 
   function restoreAdMutedVideos() {
     for (const video of [...adMutedVideos]) {
@@ -1106,12 +1114,9 @@ if (window.autoPauseInjected !== true) {
       }
     }
     if (scopedVideos.size > 0) {
-      return { videos: [...scopedVideos], scoped: true };
+      return [...scopedVideos];
     }
-    return {
-      videos: allVideos().filter((video) => !video.paused && !video.ended),
-      scoped: false,
-    };
+    return allVideos().filter((video) => !video.paused && !video.ended);
   }
 
   function observeAdMarkers() {
@@ -1202,7 +1207,7 @@ if (window.autoPauseInjected !== true) {
       return;
     }
     adCurrentlyPlaying = false;
-    lastAdSkipClickAt = 0;
+    lastAdSkipAttempts = new WeakMap();
     adUnmutedByUser.clear();
     adMarkerObserver.disconnect();
     restoreAdPlaybackSpeeds({ forget: true });
@@ -1226,40 +1231,27 @@ if (window.autoPauseInjected !== true) {
   function isClickableSkipButton(button) {
     return (
       isVisibleAdMarker(button) &&
-      !button.disabled &&
-      button.getAttribute("aria-disabled") !== "true"
+      button.checkVisibility?.({
+        opacityProperty: true,
+        visibilityProperty: true,
+      }) !== false &&
+      !button.matches(":disabled") &&
+      !button.closest("[aria-disabled='true'], [aria-hidden='true'], [inert]") &&
+      window.getComputedStyle(button).pointerEvents !== "none"
     );
   }
 
   function findAdSkipButton() {
-    for (const element of document.querySelectorAll(knownAdSkipSelector)) {
-      // YouTube's "skip-button:N" id is on a wrapper slot, which ignores clicks.
-      const button = element.matches("button, [role='button']")
-        ? element
-        : (element.querySelector("button, [role='button']") ?? element);
+    for (const button of document.querySelectorAll(
+      `${youtubeSkipButtonSelector}, ${thirdPartySkipButtonSelector}`,
+    )) {
       if (isClickableSkipButton(button)) {
         return button;
       }
     }
-    const candidates = new Set();
-    for (const container of document.querySelectorAll(adContainerSelector)) {
-      for (const element of container.querySelectorAll(
-        genericSkipCandidateSelector,
-      )) {
-        candidates.add(element);
-      }
-    }
-    for (const element of document.querySelectorAll(
-      genericSkipCandidateSelector,
+    for (const button of document.querySelectorAll(
+      `:is(${adContainerSelector}) :is(${buttonSelector})`,
     )) {
-      candidates.add(element);
-    }
-    for (const element of candidates) {
-      const button = element.matches("button, [role='button']")
-        ? element
-        : (element.querySelector("button, [role='button']") ??
-          element.closest("button, [role='button']") ??
-          element);
       const label = describeButton(button);
       if (
         adSkipTextPattern.test(label) &&
@@ -1272,33 +1264,15 @@ if (window.autoPauseInjected !== true) {
     return null;
   }
 
-  function skipAd(adVideos) {
+  function skipAd() {
     const button = findAdSkipButton();
     if (!button) {
       return;
     }
     const now = Date.now();
-    if (now - (lastAdSkipAttempts.get(button) ?? 0) >= 3000) {
+    if (now - (lastAdSkipAttempts.get(button) ?? -Infinity) >= 3000) {
       lastAdSkipAttempts.set(button, now);
-      lastAdSkipClickAt = now;
       button.click();
-      return;
-    }
-    // Some players ignore synthetic clicks; once skipping is offered, end the ad media directly.
-    if (
-      adVideos.scoped &&
-      lastAdSkipClickAt > 0 &&
-      now - lastAdSkipClickAt >= 1000
-    ) {
-      for (const video of adVideos.videos) {
-        if (
-          Number.isFinite(video.duration) &&
-          video.duration > 0 &&
-          video.currentTime < video.duration - 0.1
-        ) {
-          video.currentTime = video.duration;
-        }
-      }
     }
   }
 
@@ -1322,15 +1296,15 @@ if (window.autoPauseInjected !== true) {
     observeAdMarkers();
     const adVideos = getAdVideos();
     if (settings.muteDuringAds) {
-      muteAdVideos(adVideos.videos);
+      muteAdVideos(adVideos);
     }
     if (settings.speedUpAds) {
-      speedUpAdVideos(adVideos.videos);
+      speedUpAdVideos(adVideos);
     } else {
       restoreAdPlaybackSpeeds({ forget: true });
     }
     if (settings.autoSkipAds) {
-      skipAd(adVideos);
+      skipAd();
     }
   }
 
@@ -1347,7 +1321,13 @@ if (window.autoPauseInjected !== true) {
     }, 0);
   }
 
-  for (const eventName of ["loadstart", "loadeddata", "playing", "emptied"]) {
+  for (const eventName of [
+    "loadstart",
+    "loadeddata",
+    "playing",
+    "emptied",
+    "ended",
+  ]) {
     document.addEventListener(eventName, scheduleAdCheck, true);
   }
 
@@ -1365,7 +1345,7 @@ if (window.autoPauseInjected !== true) {
         adEndTimer = null;
       }
       adCurrentlyPlaying = false;
-      lastAdSkipClickAt = 0;
+      lastAdSkipAttempts = new WeakMap();
       adUnmutedByUser.clear();
       adMarkerObserver.disconnect();
       restoreAdPlaybackSpeeds({ forget: true });

@@ -46,7 +46,7 @@ const playbackDefaults = {
   muteDuringAds: true,
   pauseAfterAdEnds: false,
   autoSkipAds: true,
-  speedUpAds: true,
+  speedUpAds: false,
   prioritizeActiveTabMedia: false,
   singleVideoPlayback: true,
 };
